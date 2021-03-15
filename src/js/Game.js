@@ -6,6 +6,7 @@ import Matter from 'matter-js'
 
 import Box from './Box'
 import Sphere from './Sphere'
+import Phaeton from './Characters/Phaeton'
 
 export default class Game{
   constructor() {
@@ -148,7 +149,7 @@ export default class Game{
   }
 
   addElements() {
-    const box1 = new Box({
+    const floor = new Box({
       world: this.world,
       scene: this.scene,
       size: {
@@ -166,27 +167,40 @@ export default class Game{
       }
     })
 
-    const box2 = new Box({
+    this.phaeton = new Phaeton({
       world: this.world,
-      scene: this.scene,
-      position: {
-        x: 50,
-        y: 500,
-        z: 0
+      scene : this.scene,
+      position : {
+        x : 0,
+        y : 200,
+        z : 0
       },
+      optionsBox: {
+        inertia: 'Infinity',
+      }
     })
 
-    const circle = new Sphere({
-      world: this.world,
-      scene: this.scene,
-      position: {
-        x: 0,
-        y: 800,
-        z: 0
-      },
-    })
+    // const box2 = new Box({
+    //   world: this.world,
+    //   scene: this.scene,
+    //   position: {
+    //     x: 50,
+    //     y: 500,
+    //     z: 0
+    //   },
+    // })
 
-    this.bodiesWorld.push(box1, box2, circle)
+    // const circle = new Sphere({
+    //   world: this.world,
+    //   scene: this.scene,
+    //   position: {
+    //     x: 0,
+    //     y: 800,
+    //     z: 0
+    //   },
+    // })
+
+    this.bodiesWorld.push(floor)
   }
 
   //
@@ -199,6 +213,10 @@ export default class Game{
     this.bodiesWorld.forEach((bw) => {
       bw.update()
     })
+
+    // Update Phaeton position
+    // this.update()
+    this.phaeton.update()
 
     // Update controls
     this.controls.update()

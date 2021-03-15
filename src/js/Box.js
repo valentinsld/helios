@@ -39,20 +39,19 @@ export default class Box {
     Matter.World.add(this.world, this.box);
   }
   addBoxToScene() {
-    this.mesh = new THREE.Mesh(
-      new THREE.BoxBufferGeometry(
-        this.size.x,
-        this.size.y,
-        this.size.z,
-        32, 32
-      ),   
-      new THREE.MeshStandardMaterial({
-        color: '#777777',
-        metalness: 0.3,
-        roughness: 0.4,
-        envMap: this.environmentMapTexture
-      })
+    const BOX = new THREE.BoxBufferGeometry(
+      this.size.x,
+      this.size.y,
+      this.size.z,
+      32, 32
     )
+    const MATERIAL = new THREE.MeshStandardMaterial({
+      color: '#777777',
+      metalness: 0.3,
+      roughness: 0.4,
+    })
+
+    this.mesh = new THREE.Mesh(BOX, MATERIAL)
     this.mesh.receiveShadow = true
     
     this.scene.add(this.mesh)
