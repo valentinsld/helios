@@ -176,7 +176,7 @@ export default class Game{
         z: 100
       },
       position : {
-        x: 0,
+        x: 300,
         y: 350,
         z: 0
       },

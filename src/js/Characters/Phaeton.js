@@ -41,7 +41,8 @@ export default class Phaeton{
       this.size.y,
       {
         inertia: 'Infinity',
-        frictionAir: 0.1,
+        // frictionAir: 0.1,
+        mass: 1000
       }
     );
 
@@ -86,13 +87,11 @@ export default class Phaeton{
 
     switch (event.code) {
       case "KeyA":
-        // this.box.position.x -= 2 // TODO add to GUI
-        Matter.Body.translate(this.box, Matter.Vector.create(2, 0))
+        Matter.Body.translate(this.box, Matter.Vector.create(-5, 0))
         break;
       
       case "KeyD":
-        // this.box.position.x += 2
-        Matter.Body.translate(this.box, Matter.Vector.create(2, 0))
+        Matter.Body.translate(this.box, Matter.Vector.create(5, 0))
         break;
     
       case "Space":
@@ -131,57 +130,39 @@ export default class Phaeton{
   }
   
   moveTo(start, end) {
-    console.log(start, end)
-
     this.animation = gsap.timeline()
-    const initMask = this.box.collisionFilter.mask
-
-    console.log(this.box.velocity)
-
-    // Matter.Body.setStatic(this.box, true)
-    // Matter.Body.setVelocity(this.box, 1)
-    // Matter.Body.translate(this.box, Matter.Vector.create(0, end.y - start.y))
 
     this.animation.to(
-      this.box,
+      this.mesh.position,
       {
         duration: 0.3,
         x: start.x,
-        onUpdate: () => {
-          Matter.Body.setVelocity(this.box, {x: 0, y: 1 });
-        },
-        onStart: () => {
-          console.log('start')
-          this.box.collisionFilter.mask = 10
-          Matter.Body.setStatic(this.box, true)
-        }
       }
     )
     .to(
-      this.box,
+      this.mesh.position,
       {
         duration: 3,
-        y: "+=350",
+        y: end.y + this.size.y / 2,
         onComplete: () => {
-          console.log('end')
-          this.box.collisionFilter.mask = initMask
-          
-          // Matter.Body.setStatic(this.box, false)
-          // Matter.Body.setPosition(
-          //   this.box,
-          //   Matter.Vector.create({x: end.x, y: end.y + this.size.y / 2})
-          // )
+          // translation du bodie
+          const newPos = Matter.Vector.create(
+            start.x - this.box.position.x,
+            end.y - start.y
+          )
+          Matter.Body.translate(this.box, newPos)
 
-          // this.box.force.y = this.world.gravity.y
+          this.animation = null
         }  
       }
     )
   }
 
   update() {
+    if (this.animation) return
     this.mesh.position.x = this.box.position.x
     this.mesh.position.y = this.box.position.y
 
-    this.mesh.rotation.z = this.box.angle
+    // this.mesh.rotation.z = this.box.angle
   }
 }
