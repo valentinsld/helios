@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Matter from 'matter-js'
+import gsap from 'gsap'
 
 const POSITION = {
   x: 0,
@@ -13,18 +14,23 @@ const SIZE = {
 }
 
 export default class Phaeton{
-  constructor({world, scene, position = POSITION, size = SIZE, optionsBox = {}}) {
+  constructor({world, scene, position = POSITION, size = SIZE}) {
     this.world = world
     this.scene = scene
 
     this.position = position
     this.size = size
-    this.optionsBox = optionsBox
+
+    this.interactionElements = []
 
     this.addPhaetonToWorld()
     this.addPhaetonToScene()
 
     this.initEvents()
+
+    // setInterval(() => {
+    //   console.log(this.box.position.y, this.mesh.position.y)
+    // }, 100);
   }
 
   addPhaetonToWorld() {
@@ -33,10 +39,15 @@ export default class Phaeton{
       this.position.y,
       this.size.x,
       this.size.y,
-      this.optionsBox
+      {
+        inertia: 'Infinity',
+        frictionAir: 0.1,
+      }
     );
 
     Matter.World.add(this.world, this.box);
+
+    console.log(this.box)
   }
   addPhaetonToScene() {
     const BOX = new THREE.BoxBufferGeometry(
@@ -57,6 +68,11 @@ export default class Phaeton{
     this.scene.add(this.mesh)
   }
 
+  addInteractionElements(element) {
+    this.interactionElements.push(element)
+    // console.log(this.interactionElements)
+  }
+
 
   //
   // Events
@@ -70,20 +86,96 @@ export default class Phaeton{
 
     switch (event.code) {
       case "KeyA":
-        this.box.position.x += 2 // TODO add to GUI
+        // this.box.position.x -= 2 // TODO add to GUI
+        Matter.Body.translate(this.box, Matter.Vector.create(2, 0))
         break;
       
       case "KeyD":
-        this.box.position.x -= 2
+        // this.box.position.x += 2
+        Matter.Body.translate(this.box, Matter.Vector.create(2, 0))
         break;
     
+      case "Space":
+        this.interactWithElements()
+        break;  
+
       default:
         break;
     }
   }
 
-  movePlayer() {
-    
+  interactWithElements() {
+
+    this.interactionElements.forEach((element) => {
+      switch (element.type) {
+        case 'ladder':
+          const start = this.interactionElements[0].start
+          const end = this.interactionElements[0].end
+          const distStart = this.mesh.position.distanceTo(start)
+          const distEnd = this.mesh.position.distanceTo(end)
+          
+          console.log('Start ', distStart, ' ; End ', distEnd)
+
+          if (distStart <= element.distanceInteraction) {
+            this.moveTo(start, end)
+          } else if(distEnd <= element.distanceInteraction) {
+            this.moveTo(end, start)
+          }
+          
+          break;
+      
+        default:
+          break;
+      }
+    })
+  }
+  
+  moveTo(start, end) {
+    console.log(start, end)
+
+    this.animation = gsap.timeline()
+    const initMask = this.box.collisionFilter.mask
+
+    console.log(this.box.velocity)
+
+    // Matter.Body.setStatic(this.box, true)
+    // Matter.Body.setVelocity(this.box, 1)
+    // Matter.Body.translate(this.box, Matter.Vector.create(0, end.y - start.y))
+
+    this.animation.to(
+      this.box,
+      {
+        duration: 0.3,
+        x: start.x,
+        onUpdate: () => {
+          Matter.Body.setVelocity(this.box, {x: 0, y: 1 });
+        },
+        onStart: () => {
+          console.log('start')
+          this.box.collisionFilter.mask = 10
+          Matter.Body.setStatic(this.box, true)
+        }
+      }
+    )
+    .to(
+      this.box,
+      {
+        duration: 3,
+        y: "+=350",
+        onComplete: () => {
+          console.log('end')
+          this.box.collisionFilter.mask = initMask
+          
+          // Matter.Body.setStatic(this.box, false)
+          // Matter.Body.setPosition(
+          //   this.box,
+          //   Matter.Vector.create({x: end.x, y: end.y + this.size.y / 2})
+          // )
+
+          // this.box.force.y = this.world.gravity.y
+        }  
+      }
+    )
   }
 
   update() {

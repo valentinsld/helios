@@ -23,6 +23,7 @@ export default class Box {
 
     this.addBoxToWorld()
     this.addBoxToScene()
+    this.initPosition()
   }
 
   addBoxToWorld() {
@@ -33,8 +34,6 @@ export default class Box {
       this.size.y,
       this.optionsBox
     );
-
-    // var cirlce = Matter.Bodies.circle(0,3,0.5)
 
     Matter.World.add(this.world, this.box);
   }
@@ -57,10 +56,10 @@ export default class Box {
     this.scene.add(this.mesh)
   }
 
-  update() {
+  initPosition() {
     this.mesh.position.x = this.box.position.x
     this.mesh.position.y = this.box.position.y
-
+    this.mesh.position.z = this.position.z
 
     this.mesh.rotation.z = this.box.angle
   }

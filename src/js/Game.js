@@ -4,8 +4,9 @@ import * as dat from 'dat.gui'
 
 import Matter from 'matter-js'
 
-import Box from './Box'
-import Sphere from './Sphere'
+import Box from './Elements/Box'
+import Sphere from './Elements/Sphere'
+import Ladder from './Elements/Ladder'
 import Phaeton from './Characters/Phaeton'
 
 export default class Game{
@@ -122,9 +123,9 @@ export default class Game{
     var render = Render.create({
         element: document.body,
         engine: engine,
+        showVelocity: true
     });
     
-    this.bodiesWorld = []
     
     // run the engine
     Engine.run(engine);
@@ -135,12 +136,12 @@ export default class Game{
       render,
       {
         min: {
-          x: -400,
-          y: -300
+          x: -600,
+          y: -200
         },
         max: {
-          x: 400,
-          y: 300
+          x: 600,
+          y: 600
         }
       },
     )
@@ -155,11 +156,28 @@ export default class Game{
       size: {
         x: 1000,
         y: 100,
-        z: 1000
+        z: 100
       },
       position : {
         x: 0,
-        y: -100,
+        y: -50,
+        z: 0
+      },
+      optionsBox : {
+        isStatic: true
+      }
+    })
+    const floor2 = new Box({
+      world: this.world,
+      scene: this.scene,
+      size: {
+        x: 1000,
+        y: 100,
+        z: 100
+      },
+      position : {
+        x: 0,
+        y: 350,
         z: 0
       },
       optionsBox : {
@@ -167,18 +185,32 @@ export default class Game{
       }
     })
 
+
     this.phaeton = new Phaeton({
       world: this.world,
       scene : this.scene,
       position : {
         x : 0,
-        y : 200,
+        y : 100,
         z : 0
-      },
-      optionsBox: {
-        inertia: 'Infinity',
       }
     })
+
+    this.ladder = new Ladder({
+      scene: this.scene,
+      phaeton: this.phaeton,
+      position : {
+        x : 250,
+        y : 0,
+        z : -51
+      },
+      size: {
+        x: 100,
+        y: 400,
+        z: 1
+      }
+    })
+
 
     // const box2 = new Box({
     //   world: this.world,
@@ -199,8 +231,6 @@ export default class Game{
     //     z: 0
     //   },
     // })
-
-    this.bodiesWorld.push(floor)
   }
 
   //
@@ -209,10 +239,9 @@ export default class Game{
   update() {
     this.elapsedTime = this.clock.getElapsedTime()
 
+    //
     // update world
-    this.bodiesWorld.forEach((bw) => {
-      bw.update()
-    })
+    //
 
     // Update Phaeton position
     // this.update()
