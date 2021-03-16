@@ -106,14 +106,15 @@ export default class Phaeton{
   interactWithElements() {
 
     this.interactionElements.forEach((element) => {
+
       switch (element.type) {
-        case 'ladder':
-          const start = this.interactionElements[0].start
-          const end = this.interactionElements[0].end
+        case 'Ladder':
+          const start = element.start
+          const end = element.end
           const distStart = this.mesh.position.distanceTo(start)
           const distEnd = this.mesh.position.distanceTo(end)
           
-          console.log('Start ', distStart, ' ; End ', distEnd)
+          // console.log('Start ', distStart, ' ; End ', distEnd)
 
           if (distStart <= element.distanceInteraction) {
             this.moveTo(start, end)
@@ -121,6 +122,13 @@ export default class Phaeton{
             this.moveTo(end, start)
           }
           
+          break;
+
+        case 'Lever':
+          const dist = this.mesh.position.distanceTo(element.mesh.position)
+          if (dist <= element.distanceInteraction){
+            element.interact()
+          }
           break;
       
         default:

@@ -8,6 +8,7 @@ import Box from './Elements/Box'
 import Sphere from './Elements/Sphere'
 import Ladder from './Elements/Ladder'
 import Phaeton from './Characters/Phaeton'
+import Lever from './Elements/Lever'
 
 export default class Game{
   constructor() {
@@ -208,6 +209,21 @@ export default class Game{
         x: 100,
         y: 400,
         z: 1
+      }
+    })
+
+    this.lever = new Lever ({
+      scene: this.scene,
+      phaeton: this.phaeton,
+      position: {
+        x: 730,
+        y: 430,
+        z: 0,
+      },
+      size: {
+        x: 100,
+        y: 50,
+        z: 100
       }
     })
 

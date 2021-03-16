@@ -16,7 +16,7 @@ const SIZE = {
 
 export default class Ladder{
   constructor({phaeton, size = SIZE, scene, distanceInteraction = 150, position = POSITION}) {
-    this.type = 'ladder'
+    this.type = 'Ladder'
     
     this.phaeton = phaeton
     this.size = size
