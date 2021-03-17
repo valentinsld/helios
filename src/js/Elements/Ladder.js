@@ -15,18 +15,75 @@ const SIZE = {
 
 
 export default class Ladder{
-  constructor({phaeton, size = SIZE, scene, distanceInteraction = 150, position = POSITION}) {
+  constructor({phaeton, world, engine, scene, size = SIZE, distanceInteraction = 150, position = POSITION}) {
     this.type = 'Ladder'
     
     this.phaeton = phaeton
-    this.size = size
     this.scene = scene
+    this.engine = engine
+    this.world = world
+    this.size = size
     this.distanceInteraction = distanceInteraction
     this.position = position
 
+    this.addElementToWorld()
     this.addElementToScene()
     this.addElementToPhaeton()
     this.initStartEnd()
+  }
+
+  addElementToWorld() {
+    // init element
+    var collider = Matter.Bodies.rectangle(
+      this.position.x,
+      this.position.y + this.size.y/2 + 100,
+      this.size.x,
+      this.size.y + 200,
+      {
+        isSensor: true,
+        isStatic: true,
+        render: {
+          strokeStyle: '#ff0000',
+          fillStyle: 'transparent',
+          lineWidth: 2
+        }
+      }
+    );
+
+    Matter.World.add(this.world, collider)
+
+    // init events
+    Matter.Events.on(this.engine, 'collisionStart', function(event) {
+      var pairs = event.pairs;
+      
+      for (var i = 0, j = pairs.length; i != j; ++i) {
+        var pair = pairs[i];
+
+        if (pair.bodyA === collider) {
+          console.log('enter')
+          // pair.bodyB.render.strokeStyle = colorA;
+        } else if (pair.bodyB === collider) {
+          console.log('enter')
+          // pair.bodyA.render.strokeStyle = colorA;
+        }
+      }
+    });
+
+    Matter.Events.on(this.engine, 'collisionEnd', function(event) {
+      var pairs = event.pairs;
+      
+      for (var i = 0, j = pairs.length; i != j; ++i) {
+        var pair = pairs[i];
+
+        if (pair.bodyA === collider) {
+          console.log('leave')
+          // pair.bodyB.render.strokeStyle = colorB;
+        } else if (pair.bodyB === collider) {
+          console.log('leave')
+          // pair.bodyA.render.strokeStyle = colorB;
+        }
+      }
+    });
   }
 
   addElementToScene() {

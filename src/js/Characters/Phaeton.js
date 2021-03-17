@@ -47,8 +47,6 @@ export default class Phaeton{
     );
 
     Matter.World.add(this.world, this.box);
-
-    console.log(this.box)
   }
   addPhaetonToScene() {
     const BOX = new THREE.BoxBufferGeometry(

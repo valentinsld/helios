@@ -114,22 +114,23 @@ export default class Game{
         // Bodies = Matter.Bodies;
     
     // create an engine
-    var engine = Engine.create({
-      
-    });
-    this.world = engine.world
+    this.engine = Engine.create();
+    this.world = this.engine.world
     this.world.gravity.y = -0.89
     
     // create a renderer
     var render = Render.create({
-        element: document.body,
-        engine: engine,
-        showVelocity: true
+      element: document.body,
+      engine: this.engine,
+      showVelocity: true,
+      options: {
+        wireframes: false // <-- important
+      }
     });
     
     
     // run the engine
-    Engine.run(engine);
+    Engine.run(this.engine);
     
     // run the renderer
     Render.run(render);
@@ -199,6 +200,8 @@ export default class Game{
 
     this.ladder = new Ladder({
       scene: this.scene,
+      engine: this.engine,
+      world: this.world,
       phaeton: this.phaeton,
       position : {
         x : 250,
@@ -216,8 +219,8 @@ export default class Game{
       scene: this.scene,
       phaeton: this.phaeton,
       position: {
-        x: 730,
-        y: 430,
+        x: 700,
+        y: 425,
         z: 0,
       },
       size: {
@@ -260,7 +263,6 @@ export default class Game{
     //
 
     // Update Phaeton position
-    // this.update()
     this.phaeton.update()
 
     // Update controls
