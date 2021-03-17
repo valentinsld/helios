@@ -59,12 +59,11 @@ export default class Ladder{
       for (var i = 0, j = pairs.length; i != j; ++i) {
         var pair = pairs[i];
 
-        if (pair.bodyA === collider) {
+        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
+        const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
+
+        if (conditionCollider && conditionPhaeton) {
           console.log('enter')
-          // pair.bodyB.render.strokeStyle = colorA;
-        } else if (pair.bodyB === collider) {
-          console.log('enter')
-          // pair.bodyA.render.strokeStyle = colorA;
         }
       }
     });
@@ -75,12 +74,11 @@ export default class Ladder{
       for (var i = 0, j = pairs.length; i != j; ++i) {
         var pair = pairs[i];
 
-        if (pair.bodyA === collider) {
+        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
+        const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
+
+        if (conditionCollider && conditionPhaeton) {
           console.log('leave')
-          // pair.bodyB.render.strokeStyle = colorB;
-        } else if (pair.bodyB === collider) {
-          console.log('leave')
-          // pair.bodyA.render.strokeStyle = colorB;
         }
       }
     });

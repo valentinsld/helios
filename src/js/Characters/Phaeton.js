@@ -40,6 +40,7 @@ export default class Phaeton{
       this.size.x,
       this.size.y,
       {
+        label: 'Phaeton',
         inertia: 'Infinity',
         // frictionAir: 0.1,
         mass: 1000
