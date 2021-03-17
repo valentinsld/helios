@@ -15,13 +15,13 @@ const SIZE = {
 
 
 export default class Ladder{
-  constructor({phaeton, world, engine, scene, size = SIZE, distanceInteraction = 150, position = POSITION}) {
+  constructor({phaeton, engine, scene, size = SIZE, distanceInteraction = 150, position = POSITION}) {
     this.type = 'Ladder'
     
     this.phaeton = phaeton
     this.scene = scene
     this.engine = engine
-    this.world = world
+    this.world = engine.world
     this.size = size
     this.distanceInteraction = distanceInteraction
     this.position = position

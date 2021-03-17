@@ -4,11 +4,14 @@ import * as dat from 'dat.gui'
 
 import Matter from 'matter-js'
 
+import Phaeton from './Characters/Phaeton'
+import Fragment from './Characters/Fragment'
+
 import Box from './Elements/Box'
 import Sphere from './Elements/Sphere'
 import Ladder from './Elements/Ladder'
-import Phaeton from './Characters/Phaeton'
 import Lever from './Elements/Lever'
+import Fire from './Elements/Fire'
 
 export default class Game{
   constructor() {
@@ -89,17 +92,17 @@ export default class Game{
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.7)
     this.scene.add(ambientLight)
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2)
-    directionalLight.castShadow = true
-    directionalLight.shadow.mapSize.set(1024, 1024)
-    directionalLight.shadow.camera.far = 15
-    directionalLight.shadow.camera.left = - 7
-    directionalLight.shadow.camera.top = 7
-    directionalLight.shadow.camera.right = 7
-    directionalLight.shadow.camera.bottom = - 7
-    directionalLight.position.set(5, 5, 5)
+    // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2)
+    // directionalLight.castShadow = true
+    // directionalLight.shadow.mapSize.set(1024, 1024)
+    // directionalLight.shadow.camera.far = 15
+    // directionalLight.shadow.camera.left = - 7
+    // directionalLight.shadow.camera.top = 7
+    // directionalLight.shadow.camera.right = 7
+    // directionalLight.shadow.camera.bottom = - 7
+    // directionalLight.position.set(5, 5, 5)
 
-    this.scene.add(directionalLight)
+    // this.scene.add(directionalLight)
   }
 
 
@@ -153,7 +156,7 @@ export default class Game{
 
   addElements() {
     const floor = new Box({
-      world: this.world,
+      engine: this.engine,
       scene: this.scene,
       size: {
         x: 1000,
@@ -170,7 +173,7 @@ export default class Game{
       }
     })
     const floor2 = new Box({
-      world: this.world,
+      engine: this.engine,
       scene: this.scene,
       size: {
         x: 1000,
@@ -189,7 +192,17 @@ export default class Game{
 
 
     this.phaeton = new Phaeton({
-      world: this.world,
+      engine: this.engine,
+      scene : this.scene,
+      position : {
+        x : 0,
+        y : 100,
+        z : 0
+      }
+    })
+
+    this.fragment = new Fragment({
+      engine: this.engine,
       scene : this.scene,
       position : {
         x : 0,
@@ -201,7 +214,6 @@ export default class Game{
     this.ladder = new Ladder({
       scene: this.scene,
       engine: this.engine,
-      world: this.world,
       phaeton: this.phaeton,
       position : {
         x : 250,
@@ -217,6 +229,22 @@ export default class Game{
 
     this.lever = new Lever ({
       scene: this.scene,
+      phaeton: this.phaeton,
+      position: {
+        x: 700,
+        y: 425,
+        z: 0,
+      },
+      size: {
+        x: 100,
+        y: 50,
+        z: 100
+      }
+    })
+
+    this.lever = new Lever ({
+      scene: this.scene,
+      engine: this.engine,
       phaeton: this.phaeton,
       position: {
         x: 700,

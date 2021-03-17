@@ -14,8 +14,8 @@ const SIZE = {
 }
 
 export default class Phaeton{
-  constructor({world, scene, position = POSITION, size = SIZE}) {
-    this.world = world
+  constructor({engine, scene, position = POSITION, size = SIZE}) {
+    this.world = engine.world
     this.scene = scene
 
     this.position = position

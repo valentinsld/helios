@@ -13,8 +13,8 @@ const SIZE = {
 }
 
 export default class Box {
-  constructor ({world, scene, position = POSITION, size = SIZE, optionsBox = {}}) {
-    this.world = world
+  constructor ({engine, scene, position = POSITION, size = SIZE, optionsBox = {}}) {
+    this.world = engine.world
     this.scene = scene
 
     this.position = position

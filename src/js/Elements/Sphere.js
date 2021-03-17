@@ -9,8 +9,8 @@ const POSITION = {
 const RADIUS = 100
 
 export default class Sphere {
-  constructor ({world, scene, position = POSITION, radius = RADIUS, optionsBox = {}}) {
-    this.world = world
+  constructor ({engine, scene, position = POSITION, radius = RADIUS, optionsBox = {}}) {
+    this.world = engine.world
     this.scene = scene
 
     this.position = position
