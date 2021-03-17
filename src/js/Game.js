@@ -205,8 +205,8 @@ export default class Game{
       engine: this.engine,
       scene : this.scene,
       position : {
-        x : 0,
-        y : 100,
+        x : 80,
+        y : 200,
         z : 0
       }
     })
@@ -290,8 +290,9 @@ export default class Game{
     // update world
     //
 
-    // Update Phaeton position
+    // Update Phaeton & fragement position
     this.phaeton.update()
+    this.fragment.update()
 
     // Update controls
     this.controls.update()
