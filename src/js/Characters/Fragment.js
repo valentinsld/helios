@@ -45,6 +45,7 @@ export default class Fragment{
       this.position.y,
       this.radius,
       {
+        label: 'Fragment',
         // isStatic: true,
         inertia: 'Infinity',
         frictionAir: 1,
