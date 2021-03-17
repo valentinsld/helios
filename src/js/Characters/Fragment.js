@@ -8,7 +8,7 @@ const POSITION = {
   y: 0,
   z: 0
 }
-const RADIUS = 50
+const RADIUS = 25
 
 export default class Fragment{
   constructor({engine, scene, position = POSITION, radius = RADIUS}) {
@@ -44,12 +44,16 @@ export default class Fragment{
       this.position.x,
       this.position.y,
       this.radius,
+
       {
         label: 'Fragment',
         // isStatic: true,
         inertia: 'Infinity',
         frictionAir: 1,
         mass: 0,
+        collisionFilter: {
+          mask: 0x0001 | 0x0002
+        },
         render: {
           fillStyle: '#001Af2'
         }
@@ -105,8 +109,8 @@ export default class Fragment{
     if (this.animation) return
 
     // apply force body
-    let forceX = (this.box.position.x - this.cursor.x) / -100
-    let forceY = (this.box.position.y - this.cursor.y) / -100
+    let forceX = (this.box.position.x - this.cursor.x) / -1000
+    let forceY = (this.box.position.y - this.cursor.y) / -1000
     forceX = Math.max(Math.min(forceX, 1), -1)
     forceY = Math.max(Math.min(forceY, 1), -1)
     

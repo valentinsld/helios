@@ -43,9 +43,16 @@ export default class Phaeton{
         label: 'Phaeton',
         inertia: 'Infinity',
         // frictionAir: 0.1,
-        mass: 1000
+        mass: 1000,
+        collisionFilter: {
+          category: 0x0004,
+        },
       }
     );
+    
+    // Matter.Body.setDensity(this.box, 100)
+
+    console.log(this.box)
 
     Matter.World.add(this.world, this.box);
   }
