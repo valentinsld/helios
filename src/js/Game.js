@@ -112,9 +112,10 @@ export default class Game{
   initPhysicWorld() {
     // module aliases
     var Engine = Matter.Engine,
-        Render = Matter.Render;
-        // World = Matter.World,
-        // Bodies = Matter.Bodies;
+        Render = Matter.Render,
+        World = Matter.World,
+        Mouse = Matter.Mouse,
+        MouseConstraint = Matter.MouseConstraint;
     
     // create an engine
     this.engine = Engine.create();
@@ -123,34 +124,55 @@ export default class Game{
     
     // create a renderer
     var render = Render.create({
-      element: document.body,
+      element: document.querySelector('#matterRender'),
       engine: this.engine,
       showVelocity: true,
       options: {
+        width: 400,
+        height: 300,
         wireframes: false // <-- important
       }
     });
-    
-    
+    // render.canvas.id = 'matterRender'
+  
+    //
+    // mouse contraints
+    //
+    // var mouse = Mouse.create(render.canvas),
+    // mouseConstraint = MouseConstraint.create(this.engine, {
+    //     mouse: mouse,
+    //     constraint: {
+    //         stiffness: 0.2,
+    //         render: {
+    //             visible: false
+    //         }
+    //     }
+    // });
+
+    // World.add(this.world, mouseConstraint);
+
+    // keep the mouse in sync with rendering
+    // render.mouse = mouse;
+
+    // red category objects should not be draggable with the mouse
+    // mouseConstraint.collisionFilter.mask = 0x0001
+
+    //
     // run the engine
+    //
     Engine.run(this.engine);
     
+    //
     // run the renderer
+    //
     Render.run(render);
     Render.lookAt(
       render,
       {
-        min: {
-          x: -600,
-          y: -200
-        },
-        max: {
-          x: 600,
-          y: 600
-        }
+        min: { x: -600, y: -200 },
+        max: { x: 600, y: 600 }
       },
     )
-    render.canvas.id = 'matterRender'
     
   }
 
