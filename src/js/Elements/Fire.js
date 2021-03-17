@@ -14,7 +14,7 @@ const SIZE = {
 
 export default class Fire {
   constructor ({phaeton, scene, distanceInteraction = 150, position = POSITION, size = SIZE, optionsBox = {}}) {
-    this.type = 'Lever'
+    this.type = 'Fire'
     this.scene = scene
     this.position = position
     this.phaeton = phaeton
