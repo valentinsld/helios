@@ -124,7 +124,7 @@ export default class Game{
     
     // create a renderer
     var render = Render.create({
-      element: document.querySelector('#matterRender'),
+      element: document.body,
       engine: this.engine,
       showVelocity: true,
       options: {
@@ -133,7 +133,7 @@ export default class Game{
         wireframes: false // <-- important
       }
     });
-    // render.canvas.id = 'matterRender'
+    render.canvas.id = 'matterRender'
   
     //
     // mouse contraints
