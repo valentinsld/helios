@@ -21,7 +21,8 @@ export default class Game{
 
     this.clock = new THREE.Clock()
 
-    this.initGUI()
+    console.log(window.location.hash)
+    if (window.location.hash === '#DEBUG') this.initGUI()
     this.createScene()
     this.initTextLoader()
 
@@ -41,15 +42,18 @@ export default class Game{
 
   // GUI
   initGUI() {
-    this.gui = new dat.GUI()
+    this.debug = new dat.GUI()
+    this.debug.data = {}
   }
 
   // create scene
   createScene() {
     this.scene = new THREE.Scene()
 
-    const axesHelper = new THREE.AxesHelper( 500 );
-    this.scene.add( axesHelper );
+    if (this.debug) {
+      const axesHelper = new THREE.AxesHelper( 500 );
+      this.scene.add( axesHelper );
+    }
   }
 
   initTextLoader() {
@@ -69,12 +73,22 @@ export default class Game{
   initCamera() {
     // Base camera
     this.camera = new THREE.PerspectiveCamera(75, this.sizes.width / this.sizes.height, 10, 100*100) // TODO : optimiser le far
-    this.camera.position.set(0, 200, 400)
+    this.camera.position.set(0, 0, 630)
     this.scene.add(this.camera)
 
     // Controls
-    this.controls = new OrbitControls(this.camera, this.canvas)
-    this.controls.enableDamping = true
+    if (this.debug) {
+      this.controls = new OrbitControls(this.camera, this.canvas)
+      this.controls.enabled = false
+      this.controls.enableDamping = true
+
+      this.debug.data.orbitControls = this.controls.enabled
+      this.debug
+        .add(this.debug.data, 'orbitControls')
+        .onChange(() => {
+          this.controls.enabled = this.debug.data.orbitControls
+        })
+    }
   }
 
   initRenderer() {
@@ -91,18 +105,6 @@ export default class Game{
   initLights() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.7)
     this.scene.add(ambientLight)
-
-    // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2)
-    // directionalLight.castShadow = true
-    // directionalLight.shadow.mapSize.set(1024, 1024)
-    // directionalLight.shadow.camera.far = 15
-    // directionalLight.shadow.camera.left = - 7
-    // directionalLight.shadow.camera.top = 7
-    // directionalLight.shadow.camera.right = 7
-    // directionalLight.shadow.camera.bottom = - 7
-    // directionalLight.position.set(5, 5, 5)
-
-    // this.scene.add(directionalLight)
   }
 
 
@@ -122,40 +124,6 @@ export default class Game{
     this.world = this.engine.world
     this.world.gravity.y = -0.89
     
-    // create a renderer
-    var render = Render.create({
-      element: document.body,
-      engine: this.engine,
-      showVelocity: true,
-      options: {
-        width: 400,
-        height: 300,
-        wireframes: false // <-- important
-      }
-    });
-    render.canvas.id = 'matterRender'
-  
-    //
-    // mouse contraints
-    //
-    // var mouse = Mouse.create(render.canvas),
-    // mouseConstraint = MouseConstraint.create(this.engine, {
-    //     mouse: mouse,
-    //     constraint: {
-    //         stiffness: 0.2,
-    //         render: {
-    //             visible: false
-    //         }
-    //     }
-    // });
-
-    // World.add(this.world, mouseConstraint);
-
-    // keep the mouse in sync with rendering
-    // render.mouse = mouse;
-
-    // red category objects should not be draggable with the mouse
-    // mouseConstraint.collisionFilter.mask = 0x0001
 
     //
     // run the engine
@@ -165,14 +133,52 @@ export default class Game{
     //
     // run the renderer
     //
-    Render.run(render);
-    Render.lookAt(
-      render,
-      {
-        min: { x: -600, y: -200 },
-        max: { x: 600, y: 600 }
-      },
-    )
+    if (this.debug) {
+      console.log('render')
+      // create a renderer
+      var render = Render.create({
+        element: document.body,
+        engine: this.engine,
+        showVelocity: true,
+        options: {
+          width: 400,
+          height: 300,
+          wireframes: false // <-- important
+        }
+      });
+      render.canvas.id = 'matterRender'
+    
+      //
+      // mouse contraints
+      //
+      /* var mouse = Mouse.create(render.canvas),
+      mouseConstraint = MouseConstraint.create(this.engine, {
+          mouse: mouse,
+          constraint: {
+              stiffness: 0.2,
+              render: {
+                  visible: false
+              }
+          }
+      });
+
+      World.add(this.world, mouseConstraint);
+
+      keep the mouse in sync with rendering
+      render.mouse = mouse;
+
+      red category objects should not be draggable with the mouse
+      mouseConstraint.collisionFilter.mask = 0x0001 */
+
+      Render.run(render);
+      Render.lookAt(
+        render,
+        {
+          min: { x: -600, y: -400 },
+          max: { x: 600, y: 400 }
+        },
+      )
+    }
     
   }
 
@@ -186,8 +192,8 @@ export default class Game{
         z: 100
       },
       position : {
-        x: 0,
-        y: -50,
+        x: -100,
+        y: -250,
         z: 0
       },
       optionsBox : {
@@ -203,8 +209,8 @@ export default class Game{
         z: 100
       },
       position : {
-        x: 300,
-        y: 350,
+        x: 200,
+        y: 150,
         z: 0
       },
       optionsBox : {
@@ -218,7 +224,7 @@ export default class Game{
       scene : this.scene,
       position : {
         x : 0,
-        y : 100,
+        y : -100,
         z : 0
       }
     })
@@ -238,8 +244,8 @@ export default class Game{
       engine: this.engine,
       phaeton: this.phaeton,
       position : {
-        x : 250,
-        y : 0,
+        x : 150,
+        y : -300,
         z : -51
       },
       size: {
@@ -253,8 +259,8 @@ export default class Game{
       scene: this.scene,
       phaeton: this.phaeton,
       position: {
-        x: 700,
-        y: 425,
+        x: 500,
+        y: 225,
         z: 0,
       },
       size: {
@@ -264,42 +270,21 @@ export default class Game{
       }
     })
 
-    this.lever = new Lever ({
+    this.lever = new Fire ({
       scene: this.scene,
       engine: this.engine,
       phaeton: this.phaeton,
       position: {
-        x: 700,
-        y: 425,
-        z: 0,
+        x: -300,
+        y: -150,
+        z: -45,
       },
       size: {
         x: 100,
-        y: 50,
+        y: 100,
         z: 100
       }
     })
-
-
-    // const box2 = new Box({
-    //   world: this.world,
-    //   scene: this.scene,
-    //   position: {
-    //     x: 50,
-    //     y: 500,
-    //     z: 0
-    //   },
-    // })
-
-    // const circle = new Sphere({
-    //   world: this.world,
-    //   scene: this.scene,
-    //   position: {
-    //     x: 0,
-    //     y: 800,
-    //     z: 0
-    //   },
-    // })
   }
 
   //
@@ -311,13 +296,12 @@ export default class Game{
     //
     // update world
     //
-
     // Update Phaeton & fragement position
     this.phaeton.update()
     this.fragment.update()
 
     // Update controls
-    this.controls.update()
+    this.controls?.update()
 
     // Render
     this.renderer.render(this.scene, this.camera)

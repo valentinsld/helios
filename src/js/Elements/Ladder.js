@@ -38,7 +38,7 @@ export default class Ladder{
       this.position.x,
       this.position.y + this.size.y/2 + 100,
       this.size.x,
-      this.size.y + 200,
+      this.size.y + 50,
       {
         isSensor: true,
         isStatic: true,
@@ -103,7 +103,7 @@ export default class Ladder{
     this.mesh.receiveShadow = true
 
     this.mesh.position.x += this.position.x
-    this.mesh.position.y += this.size.y / 2
+    this.mesh.position.y += this.position.y + this.size.y / 2 + 100
     this.mesh.position.z += this.position.z
 
     this.scene.add(this.mesh)
@@ -125,5 +125,7 @@ export default class Ladder{
       this.mesh.position.y + this.size.y / 2,
       this.mesh.position.z
     )
+
+    console.log(this.start, this.end)
   }
 }

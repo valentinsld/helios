@@ -13,6 +13,8 @@ const SIZE = {
   z: 50
 }
 
+const COLOR = '#008d02'
+
 export default class Phaeton{
   constructor({engine, scene, position = POSITION, size = SIZE}) {
     this.world = engine.world
@@ -47,6 +49,9 @@ export default class Phaeton{
         collisionFilter: {
           category: 0x0004,
         },
+        render: {
+          fillStyle : COLOR
+        }
       }
     );
     
@@ -64,7 +69,7 @@ export default class Phaeton{
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: '#008d02',
+      color: COLOR,
       metalness: 0.3,
       roughness: 0.4,
     })
@@ -110,7 +115,6 @@ export default class Phaeton{
   }
 
   interactWithElements() {
-
     this.interactionElements.forEach((element) => {
 
       switch (element.type) {

@@ -81,8 +81,8 @@ export default class Fragment{
 
   addPlaneToScene() {
     const PLANE = new THREE.PlaneGeometry(
-      this.viewport.width,
-      this.viewport.height,
+      this.viewport.width * 1.08,
+      this.viewport.height * 1.08,
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
@@ -90,6 +90,7 @@ export default class Fragment{
     })
 
     this.plane = new THREE.Mesh(PLANE, MATERIAL)
+    this.plane.position.z = -55
 
     this.scene.add(this.plane)
   }
