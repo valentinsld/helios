@@ -125,7 +125,5 @@ export default class Ladder{
       this.mesh.position.y + this.size.y / 2,
       this.mesh.position.z
     )
-
-    console.log(this.start, this.end)
   }
 }

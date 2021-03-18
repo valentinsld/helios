@@ -11,7 +11,8 @@ const POSITION = {
 const RADIUS = 25
 
 export default class Fragment{
-  constructor({engine, scene, position = POSITION, radius = RADIUS}) {
+  constructor({canvas, engine, scene, position = POSITION, radius = RADIUS}) {
+    this.canvas = canvas
     this.world = engine.world
     this.scene = scene
 
@@ -19,6 +20,8 @@ export default class Fragment{
     this.radius = radius
 
     this.interactionElements = []
+    this.interactionElement = null
+    this.mouseDown = false
 
     this.cursor = {
       x: 0,
@@ -94,16 +97,42 @@ export default class Fragment{
 
     this.scene.add(this.plane)
   }
+
+
+  addInteractionElements(element) {
+    this.interactionElements.push(element)
+    console.log(this.interactionElements)
+  }
+
   //
   // Events
   //
   initEvents() {
     window.addEventListener('mousemove', this.cursorMove.bind(this))
+    window.addEventListener('mousedown', this.interactWithElements.bind(this))
+    window.addEventListener('mouseup', this.mouseUp.bind(this))
   }
 
   cursorMove(e) {
     this.cursor.x = e.clientX - this.viewport.width / 2
     this.cursor.y = -e.clientY + this.viewport.height / 2
+  }
+  mouseUp() {
+    if (!this.interactionElement) return
+
+    this.interactionElement.endInteract()
+    this.interactionElement = null
+  }
+
+  interactWithElements() {
+    this.interactionElements.forEach((element) => {
+      const dist = this.mesh.position.distanceTo(element.mesh.position)
+
+      if (dist <= element.distanceInteraction) {
+        this.interactionElement = element
+        element.startInteract()
+      }
+    })
   }
 
   update() {
@@ -124,5 +153,16 @@ export default class Fragment{
     // update position mesh
     this.mesh.position.x = this.box.position.x
     this.mesh.position.y = this.box.position.y
+
+    // get angle interaction
+    if (this.interactionElement) {
+      // const angle = this.mesh.position.angleTo(this.interactionElement.mesh.position)
+      const p1 = new THREE.Vector2(0,0).copy(this.mesh.position);
+      const p2 = new THREE.Vector2(0,0).copy(this.interactionElement.mesh.position);
+
+      const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+
+      this.interactionElement.interact(angle)
+    }
   }
 }

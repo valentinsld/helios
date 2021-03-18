@@ -21,7 +21,6 @@ export default class Game{
 
     this.clock = new THREE.Clock()
 
-    console.log(window.location.hash)
     if (window.location.hash === '#DEBUG') this.initGUI()
     this.createScene()
     this.initTextLoader()
@@ -134,20 +133,22 @@ export default class Game{
     // run the renderer
     //
     if (this.debug) {
-      console.log('render')
       // create a renderer
       var render = Render.create({
         element: document.body,
         engine: this.engine,
-        showVelocity: true,
         options: {
           width: 400,
           height: 300,
-          wireframes: false // <-- important
-        }
+          wireframes: false, // <-- important
+          showAngleIndicator: true,
+          showCollisions: true,
+          showVelocity: true
+        },
       });
       render.canvas.id = 'matterRender'
-    
+      Render.run(render);
+
       //
       // mouse contraints
       //
@@ -170,7 +171,6 @@ export default class Game{
       red category objects should not be draggable with the mouse
       mouseConstraint.collisionFilter.mask = 0x0001 */
 
-      Render.run(render);
       Render.lookAt(
         render,
         {
@@ -230,6 +230,7 @@ export default class Game{
     })
 
     this.fragment = new Fragment({
+      canvas: this.canvas,
       engine: this.engine,
       scene : this.scene,
       position : {
@@ -273,7 +274,8 @@ export default class Game{
     this.lever = new Fire ({
       scene: this.scene,
       engine: this.engine,
-      phaeton: this.phaeton,
+      fragment: this.fragment,
+      debug: this.debug,
       position: {
         x: -300,
         y: -150,

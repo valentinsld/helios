@@ -12,15 +12,21 @@ const SIZE = {
   z: 100
 }
 
+const SENSOR_LIGHT = {
+  width: 1000,
+  height: 20
+}
+
 const COLOR = '#ffff00'
 
 export default class Fire {
-  constructor ({phaeton, engine, scene, distanceInteraction = 150, position = POSITION, size = SIZE, optionsBox = {}}) {
+  constructor ({fragment, engine, debug, scene, distanceInteraction = 150, position = POSITION, size = SIZE, optionsBox = {}}) {
     this.type = 'Fire'
     this.scene = scene
-    this.phaeton = phaeton
+    this.fragment = fragment
     this.engine = engine
     this.world = engine.world
+    this.debug = debug
     
     this.position = position
     this.size = size
@@ -30,9 +36,12 @@ export default class Fire {
     this.activate = false
 
     this.createSensor()
-    // this.addElementToPhaeton()
+    this.createSensorLight()
+
     this.addBoxToScene()
     this.createLight()
+
+    this.addElementToFragment()
   }
 
   createSensor() {
@@ -86,6 +95,30 @@ export default class Fire {
     });
   }
 
+  createSensorLight() {
+    this.sensorLight = Matter.Bodies.rectangle(
+      this.position.x + SENSOR_LIGHT.width/2,
+      this.position.y,
+      SENSOR_LIGHT.width,
+      SENSOR_LIGHT.height,
+      {
+        isSensor: true,
+        isStatic: true,
+        render: {
+          showPositions: true,
+          strokeStyle: COLOR,
+          fillStyle: 'transparent',
+          lineWidth: 2,
+        }
+      }
+    );
+
+    Matter.World.add(this.world, this.sensorLight)
+
+    Matter.Body.setCentre(this.sensorLight, Matter.Vector.create(-SENSOR_LIGHT.width/2,0), true)
+    Matter.Body.setAngle(this.sensorLight, 0)
+  }
+
   addBoxToScene() {
     const BOX = new THREE.BoxBufferGeometry(
       this.size.x,
@@ -110,23 +143,32 @@ export default class Fire {
   }
 
   createLight() {
-    const spotLight = new THREE.SpotLight( 0xffffff, 1, 2000, Math.PI * 0.05, 0.25, 1 );
-    spotLight.position.copy(this.position);
+    this.spotLight = new THREE.SpotLight( 0xffffff, 0, 2000, Math.PI * 0.05, 0.25, 1 );
+    this.spotLight.position.copy(this.position)
 
-    spotLight.castShadow = true;
+    this.spotLight.castShadow = true
 
-    spotLight.shadow.mapSize.width = 1024;
-    spotLight.shadow.mapSize.height = 1024;
+    this.spotLight.shadow.mapSize.width = 1024
+    this.spotLight.shadow.mapSize.height = 1024
 
-    this.scene.add( spotLight );
+    this.scene.add( this.spotLight )
 
+    this.spotLight.target = this.fragment.mesh
     
-    const spotLightHelper = new THREE.SpotLightHelper( spotLight );
-    this.scene.add( spotLightHelper );
+    // const spotLightHelper = new THREE.SpotLightHelper( this.spotLight )
+    // this.scene.add( spotLightHelper )
   }
 
-  interact() {
+  startInteract() {
+    this.spotLight.intensity = 1
+  }
 
+  interact(angle) {
+    Matter.Body.setAngle(this.sensorLight, angle + Math.PI)
+  }
+
+  endInteract() {
+    this.spotLight.intensity = 0
   }
 
 }

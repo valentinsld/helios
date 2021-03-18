@@ -57,8 +57,6 @@ export default class Phaeton{
     
     // Matter.Body.setDensity(this.box, 100)
 
-    console.log(this.box)
-
     Matter.World.add(this.world, this.box);
   }
   addPhaetonToScene() {
