@@ -14,13 +14,13 @@ const SIZE = {
 
 const SENSOR_LIGHT = {
   width: 1000,
-  height: 20
+  height: 60
 }
 
 const COLOR = '#ffff00'
 
 export default class Fire {
-  constructor ({fragment, engine, debug, scene, distanceInteraction = 150, position = POSITION, size = SIZE, optionsBox = {}}) {
+  constructor ({fragment, engine, debug, scene, captor, distanceInteraction = 150, position = POSITION, size = SIZE, optionsBox = {}}) {
     this.type = 'Fire'
     this.scene = scene
     this.fragment = fragment
@@ -28,6 +28,7 @@ export default class Fire {
     this.world = engine.world
     this.debug = debug
     
+    this.captor = captor
     this.position = position
     this.size = size
     this.distanceInteraction = distanceInteraction
@@ -104,6 +105,9 @@ export default class Fire {
       {
         isSensor: true,
         isStatic: true,
+        collisionFilter: {
+          mask: 0x0008
+        },
         render: {
           showPositions: true,
           strokeStyle: COLOR,
@@ -116,7 +120,40 @@ export default class Fire {
     Matter.World.add(this.world, this.sensorLight)
 
     Matter.Body.setCentre(this.sensorLight, Matter.Vector.create(-SENSOR_LIGHT.width/2,0), true)
-    Matter.Body.setAngle(this.sensorLight, 0)
+    Matter.Body.setAngle(this.sensorLight, Math.PI)
+
+    // init events
+    Matter.Events.on(this.engine, 'collisionStart', (event) => {
+      if (this.activate) return
+
+      var pairs = event.pairs;
+      
+      for (var i = 0, j = pairs.length; i != j; ++i) {
+        var pair = pairs[i];
+
+        const conditionCollider = pair.bodyA === this.sensorLight || pair.bodyB === this.sensorLight
+        const conditionColliderBox = pair.bodyA === this.captor.box || pair.bodyB === this.captor.box
+
+        if (conditionCollider && conditionColliderBox) {
+          this.captor.interact()
+        }
+      }
+    });
+
+    Matter.Events.on(this.engine, 'collisionEnd', (event) => {
+      var pairs = event.pairs;
+      
+      for (var i = 0, j = pairs.length; i != j; ++i) {
+        var pair = pairs[i];
+
+        const conditionCollider = pair.bodyA === this.sensorLight || pair.bodyB === this.sensorLight
+        const conditionColliderBox = pair.bodyA === this.captor.box || pair.bodyB === this.captor.box
+
+        if (conditionCollider && conditionColliderBox) {
+          this.captor.interact()
+        }
+      }
+    });
   }
 
   addBoxToScene() {

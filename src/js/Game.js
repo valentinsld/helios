@@ -12,6 +12,7 @@ import Sphere from './Elements/Sphere'
 import Ladder from './Elements/Ladder'
 import Lever from './Elements/Lever'
 import Fire from './Elements/Fire'
+import Captor from './Elements/Captor'
 
 export default class Game{
   constructor() {
@@ -102,7 +103,7 @@ export default class Game{
 
 
   initLights() {
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
     this.scene.add(ambientLight)
   }
 
@@ -187,12 +188,12 @@ export default class Game{
       engine: this.engine,
       scene: this.scene,
       size: {
-        x: 1000,
+        x: 1200,
         y: 100,
         z: 100
       },
       position : {
-        x: -100,
+        x: 100,
         y: -250,
         z: 0
       },
@@ -271,7 +272,24 @@ export default class Game{
       }
     })
 
-    this.lever = new Fire ({
+
+    this.captor = new Captor ({
+      scene: this.scene,
+      engine: this.engine,
+      fragment: this.fragment,
+      position: {
+        x: 500,
+        y: -150,
+        z: -45,
+      },
+      size: {
+        x: 100,
+        y: 100,
+        z: 100
+      }
+    })
+
+    this.fire = new Fire ({
       scene: this.scene,
       engine: this.engine,
       fragment: this.fragment,
@@ -285,8 +303,10 @@ export default class Game{
         x: 100,
         y: 100,
         z: 100
-      }
+      },
+      captor: this.captor
     })
+
   }
 
   //
