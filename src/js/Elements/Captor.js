@@ -12,11 +12,6 @@ const SIZE = {
   z: 100
 }
 
-const SENSOR_LIGHT = {
-  width: 1000,
-  height: 20
-}
-
 const COLOR = '#FF8000'
 const COLOR_BIS = '#ffe063'
 
