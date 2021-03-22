@@ -46,8 +46,6 @@ export default class Captor {
       this.size.y,
       {
         label: 'Captor',
-        // isStatic: true,
-        // isSensor: true,
         collisionFilter: {
           category: 0x0008,
           mask: 0x0001
@@ -61,39 +59,6 @@ export default class Captor {
     );
 
     Matter.World.add(this.world, this.box)
-
-    // // init events
-    // Matter.Events.on(this.engine, 'collisionStart', (event) => {
-    //   var pairs = event.pairs;
-      
-    //   for (var i = 0, j = pairs.length; i != j; ++i) {
-    //     var pair = pairs[i];
-
-    //     const conditionCollider = pair.bodyA === this.box || pair.bodyB === this.box
-
-    //     if (conditionCollider) {
-    //       this.activate = true
-          
-    //       this.mesh.material.color = new THREE.Color(COLOR_BIS)
-    //     }
-    //   }
-    // });
-
-    // Matter.Events.on(this.engine, 'collisionEnd', (event) => {
-    //   var pairs = event.pairs;
-      
-    //   for (var i = 0, j = pairs.length; i != j; ++i) {
-    //     var pair = pairs[i];
-
-    //     const conditionCollider = pair.bodyA === this.box || pair.bodyB === this.box
-
-    //     if (conditionCollider) {
-    //       this.activate = true
-          
-    //       this.mesh.material.color = new THREE.Color(COLOR)
-    //     }
-    //   }
-    // });
   }
 
   addBoxToScene() {
