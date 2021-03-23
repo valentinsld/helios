@@ -101,7 +101,7 @@ export default class Fragment{
 
   addInteractionElements(element) {
     this.interactionElements.push(element)
-    console.log(this.interactionElements)
+    // console.log(this.interactionElements)
   }
 
   //
