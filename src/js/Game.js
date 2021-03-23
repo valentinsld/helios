@@ -4,8 +4,11 @@ import * as dat from 'dat.gui'
 
 import Matter from 'matter-js'
 
+import SceneManager from './Scenes'
+
 import Phaeton from './Characters/Phaeton'
 import Fragment from './Characters/Fragment'
+
 
 import Box from './Elements/Box'
 import Sphere from './Elements/Sphere'
@@ -22,9 +25,11 @@ export default class Game{
 
     this.clock = new THREE.Clock()
 
+    this.updateElements = {}
+
     if (window.location.hash === '#DEBUG') this.initGUI()
     this.createScene()
-    this.initTextLoader()
+    // this.initTextLoader()
 
     // this.initScene()
     this.initLights()
@@ -33,7 +38,8 @@ export default class Game{
 
     this.initPhysicWorld()
 
-    this.addElements()
+    this.initSceneManager()
+
 
     this.resize()
     this.update()
@@ -48,11 +54,11 @@ export default class Game{
 
   // create scene
   createScene() {
-    this.scene = new THREE.Scene()
+    this.globalScene = new THREE.Scene()
 
     if (this.debug) {
       const axesHelper = new THREE.AxesHelper( 500 );
-      this.scene.add( axesHelper );
+      this.globalScene.add( axesHelper );
     }
   }
 
@@ -74,7 +80,7 @@ export default class Game{
     // Base camera
     this.camera = new THREE.PerspectiveCamera(75, this.sizes.width / this.sizes.height, 10, 100*100) // TODO : optimiser le far
     this.camera.position.set(0, 0, 630)
-    this.scene.add(this.camera)
+    this.globalScene.add(this.camera)
 
     // Controls
     if (this.debug) {
@@ -104,7 +110,7 @@ export default class Game{
 
   initLights() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
-    this.scene.add(ambientLight)
+    this.globalScene.add(ambientLight)
   }
 
 
@@ -183,130 +189,25 @@ export default class Game{
     
   }
 
-  addElements() {
-    const floor = new Box({
+  // Scene Manager
+  initSceneManager() {
+    this.sceneManager = new SceneManager({
+      camera: this.camera,
       engine: this.engine,
-      scene: this.scene,
-      size: {
-        x: 1200,
-        y: 100,
-        z: 100
-      },
-      position : {
-        x: 100,
-        y: -250,
-        z: 0
-      },
-      optionsBox : {
-        isStatic: true
-      }
-    })
-    const floor2 = new Box({
-      engine: this.engine,
-      scene: this.scene,
-      size: {
-        x: 1000,
-        y: 100,
-        z: 100
-      },
-      position : {
-        x: 200,
-        y: 150,
-        z: 0
-      },
-      optionsBox : {
-        isStatic: true
-      }
-    })
-
-
-    this.phaeton = new Phaeton({
-      engine: this.engine,
-      scene : this.scene,
-      position : {
-        x : 0,
-        y : -100,
-        z : 0
-      }
-    })
-
-    this.fragment = new Fragment({
-      canvas: this.canvas,
-      engine: this.engine,
-      scene : this.scene,
-      position : {
-        x : 80,
-        y : 200,
-        z : 0
-      }
-    })
-
-    this.ladder = new Ladder({
-      scene: this.scene,
-      engine: this.engine,
-      phaeton: this.phaeton,
-      position : {
-        x : 150,
-        y : -300,
-        z : -51
-      },
-      size: {
-        x: 100,
-        y: 400,
-        z: 1
-      }
-    })
-
-    this.lever = new Lever ({
-      scene: this.scene,
-      phaeton: this.phaeton,
-      position: {
-        x: 500,
-        y: 225,
-        z: 0,
-      },
-      size: {
-        x: 100,
-        y: 50,
-        z: 100
-      }
-    })
-
-
-    this.captor = new Captor ({
-      scene: this.scene,
-      engine: this.engine,
-      fragment: this.fragment,
-      position: {
-        x: 500,
-        y: -150,
-        z: -45,
-      },
-      size: {
-        x: 100,
-        y: 100,
-        z: 100
-      }
-    })
-
-    this.fire = new Fire ({
-      scene: this.scene,
-      engine: this.engine,
-      fragment: this.fragment,
+      globalScene: this.globalScene,
       debug: this.debug,
-      position: {
-        x: -300,
-        y: -150,
-        z: -45,
-      },
-      size: {
-        x: 100,
-        y: 100,
-        z: 100
-      },
-      captor: this.captor
+      game: this
     })
+  }
 
+  addUpdatedElement(name, func) {
+    this.updateElements[name] = func
+  }
+  removeUpdatedElement(name) {
+    delete this.updateElements[name]
+  }
+  clearUpdatedElement() {
+    this.updateElements = {}
   }
 
   //
@@ -316,17 +217,17 @@ export default class Game{
     this.elapsedTime = this.clock.getElapsedTime()
 
     //
-    // update world
+    // Update object
     //
-    // Update Phaeton & fragement position
-    this.phaeton.update()
-    this.fragment.update()
+    for (const el in this.updateElements) {
+      this.updateElements[el].call()
+    }
 
     // Update controls
     this.controls?.update()
 
     // Render
-    this.renderer.render(this.scene, this.camera)
+    this.renderer.render(this.globalScene, this.camera)
 
     // Call tick again on the next frame
     window.requestAnimationFrame(this.update.bind(this))
