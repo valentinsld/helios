@@ -139,15 +139,9 @@ export default class Phaeton{
           }
           
           break;
-
-        case 'Lever':
-          const dist = this.mesh.position.distanceTo(element.mesh.position)
-          if (dist <= element.distanceInteraction){
-            element.interact()
-          }
-          break;
       
         default:
+          element.interact()
           break;
       }
     })

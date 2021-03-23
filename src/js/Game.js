@@ -6,17 +6,6 @@ import Matter from 'matter-js'
 
 import SceneManager from './Scenes'
 
-import Phaeton from './Characters/Phaeton'
-import Fragment from './Characters/Fragment'
-
-
-import Box from './Elements/Box'
-import Sphere from './Elements/Sphere'
-import Ladder from './Elements/Ladder'
-import Lever from './Elements/Lever'
-import Fire from './Elements/Fire'
-import Captor from './Elements/Captor'
-
 export default class Game{
   constructor() {
     this.canvas = document.querySelector('canvas.webgl')

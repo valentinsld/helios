@@ -11,6 +11,7 @@ import Ladder from '../Elements/Ladder'
 import Lever from '../Elements/Lever'
 import Fire from '../Elements/Fire'
 import Captor from '../Elements/Captor'
+import Door from '../Elements/Door'
 
 export default class Scene1 {
   constructor({camera, engine, globalScene, fragment, phaeton, game}) {
@@ -92,7 +93,6 @@ export default class Scene1 {
     })
 
 
-
     this.ladder = new Ladder({
       scene: this.scene,
       engine: this.engine,
@@ -111,6 +111,7 @@ export default class Scene1 {
 
     this.lever = new Lever ({
       scene: this.scene,
+      engine: this.engine,
       phaeton: this.phaeton,
       position: {
         x: 500,
@@ -159,6 +160,24 @@ export default class Scene1 {
       captor: this.captor
     })
 
+
+    
+    this.door = new Door({
+      scene: this.scene,
+      engine: this.engine,
+      phaeton: this.phaeton,
+      fragment: this.fragment,
+      position : {
+        x : -150,
+        y : 350,
+        z : -51
+      },
+      size: {
+        x: 200,
+        y: 300,
+        z: 1
+      }
+    })
   }
 
   //
