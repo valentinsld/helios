@@ -1,7 +1,5 @@
 import * as THREE from 'three'
 import Matter from 'matter-js'
-import gsap from 'gsap'
-import GetCursorPosition from 'cursor-position'
 
 const POSITION = {
   x: 0,
@@ -11,10 +9,11 @@ const POSITION = {
 const RADIUS = 25
 
 export default class Fragment{
-  constructor({canvas, engine, scene, position = POSITION, radius = RADIUS}) {
+  constructor({canvas, engine, scene, camera, position = POSITION, radius = RADIUS}) {
     this.canvas = canvas
     this.world = engine.world
     this.scene = scene
+    this.cameraZoom = camera.zoom
 
     this.position = position
     this.radius = radius
@@ -84,8 +83,8 @@ export default class Fragment{
 
   addPlaneToScene() {
     const PLANE = new THREE.PlaneGeometry(
-      this.viewport.width * 1.08,
-      this.viewport.height * 1.08,
+      this.viewport.width / this.cameraZoom,
+      this.viewport.height / this.cameraZoom,
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
@@ -114,8 +113,8 @@ export default class Fragment{
   }
 
   cursorMove(e) {
-    this.cursor.x = e.clientX - this.viewport.width / 2
-    this.cursor.y = -e.clientY + this.viewport.height / 2
+    this.cursor.x = (e.clientX - this.viewport.width / 2) / this.cameraZoom
+    this.cursor.y = (-e.clientY + this.viewport.height / 2) / this.cameraZoom
   }
   mouseUp() {
     if (!this.interactionElement) return
