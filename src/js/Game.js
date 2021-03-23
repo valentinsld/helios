@@ -67,8 +67,9 @@ export default class Game{
 
   initCamera() {
     // Base camera
-    this.camera = new THREE.PerspectiveCamera(75, this.sizes.width / this.sizes.height, 10, 100*100) // TODO : optimiser le far
-    this.camera.position.set(0, 0, 630)
+    this.camera =  new THREE.OrthographicCamera( this.sizes.width / - 2, this.sizes.width / 2, this.sizes.height / 2, this.sizes.height / - 2, 1, 10000 );
+    this.camera.position.set(0, 0, 1000)
+    console.log(this.sizes.width)
     this.globalScene.add(this.camera)
 
     // Controls
@@ -233,7 +234,10 @@ export default class Game{
     this.sizes.height = window.innerHeight
 
     // Update camera
-    this.camera.aspect = this.sizes.width / this.sizes.height
+    this.camera.left = this.sizes.width / - 2
+    this.camera.right = this.sizes.width / 2
+    this.camera.top = this.sizes.height / 2
+    this.camera.bottom = this.sizes.height / - 2
     this.camera.updateProjectionMatrix()
 
     // Update renderer
