@@ -5,8 +5,6 @@ export default class SceneManager {
       .filter(key => key !== './index.js')
       .map(key => require(`${key}`).default)
 
-    console.log(this.scenes)
-
     this.params = params
     this.debug = this.params.debug
     this.initDebug()
