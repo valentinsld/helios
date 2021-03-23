@@ -6,8 +6,11 @@ export default class SceneManager {
       .map(key => require(`${key}`).default)
 
     this.params = params
-    this.debug = this.params.debug
-    this.initDebug()
+    this.params.sceneManager = this
+
+    if (this.params.debug) {
+      this.initDebug()
+    }
 
     this.state = {
       currentSceneIndex: 0,
@@ -17,6 +20,8 @@ export default class SceneManager {
   }
 
   initDebug() {
+    this.debug = this.params.debug
+
     this.debug.data.sceneManager = {}
     this.debug.data.sceneManager.nextScene = this.next.bind(this)
     this.debug.data.sceneManager.previousScene = this.previous.bind(this)
@@ -28,13 +33,16 @@ export default class SceneManager {
   }
 
   async previous() {
+    if (this.currentSceneIndex === 0) return
+    
     const destructed = await this.state.currentScene.destruct()
     this.state.currentScene = new this.scenes[ --this.state.currentSceneIndex ](this.params)
   }
 
   async next() {
+    if (this.currentSceneIndex === this.scenes.length) return
+
     const destructed = await this.state.currentScene.destruct()
-    // console.log(destructed)
     this.state.currentScene = new this.scenes[ ++this.state.currentSceneIndex ](this.params)
   }
 }

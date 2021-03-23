@@ -14,8 +14,9 @@ import Captor from '../Elements/Captor'
 import Door from '../Elements/Door'
 
 export default class Scene1 {
-  constructor({camera, engine, globalScene, fragment, phaeton, game}) {
+  constructor({camera, engine, globalScene, sceneManager, game}) {
     this.game = game
+    this.sceneManager = sceneManager
     this.camera = camera
 
     this.engine = engine
@@ -161,10 +162,10 @@ export default class Scene1 {
     })
 
 
-    
     this.door = new Door({
       scene: this.scene,
       engine: this.engine,
+      sceneManager: this.sceneManager,
       phaeton: this.phaeton,
       fragment: this.fragment,
       position : {
