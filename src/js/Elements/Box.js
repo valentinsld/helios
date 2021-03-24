@@ -11,9 +11,13 @@ const SIZE = {
   y: 100,
   z: 100
 }
+const OPTIONS = {
+  label: 'Box',
+  isStatic: true
+}
 
 export default class Box {
-  constructor ({engine, scene, position = POSITION, size = SIZE, optionsBox = {}}) {
+  constructor ({engine, scene, position = POSITION, size = SIZE, optionsBox = OPTIONS}) {
     this.world = engine.world
     this.scene = scene
 

@@ -13,38 +13,49 @@ const SIZE = {
   z: 0
 }
 
+const COLOR = '#ff00ff'
 
-export default class Ladder{
-  constructor({phaeton, engine, scene, size = SIZE, distanceInteraction = 150, position = POSITION}) {
-    this.type = 'Ladder'
+export default class Door{
+  constructor({phaeton, fragment, engine, sceneManager, scene, size = SIZE, distanceInteraction = 150, position = POSITION}) {
+    this.type = 'Door'
     
-    this.phaeton = phaeton
     this.scene = scene
     this.engine = engine
     this.world = engine.world
+    this.sceneManager = sceneManager
+    // console.log(this.sceneManager)
+
+    this.phaeton = phaeton
+    this.fragment = fragment
+
     this.size = size
     this.distanceInteraction = distanceInteraction
     this.position = position
 
+    this.canUse = {
+      phaeton: false,
+      fragment: false
+    }
+
     this.addElementToWorld()
     this.addElementToScene()
+
     this.addElementToPhaeton()
-    this.initStartEnd()
   }
 
   addElementToWorld() {
     // init element
     var collider = Matter.Bodies.rectangle(
       this.position.x,
-      this.position.y + this.size.y/2 + 100,
+      this.position.y,
       this.size.x,
-      this.size.y + 50,
+      this.size.y,
       {
-        label: 'Ladder',
+        label: 'Door',
         isSensor: true,
         isStatic: true,
         render: {
-          strokeStyle: '#ff0000',
+          strokeStyle: COLOR,
           fillStyle: 'transparent',
           lineWidth: 2
         }
@@ -54,33 +65,41 @@ export default class Ladder{
     Matter.World.add(this.world, collider)
 
     // init events
-    Matter.Events.on(this.engine, 'collisionStart', function(event) {
+    Matter.Events.on(this.engine, 'collisionStart', (event) => {
       var pairs = event.pairs;
-      
+
       for (var i = 0, j = pairs.length; i != j; ++i) {
         var pair = pairs[i];
 
         const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
         const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
+        const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
 
         if (conditionCollider && conditionPhaeton) {
-          console.log('enter')
+          this.canUse.phaeton = true
+        } else if (conditionCollider && conditionFragment) {
+          this.canUse.fragment = true
         }
+
       }
     });
 
-    Matter.Events.on(this.engine, 'collisionEnd', function(event) {
+    Matter.Events.on(this.engine, 'collisionEnd', (event) => {
       var pairs = event.pairs;
-      
+
       for (var i = 0, j = pairs.length; i != j; ++i) {
         var pair = pairs[i];
 
         const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
         const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
+        const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
 
         if (conditionCollider && conditionPhaeton) {
-          console.log('leave')
+          this.canUse.phaeton = false
+        } else if (conditionCollider && conditionFragment) {
+          this.canUse.fragment = false
         }
+
       }
     });
   }
@@ -95,7 +114,7 @@ export default class Ladder{
    
 
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: '#ff0004',
+      color: COLOR,
       metalness: 0.3,
       roughness: 0.4,
     })
@@ -104,7 +123,7 @@ export default class Ladder{
     this.mesh.receiveShadow = true
 
     this.mesh.position.x += this.position.x
-    this.mesh.position.y += this.position.y + this.size.y / 2 + 100
+    this.mesh.position.y += this.position.y
     this.mesh.position.z += this.position.z
 
     this.scene.add(this.mesh)
@@ -114,17 +133,9 @@ export default class Ladder{
     this.phaeton.addInteractionElements(this)
   }
 
-  initStartEnd() {
-    this.start = new THREE.Vector3(
-      this.mesh.position.x,
-      this.mesh.position.y - this.size.y / 2,
-      this.mesh.position.z
-    )
+  interact() {
+    if (!this.canUse.phaeton || !this.canUse.fragment) return
 
-    this.end = new THREE.Vector3(
-      this.mesh.position.x,
-      this.mesh.position.y + this.size.y / 2,
-      this.mesh.position.z
-    )
+    this.sceneManager.next()
   }
 }

@@ -2,12 +2,13 @@ import * as THREE from 'three'
 import * as Matter from 'matter-js'
 
 export default class Scene0 {
-  constructor({camera, engine, globalScene, game}) {
+  constructor({camera, engine, globalScene, game, sceneManager}) {
     this.game = game
     this.camera = camera
 
     this.engine = engine
     this.world = this.engine.world
+
 
     // init scene
     this.scene = new THREE.Group()
@@ -17,12 +18,12 @@ export default class Scene0 {
   }
 
   initScene() {
-    console.log('scene 2')
+    console.log('scene 0')
 
-    const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-    const cube = new THREE.Mesh( geometry, material );
-    this.scene.add( cube );
+    setTimeout(() => {
+      const sceneManager = this.game.sceneManager
+      sceneManager.next()
+    }, 2000);
   }
 
   //

@@ -89,6 +89,7 @@ export default class Phaeton{
   //
   initEvents() {
     window.addEventListener('keypress', this.keypress.bind(this))
+    window.addEventListener('keyup', this.keyup.bind(this))
   }
 
   keypress(event){
@@ -102,7 +103,14 @@ export default class Phaeton{
       case "KeyD":
         Matter.Body.translate(this.box, Matter.Vector.create(5, 0))
         break;
-    
+
+      default:
+        break;
+    }
+  }
+
+  keyup(event){
+    switch (event.code) {  
       case "Space":
         this.interactWithElements()
         break;  
@@ -131,15 +139,9 @@ export default class Phaeton{
           }
           
           break;
-
-        case 'Lever':
-          const dist = this.mesh.position.distanceTo(element.mesh.position)
-          if (dist <= element.distanceInteraction){
-            element.interact()
-          }
-          break;
       
         default:
+          element.interact()
           break;
       }
     })

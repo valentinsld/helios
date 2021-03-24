@@ -1,7 +1,5 @@
 import * as THREE from 'three'
 import Matter from 'matter-js'
-import gsap from 'gsap'
-import GetCursorPosition from 'cursor-position'
 
 const POSITION = {
   x: 0,
@@ -11,10 +9,11 @@ const POSITION = {
 const RADIUS = 25
 
 export default class Fragment{
-  constructor({canvas, engine, scene, position = POSITION, radius = RADIUS}) {
+  constructor({canvas, engine, scene, camera, position = POSITION, radius = RADIUS}) {
     this.canvas = canvas
     this.world = engine.world
     this.scene = scene
+    this.cameraZoom = camera.zoom
 
     this.position = position
     this.radius = radius
@@ -38,6 +37,7 @@ export default class Fragment{
     this.addFragmentToWorld()
     this.addFragmentToScene()
     this.addPlaneToScene()
+    this.createTargetObject()
 
     this.initEvents()
   }
@@ -84,8 +84,8 @@ export default class Fragment{
 
   addPlaneToScene() {
     const PLANE = new THREE.PlaneGeometry(
-      this.viewport.width * 1.08,
-      this.viewport.height * 1.08,
+      this.viewport.width / this.cameraZoom,
+      this.viewport.height / this.cameraZoom,
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
@@ -98,10 +98,15 @@ export default class Fragment{
     this.scene.add(this.plane)
   }
 
+  createTargetObject() {
+    this.targetObject = new THREE.Object3D();
+    this.scene.add(this.targetObject);
+  }
+
 
   addInteractionElements(element) {
     this.interactionElements.push(element)
-    console.log(this.interactionElements)
+    // console.log(this.interactionElements)
   }
 
   //
@@ -114,8 +119,8 @@ export default class Fragment{
   }
 
   cursorMove(e) {
-    this.cursor.x = e.clientX - this.viewport.width / 2
-    this.cursor.y = -e.clientY + this.viewport.height / 2
+    this.cursor.x = (e.clientX - this.viewport.width / 2) / this.cameraZoom
+    this.cursor.y = (-e.clientY + this.viewport.height / 2) / this.cameraZoom
   }
   mouseUp() {
     if (!this.interactionElement) return
@@ -127,8 +132,8 @@ export default class Fragment{
   interactWithElements() {
     this.interactionElements.forEach((element) => {
       const dist = this.mesh.position.distanceTo(element.mesh.position)
-
-      if (dist <= element.distanceInteraction) {
+      
+      if (element.canUse) {
         this.interactionElement = element
         element.startInteract()
       }
@@ -136,33 +141,39 @@ export default class Fragment{
   }
 
   update() {
-    if (this.animation) return
-
-    // apply force body
-    let forceX = (this.box.position.x - this.cursor.x) / -1000
-    let forceY = (this.box.position.y - this.cursor.y) / -1000
-    forceX = Math.max(Math.min(forceX, 1), -1)
-    forceY = Math.max(Math.min(forceY, 1), -1)
-    
-    Matter.Body.applyForce(
-      this.box,
-      Matter.Vector.create(0,0),
-      Matter.Vector.create(forceX, forceY)
-    )
-
-    // update position mesh
-    this.mesh.position.x = this.box.position.x
-    this.mesh.position.y = this.box.position.y
-
-    // get angle interaction
+    // interact with element
     if (this.interactionElement) {
-      // const angle = this.mesh.position.angleTo(this.interactionElement.mesh.position)
-      const p1 = new THREE.Vector2(0,0).copy(this.mesh.position);
-      const p2 = new THREE.Vector2(0,0).copy(this.interactionElement.mesh.position);
+      var direction = new THREE.Vector2()
+      direction.subVectors(this.cursor, this.box.position)
+      direction.normalize()
+      // console.log(direction)
 
-      const angle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+      const positionInteractement = this.interactionElement.box.position
+      // update position mesh
+      Matter.Body.setPosition(this.box, Matter.Vector.create(positionInteractement.x, positionInteractement.y))
 
-      this.interactionElement.interact(angle)
+      // update position mesh
+      this.targetObject.position.x = positionInteractement.x + direction.x * 2000
+      this.targetObject.position.y = positionInteractement.y + direction.y * 2000
+      
+      this.interactionElement.interact(this.targetObject.position)
+    } else {
+      // apply force body
+      let forceX = (this.box.position.x - this.cursor.x) / -500 * this.cameraZoom
+      let forceY = (this.box.position.y - this.cursor.y) / -500 * this.cameraZoom
+      forceX = Math.max(Math.min(forceX, 1), -1)
+      forceY = Math.max(Math.min(forceY, 1), -1)
+      
+      Matter.Body.applyForce(
+        this.box,
+        Matter.Vector.create(0,0),
+        Matter.Vector.create(forceX, forceY)
+      )
+
     }
-  }
+
+      // update position mesh
+      this.mesh.position.x = this.box.position.x
+      this.mesh.position.y = this.box.position.y
+  } 
 }
