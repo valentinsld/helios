@@ -131,7 +131,7 @@ export default class Game{
     //
     if (this.debug) {
       // create a renderer
-      var render = Render.create({
+      this.render = Render.create({
         element: document.body,
         engine: this.engine,
         options: {
@@ -143,8 +143,8 @@ export default class Game{
           showVelocity: true
         },
       });
-      render.canvas.id = 'matterRender'
-      Render.run(render);
+      this.render.canvas.id = 'matterRender'
+      Render.run(this.render);
 
       //
       // mouse contraints
@@ -169,7 +169,7 @@ export default class Game{
       mouseConstraint.collisionFilter.mask = 0x0001 */
 
       Render.lookAt(
-        render,
+        this.render,
         {
           min: { x: -600, y: -400 },
           max: { x: 600, y: 400 }
@@ -183,6 +183,7 @@ export default class Game{
   initSceneManager() {
     this.sceneManager = new SceneManager({
       camera: this.camera,
+      render: this.render,
       engine: this.engine,
       globalScene: this.globalScene,
       debug: this.debug,

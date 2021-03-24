@@ -14,11 +14,12 @@ import Captor from '../Elements/Captor'
 import Door from '../Elements/Door'
 
 export default class Scene1 {
-  constructor({camera, engine, globalScene, sceneManager, game}) {
+  constructor({camera, render, engine, globalScene, sceneManager, game}) {
     this.game = game
     this.sceneManager = sceneManager
     this.camera = camera
 
+    this.render = render
     this.engine = engine
     this.world = this.engine.world
 
@@ -71,9 +72,6 @@ export default class Scene1 {
         x: 100,
         y: -250,
         z: 0
-      },
-      optionsBox : {
-        isStatic: true
       }
     })
     const floor2 = new Box({
@@ -88,9 +86,6 @@ export default class Scene1 {
         x: 200,
         y: 150,
         z: 0
-      },
-      optionsBox : {
-        isStatic: true
       }
     })
 
@@ -147,6 +142,7 @@ export default class Scene1 {
     this.fire = new Fire ({
       scene: this.scene,
       engine: this.engine,
+      render: this.render,
       fragment: this.fragment,
       debug: this.debug,
       position: {

@@ -41,10 +41,8 @@ export default class Captor {
       this.size.y,
       {
         label: 'Captor',
-        collisionFilter: {
-          category: 0x0008,
-          mask: 0x0001
-        },
+        isSensor: true,
+        isStatic: true,
         render: {
           strokeStyle: COLOR,
           fillStyle: 'transparent',
@@ -52,6 +50,8 @@ export default class Captor {
         }
       }
     );
+
+    this.box.interact = this.interact.bind(this)
 
     Matter.World.add(this.world, this.box)
   }
@@ -75,11 +75,12 @@ export default class Captor {
     this.scene.add(this.mesh)
   }
 
-  interact() {
-    console.log('interact captor')
-
-    this.activate = !this.activate
-    const color = this.activate ? COLOR_BIS : COLOR
+  interact(inOut) {
+    // console.log('interact captor :', inOut)
+    const condition = inOut === 'in'
+    
+    this.activate = condition ? true : false
+    const color = condition ? COLOR_BIS : COLOR
     this.mesh.material.color = new THREE.Color(color)
   }
 
