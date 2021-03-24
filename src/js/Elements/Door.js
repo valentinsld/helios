@@ -23,7 +23,7 @@ export default class Door{
     this.engine = engine
     this.world = engine.world
     this.sceneManager = sceneManager
-    console.log(this.sceneManager)
+    // console.log(this.sceneManager)
 
     this.phaeton = phaeton
     this.fragment = fragment
@@ -51,6 +51,7 @@ export default class Door{
       this.size.x,
       this.size.y,
       {
+        label: 'Door',
         isSensor: true,
         isStatic: true,
         render: {

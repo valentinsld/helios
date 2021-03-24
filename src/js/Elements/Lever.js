@@ -41,6 +41,7 @@ export default class Lever {
       this.size.x,
       this.size.y,
       {
+        label: 'Lever',
         isSensor: true,
         isStatic: true,
         render: {

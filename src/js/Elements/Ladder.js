@@ -40,6 +40,7 @@ export default class Ladder{
       this.size.x,
       this.size.y + 50,
       {
+        label: 'Ladder',
         isSensor: true,
         isStatic: true,
         render: {
