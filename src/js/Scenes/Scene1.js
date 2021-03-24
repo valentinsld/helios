@@ -46,6 +46,7 @@ export default class Scene1 {
       canvas: this.canvas,
       engine: this.engine,
       scene : this.scene,
+      camera : this.camera,
       position : {
         x : 80,
         y : 200,
@@ -156,7 +157,7 @@ export default class Scene1 {
       size: {
         x: 100,
         y: 100,
-        z: 100
+        z: 10
       },
       captor: this.captor
     })

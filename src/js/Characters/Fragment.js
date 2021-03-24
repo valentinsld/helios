@@ -130,6 +130,8 @@ export default class Fragment{
       if (dist <= element.distanceInteraction) {
         this.interactionElement = element
         element.startInteract()
+
+        // this.mesh.position.copy(element.mesh.position)
       }
     })
   }
@@ -138,8 +140,8 @@ export default class Fragment{
     if (this.animation) return
 
     // apply force body
-    let forceX = (this.box.position.x - this.cursor.x) / -1000
-    let forceY = (this.box.position.y - this.cursor.y) / -1000
+    let forceX = (this.box.position.x - this.cursor.x) / -500 * this.cameraZoom
+    let forceY = (this.box.position.y - this.cursor.y) / -500 * this.cameraZoom
     forceX = Math.max(Math.min(forceX, 1), -1)
     forceY = Math.max(Math.min(forceY, 1), -1)
     
