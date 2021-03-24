@@ -121,6 +121,8 @@ export default class Phaeton{
   }
 
   interactWithElements() {
+    if (this.animation) return
+
     this.interactionElements.forEach((element) => {
 
       switch (element.type) {
