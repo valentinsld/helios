@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import * as dat from 'dat.gui'
 
 import Matter from 'matter-js'
@@ -18,17 +19,16 @@ export default class Game{
 
     if (window.location.hash === '#DEBUG') this.initGUI()
     this.createScene()
-    // this.initTextLoader()
 
-    // this.initScene()
+    this.initTextLoader()
+    this.initGltfLoader()
+
     this.initLights()
     this.initCamera()
     this.initRenderer()
 
     this.initPhysicWorld()
-
     this.initSceneManager()
-
 
     this.resize()
     this.update()
@@ -63,6 +63,29 @@ export default class Game{
     //     '/textures/environmentMaps/0/pz.png',
     //     '/textures/environmentMaps/0/nz.png'
     // ])
+  }
+
+  initGltfLoader() {
+    this.gltfLoader = new GLTFLoader()
+
+    // gltfLoader.load(
+    //   '/models/Duck/glTF/Duck.gltf',
+    //   (gltf) =>
+    //   {
+    //       console.log('success')
+    //       console.log(gltf)
+    //   },
+    //   (progress) =>
+    //   {
+    //       console.log('progress')
+    //       console.log(progress)
+    //   },
+    //   (error) =>
+    //   {
+    //       console.log('error')
+    //       console.log(error)
+    //   }
+    // )
   }
 
   initCamera() {
@@ -187,6 +210,8 @@ export default class Game{
       engine: this.engine,
       globalScene: this.globalScene,
       debug: this.debug,
+      textureLoader: this.textureLoader,
+      gltfLoader: this.gltfLoader,
       game: this
     })
   }
