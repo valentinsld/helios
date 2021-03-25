@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import * as Matter from 'matter-js'
 
+import LoaderModelsManager from '../LoaderModelsManager'
+
 export default class Scene0 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
     this.game = game
@@ -31,34 +33,48 @@ export default class Scene0 {
 
     this.scene.add( cube );
 
-    //
-    // Brasier
-    //
-    this.gltfLoader.load(
-      '/models/brasier.glb',
-      (gltf) =>
+    const arrayModels = [
       {
-          console.log('success')
-          console.log(gltf)
-
-          this.brasier = gltf.scene.children[0]
-          console.log(this.brasier.scale)
-          this.brasier.scale.set(10,10,10)
-          console.log(this.brasier.scale)
-
-          this.scene.add(this.brasier)
+        url: '/models/brasier/brasier.glb',
+        func: this.initBrasier.bind(this)
       },
-      (progress) =>
       {
-          console.log('progress')
-          console.log(progress)
+        url: '/models/statues/statue1.gltf',
+        func: this.initStatue1.bind(this)
       },
-      (error) =>
       {
-          console.log('error')
-          console.log(error)
+        url: '/models/statues/statue2.gltf',
+        func: this.initStatue2.bind(this)
       }
-    )
+    ]
+
+    new LoaderModelsManager({
+      arrayModels,
+      gltfLoader: this.gltfLoader,
+      progressFunction: this.updateProgress.bind(this)
+    })
+  }
+
+  updateProgress(progress) {
+    console.log('progress', progress)
+  }
+
+  initBrasier(gltf) {
+    console.log('brasier', gltf)
+
+    this.scene.add(gltf.scene)
+  }
+  
+  initStatue1(gltf) {
+    console.log('initStatue1', gltf)
+
+    this.scene.add(gltf.scene)
+  }
+  
+  initStatue2(gltf) {
+    console.log('initStatue2', gltf)
+
+    this.scene.add(gltf.scene)
   }
 
   //
