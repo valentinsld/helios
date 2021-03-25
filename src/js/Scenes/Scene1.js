@@ -14,7 +14,7 @@ import Captor from '../Elements/Captor'
 import Door from '../Elements/Door'
 
 export default class Scene1 {
-  constructor({camera, render, engine, globalScene, sceneManager, game}) {
+  constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
     this.game = game
     this.sceneManager = sceneManager
     this.camera = camera

@@ -1,3 +1,5 @@
+const START_SCENE = 1
+
 export default class SceneManager {
   constructor(params) {
     const scenesContext = require.context('./', true, /.js$/)
@@ -13,8 +15,8 @@ export default class SceneManager {
     }
 
     this.state = {
-      currentSceneIndex: 1,
-      currentScene: new this.scenes[1](this.params),
+      currentSceneIndex: START_SCENE,
+      currentScene: new this.scenes[START_SCENE](this.params),
       isTransitioning: false,
     }
   }
@@ -33,16 +35,20 @@ export default class SceneManager {
   }
 
   async previous() {
-    if (this.currentSceneIndex === 0) return
+    if (this.currentSceneIndex === 0 || this.state.isTransitioning) return
+    this.state.isTransitioning = true
     
     const destructed = await this.state.currentScene.destruct()
     this.state.currentScene = new this.scenes[ --this.state.currentSceneIndex ](this.params)
+    this.state.isTransitioning = false
   }
 
   async next() {
-    if (this.currentSceneIndex === this.scenes.length) return
+    if (this.currentSceneIndex === this.scenes.length || this.state.isTransitioning) return
+    this.state.isTransitioning = true
 
     const destructed = await this.state.currentScene.destruct()
     this.state.currentScene = new this.scenes[ ++this.state.currentSceneIndex ](this.params)
+    this.state.isTransitioning = false
   }
 }
