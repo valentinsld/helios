@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import * as dat from 'dat.gui'
 
 import Matter from 'matter-js'
@@ -66,7 +67,11 @@ export default class Game{
   }
 
   initGltfLoader() {
+    const dracoLoader = new DRACOLoader()
+    dracoLoader.setDecoderPath('/draco/')
+
     this.gltfLoader = new GLTFLoader()
+    this.gltfLoader.setDRACOLoader(dracoLoader)
 
     // gltfLoader.load(
     //   '/models/Duck/glTF/Duck.gltf',
