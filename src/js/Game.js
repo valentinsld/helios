@@ -24,7 +24,7 @@ export default class Game{
     this.initTextLoader()
     this.initGltfLoader()
 
-    this.initLights()
+    // this.initLights()
     this.initCamera()
     this.initRenderer()
 
@@ -45,6 +45,7 @@ export default class Game{
   // create scene
   createScene() {
     this.globalScene = new THREE.Scene()
+    this.globalScene.background = new THREE.Color(0x1c292c)
 
     if (this.debug) {
       const axesHelper = new THREE.AxesHelper( 500 );
@@ -95,9 +96,9 @@ export default class Game{
 
   initCamera() {
     // Base camera
-    this.camera =  new THREE.OrthographicCamera( 0, 0, 0, 0, 1, 500 );
+    this.camera =  new THREE.OrthographicCamera( 0, 0, 0, 0, 1, 1000 );
     this.camera.zoom = 0.5
-    this.camera.position.set(0, 0, 100)
+    this.camera.position.set(0, 0, 300)
     this.globalScene.add(this.camera)
 
     // Controls
@@ -119,6 +120,7 @@ export default class Game{
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas
     })
+
     this.renderer.shadowMap.enabled = true
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
     this.renderer.setSize(this.sizes.width, this.sizes.height)
@@ -241,7 +243,7 @@ export default class Game{
     // Update object
     //
     for (const el in this.updateElements) {
-      this.updateElements[el].call()
+      this.updateElements[el].call(null, this.elapsedTime)
     }
 
     // Update controls

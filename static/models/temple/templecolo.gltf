@@ -1,0 +1,281 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.4.40",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "Cube.001",
+            "scale" : [
+                0.9012471437454224,
+                0.7061895132064819,
+                0.4252464175224304
+            ],
+            "translation" : [
+                0,
+                0.2462250292301178,
+                -2.206031560897827
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "name" : "wall",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.2529435157775879,
+                    0.05463597550988197,
+                    0.05463597550988197,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.5
+            }
+        },
+        {
+            "doubleSided" : true,
+            "name" : "sun",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.8000000715255737,
+                    0.3313544988632202,
+                    0.27870720624923706,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.5
+            }
+        },
+        {
+            "doubleSided" : true,
+            "name" : "porte",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.0010315031977370381,
+                    0.0010315031977370381,
+                    0.0010315031977370381,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.5
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Cube.001",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                },
+                {
+                    "attributes" : {
+                        "POSITION" : 4,
+                        "NORMAL" : 5,
+                        "TEXCOORD_0" : 6
+                    },
+                    "indices" : 7,
+                    "material" : 1
+                },
+                {
+                    "attributes" : {
+                        "POSITION" : 8,
+                        "NORMAL" : 9,
+                        "TEXCOORD_0" : 10
+                    },
+                    "indices" : 11,
+                    "material" : 2
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 4836,
+            "max" : [
+                2.120265483856201,
+                8.24821662902832,
+                9.201189041137695
+            ],
+            "min" : [
+                -3.254532814025879,
+                -0.36444735527038574,
+                -0.11111113429069519
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 4836,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 4836,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 7308,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 5126,
+            "max" : [
+                0.5728520154953003,
+                4.461245536804199,
+                2.9976577758789062
+            ],
+            "min" : [
+                -0.5341488718986511,
+                1.1919794082641602,
+                2.756767511367798
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 5126,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 5126,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5123,
+            "count" : 7800,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 8,
+            "componentType" : 5126,
+            "count" : 1980,
+            "max" : [
+                0.33222585916519165,
+                2.4800233840942383,
+                3.108677387237549
+            ],
+            "min" : [
+                -0.3426498770713806,
+                0.09127342700958252,
+                3.0162384510040283
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 9,
+            "componentType" : 5126,
+            "count" : 1980,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 10,
+            "componentType" : 5126,
+            "count" : 1980,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 11,
+            "componentType" : 5123,
+            "count" : 3000,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 58032,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 58032,
+            "byteOffset" : 58032
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 38688,
+            "byteOffset" : 116064
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 14616,
+            "byteOffset" : 154752
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 61512,
+            "byteOffset" : 169368
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 61512,
+            "byteOffset" : 230880
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 41008,
+            "byteOffset" : 292392
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 15600,
+            "byteOffset" : 333400
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 23760,
+            "byteOffset" : 349000
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 23760,
+            "byteOffset" : 372760
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 15840,
+            "byteOffset" : 396520
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 6000,
+            "byteOffset" : 412360
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 418360,
+            "uri" : "templecolo.bin"
+        }
+    ]
+}

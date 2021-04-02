@@ -26,9 +26,9 @@ export default class LoaderModelsManager{
         (gltf) =>
         {
           // scale scene :
-          gltf.scene.children.forEach((child) => {
-            child.scale.set(10,10,10)
-          })
+          // gltf.scene.children.forEach((child) => {
+          //   child.scale.set(10,10,10)
+          // })
 
           this.array[index].func.call(null, gltf)
         },
