@@ -24,7 +24,7 @@ export default class Game{
     this.initTextLoader()
     this.initGltfLoader()
 
-    // this.initLights()
+    this.initLights()
     this.initCamera()
     this.initRenderer()
 
@@ -45,11 +45,20 @@ export default class Game{
   // create scene
   createScene() {
     this.globalScene = new THREE.Scene()
-    this.globalScene.background = new THREE.Color(0x1c292c)
+    let color = {
+      background: 0x000000
+    }
+    this.globalScene.background = new THREE.Color(color.background)
 
     if (this.debug) {
       const axesHelper = new THREE.AxesHelper( 500 );
       this.globalScene.add( axesHelper );
+
+      this.debugGlobalFolder = this.debug.addFolder('Global Scene')
+      const colorBkg = this.debugGlobalFolder.addColor(color, "background").name('background color')
+      colorBkg.onChange((value) => {
+        this.globalScene.background = new THREE.Color(value)
+      })
     }
   }
 
@@ -108,7 +117,7 @@ export default class Game{
       this.controls.enableDamping = true
 
       this.debug.data.orbitControls = this.controls.enabled
-      this.debug
+      this.debugGlobalFolder
         .add(this.debug.data, 'orbitControls')
         .onChange(() => {
           this.controls.enabled = this.debug.data.orbitControls
@@ -129,8 +138,26 @@ export default class Game{
 
 
   initLights() {
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
+    const light = {
+      color: 0xffffff,
+      intensity: 0.4
+    }
+    const ambientLight = new THREE.AmbientLight(light.color, light.intensity)
     this.globalScene.add(ambientLight)
+
+    if (this.debug) {
+      const ambiantlightFoler = this.debugGlobalFolder.addFolder('Ambient light')
+
+      const color = ambiantlightFoler.addColor(light, "color").name('Color')
+      color.onChange((value) => {
+        ambientLight.color = new THREE.Color(value)
+      })
+
+      const intensity = ambiantlightFoler.add(light, "intensity", 0, 1).name('Intensity')
+      intensity.onChange((value) => {
+        ambientLight.intensity = value
+      })
+    }
   }
 
 
