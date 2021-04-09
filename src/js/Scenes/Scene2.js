@@ -76,7 +76,7 @@ export default class Scene0 {
     // const ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
     // this.scene.add(ambientLight)
 
-    this.light = new THREE.PointLight(0xffffff, 1, 5000);
+    this.light = new THREE.PointLight(0xffffff, 0.5, 5000);
     this.light.position.set(0, 50, 50);
     this.light.castShadow = true
     this.light.shadow.bias = - 0.01
@@ -149,11 +149,6 @@ export default class Scene0 {
       if (node.isMesh) {
         node.castShadow = true
         node.receiveShadow = true
-        node.depthTest = false
-        const folder = this.debug.addFolder(node.name)
-        folder.add(node, 'castShadow')
-        folder.add(node, 'receiveShadow')
-        folder.add(node, 'depthTest')
       }
     })
 
@@ -172,7 +167,7 @@ export default class Scene0 {
     material.normalMap = normal
     material.roughness = 0.8
 
-    console.log(material)
+    // console.log(material)
 
     this.scene.add(this.testCube)
   }
