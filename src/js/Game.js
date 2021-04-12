@@ -132,6 +132,7 @@ export default class Game{
 
     this.renderer.shadowMap.enabled = true
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    // this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.renderer.setSize(this.sizes.width, this.sizes.height)
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   }
@@ -139,8 +140,8 @@ export default class Game{
 
   initLights() {
     const light = {
-      color: 0xffffff,
-      intensity: 0.4
+      color: 0x341f0c,
+      intensity: 0.2
     }
     const ambientLight = new THREE.AmbientLight(light.color, light.intensity)
     this.globalScene.add(ambientLight)
