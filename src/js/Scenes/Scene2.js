@@ -94,7 +94,7 @@ export default class Scene0 {
     this.light.shadow.camera.far = 800
     console.log(this.light.shadow.camera)
 
-    // this.game.addUpdatedElement('lightTemple', this.updatePositionLight.bind(this))
+    this.game.addUpdatedElement('lightTemple', this.updatePositionLight.bind(this))
 
     if (this.debugSceneFolder) {
       const spotLightFolder = this.debugSceneFolder.addFolder('Spot light')
@@ -114,7 +114,7 @@ export default class Scene0 {
 
   updatePositionLight(time) {
     // this.light.position.z = Math.cos(time) * 50
-    this.light.power = 6.3 + Math.cos(time*4) * 1.3
+    this.light.power = 7 + Math.cos(time*4) * 1.3
     // console.log(time)
   }
 
