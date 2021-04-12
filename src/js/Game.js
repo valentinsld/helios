@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import * as dat from 'dat.gui'
+import Stats from 'stats.js'
 
 import Matter from 'matter-js'
 
@@ -40,6 +41,10 @@ export default class Game{
   initGUI() {
     this.debug = new dat.GUI()
     this.debug.data = {}
+
+    this.stats = new Stats()
+    this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild( this.stats.dom );
   }
 
   // create scene
@@ -265,6 +270,7 @@ export default class Game{
   //  Update
   //
   update() {
+    this.stats?.begin();
     this.elapsedTime = this.clock.getElapsedTime()
 
     //
@@ -279,6 +285,9 @@ export default class Game{
 
     // Render
     this.renderer.render(this.globalScene, this.camera)
+
+    // get FPS
+    this.stats?.end();
 
     // Call tick again on the next frame
     window.requestAnimationFrame(this.update.bind(this))
