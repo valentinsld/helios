@@ -42,6 +42,7 @@ export default class Fire {
 
     this.addBoxToScene()
     this.createLight()
+    this.createCone()
 
     this.addElementToFragment()
   }
@@ -135,65 +136,28 @@ export default class Fire {
     });
   }
 
-  createSensorLight___() {
-    this.sensorLight = Matter.Bodies.rectangle(
-      this.position.x + SENSOR_LIGHT.width/2,
-      this.position.y,
-      SENSOR_LIGHT.width,
-      SENSOR_LIGHT.height,
-      {
-        isSensor: true,
-        isStatic: true,
-        collisionFilter: {
-          mask: 0x0008
-        },
-        render: {
-          showPositions: true,
-          strokeStyle: COLOR,
-          fillStyle: 'transparent',
-          lineWidth: 2,
-        }
-      }
-    );
+  createCone() {
+    const heightCone = 1800
 
-    Matter.World.add(this.world, this.sensorLight)
-
-    Matter.Body.setCentre(this.sensorLight, Matter.Vector.create(-SENSOR_LIGHT.width/2,0), true)
-    Matter.Body.setAngle(this.sensorLight, Math.PI)
-
-    // init events
-    Matter.Events.on(this.engine, 'collisionStart', (event) => {
-      if (this.activate) return
-
-      var pairs = event.pairs;
-      
-      for (var i = 0, j = pairs.length; i != j; ++i) {
-        var pair = pairs[i];
-
-        const conditionCollider = pair.bodyA === this.sensorLight || pair.bodyB === this.sensorLight
-        const conditionColliderBox = pair.bodyA === this.captor.box || pair.bodyB === this.captor.box
-
-        if (conditionCollider && conditionColliderBox) {
-          this.captor.interact()
-        }
-      }
+    const geometryBis = new THREE.ConeGeometry(100, heightCone, 32);
+    geometryBis.applyMatrix4( new THREE.Matrix4().setPosition( 0, heightCone * -0.5, 0 ) );
+    geometryBis.rotateX(-Math.PI / 2);
+    const materialBis = new THREE.MeshStandardMaterial({
+      color: 0xe8b591,
+      transparent: true,  
+      opacity: 0,
+      metalness: 1,
+      emissive: 0xe8b591,
+      emissiveIntensity: 1
     });
+    this.coneOpacity = 0.5
+    this.cone = new THREE.Mesh(geometryBis, materialBis);
+    this.scene.add(this.cone);
 
-    Matter.Events.on(this.engine, 'collisionEnd', (event) => {
-      var pairs = event.pairs;
-      
-      for (var i = 0, j = pairs.length; i != j; ++i) {
-        var pair = pairs[i];
-
-        const conditionCollider = pair.bodyA === this.sensorLight || pair.bodyB === this.sensorLight
-        const conditionColliderBox = pair.bodyA === this.captor.box || pair.bodyB === this.captor.box
-
-        if (conditionCollider && conditionColliderBox) {
-          this.captor.interact()
-        }
-      }
-    });
+    this.cone.position.copy(this.position)
+    this.cone.rotation.z = Math.PI
   }
+
 
   addBoxToScene() {
     const BOX = new THREE.BoxBufferGeometry(
@@ -237,11 +201,15 @@ export default class Fire {
 
   startInteract() {
     this.spotLight.intensity = 1
+    this.cone.material.opacity = this.coneOpacity
   }
 
   interact(cursor) {
     const startPoint = this.mesh.position
     const endPoint = cursor
+
+    this.cone.lookAt(new THREE.Vector3().copy(endPoint))
+
 
     const allbodies = Matter.Composite.allBodies(this.world),
       bodies = allbodies.filter(bodie => 
@@ -281,6 +249,7 @@ export default class Fire {
 
   endInteract() {
     this.spotLight.intensity = 0
+    this.cone.material.opacity = 0
   }
 
 }
