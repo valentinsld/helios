@@ -20,7 +20,7 @@ const SENSOR_LIGHT = {
 const COLOR = '#ffff00'
 
 export default class Fire {
-  constructor ({fragment, engine, render, debug, scene, captor, position = POSITION, size = SIZE, optionsBox = {}}) {
+  constructor ({fragment, engine, render, debug, scene, captor, position = POSITION, size = SIZE, optionsBox = {}, heightCone = 3800, angleCone = Math.PI * 0.02}) {
     this.type = 'Fire'
     this.scene = scene
     this.fragment = fragment
@@ -33,6 +33,9 @@ export default class Fire {
     this.position = position
     this.size = size
     this.optionsBox = optionsBox
+
+    this.heightCone = heightCone
+    this.angleCone = angleCone
 
     this.canUse = false
     this.activate = false
@@ -137,10 +140,10 @@ export default class Fire {
   }
 
   createCone() {
-    const heightCone = 1800
-
-    const geometryBis = new THREE.ConeGeometry(100, heightCone, 32);
-    geometryBis.applyMatrix4( new THREE.Matrix4().setPosition( 0, heightCone * -0.5, 0 ) );
+    const radius = (this.heightCone * Math.tan(this.angleCone * 0.5)) * 2 * 0.8
+    console.log(radius)
+    const geometryBis = new THREE.ConeGeometry(radius, this.heightCone, 32);
+    geometryBis.applyMatrix4( new THREE.Matrix4().setPosition( 0, this.heightCone * -0.5, 0 ) );
     geometryBis.rotateX(-Math.PI / 2);
     const materialBis = new THREE.MeshStandardMaterial({
       color: 0xe8b591,
@@ -183,7 +186,7 @@ export default class Fire {
   }
 
   createLight() {
-    this.spotLight = new THREE.SpotLight( 0xffffff, 0, 2000, Math.PI * 0.02, 0.25, 1 );
+    this.spotLight = new THREE.SpotLight( 0xffffff, 0, this.heightCone, this.angleCone, 0.25, 1 );
     this.spotLight.position.copy(this.position)
 
     this.spotLight.castShadow = true

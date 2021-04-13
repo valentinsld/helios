@@ -151,7 +151,7 @@ export default class Scene1 {
       size: {
         x: 100,
         y: 100,
-        z: 100
+        z: 200
       },
       canInteract: this.getStepStatues.bind(this),
       activateAction: this.endEnigmeAnimation.bind(this)
@@ -174,6 +174,7 @@ export default class Scene1 {
         z: 10
       },
       captor: this.captor,
+      angleCone: Math.PI * 0.01
     })
 
 
