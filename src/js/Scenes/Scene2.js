@@ -29,6 +29,7 @@ export default class Scene0 {
 
   initScene() {
     this.camera.zoom = 1
+    this.camera.updateProjectionMatrix()
 
     console.log('scene 2')
 

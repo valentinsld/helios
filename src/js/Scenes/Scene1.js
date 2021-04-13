@@ -38,7 +38,7 @@ export default class Scene1 {
       scene : this.scene,
       position : {
         x : -1300,
-        y : -350,
+        y : -450,
         z : 0
       }
     })
@@ -50,7 +50,7 @@ export default class Scene1 {
       camera : this.camera,
       position : {
         x : -1200,
-        y : -250,
+        y : -350,
         z : 0
       }
     })
@@ -64,13 +64,13 @@ export default class Scene1 {
       engine: this.engine,
       scene: this.scene,
       size: {
-        x: 3000,
+        x: 4000,
         y: 500,
         z: 300
       },
       position : {
         x: 0,
-        y: -700,
+        y: -800,
         z: 0
       }
     })
@@ -84,8 +84,8 @@ export default class Scene1 {
         z: 300
       },
       position : {
-        x: -1600,
-        y: 300,
+        x: -2000,
+        y: 200,
         z: 0
       }
     })
@@ -99,8 +99,8 @@ export default class Scene1 {
         z: 300
       },
       position : {
-        x: 1600,
-        y: 300,
+        x: 2000,
+        y: 200,
         z: 0
       }
     })
@@ -114,8 +114,8 @@ export default class Scene1 {
         z: 300
       },
       position : {
-        x: 320,
-        y: -457,
+        x: 720,
+        y: -557,
         z: 0
       },
       rotation: Math.PI * 0.6
@@ -130,8 +130,8 @@ export default class Scene1 {
         z: 100
       },
       position : {
-        x: 1000,
-        y: -500,
+        x: 1400,
+        y: -600,
         z: 0
       }
     })
@@ -142,7 +142,7 @@ export default class Scene1 {
       phaeton: this.phaeton,
       position: {
         x: -100,
-        y: -400,
+        y: -500,
         z: -50,
       },
       size: {
@@ -159,7 +159,7 @@ export default class Scene1 {
       phaeton: this.phaeton,
       position: {
         x: 200,
-        y: -400,
+        y: -500,
         z: -50,
       },
       size: {
@@ -176,7 +176,7 @@ export default class Scene1 {
       fragment: this.fragment,
       position: {
         x: 1200,
-        y: 250,
+        y: 150,
         z: -45,
       },
       size: {
@@ -196,7 +196,7 @@ export default class Scene1 {
       debug: this.debug,
       position: {
         x: -600,
-        y: -400,
+        y: -500,
         z: -45,
       },
       size: {
@@ -216,8 +216,8 @@ export default class Scene1 {
       phaeton: this.phaeton,
       fragment: this.fragment,
       position : {
-        x : 1200,
-        y : -300,
+        x : 1600,
+        y : -250,
         z : -51
       },
       size: {
