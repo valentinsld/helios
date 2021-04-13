@@ -25,9 +25,9 @@ export default class Game{
     this.initTextLoader()
     this.initGltfLoader()
 
-    this.initLights()
     this.initCamera()
     this.initRenderer()
+    this.initLights()
 
     this.initPhysicWorld()
     this.initSceneManager()
@@ -145,8 +145,8 @@ export default class Game{
 
   initLights() {
     const light = {
-      color: 0x341f0c,
-      intensity: 0.2
+      color: 0xffffff,
+      intensity: 1
     }
     const ambientLight = new THREE.AmbientLight(light.color, light.intensity)
     this.globalScene.add(ambientLight)
@@ -230,14 +230,36 @@ export default class Game{
 
       red category objects should not be draggable with the mouse
       mouseConstraint.collisionFilter.mask = 0x0001 */
+      this.render.canvas.opacity = 1
+      this.render.canvas.zoom = 1
 
       Render.lookAt(
         this.render,
         {
-          min: { x: -600, y: -400 },
-          max: { x: 600, y: 400 }
+          min: { x: -800, y: -600 },
+          max: { x: 800, y: 600 }
         },
       )
+
+      const physicFolder = this.debugGlobalFolder.addFolder('Physic World')
+
+      const opCanvas = physicFolder.add(this.render.canvas, "opacity", 0, 1).name('Opacity Physic Worl')
+      opCanvas.onChange((value) => {
+        this.render.canvas.style.opacity = value
+      })
+
+      const zoomCanvas = physicFolder.add(this.render.canvas, "zoom", 0, 10).name('Zoom')
+      zoomCanvas.onChange((value) => {
+        Render.lookAt(
+          this.render,
+          {
+            min: { x: -800 * value, y: -600 * value },
+            max: { x: 800 * value, y: 600 * value }
+          },
+        )
+      })
+
+
     }
     
   }

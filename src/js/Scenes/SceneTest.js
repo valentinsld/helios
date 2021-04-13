@@ -4,13 +4,12 @@ import * as Matter from 'matter-js'
 import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
 
-
 import Box from '../Elements/Box'
+import Ladder from '../Elements/Ladder'
+import Lever from '../Elements/Lever'
 import Fire from '../Elements/Fire'
 import Captor from '../Elements/Captor'
 import Door from '../Elements/Door'
-
-import Statue from '../Elements/01_statue'
 
 export default class Scene1 {
   constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
@@ -26,7 +25,6 @@ export default class Scene1 {
     this.scene = new THREE.Group()
     globalScene.add(this.scene)
     
-    this.endEnigme = false
 
     this.initCharacters()
     this.addElements()
@@ -37,8 +35,8 @@ export default class Scene1 {
       engine: this.engine,
       scene : this.scene,
       position : {
-        x : -1300,
-        y : -350,
+        x : 0,
+        y : -100,
         z : 0
       }
     })
@@ -49,8 +47,8 @@ export default class Scene1 {
       scene : this.scene,
       camera : this.camera,
       position : {
-        x : -1200,
-        y : -250,
+        x : 80,
+        y : 200,
         z : 0
       }
     })
@@ -64,76 +62,60 @@ export default class Scene1 {
       engine: this.engine,
       scene: this.scene,
       size: {
-        x: 3000,
-        y: 500,
-        z: 300
-      },
-      position : {
-        x: 0,
-        y: -700,
-        z: 0
-      }
-    })
-
-    const wallLeft = new Box({
-      engine: this.engine,
-      scene: this.scene,
-      size: {
-        x: 400,
-        y: 1500,
-        z: 300
-      },
-      position : {
-        x: -1600,
-        y: 300,
-        z: 0
-      }
-    })
-
-    const wallRight= new Box({
-      engine: this.engine,
-      scene: this.scene,
-      size: {
-        x: 400,
-        y: 1500,
-        z: 300
-      },
-      position : {
-        x: 1600,
-        y: 300,
-        z: 0
-      }
-    })
-
-    this.statue1 = new Statue ({
-      scene: this.scene,
-      engine: this.engine,
-      phaeton: this.phaeton,
-      position: {
-        x: -100,
-        y: -400,
-        z: -50,
-      },
-      size: {
-        x: 100,
+        x: 1200,
         y: 100,
         z: 100
+      },
+      position : {
+        x: 100,
+        y: -250,
+        z: 0
+      }
+    })
+    const floor2 = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      size: {
+        x: 1000,
+        y: 100,
+        z: 100
+      },
+      position : {
+        x: 200,
+        y: 150,
+        z: 0
       }
     })
 
-    
-    this.statue2 = new Statue ({
+
+    this.ladder = new Ladder({
+      scene: this.scene,
+      engine: this.engine,
+      phaeton: this.phaeton,
+      position : {
+        x : 150,
+        y : -300,
+        z : -51
+      },
+      size: {
+        x: 100,
+        y: 400,
+        z: 1
+      }
+    })
+
+    this.lever = new Lever ({
       scene: this.scene,
       engine: this.engine,
       phaeton: this.phaeton,
       position: {
-        x: 200,
-        y: -400,
-        z: -50,
+        x: 500,
+        y: 225,
+        z: 0,
       },
       size: {
         x: 100,
-        y: 100,
+        y: 50,
         z: 100
       }
     })
@@ -144,17 +126,15 @@ export default class Scene1 {
       engine: this.engine,
       fragment: this.fragment,
       position: {
-        x: 1200,
-        y: 250,
+        x: 500,
+        y: -150,
         z: -45,
       },
       size: {
         x: 100,
         y: 100,
         z: 100
-      },
-      canInteract: this.getStepStatues.bind(this),
-      activateAction: this.endEnigmeAnimation.bind(this)
+      }
     })
 
     this.fire = new Fire ({
@@ -164,8 +144,8 @@ export default class Scene1 {
       fragment: this.fragment,
       debug: this.debug,
       position: {
-        x: -600,
-        y: -400,
+        x: -300,
+        y: -150,
         z: -45,
       },
       size: {
@@ -173,7 +153,7 @@ export default class Scene1 {
         y: 100,
         z: 10
       },
-      captor: this.captor,
+      captor: this.captor
     })
 
 
@@ -184,27 +164,16 @@ export default class Scene1 {
       phaeton: this.phaeton,
       fragment: this.fragment,
       position : {
-        x : 1200,
-        y : -300,
+        x : -150,
+        y : 350,
         z : -51
       },
       size: {
         x: 200,
         y: 300,
         z: 1
-      },
-      open: this.endEnigme
+      }
     })
-  }
-
-  getStepStatues () {
-    return this.statue1.activate && this.statue2.activate
-  }
-
-  endEnigmeAnimation () {
-    this.endEnigme = true
-    this.door.open()
-    console.log('End enigme !!')
   }
 
   //

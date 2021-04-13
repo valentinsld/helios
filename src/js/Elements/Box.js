@@ -13,7 +13,11 @@ const SIZE = {
 }
 const OPTIONS = {
   label: 'Box',
-  isStatic: true
+  isStatic: true,
+  render: {
+    fillStyle: 'transparent',
+    lineWidth: 2
+  }
 }
 
 export default class Box {

@@ -6,44 +6,34 @@ const POSITION = {
   y: 0,
   z: 0
 }
-
 const SIZE = {
-  x: 150,
-  y: 300,
-  z: 0
+  x: 100,
+  y: 100,
+  z: 100
 }
 
-const COLOR = '#ff00ff'
-
-export default class Door{
-  constructor({phaeton, fragment, engine, sceneManager, scene, size = SIZE, position = POSITION, open = false}) {
-    this.type = 'Door'
-    
+export default class Lever {
+  constructor ({scene, engine, phaeton, position = POSITION, size = SIZE}) {
+    this.type = 'Lever'
     this.scene = scene
     this.engine = engine
     this.world = engine.world
-    this.sceneManager = sceneManager
-    // console.log(this.sceneManager)
-
-    this.opened = open
     this.phaeton = phaeton
-    this.fragment = fragment
 
-    this.size = size
     this.position = position
+    this.size = size
+    
+    this.canInteract = false
+    this.activate = false
+    this.step = 0
 
-    this.canUse = {
-      phaeton: false,
-      fragment: false
-    }
-
-    this.addElementToWorld()
-    this.addElementToScene()
-
+    this.addColisionToWorld()
+    this.addBoxToScene()
     this.addElementToPhaeton()
   }
 
-  addElementToWorld() {
+  
+  addColisionToWorld() {
     // init element
     var collider = Matter.Bodies.rectangle(
       this.position.x,
@@ -51,11 +41,11 @@ export default class Door{
       this.size.x,
       this.size.y,
       {
-        label: 'Door',
+        label: 'Lever',
         isSensor: true,
         isStatic: true,
         render: {
-          strokeStyle: COLOR,
+          strokeStyle: '#ff0000',
           fillStyle: 'transparent',
           lineWidth: 2
         }
@@ -67,65 +57,51 @@ export default class Door{
     // init events
     Matter.Events.on(this.engine, 'collisionStart', (event) => {
       var pairs = event.pairs;
-
+      
       for (var i = 0, j = pairs.length; i != j; ++i) {
         var pair = pairs[i];
 
         const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
         const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
-        const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
 
         if (conditionCollider && conditionPhaeton) {
-          this.canUse.phaeton = true
-        } else if (conditionCollider && conditionFragment) {
-          this.canUse.fragment = true
+          this.canInteract = true
         }
-
       }
     });
 
     Matter.Events.on(this.engine, 'collisionEnd', (event) => {
       var pairs = event.pairs;
-
+      
       for (var i = 0, j = pairs.length; i != j; ++i) {
         var pair = pairs[i];
 
         const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
         const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
-        const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
 
         if (conditionCollider && conditionPhaeton) {
-          this.canUse.phaeton = false
-        } else if (conditionCollider && conditionFragment) {
-          this.canUse.fragment = false
+          this.canInteract = false
         }
-
       }
     });
   }
 
-  addElementToScene() {
+  addBoxToScene() {
     const BOX = new THREE.BoxBufferGeometry(
       this.size.x,
       this.size.y,
       this.size.z,
       32, 32
     )
-   
-
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: COLOR,
+      color: '#0000ff',
       metalness: 0.3,
       roughness: 0.4,
     })
 
     this.mesh = new THREE.Mesh(BOX, MATERIAL)
-    this.mesh.receiveShadow = true
-
-    this.mesh.position.x += this.position.x
-    this.mesh.position.y += this.position.y
-    this.mesh.position.z += this.position.z
-
+    this.mesh.position.copy(this.position)
+    
     this.scene.add(this.mesh)
   }
 
@@ -133,19 +109,19 @@ export default class Door{
     this.phaeton.addInteractionElements(this)
   }
 
-  open () {
-    this.opened = true
-    this.mesh.material.color = new THREE.Color(0x00ffff)
-  }
-
-  close () {
-    this.opened = false
-    this.mesh.material.color = new THREE.Color(COLOR)
-  }
-
   interact() {
-    if (!this.canUse.phaeton || !this.canUse.fragment || !this.opened) return
+    if (!this.canInteract) return
 
-    this.sceneManager.next()
+    this.step += 1
+    console.log(this.step, this.step % 4 === 3)
+
+    if (this.step % 4 === 3) {
+      this.activate = true
+      this.mesh.material.color = new THREE.Color("#ff0000")
+    } else {
+      this.activate = false
+      this.mesh.material.color = new THREE.Color("#0000ff")
+    }
   }
+
 }

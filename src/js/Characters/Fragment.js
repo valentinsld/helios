@@ -23,10 +23,10 @@ export default class Fragment{
     this.mouseDown = false
 
     this.cursor = {
-      x: 0,
-      y: 0,
-      prevX: 0,
-      prevY: 0
+      x: position.x,
+      y: position.y,
+      prevX: position.x,
+      prevY: position.y
     }
 
     this.viewport = {
@@ -161,8 +161,8 @@ export default class Fragment{
       // apply force body
       let forceX = (this.box.position.x - this.cursor.x) / -500 * this.cameraZoom
       let forceY = (this.box.position.y - this.cursor.y) / -500 * this.cameraZoom
-      forceX = Math.max(Math.min(forceX, 1), -1)
-      forceY = Math.max(Math.min(forceY, 1), -1)
+      forceX = Math.max(Math.min(forceX, 0.4), -0.4)
+      forceY = Math.max(Math.min(forceY, 0.4), -0.4)
       
       Matter.Body.applyForce(
         this.box,
