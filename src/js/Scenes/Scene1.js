@@ -105,6 +105,37 @@ export default class Scene1 {
       }
     })
 
+    const escalier = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      size: {
+        x: 150,
+        y: 550,
+        z: 300
+      },
+      position : {
+        x: 320,
+        y: -457,
+        z: 0
+      },
+      rotation: Math.PI * 0.6
+    })
+
+    const palier = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      size: {
+        x: 900,
+        y: 400,
+        z: 100
+      },
+      position : {
+        x: 1000,
+        y: -500,
+        z: 0
+      }
+    })
+
     this.statue1 = new Statue ({
       scene: this.scene,
       engine: this.engine,

@@ -44,7 +44,9 @@ export default class Phaeton{
       {
         label: 'Phaeton',
         inertia: 'Infinity',
-        // frictionAir: 0.1,
+        frictionAir: 0.1,
+        // chamfer: 10,
+        friction: 1,
         mass: 1000,
         collisionFilter: {
           category: 0x0004,
@@ -97,11 +99,11 @@ export default class Phaeton{
 
     switch (event.code) {
       case "KeyA":
-        Matter.Body.translate(this.box, Matter.Vector.create(-5, 0))
+        Matter.Body.translate(this.box, Matter.Vector.create(-8, 0))
         break;
       
       case "KeyD":
-        Matter.Body.translate(this.box, Matter.Vector.create(5, 0))
+        Matter.Body.translate(this.box, Matter.Vector.create(8, 0))
         break;
 
       default:

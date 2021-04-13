@@ -141,7 +141,6 @@ export default class Fire {
 
   createCone() {
     const radius = (this.heightCone * Math.tan(this.angleCone * 0.5)) * 2 * 0.8
-    console.log(radius)
     const geometryBis = new THREE.ConeGeometry(radius, this.heightCone, 32);
     geometryBis.applyMatrix4( new THREE.Matrix4().setPosition( 0, this.heightCone * -0.5, 0 ) );
     geometryBis.rotateX(-Math.PI / 2);
