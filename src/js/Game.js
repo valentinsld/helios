@@ -324,12 +324,13 @@ export default class Game{
     // Update sizes
     this.sizes.width = window.innerWidth
     this.sizes.height = window.innerHeight
+    const ratio = this.sizes.height / this.sizes.width
 
     // Update camera
-    this.camera.left = this.sizes.width / - 2
-    this.camera.right = this.sizes.width / 2
-    this.camera.top = this.sizes.height / 2
-    this.camera.bottom = this.sizes.height / - 2
+    this.camera.left = 1920 / - 2
+    this.camera.right = 1920 / 2
+    this.camera.top = 1920 * ratio / 2
+    this.camera.bottom = 1920 * ratio / - 2
     this.camera.updateProjectionMatrix()
 
     // Update renderer
