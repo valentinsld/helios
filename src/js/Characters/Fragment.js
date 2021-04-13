@@ -13,7 +13,9 @@ export default class Fragment{
     this.canvas = canvas
     this.world = engine.world
     this.scene = scene
+    this.camera = camera
     this.cameraZoom = camera.zoom
+    console.log(this.camera)
 
     this.position = position
     this.radius = radius
@@ -29,9 +31,14 @@ export default class Fragment{
       prevY: position.y
     }
 
-    this.viewport = {
+    this.screen = {
       width: window.innerWidth,
       height: window.innerHeight
+    }
+    
+    this.viewport = {
+      width: this.camera.right * 2 / this.cameraZoom,
+      height: this.camera.top * 2 / this.cameraZoom
     }
 
     this.addFragmentToWorld()
@@ -84,8 +91,8 @@ export default class Fragment{
 
   addPlaneToScene() {
     const PLANE = new THREE.PlaneGeometry(
-      this.viewport.width / this.cameraZoom,
-      this.viewport.height / this.cameraZoom,
+      this.viewport.width,
+      this.viewport.height,
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
@@ -119,8 +126,8 @@ export default class Fragment{
   }
 
   cursorMove(e) {
-    this.cursor.x = (e.clientX - this.viewport.width / 2) / this.cameraZoom
-    this.cursor.y = (-e.clientY + this.viewport.height / 2) / this.cameraZoom
+    this.cursor.x = (e.clientX - this.screen.width / 2) * this.viewport.width / window.innerWidth
+    this.cursor.y = (-e.clientY + this.screen.height/ 2) * this.viewport.height / window.innerHeight
   }
   mouseUp() {
     if (!this.interactionElement) return

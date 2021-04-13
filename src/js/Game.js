@@ -30,11 +30,12 @@ export default class Game{
     this.initLights()
 
     this.initPhysicWorld()
-    this.initSceneManager()
-
+    
     this.resize()
     this.update()
     this.createEvents()
+    
+    this.initSceneManager()
   }
 
   // GUI
