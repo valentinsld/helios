@@ -81,16 +81,18 @@ export default class Fragment{
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: '#001Af2',
+      color: 0xffff00,
       metalness: 0.3,
       roughness: 0.4,
+      emissive: 0xffff00,
+      emissiveIntensity: 0.95
     })
 
     this.sphere = new THREE.Mesh(SPHERE, MATERIAL)
     this.sphereLight = new THREE.PointLight('#ffff00', 4, 500)
     
     this.mesh.add(this.sphere, this.sphereLight)
-    this.mesh.position.z = 200
+    this.mesh.position.z = 250
   }
 
   addPlaneToScene() {
