@@ -29,10 +29,6 @@ export default class Phaeton{
     this.addPhaetonToScene()
 
     this.initEvents()
-
-    // setInterval(() => {
-    //   console.log(this.box.position.y, this.mesh.position.y)
-    // }, 100);
   }
 
   addPhaetonToWorld() {

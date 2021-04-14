@@ -13,23 +13,24 @@ const SIZE = {
 }
 
 export default class Lever {
-  constructor ({scene, engine, phaeton, gltf, position = POSITION, size = SIZE}) {
+  constructor ({scene, engine, phaeton, gltf = null, position = POSITION, size = SIZE}) {
     this.type = 'Lever'
     this.scene = scene
     this.engine = engine
     this.world = engine.world
     this.phaeton = phaeton
 
+    this.gltf = gltf
     this.position = position
     this.size = size
     
     this.canInteract = false
     this.activate = false
-    this.step = 0
+    this.step = Math.floor(Math.random() * 4)
 
     this.addColisionToWorld()
-    if (gltf) {
-      this.addGltf(gltf)
+    if (this.gltf) {
+      this.addGltf(this.gltf)
     } else {
       this.addBoxToScene()
     }
@@ -91,11 +92,10 @@ export default class Lever {
   }
 
   addGltf (gltf) {
-    console.log(gltf)
-
     this.mesh = gltf
     this.mesh.position.copy(this.position)
-    
+    this.mesh.rotation.y = this.step * Math.PI / 2
+
     this.scene.add(this.mesh)
   }
 
@@ -126,14 +126,15 @@ export default class Lever {
     if (!this.canInteract) return
 
     this.step += 1
-    console.log(this.step, this.step % 4 === 3)
+    // console.log(this.step, this.step % 4 === 0)
+    this.mesh.rotation.y = this.step * Math.PI / 2
 
-    if (this.step % 4 === 3) {
+    if (this.step % 4 === 0) {
       this.activate = true
-      this.mesh.material.color = new THREE.Color("#ff0000")
+      if (!this.gltf) this.mesh.material.color = new THREE.Color("#ff0000")
     } else {
       this.activate = false
-      this.mesh.material.color = new THREE.Color("#0000ff")
+      if (!this.gltf) this.mesh.material.color = new THREE.Color("#0000ff")
     }
   }
 
