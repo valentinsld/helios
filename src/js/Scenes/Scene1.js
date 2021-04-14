@@ -45,7 +45,7 @@ export default class Scene1 {
       position : {
         x : -1300,
         y : -450,
-        z : 0
+        z : 200
       }
     })
 
@@ -70,6 +70,10 @@ export default class Scene1 {
       {
         url: '/models/statuedebout/statuedebout.gltf',
         func: this.initStatue1.bind(this)
+      },
+      {
+        url: '/models/statuedebout/statuedebout.gltf',
+        func: this.initStatue2.bind(this)
       }
     ]
 
@@ -87,7 +91,7 @@ export default class Scene1 {
       size: {
         x: 4000,
         y: 500,
-        z: 300
+        z: 500
       },
       position : {
         x: 0,
@@ -102,7 +106,7 @@ export default class Scene1 {
       size: {
         x: 400,
         y: 1500,
-        z: 300
+        z: 500
       },
       position : {
         x: -2000,
@@ -117,7 +121,7 @@ export default class Scene1 {
       size: {
         x: 400,
         y: 1500,
-        z: 300
+        z: 500
       },
       position : {
         x: 2000,
@@ -132,7 +136,7 @@ export default class Scene1 {
       size: {
         x: 150,
         y: 550,
-        z: 300
+        z: 500
       },
       position : {
         x: 720,
@@ -148,7 +152,7 @@ export default class Scene1 {
       size: {
         x: 900,
         y: 400,
-        z: 100
+        z: 500
       },
       position : {
         x: 1400,
@@ -174,21 +178,21 @@ export default class Scene1 {
     // })
 
     
-    this.statue2 = new Statue ({
-      scene: this.scene,
-      engine: this.engine,
-      phaeton: this.phaeton,
-      position: {
-        x: 200,
-        y: -500,
-        z: -50,
-      },
-      size: {
-        x: 100,
-        y: 100,
-        z: 100
-      }
-    })
+    // this.statue2 = new Statue ({
+    //   scene: this.scene,
+    //   engine: this.engine,
+    //   phaeton: this.phaeton,
+    //   position: {
+    //     x: 200,
+    //     y: -500,
+    //     z: -50,
+    //   },
+    //   size: {
+    //     x: 100,
+    //     y: 100,
+    //     z: 100
+    //   }
+    // })
 
 
     this.captor = new Captor ({
@@ -265,7 +269,52 @@ export default class Scene1 {
 
     gltf = gltf.scene
     gltf.scale.set(70, 70, 70)
-    gltf.position.z = -100
+    gltf.children[0].position.z = -0.1
+    gltf.children[0].position.y = 0.70
+
+    gltf.traverse( function(node) {
+      if (node.isMesh) {
+        node.material = material
+        node.castShadow = true
+        // node.receiveShadow = true
+      }
+    })
+
+    this.statue2 = new Statue ({
+      scene: this.scene,
+      engine: this.engine,
+      phaeton: this.phaeton,
+      gltf,
+      position: {
+        x: 200,
+        y: -500,
+        z: -50,
+      },
+      size: {
+        x: 100,
+        y: 100,
+        z: 100
+      }
+    })
+  }
+
+  initStatue2 (gltf) {
+    const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
+    normal.flipY = false
+
+    const material = new THREE.MeshStandardMaterial({
+      map: texture,
+      normalMap: normal,
+      metalness: 0,
+      roughness: 0.5,
+    })
+
+    gltf = gltf.scene
+    gltf.scale.set(70, 70, 70)
+    gltf.children[0].position.z = -0.1
+    gltf.children[0].position.y = 0.70
 
     gltf.traverse( function(node) {
       if (node.isMesh) {
@@ -291,12 +340,8 @@ export default class Scene1 {
         z: 100
       }
     })
+  }
 
-    this.game.addUpdatedElement('rotateStatue1', this.rotateStatue1.bind(this))
-  }
-  rotateStatue1 (time) {
-    this.statue1.mesh.rotation.y = time
-  }
 
   getStepStatues () {
     return this.statue1.activate && this.statue2.activate
