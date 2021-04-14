@@ -147,7 +147,7 @@ export default class Game{
   initLights() {
     const light = {
       color: 0xffffff,
-      intensity: 1
+      intensity: 0.4
     }
     const ambientLight = new THREE.AmbientLight(light.color, light.intensity)
     this.globalScene.add(ambientLight)

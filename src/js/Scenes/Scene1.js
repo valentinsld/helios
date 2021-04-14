@@ -4,11 +4,12 @@ import * as Matter from 'matter-js'
 import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
 
-
 import Box from '../Elements/Box'
 import Fire from '../Elements/Fire'
 import Captor from '../Elements/Captor'
 import Door from '../Elements/Door'
+
+import LoaderModelsManager from '../LoaderModelsManager'
 
 import Statue from '../Elements/01_statue'
 
@@ -18,6 +19,8 @@ export default class Scene1 {
     this.sceneManager = sceneManager
     this.camera = camera
 
+    this.gltfLoader = gltfLoader
+    this.textureLoader = textureLoader
     this.render = render
     this.engine = engine
     this.world = this.engine.world
@@ -29,6 +32,7 @@ export default class Scene1 {
     this.endEnigme = false
 
     this.initCharacters()
+    this.initModels()
     this.addElements()
   }
 
@@ -57,6 +61,21 @@ export default class Scene1 {
 
     this.game.addUpdatedElement('phaeton', this.phaeton.update.bind(this.phaeton))
     this.game.addUpdatedElement('fragment', this.fragment.update.bind(this.fragment))
+  }
+
+  initModels () {
+    const arrayModels = [
+      {
+        url: '/models/statuedebout/statuedebout.gltf',
+        func: this.initStatue1.bind(this)
+      }
+    ]
+
+    new LoaderModelsManager({
+      arrayModels,
+      gltfLoader: this.gltfLoader,
+      // progressFunction: this.updateProgress.bind(this)
+    })
   }
 
   addElements () {
@@ -136,21 +155,21 @@ export default class Scene1 {
       }
     })
 
-    this.statue1 = new Statue ({
-      scene: this.scene,
-      engine: this.engine,
-      phaeton: this.phaeton,
-      position: {
-        x: -100,
-        y: -500,
-        z: -50,
-      },
-      size: {
-        x: 100,
-        y: 100,
-        z: 100
-      }
-    })
+    // this.statue1 = new Statue ({
+    //   scene: this.scene,
+    //   engine: this.engine,
+    //   phaeton: this.phaeton,
+    //   position: {
+    //     x: -100,
+    //     y: -500,
+    //     z: -50,
+    //   },
+    //   size: {
+    //     x: 100,
+    //     y: 100,
+    //     z: 100
+    //   }
+    // })
 
     
     this.statue2 = new Statue ({
@@ -227,6 +246,53 @@ export default class Scene1 {
       },
       open: this.endEnigme
     })
+  }
+
+  initStatue1 (gltf) {
+    const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
+    
+    const material = new THREE.MeshStandardMaterial({
+      map: texture,
+      normalMap: normal,
+      metalness: 0.3,
+      roughness: 0.2,
+    })
+
+    gltf = gltf.scene
+    gltf.scale.set(70, 70, 70)
+    gltf.position.z = -100
+
+    gltf.traverse( function(node) {
+      if (node.isMesh) {
+        node.material = material
+        node.castShadow = true
+        // node.receiveShadow = true
+      }
+    })
+
+    this.statue1 = new Statue ({
+      scene: this.scene,
+      engine: this.engine,
+      phaeton: this.phaeton,
+      gltf,
+      position: {
+        x: -100,
+        y: -500,
+        z: -50,
+      },
+      size: {
+        x: 100,
+        y: 100,
+        z: 100
+      }
+    })
+
+    this.game.addUpdatedElement('rotateStatue1', this.rotateStatue1.bind(this))
+  }
+  rotateStatue1 (time) {
+    this.statue1.mesh.rotation.y = time
   }
 
   getStepStatues () {

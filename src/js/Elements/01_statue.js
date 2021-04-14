@@ -13,7 +13,7 @@ const SIZE = {
 }
 
 export default class Lever {
-  constructor ({scene, engine, phaeton, position = POSITION, size = SIZE}) {
+  constructor ({scene, engine, phaeton, gltf, position = POSITION, size = SIZE}) {
     this.type = 'Lever'
     this.scene = scene
     this.engine = engine
@@ -28,7 +28,11 @@ export default class Lever {
     this.step = 0
 
     this.addColisionToWorld()
-    this.addBoxToScene()
+    if (gltf) {
+      this.addGltf(gltf)
+    } else {
+      this.addBoxToScene()
+    }
     this.addElementToPhaeton()
   }
 
@@ -84,6 +88,15 @@ export default class Lever {
         }
       }
     });
+  }
+
+  addGltf (gltf) {
+    console.log(gltf)
+
+    this.mesh = gltf
+    this.mesh.position.copy(this.position)
+    
+    this.scene.add(this.mesh)
   }
 
   addBoxToScene() {

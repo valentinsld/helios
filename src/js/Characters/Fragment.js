@@ -15,7 +15,6 @@ export default class Fragment{
     this.scene = scene
     this.camera = camera
     this.cameraZoom = camera.zoom
-    console.log(this.camera)
 
     this.position = position
     this.radius = radius
@@ -43,7 +42,7 @@ export default class Fragment{
 
     this.addFragmentToWorld()
     this.addFragmentToScene()
-    this.addPlaneToScene()
+    // this.addPlaneToScene()
     this.createTargetObject()
 
     this.initEvents()
@@ -74,6 +73,10 @@ export default class Fragment{
   }
 
   addFragmentToScene() {
+    this.mesh = new THREE.Group()
+    this.scene.add(this.mesh)
+
+
     const SPHERE = new THREE.SphereBufferGeometry(
       this.radius,
       32, 32
@@ -84,9 +87,11 @@ export default class Fragment{
       roughness: 0.4,
     })
 
-    this.mesh = new THREE.Mesh(SPHERE, MATERIAL)
-
-    this.scene.add(this.mesh)
+    this.sphere = new THREE.Mesh(SPHERE, MATERIAL)
+    this.sphereLight = new THREE.PointLight('#ffff00', 4, 500)
+    this.sphereLight.z = 100
+    
+    this.mesh.add(this.sphere, this.sphereLight)
   }
 
   addPlaneToScene() {
