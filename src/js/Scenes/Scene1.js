@@ -29,6 +29,8 @@ export default class Scene1 {
     this.scene = new THREE.Group()
     globalScene.add(this.scene)
     
+    if (this.debug) this.debugSceneFolder = this.debug.addFolder('Scene params')
+
     this.endEnigme = false
 
     this.initCharacters()
@@ -258,7 +260,7 @@ export default class Scene1 {
       map: texture,
       normalMap: normal,
       metalness: 0,
-      roughness: 0,
+      roughness: 0.5,
     })
 
     gltf = gltf.scene
