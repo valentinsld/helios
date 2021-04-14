@@ -257,8 +257,8 @@ export default class Scene1 {
     const material = new THREE.MeshStandardMaterial({
       map: texture,
       normalMap: normal,
-      metalness: 0.3,
-      roughness: 0.2,
+      metalness: 0,
+      roughness: 0,
     })
 
     gltf = gltf.scene

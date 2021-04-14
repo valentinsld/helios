@@ -76,7 +76,6 @@ export default class Fragment{
     this.mesh = new THREE.Group()
     this.scene.add(this.mesh)
 
-
     const SPHERE = new THREE.SphereBufferGeometry(
       this.radius,
       32, 32
@@ -89,9 +88,9 @@ export default class Fragment{
 
     this.sphere = new THREE.Mesh(SPHERE, MATERIAL)
     this.sphereLight = new THREE.PointLight('#ffff00', 4, 500)
-    this.sphereLight.z = 100
     
     this.mesh.add(this.sphere, this.sphereLight)
+    this.mesh.position.z = 200
   }
 
   addPlaneToScene() {
