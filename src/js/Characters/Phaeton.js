@@ -16,17 +16,20 @@ const SIZE = {
 const COLOR = '#008d02'
 
 export default class Phaeton{
-  constructor({engine, scene, position = POSITION, size = SIZE}) {
+  constructor({engine, scene, debug, position = POSITION, size = SIZE}) {
     this.world = engine.world
     this.scene = scene
 
+    this.debug = debug
     this.position = position
     this.size = size
 
+    this.speed = 8
     this.interactionElements = []
 
     this.addPhaetonToWorld()
     this.addPhaetonToScene()
+    if(this.debug) this.addDebug()
 
     this.initEvents()
   }
@@ -76,6 +79,11 @@ export default class Phaeton{
     this.scene.add(this.mesh)
   }
 
+  addDebug () {
+    this.debugFolder = this.debug.addFolder('Phaeton')
+    this.debugFolder.add(this, "speed", 0, 20)
+  }
+
   addInteractionElements(element) {
     this.interactionElements.push(element)
     // console.log(this.interactionElements)
@@ -95,11 +103,11 @@ export default class Phaeton{
 
     switch (event.code) {
       case "KeyA":
-        Matter.Body.translate(this.box, Matter.Vector.create(-8, 0))
+        Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
         break;
       
       case "KeyD":
-        Matter.Body.translate(this.box, Matter.Vector.create(8, 0))
+        Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
         break;
 
       default:

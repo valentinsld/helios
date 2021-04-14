@@ -14,10 +14,11 @@ import LoaderModelsManager from '../LoaderModelsManager'
 import Statue from '../Elements/01_statue'
 
 export default class Scene1 {
-  constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
+  constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game, debug}) {
     this.game = game
     this.sceneManager = sceneManager
     this.camera = camera
+    this.debug = debug
 
     this.gltfLoader = gltfLoader
     this.textureLoader = textureLoader
@@ -42,6 +43,7 @@ export default class Scene1 {
     this.phaeton = new Phaeton({
       engine: this.engine,
       scene : this.scene,
+      debug: this.debug,
       position : {
         x : -1300,
         y : -450,
@@ -54,6 +56,7 @@ export default class Scene1 {
       engine: this.engine,
       scene : this.scene,
       camera : this.camera,
+      debug: this.debug,
       position : {
         x : -1200,
         y : -350,

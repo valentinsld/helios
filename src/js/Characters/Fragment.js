@@ -9,12 +9,23 @@ const POSITION = {
 const RADIUS = 25
 
 export default class Fragment{
-  constructor({canvas, engine, scene, camera, position = POSITION, radius = RADIUS}) {
+  constructor({canvas, engine, scene, camera, debug, position = POSITION, radius = RADIUS}) {
     this.canvas = canvas
     this.world = engine.world
     this.scene = scene
     this.camera = camera
     this.cameraZoom = camera.zoom
+    this.debug = debug
+
+    this.params = {
+      color: 0xffff00,
+      metalness: 0.3,
+      roughness: 0.4,
+      emissiveColor: 0xffff00,
+      emissiveIntensity: 0.95,
+      intensity: 4,
+      distance: 500
+    }
 
     this.position = position
     this.radius = radius
@@ -44,6 +55,8 @@ export default class Fragment{
     this.addFragmentToScene()
     // this.addPlaneToScene()
     this.createTargetObject()
+
+    if(this.debug) this.addDebug()
 
     this.initEvents()
   }
@@ -76,21 +89,31 @@ export default class Fragment{
     this.mesh = new THREE.Group()
     this.scene.add(this.mesh)
 
+    // SPHERE
     const SPHERE = new THREE.SphereBufferGeometry(
       this.radius,
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: 0xffff00,
-      metalness: 0.3,
-      roughness: 0.4,
-      emissive: 0xffff00,
-      emissiveIntensity: 0.95
+      color: this.params.color,
+      metalness: this.params.metalness,
+      roughness: this.params.roughness,
+      emissive: this.params.emissiveColor,
+      emissiveIntensity: this.params.emissiveIntensity
     })
 
     this.sphere = new THREE.Mesh(SPHERE, MATERIAL)
-    this.sphereLight = new THREE.PointLight('#ffff00', 4, 500)
-    
+
+    // LIGHT
+    this.sphereLight = new THREE.PointLight(this.params.color, this.params.intensity, this.params.distance)
+    this.sphereLight.castShadow = true
+    this.sphereLight.shadow.radius = 8
+    this.sphereLight.shadow.mapSize.width = 2048
+    this.sphereLight.shadow.mapSize.height = 2048
+    this.sphereLight.shadow.bias = - 0.01
+    this.sphereLight.shadow.camera.far = 800
+
+    // ADD ELEMENTS
     this.mesh.add(this.sphere, this.sphereLight)
     this.mesh.position.z = 250
   }
@@ -120,6 +143,35 @@ export default class Fragment{
   addInteractionElements(element) {
     this.interactionElements.push(element)
     // console.log(this.interactionElements)
+  }
+
+  addDebug () {
+    this.debugFolder = this.debug.addFolder('Fragment')
+
+    // this.params = {
+    //   color: 0xffff00, X
+    //   metalness: 0.3,
+    //   roughness: 0.4,
+    //   emissiveColor: 0xffff00, X
+    //   emissiveIntensity: 0.95,
+    //   intensity: 4,
+    //   distance: 500
+    // }
+
+    this.debugFolder.addColor(this.params, 'color').onChange((color) => {
+      this.sphere.material.color = new THREE.Color(color)
+      this.sphereLight.color = new THREE.Color(color)
+    })
+    this.debugFolder.add(this.sphere.material, "metalness", 0, 1)
+    this.debugFolder.add(this.sphere.material, "roughness", 0, 1)
+    this.debugFolder.addColor(this.params, 'emissiveColor').onChange((color) => {
+      this.sphere.material.emissive = new THREE.Color(color)
+    })
+    this.debugFolder.add(this.sphere.material, "emissiveIntensity", 0, 1)
+
+    this.debugFolder.add(this.sphereLight, "intensity", 0, 15)
+    this.debugFolder.add(this.sphereLight, "distance", 0, 1000)
+
   }
 
   //
