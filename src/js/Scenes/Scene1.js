@@ -252,7 +252,8 @@ export default class Scene1 {
     const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
     texture.flipY = false
     const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
-    
+    normal.flipY = false
+
     const material = new THREE.MeshStandardMaterial({
       map: texture,
       normalMap: normal,
