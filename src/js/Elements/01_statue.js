@@ -12,9 +12,9 @@ const SIZE = {
   z: 100
 }
 
-export default class Lever {
+export default class Statue {
   constructor ({scene, engine, phaeton, gltf = null, position = POSITION, size = SIZE}) {
-    this.type = 'Lever'
+    this.type = 'Statue'
     this.scene = scene
     this.engine = engine
     this.world = engine.world
@@ -25,8 +25,8 @@ export default class Lever {
     this.size = size
     
     this.canInteract = false
-    this.activate = false
     this.step = Math.floor(Math.random() * 4)
+    this.activate = this.step % 4 === 0
 
     this.addColisionToWorld()
     if (this.gltf) {
@@ -114,8 +114,6 @@ export default class Lever {
 
     this.mesh = new THREE.Mesh(BOX, MATERIAL)
     this.mesh.position.copy(this.position)
-    
-    this.scene.add(this.mesh)
   }
 
   addElementToPhaeton() {
