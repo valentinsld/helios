@@ -74,7 +74,7 @@ export default class Scene1 {
       position : {
         x : -1200,
         y : -350,
-        z : 0
+        z : 120
       }
     })
 
@@ -97,7 +97,7 @@ export default class Scene1 {
         func: this.initPorte.bind(this)
       },
       {
-        url: '/models/temple/Temple.gltf',
+        url: '/models/temple/temple.gltf',
         func: this.initTemple.bind(this)
       },
       {
