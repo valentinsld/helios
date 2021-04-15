@@ -180,8 +180,8 @@ export default class Scene1 {
         z: 100
       },
       position : {
-        x: 685,
-        y: -495,
+        x: 385,
+        y: -500,
         z: 0
       },
       rotation: Math.PI * 0.7
@@ -197,8 +197,8 @@ export default class Scene1 {
         z: 100
       },
       position : {
-        x: 1060,
-        y: -550,
+        x: 760,
+        y: -555,
         z: 0
       }
     })
@@ -212,8 +212,8 @@ export default class Scene1 {
       // render: this.debug ? true : false,
       render: false,
       position : {
-        x : 900,
-        y : -50,
+        x : 600,
+        y : -150,
         z : 250
       },
       size: {
@@ -428,6 +428,8 @@ export default class Scene1 {
         node.material = materialSoleil
         node.castShadow = true
         node.receiveShadow = true
+      } else if (node.name === 'interieureporte') {
+        console.log(node)
       } else if (node.isMesh) {
         node.material = material
         node.castShadow = true
@@ -436,6 +438,26 @@ export default class Scene1 {
     })
 
     this.groupDoorTemple.add(this.temple)
+
+    const light = new THREE.PointLight(0xb36f24, 3.5, 700)
+    // const light1 = new THREE.PointLight(0xff00ff, 1.5, 700)
+    light.position.set(50,300,-100)
+    // light1.position.set(50,100,-100)
+    light.castShadow = true
+    // light1.castShadow = true
+
+    // light.castShadow = true
+    // light.shadow.radius = 8
+    // light.shadow.mapSize.width = 2048
+    // light.shadow.mapSize.height = 2048
+    // light.shadow.bias = - 0.01
+    // light.shadow.camera.far = 1500
+
+    this.groupDoorTemple.add(light)
+    // this.groupDoorTemple.add(light1)
+
+    // const pointLightHelper = new THREE.PointLightHelper( light, 100 );
+    // this.scene.add( pointLightHelper );
   }
 
   initBrasier (gltf) {
