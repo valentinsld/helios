@@ -20,7 +20,7 @@ const SENSOR_LIGHT = {
 const COLOR = '#ffff00'
 
 export default class Fire {
-  constructor ({fragment, engine, render, debug, scene, captor, position = POSITION, size = SIZE, optionsBox = {}, heightCone = 3800, angleCone = Math.PI * 0.02}) {
+  constructor ({fragment, engine, render, gltf, debug, scene, captor, position = POSITION, size = SIZE, optionsBox = {}, heightCone = 3800, angleCone = Math.PI * 0.02}) {
     this.type = 'Fire'
     this.scene = scene
     this.fragment = fragment
@@ -43,7 +43,11 @@ export default class Fire {
     this.createSensor()
     // this.createSensorLight()
 
-    this.addBoxToScene()
+    if (gltf) {
+      this.addGltfToScene(gltf)
+    } else {
+      this.addBoxToScene()
+    }
     this.createLight()
     this.createCone()
 
@@ -180,6 +184,13 @@ export default class Fire {
     this.scene.add(this.mesh)
   }
 
+  addGltfToScene (gltf) {
+    this.mesh = gltf
+    this.mesh.position.copy(this.position)
+
+    this.scene.add(this.mesh)
+  }
+
   addElementToFragment() {
     this.fragment.addInteractionElements(this)
   }
@@ -187,6 +198,7 @@ export default class Fire {
   createLight() {
     this.spotLight = new THREE.SpotLight( 0xffffff, 0, this.heightCone, this.angleCone * 3, 1, 1 );
     this.spotLight.power = 15
+    this.spotLight.intensity = 0
     this.spotLight.position.copy(this.position)
 
     this.spotLight.castShadow = true

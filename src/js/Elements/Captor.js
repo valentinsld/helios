@@ -31,7 +31,7 @@ export default class Captor {
     this.canInteract = canInteract
     this.activateAction = activateAction
 
-    if(true) this.addBoxToScene()
+    if(render) this.addBoxToScene()
     this.createSensor()
   }
 

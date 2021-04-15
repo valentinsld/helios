@@ -60,7 +60,7 @@ export default class Scene1 {
       position : {
         x : -1300,
         y : -350,
-        z : 200
+        z : 150
       }
     })
 
@@ -98,6 +98,10 @@ export default class Scene1 {
       {
         url: '/models/temple/Temple.gltf',
         func: this.initTemple.bind(this)
+      },
+      {
+        url: '/models/brasier/brasier.gltf',
+        func: this.initBrasier.bind(this)
       }
     ]
 
@@ -165,74 +169,35 @@ export default class Scene1 {
     const escalier = new Box({
       engine: this.engine,
       scene: this.scene,
+      // render: false,
       size: {
         x: 150,
-        y: 400,
-        z: 500
+        y: 280,
+        z: 100
       },
       position : {
-        x: 500,
-        y: -590,
+        x: 685,
+        y: -595,
         z: 0
       },
-      rotation: Math.PI * 0.6
+      rotation: Math.PI * 0.7
     })
 
     const palier = new Box({
       engine: this.engine,
       scene: this.scene,
+      // render: false,
       size: {
-        x: 900,
+        x: 600,
         y: 400,
-        z: 500
+        z: 100
       },
       position : {
-        x: 1050,
+        x: 1060,
         y: -650,
         z: 0
       }
     })
-
-
-    this.captor = new Captor ({
-      scene: this.scene,
-      engine: this.engine,
-      fragment: this.fragment,
-      position: {
-        x: 850,
-        y: 240,
-        z: 50,
-      },
-      render: this.debug ? true : false,
-      size: {
-        x: 100,
-        y: 100,
-        z: 200
-      },
-      canInteract: this.getStepStatues.bind(this),
-      activateAction: this.endEnigmeAnimation.bind(this)
-    })
-
-    this.fire = new Fire ({
-      scene: this.scene,
-      engine: this.engine,
-      render: this.render,
-      fragment: this.fragment,
-      debug: this.debug,
-      position: {
-        x: -600,
-        y: -500,
-        z: -45,
-      },
-      size: {
-        x: 100,
-        y: 100,
-        z: 10
-      },
-      captor: this.captor,
-      angleCone: Math.PI * 0.01
-    })
-
 
     this.door = new Door({
       scene: this.scene,
@@ -448,6 +413,7 @@ export default class Scene1 {
       normalMap: normalSoleil,
       metalness: 0,
       roughness: 0.5,
+      side: THREE.DoubleSide
     })
 
     this.temple = gltf.scene
@@ -455,7 +421,9 @@ export default class Scene1 {
 
     this.temple.traverse( function(node) {
       if (node.name === 'soleil') {
+        console.log('soleil !', node)
         node.material = materialSoleil
+        node.castShadow = true
         node.receiveShadow = true
       } else if (node.isMesh) {
         node.material = material
@@ -467,6 +435,69 @@ export default class Scene1 {
     this.groupDoorTemple.add(this.temple)
   }
 
+  initBrasier (gltf) {
+    gltf = gltf.scene
+    gltf.scale.set(300, 300, 300)
+    gltf.getObjectByName('brasier').position.y = -0.170
+
+    this.captor = new Captor ({
+      scene: this.scene,
+      engine: this.engine,
+      fragment: this.fragment,
+      position: {
+        x: 850,
+        y: 240,
+        z: 50,
+      },
+      // render: this.debug ? true : false,
+      size: {
+        x: 100,
+        y: 100,
+        z: 200
+      },
+      canInteract: this.getStepStatues.bind(this),
+      activateAction: this.endEnigmeAnimation.bind(this)
+    })
+
+    this.fire = new Fire ({
+      scene: this.scene,
+      engine: this.engine,
+      render: this.render,
+      fragment: this.fragment,
+      debug: this.debug,
+      gltf,
+      position: {
+        x: -600,
+        y: -500,
+        z: -45,
+      },
+      size: {
+        x: 100,
+        y: 100,
+        z: 10
+      },
+      captor: this.captor,
+      angleCone: Math.PI * 0.01
+    })
+
+    // point light
+    const paramsLight = {
+      color: 0xff0000
+    }
+    const light = new THREE.PointLight(paramsLight.color, 1, 1000);
+    light.position.set(-600, -400, -45);
+    this.scene.add( light );
+
+    if (this.debugSceneFolder) {
+      const color = this.debugSceneFolder.addColor(paramsLight, "color").name('Light Color')
+      color.onChange((value) => {
+        light.color = new THREE.Color(value)
+      })
+
+      this.debugSceneFolder.add(light, "intensity", 0, 10).name('Light intensity')
+      this.debugSceneFolder.add(light, "distance", 1000, 2000).name('Light distance')
+    }
+  }
 
   getStepStatues () {
     return this.statue1.activate && this.statue2.activate

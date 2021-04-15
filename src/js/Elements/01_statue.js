@@ -133,7 +133,7 @@ export default class Statue {
       {
         y: this.step * Math.PI / 2,
         ease: "steps(6)", //'Power2.out'
-        duration: 1
+        duration: 0.5
       }
     )
 
