@@ -302,7 +302,7 @@ export default class Scene1 {
       phaeton: this.phaeton,
       gltf,
       position: {
-        x: -100,
+        x: -200,
         y: -400,
         z: -80,
       },
