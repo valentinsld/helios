@@ -132,7 +132,7 @@ export default class Statue {
       this.mesh.rotation,
       {
         y: this.step * Math.PI / 2,
-        ease: "steps(8)", //'Power2.out'
+        ease: "steps(6)", //'Power2.out'
         duration: 1
       }
     )

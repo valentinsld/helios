@@ -16,7 +16,7 @@ const COLOR = '#FF8000'
 const COLOR_BIS = '#ffe063'
 
 export default class Captor {
-  constructor ({fragment, engine, scene, position = POSITION, size = SIZE, optionsBox = {}, canInteract, activateAction}) {
+  constructor ({fragment, engine, scene, position = POSITION, size = SIZE, optionsBox = {}, render, canInteract, activateAction}) {
     this.type = 'Captor'
     this.scene = scene
     this.fragment = fragment
@@ -31,7 +31,7 @@ export default class Captor {
     this.canInteract = canInteract
     this.activateAction = activateAction
 
-    this.addBoxToScene()
+    if(true) this.addBoxToScene()
     this.createSensor()
   }
 
@@ -78,14 +78,14 @@ export default class Captor {
   }
 
   interact(inOut) {
-    console.log(this.activate)
+    // console.log(this.activate)
     if (!this.canInteract.call(null) || this.activate) return
     // console.log('interact captor :', inOut)
     const condition = inOut === 'in'
     
     this.activate = condition ? true : false
     const color = condition ? COLOR_BIS : COLOR
-    this.mesh.material.color = new THREE.Color(color)
+    if (this.mesh) this.mesh.material.color = new THREE.Color(color)
 
     if (this.activate) {
       this.activateAction.call(null)

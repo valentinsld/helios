@@ -150,7 +150,7 @@ export default class Fire {
       opacity: 0,
       metalness: 1,
       emissive: 0xe8b591,
-      emissiveIntensity: 1
+      emissiveIntensity: 0.5
     });
     this.coneOpacity = 0.5
     this.cone = new THREE.Mesh(geometryBis, materialBis);
@@ -185,7 +185,8 @@ export default class Fire {
   }
 
   createLight() {
-    this.spotLight = new THREE.SpotLight( 0xffffff, 0, this.heightCone, this.angleCone, 0.25, 1 );
+    this.spotLight = new THREE.SpotLight( 0xffffff, 0, this.heightCone, this.angleCone * 3, 1, 1 );
+    this.spotLight.power = 15
     this.spotLight.position.copy(this.position)
 
     this.spotLight.castShadow = true
@@ -202,7 +203,7 @@ export default class Fire {
   }
 
   startInteract() {
-    this.spotLight.intensity = 1
+    this.spotLight.intensity = 3
     this.cone.material.opacity = this.coneOpacity
   }
 
