@@ -33,7 +33,7 @@ export default class Scene1 {
     globalScene.add(this.scene)
 
     this.groupDoorTemple = new THREE.Group()
-    this.groupDoorTemple.position.set(1100, -570, -180)
+    this.groupDoorTemple.position.set(800, -470, -180)
     this.groupDoorTemple.rotateY(Math.PI * 3/4)
     this.scene.add(this.groupDoorTemple)
 
@@ -49,7 +49,10 @@ export default class Scene1 {
   }
 
   initZoomCamera () {
-    this.camera.zoom = 0.65
+    this.camera.zoom = 0.95
+
+    // this.scene.position.set(-200, 100, 0)
+
     this.camera.updateProjectionMatrix()
   }
 
@@ -59,7 +62,7 @@ export default class Scene1 {
       scene : this.scene,
       debug: this.debug,
       position : {
-        x : -1300,
+        x : -900,
         y : -350,
         z : 150
       }
@@ -72,8 +75,8 @@ export default class Scene1 {
       camera : this.camera,
       debug: this.debug,
       position : {
-        x : -1200,
-        y : -350,
+        x : -1100,
+        y : -250,
         z : 120
       }
     })
@@ -124,7 +127,7 @@ export default class Scene1 {
       },
       position : {
         x: 0,
-        y: -800,
+        y: -700,
         z: 0
       }
     })
@@ -139,8 +142,8 @@ export default class Scene1 {
       },
       render: false,
       position : {
-        x: -1650,
-        y: 200,
+        x: -1250,
+        y: 300,
         z: 0
       },
       optionsBox: {
@@ -158,8 +161,8 @@ export default class Scene1 {
       },
       render: false,
       position: {
-        x: 1150,
-        y: 200,
+        x: 900,
+        y: 300,
         z: 0
       },
       optionsBox: {
@@ -170,7 +173,7 @@ export default class Scene1 {
     const escalier = new Box({
       engine: this.engine,
       scene: this.scene,
-      // render: false,
+      render: false,
       size: {
         x: 150,
         y: 280,
@@ -178,7 +181,7 @@ export default class Scene1 {
       },
       position : {
         x: 685,
-        y: -595,
+        y: -495,
         z: 0
       },
       rotation: Math.PI * 0.7
@@ -187,7 +190,7 @@ export default class Scene1 {
     const palier = new Box({
       engine: this.engine,
       scene: this.scene,
-      // render: false,
+      render: false,
       size: {
         x: 600,
         y: 400,
@@ -195,7 +198,7 @@ export default class Scene1 {
       },
       position : {
         x: 1060,
-        y: -650,
+        y: -550,
         z: 0
       }
     })
@@ -210,7 +213,7 @@ export default class Scene1 {
       render: false,
       position : {
         x : 900,
-        y : -150,
+        y : -50,
         z : 250
       },
       size: {
@@ -254,9 +257,9 @@ export default class Scene1 {
       phaeton: this.phaeton,
       gltf,
       position: {
-        x: 200,
-        y: -500,
-        z: -80,
+        x: 50,
+        y: -400,
+        z: -30,
       },
       size: {
         x: 100,
@@ -300,7 +303,7 @@ export default class Scene1 {
       gltf,
       position: {
         x: -100,
-        y: -500,
+        y: -400,
         z: -80,
       },
       size: {
@@ -445,8 +448,8 @@ export default class Scene1 {
       engine: this.engine,
       fragment: this.fragment,
       position: {
-        x: 850,
-        y: 240,
+        x: 950,
+        y: 550,
         z: 50,
       },
       // render: this.debug ? true : false,
@@ -467,8 +470,8 @@ export default class Scene1 {
       debug: this.debug,
       gltf,
       position: {
-        x: -600,
-        y: -500,
+        x: -450,
+        y: -400,
         z: -45,
       },
       size: {

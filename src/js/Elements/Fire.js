@@ -159,6 +159,7 @@ export default class Fire {
     this.coneOpacity = 0.5
     this.cone = new THREE.Mesh(geometryBis, materialBis);
     this.scene.add(this.cone);
+    this.cone.name = 'Cone'
 
     this.cone.position.copy(this.position)
     this.cone.rotation.z = Math.PI
