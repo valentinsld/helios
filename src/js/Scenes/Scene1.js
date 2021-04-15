@@ -394,7 +394,7 @@ export default class Scene1 {
     // texture
     const texture = this.textureLoader.load('/models/temple/TextureTemple.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/temple/NormalTemple.png')
+    const normal = this.textureLoader.load('/models/temple/normaltemple.png')
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
