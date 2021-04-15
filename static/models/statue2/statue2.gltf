@@ -1,0 +1,133 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.4.40",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "statue1.001",
+            "rotation" : [
+                -0.3626108467578888,
+                0.45230990648269653,
+                0.055672358721494675,
+                -0.8129144906997681
+            ],
+            "scale" : [
+                0.15812230110168457,
+                0.15812230110168457,
+                0.15812230110168457
+            ],
+            "translation" : [
+                0.05651497468352318,
+                0.05480504035949707,
+                0.031983375549316406
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "name" : "Material.001",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.1424000859260559,
+                    0.1424000859260559,
+                    0.1424000859260559,
+                    1
+                ],
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.5
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Cube.011",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 1606,
+            "max" : [
+                1.3947824239730835,
+                8.276872634887695,
+                1.8752628564834595
+            ],
+            "min" : [
+                -2.9263482093811035,
+                -1.1841562986373901,
+                -3.2145142555236816
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 1606,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 1606,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 2406,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 19272,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 19272,
+            "byteOffset" : 19272
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 12848,
+            "byteOffset" : 38544
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 4812,
+            "byteOffset" : 51392
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 56204,
+            "uri" : "statue2.bin"
+        }
+    ]
+}

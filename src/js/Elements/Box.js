@@ -13,21 +13,30 @@ const SIZE = {
 }
 const OPTIONS = {
   label: 'Box',
-  isStatic: true
+  isStatic: true,
+  friction: 1,
+  frictionStatic: Infinity,
+  render: {
+    fillStyle: 'transparent',
+    lineWidth: 2
+  }
 }
 
 export default class Box {
-  constructor ({engine, scene, position = POSITION, size = SIZE, optionsBox = OPTIONS}) {
+  constructor ({engine, scene, position = POSITION, rotation = 0, size = SIZE, optionsBox = OPTIONS, render = true}) {
     this.world = engine.world
     this.scene = scene
 
     this.position = position
+    this.rotation = rotation
     this.size = size
-    this.optionsBox = optionsBox
+    this.optionsBox = Object.assign(OPTIONS, optionsBox)
 
     this.addBoxToWorld()
-    this.addBoxToScene()
-    this.initPosition()
+    if (render) {
+      this.addBoxToScene()
+      this.initPosition()
+    }
   }
 
   addBoxToWorld() {
@@ -38,6 +47,8 @@ export default class Box {
       this.size.y,
       this.optionsBox
     );
+    
+    Matter.Body.rotate(this.box, this.rotation)
 
     Matter.World.add(this.world, this.box);
   }

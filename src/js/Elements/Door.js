@@ -16,7 +16,7 @@ const SIZE = {
 const COLOR = '#ff00ff'
 
 export default class Door{
-  constructor({phaeton, fragment, engine, sceneManager, scene, size = SIZE, distanceInteraction = 150, position = POSITION}) {
+  constructor({phaeton, fragment, engine, sceneManager, scene, render = false, size = SIZE, position = POSITION, open = false}) {
     this.type = 'Door'
     
     this.scene = scene
@@ -25,11 +25,11 @@ export default class Door{
     this.sceneManager = sceneManager
     // console.log(this.sceneManager)
 
+    this.opened = open
     this.phaeton = phaeton
     this.fragment = fragment
 
     this.size = size
-    this.distanceInteraction = distanceInteraction
     this.position = position
 
     this.canUse = {
@@ -38,7 +38,7 @@ export default class Door{
     }
 
     this.addElementToWorld()
-    this.addElementToScene()
+    if (render) this.addElementToScene()
 
     this.addElementToPhaeton()
   }
@@ -133,8 +133,18 @@ export default class Door{
     this.phaeton.addInteractionElements(this)
   }
 
+  open () {
+    this.opened = true
+    if (this.mesh) this.mesh.material.color = new THREE.Color(0x00ffff)
+  }
+
+  close () {
+    this.opened = false
+    if (this.mesh) this.mesh.material.color = new THREE.Color(COLOR)
+  }
+
   interact() {
-    if (!this.canUse.phaeton || !this.canUse.fragment) return
+    if (!this.canUse.phaeton || !this.canUse.fragment || !this.opened) return
 
     this.sceneManager.next()
   }

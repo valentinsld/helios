@@ -16,23 +16,22 @@ const SIZE = {
 const COLOR = '#008d02'
 
 export default class Phaeton{
-  constructor({engine, scene, position = POSITION, size = SIZE}) {
+  constructor({engine, scene, debug, position = POSITION, size = SIZE}) {
     this.world = engine.world
     this.scene = scene
 
+    this.debug = debug
     this.position = position
     this.size = size
 
+    this.speed = 8
     this.interactionElements = []
 
     this.addPhaetonToWorld()
     this.addPhaetonToScene()
+    if(this.debug) this.addDebug()
 
     this.initEvents()
-
-    // setInterval(() => {
-    //   console.log(this.box.position.y, this.mesh.position.y)
-    // }, 100);
   }
 
   addPhaetonToWorld() {
@@ -44,7 +43,9 @@ export default class Phaeton{
       {
         label: 'Phaeton',
         inertia: 'Infinity',
-        // frictionAir: 0.1,
+        frictionAir: 0.1,
+        // chamfer: 10,
+        friction: 1,
         mass: 1000,
         collisionFilter: {
           category: 0x0004,
@@ -74,8 +75,15 @@ export default class Phaeton{
 
     this.mesh = new THREE.Mesh(BOX, MATERIAL)
     this.mesh.receiveShadow = true
+    this.mesh.castShadow = true
+    this.mesh.position.z = this.position.z
 
     this.scene.add(this.mesh)
+  }
+
+  addDebug () {
+    this.debugFolder = this.debug.addFolder('Phaeton')
+    this.debugFolder.add(this, "speed", 0, 20)
   }
 
   addInteractionElements(element) {
@@ -97,11 +105,11 @@ export default class Phaeton{
 
     switch (event.code) {
       case "KeyA":
-        Matter.Body.translate(this.box, Matter.Vector.create(-5, 0))
+        Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
         break;
       
       case "KeyD":
-        Matter.Body.translate(this.box, Matter.Vector.create(5, 0))
+        Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
         break;
 
       default:
@@ -121,6 +129,8 @@ export default class Phaeton{
   }
 
   interactWithElements() {
+    if (this.animation) return
+
     this.interactionElements.forEach((element) => {
 
       switch (element.type) {

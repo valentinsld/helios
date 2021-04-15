@@ -1,0 +1,45 @@
+.modelLoader {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  background-color: rgba(0,0,0, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  pointer-events: none;
+  opacity: 0;
+}
+
+.modelLoader.-show {
+  transition: opacity 300ms ease;
+
+  pointer-events: initial;
+  opacity: 1;
+}
+
+.modelLoader__container {
+  display: flex;
+  flex-direction: column;
+
+  width: 500px;
+}
+
+.modelLoader__text {
+  color: white;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.modelLoader__bar {
+  width: 0;
+  height: 10px;
+  border-radius: 10px;
+
+  background-color: blue;
+}
