@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Matter from 'matter-js'
+import gsap from 'gsap'
 
 const POSITION = {
   x: 0,
@@ -125,7 +126,16 @@ export default class Statue {
 
     this.step += 1
     // console.log(this.step, this.step % 4 === 0)
-    this.mesh.rotation.y = this.step * Math.PI / 2
+    // this.mesh.rotation.y = this.step * Math.PI / 2
+
+    gsap.to(
+      this.mesh.rotation,
+      {
+        y: this.step * Math.PI / 2,
+        ease: "steps(8)", //'Power2.out'
+        duration: 1
+      }
+    )
 
     if (this.step % 4 === 0) {
       this.activate = true

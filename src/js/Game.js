@@ -111,9 +111,9 @@ export default class Game{
 
   initCamera() {
     // Base camera
-    this.camera =  new THREE.OrthographicCamera( 0, 0, 0, 0, 1, 1000 );
+    this.camera =  new THREE.OrthographicCamera( 0, 0, 0, 0, 1, 1500 );
     this.camera.zoom = 0.5
-    this.camera.position.set(0, 0, 300)
+    this.camera.position.set(0, 0, 600)
     this.globalScene.add(this.camera)
 
     // Controls
