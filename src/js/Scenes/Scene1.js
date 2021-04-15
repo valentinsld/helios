@@ -13,6 +13,7 @@ import Door from '../Elements/Door'
 import LoaderModelsManager from '../LoaderModelsManager'
 
 import Statue from '../Elements/01_statue'
+import { Vector3 } from 'three'
 
 export default class Scene1 {
   constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game, debug}) {
@@ -282,6 +283,7 @@ export default class Scene1 {
     gltf = gltf.scene
     gltf.scale.set(300, 300, 300) 
     gltf.children[0].position.y = -0.17
+    gltf.moreY = Math.PI / 2
 
     gltf.traverse( function(node) {
       if (node.isMesh) {
@@ -480,9 +482,9 @@ export default class Scene1 {
 
     // point light
     const paramsLight = {
-      color: 0xff0000
+      color: 0xa26d32
     }
-    const light = new THREE.PointLight(paramsLight.color, 1, 1000);
+    const light = new THREE.PointLight(paramsLight.color, 5, 1900);
     light.position.set(-600, -400, -45);
     this.scene.add( light );
 

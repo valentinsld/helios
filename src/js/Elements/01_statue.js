@@ -95,7 +95,8 @@ export default class Statue {
   addGltf (gltf) {
     this.mesh = gltf
     this.mesh.position.copy(this.position)
-    this.mesh.rotation.y = this.step * Math.PI / 2
+    const moreY = this.mesh.moreY || 0
+    this.mesh.rotation.y = this.step * Math.PI / 2 + moreY
 
     this.scene.add(this.mesh)
   }
@@ -127,11 +128,12 @@ export default class Statue {
     this.step += 1
     // console.log(this.step, this.step % 4 === 0)
     // this.mesh.rotation.y = this.step * Math.PI / 2
+    const moreY = this.mesh.moreY || 0
 
     gsap.to(
       this.mesh.rotation,
       {
-        y: this.step * Math.PI / 2,
+        y: this.step * Math.PI / 2 + moreY,
         ease: "steps(6)", //'Power2.out'
         duration: 0.5
       }
@@ -144,6 +146,7 @@ export default class Statue {
       this.activate = false
       if (!this.gltf) this.mesh.material.color = new THREE.Color("#0000ff")
     }
+    console.log(this.activate)
   }
 
 }
