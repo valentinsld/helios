@@ -88,7 +88,7 @@ export default class Scene1 {
         func: this.initStatue1.bind(this)
       },
       {
-        url: '/models/statuedebout/statuedebout.gltf',
+        url: '/models/statue2/statue2.gltf',
         func: this.initStatue2.bind(this)
       },
       {
@@ -235,9 +235,9 @@ export default class Scene1 {
     })
 
     gltf = gltf.scene
-    gltf.scale.set(70, 70, 70)
+    gltf.scale.set(55, 55, 55)
     gltf.children[0].position.z = -0.1
-    gltf.children[0].position.y = 0.70
+    gltf.children[0].position.y = 0.44
 
     gltf.traverse( function(node) {
       if (node.isMesh) {
@@ -266,22 +266,22 @@ export default class Scene1 {
   }
 
   initStatue2 (gltf) {
-    const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
-    texture.flipY = false
-    const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
-    normal.flipY = false
+    // const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
+    // texture.flipY = false
+    // const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
+    // normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
-      map: texture,
-      normalMap: normal,
+      color: 0x444444,
+      // map: texture,
+      // normalMap: normal,
       metalness: 0,
       roughness: 0.5,
     })
 
     gltf = gltf.scene
-    gltf.scale.set(70, 70, 70)
-    gltf.children[0].position.z = -0.1
-    gltf.children[0].position.y = 0.70
+    gltf.scale.set(300, 300, 300) 
+    gltf.children[0].position.y = -0.17
 
     gltf.traverse( function(node) {
       if (node.isMesh) {
@@ -364,7 +364,6 @@ export default class Scene1 {
     this.porte.add(this.porteGauche)
     this.porte.add(this.porteDroit)
 
-    console.log(this.porteGauche)
     this.porteGauche.position.copy(armaturegauche.position)
     this.porteDroit.position.copy(armaturedroit.position)
 
@@ -421,7 +420,6 @@ export default class Scene1 {
 
     this.temple.traverse( function(node) {
       if (node.name === 'soleil') {
-        console.log('soleil !', node)
         node.material = materialSoleil
         node.castShadow = true
         node.receiveShadow = true
