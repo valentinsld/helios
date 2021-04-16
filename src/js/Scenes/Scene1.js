@@ -92,7 +92,7 @@ export default class Scene1 {
         func: this.initStatue1.bind(this)
       },
       {
-        url: '/models/statue2/statue2.gltf',
+        url: '/models/statue2/statueAssis.gltf',
         func: this.initStatue2.bind(this)
       },
       {
@@ -272,21 +272,21 @@ export default class Scene1 {
   }
 
   async initStatue2 (gltf) {
-    // const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
-    // texture.flipY = false
-    // const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
-    // normal.flipY = false
+    const texture = this.textureLoader.load('/models/statue2/textureAssis2.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/statue2/normalAssis.png')
+    normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
-      color: 0x444444,
-      // map: texture,
-      // normalMap: normal,
+      // color: 0x444444,
+      map: texture,
+      normalMap: normal,
       metalness: 0,
       roughness: 0.5,
     })
 
     gltf = gltf.scene
-    gltf.scale.set(300, 300, 300) 
+    gltf.scale.set(55, 55, 55)
     gltf.children[0].position.y = -0.17
     gltf.moreY = Math.PI / 2
 

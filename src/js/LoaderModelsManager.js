@@ -27,7 +27,7 @@ export default class LoaderModelsManager{
         async (gltf) =>
         {
           const create = await this.array[index].func.call(null, gltf)
-          console.log(create)
+          // console.log(create)
 
           this.updateProgress()
         },
@@ -57,7 +57,7 @@ export default class LoaderModelsManager{
     this.textLoader.innerText = progress * 100 + '%'
     this.barLoader.style.width = progress * 100 + '%'
 
-    console.log(progress)
+    // console.log(progress)
     if (progress === 1) {
       setTimeout(() => {
         console.log('ENDED', this.domLoader)
