@@ -429,7 +429,7 @@ export default class Scene1 {
         node.castShadow = true
         node.receiveShadow = true
       } else if (node.name === 'interieureporte') {
-        console.log(node)
+        // console.log(node)
       } else if (node.isMesh) {
         node.material = material
         node.castShadow = true
