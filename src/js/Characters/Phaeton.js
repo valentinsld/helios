@@ -24,7 +24,7 @@ export default class Phaeton{
     this.position = position
     this.size = size
 
-    this.speed = 8
+    this.speed = 16
     this.interactionElements = []
 
     this.addPhaetonToWorld()
