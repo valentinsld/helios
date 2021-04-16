@@ -25,11 +25,6 @@ export default class LoaderModelsManager{
         // success
         (gltf) =>
         {
-          // scale scene :
-          // gltf.scene.children.forEach((child) => {
-          //   child.scale.set(10,10,10)
-          // })
-
           this.array[index].func.call(null, gltf)
         },
         // progression
@@ -65,8 +60,11 @@ export default class LoaderModelsManager{
     this.textLoader.innerText = this.progress * 100 + '%'
     this.barLoader.style.width = this.progress * 100 + '%'
 
+    console.log(this.progress)
     if (progress === 1) {
-      this.domLoader.classList.remove('-show')
+      setTimeout(() => {
+        this.domLoader.classList.remove('-show')
+      }, 2000)
     }
   }
 }
