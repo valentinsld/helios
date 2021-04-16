@@ -225,7 +225,7 @@ export default class Scene1 {
     })
   }
 
-  initStatue1 (gltf) {
+  async initStatue1 (gltf) {
     const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
     texture.flipY = false
     const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
@@ -267,9 +267,11 @@ export default class Scene1 {
         z: 100
       }
     })
+
+    return this.newPromise()
   }
 
-  initStatue2 (gltf) {
+  async initStatue2 (gltf) {
     // const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
     // texture.flipY = false
     // const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
@@ -312,9 +314,11 @@ export default class Scene1 {
         z: 100
       }
     })
+
+    return this.newPromise()
   }
 
-  initPorte (gltf) {
+  async initPorte (gltf) {
     // Material armature
     const textureArmature = this.textureLoader.load('/models/porte/texturearmaturetest.png')
     textureArmature.flipY = false
@@ -391,9 +395,11 @@ export default class Scene1 {
 
       this.debugSceneFolder.add(obj,'openDoor')
     }
+
+    return this.newPromise()
   }
 
-  initTemple (gltf) {
+  async initTemple (gltf) {
     // texture
     const texture = this.textureLoader.load('/models/temple/TextureTemple.png')
     texture.flipY = false
@@ -458,9 +464,11 @@ export default class Scene1 {
 
     // const pointLightHelper = new THREE.PointLightHelper( light, 100 );
     // this.scene.add( pointLightHelper );
+
+    return this.newPromise(2500)
   }
 
-  initBrasier (gltf) {
+  async initBrasier (gltf) {
     gltf = gltf.scene
     gltf.scale.set(300, 300, 300)
     gltf.getObjectByName('brasier').position.y = -0.170
@@ -522,6 +530,8 @@ export default class Scene1 {
       this.debugSceneFolder.add(light, "intensity", 0, 10).name('Light intensity')
       this.debugSceneFolder.add(light, "distance", 1000, 2000).name('Light distance')
     }
+
+    return this.newPromise()
   }
 
   getStepStatues () {
@@ -551,6 +561,14 @@ export default class Scene1 {
     )
 
     console.log('End enigme !!')
+  }
+
+  newPromise (time = 1000) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, time);
+    });
   }
 
   //

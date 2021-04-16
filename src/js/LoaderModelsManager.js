@@ -11,6 +11,7 @@ export default class LoaderModelsManager{
 
     this.progress = 0
 
+    this.updateProgress()
     this.initLoading()
   }
   
@@ -23,19 +24,20 @@ export default class LoaderModelsManager{
       this.gltfLoader.load(
         this.array[index].url,
         // success
-        (gltf) =>
+        async (gltf) =>
         {
-          this.array[index].func.call(null, gltf)
+          const create = await this.array[index].func.call(null, gltf)
+          console.log(create)
+
+          this.updateProgress()
         },
         // progression
         (progress) =>
         {
           // console.log('progress', progress)
-          const state = progress.loaded / progress.total
-          this.array[index].state = state
+          // const state = progress.loaded / progress.total
+          // this.array[index].state = state
           // console.log('progress state : ', state)
-          
-          this.updateProgress()
         },
         // error
         (error) =>
@@ -48,23 +50,19 @@ export default class LoaderModelsManager{
   }
 
   updateProgress() {
-    let progress = 0
+    this.progress +=1
 
-    for (let index in this.array) {
-      progress += this.array[index].state
-    }
+    const progress = this.progress / this.arrayLength
 
-    this.progress = Math.round(progress / this.arrayLength * 100) / 100
-    this.progressFunction?.call(null, this.progress)
+    this.textLoader.innerText = progress * 100 + '%'
+    this.barLoader.style.width = progress * 100 + '%'
 
-    this.textLoader.innerText = this.progress * 100 + '%'
-    this.barLoader.style.width = this.progress * 100 + '%'
-
-    console.log(this.progress)
+    console.log(progress)
     if (progress === 1) {
       setTimeout(() => {
+        console.log('ENDED', this.domLoader)
         this.domLoader.classList.remove('-show')
-      }, 2000)
+      }, 500)
     }
   }
 }
