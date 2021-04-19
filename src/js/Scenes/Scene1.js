@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import * as Matter from 'matter-js'
+
 import gsap from 'gsap'
+import { RoughEase } from 'gsap/EasePack'
 
 import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
@@ -13,7 +15,6 @@ import Door from '../Elements/Door'
 import LoaderModelsManager from '../LoaderModelsManager'
 
 import Statue from '../Elements/01_statue'
-import { Vector3 } from 'three'
 
 export default class Scene1 {
   constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game, debug}) {
@@ -517,19 +518,53 @@ export default class Scene1 {
     const paramsLight = {
       color: 0xa26d32
     }
-    const light = new THREE.PointLight(paramsLight.color, 5, 1900);
-    light.position.set(-600, -400, -45);
-    this.scene.add( light );
+    this.lightBrasier = new THREE.PointLight(paramsLight.color, 4, 1900);
+    this.lightBrasier.position.set(-450, -400, -45);
+    this.scene.add( this.lightBrasier );
 
     if (this.debugSceneFolder) {
       const color = this.debugSceneFolder.addColor(paramsLight, "color").name('Light Color')
       color.onChange((value) => {
-        light.color = new THREE.Color(value)
+        this.lightBrasier.color = new THREE.Color(value)
       })
 
-      this.debugSceneFolder.add(light, "intensity", 0, 10).name('Light intensity')
-      this.debugSceneFolder.add(light, "distance", 1000, 2000).name('Light distance')
+      this.debugSceneFolder.add(this.lightBrasier, "intensity", 0, 10).name('Light intensity')
+      this.debugSceneFolder.add(this.lightBrasier, "distance", 1000, 2000).name('Light distance')
     }
+
+    //
+    // ANIMATION
+    //
+    const easeRough = RoughEase.ease.config({
+      template: 'power1.out',
+      strength: 1,
+      points: 10,
+      taper: 'none',
+      randomize: true,
+      clamp: false
+    })
+
+    const timeline = gsap.timeline({repeat: -1});
+    timeline
+      .to(
+        this.lightBrasier,
+        {
+          intensity: 6, // 5 + 3
+          duration: 1,
+          ease: easeRough
+        }
+      )
+      .to(
+        this.lightBrasier,
+        {
+          intensity: 4.5,
+          duration: 1,
+          ease: easeRough,
+          onComplete: () => {
+            console.log('complete')
+          }
+        }
+      )
 
     return this.newPromise()
   }
