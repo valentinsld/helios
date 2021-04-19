@@ -22,6 +22,7 @@ import Door from '../Elements/Door'
 
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
+import transition from '../utils/transition'
 
 import Statue from '../Elements/01_statue'
 
@@ -675,17 +676,19 @@ export default class Scene1 {
   // Destruct
   //
   async destruct () {
+    if (this.debug) {
+      this.debug.removeFolder('Scene params')
+      this.debug.removeFolder('Phaeton')
+      this.debug.removeFolder('Fragment')
+    }
+    
+    const trans = await transition.fade()
+
     clearScene(this.scene)
     Matter.World.clear(this.world);
 
-    if (this.debug) {
-      this.debug.removeFolder('Scene params')
-    }
-
     return new Promise(resolve => {
-      setTimeout(() => {
-        resolve('destructed');
-      }, 100);
+      resolve('destructed');
     });
   }
 }
