@@ -193,7 +193,7 @@ export default class Game{
     // create an engine
     this.engine = Engine.create();
     this.world = this.engine.world
-    this.world.gravity.y = -0.89
+    this.world.gravity.y = -3
     
 
     //
