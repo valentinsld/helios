@@ -16,7 +16,7 @@ const SIZE = {
 const COLOR = '#ff00ff'
 
 export default class Door{
-  constructor({phaeton, fragment, engine, sceneManager, scene, render = false, size = SIZE, position = POSITION, open = false, animationEndPhaeton, animationEndFragment}) {
+  constructor({phaeton, fragment, engine, sceneManager, scene, render = false, size = SIZE, position = POSITION, open = false}) {
     this.type = 'Door'
     
     this.scene = scene
@@ -28,19 +28,19 @@ export default class Door{
     this.opened = open
     this.phaeton = phaeton
     this.fragment = fragment
-    this.animationEndFragment = animationEndFragment
-    this.animationEndPhaeton = animationEndPhaeton
 
     this.size = size
     this.position = position
 
-    this.entered = {
+    this.canUse = {
       phaeton: false,
       fragment: false
     }
 
     this.addElementToWorld()
     if (render) this.addElementToScene()
+
+    this.addElementToPhaeton()
   }
 
   addElementToWorld() {
@@ -66,8 +66,6 @@ export default class Door{
 
     // init events
     Matter.Events.on(this.engine, 'collisionStart', (event) => {
-      if (!this.opened) return
-
       var pairs = event.pairs;
 
       for (var i = 0, j = pairs.length; i != j; ++i) {
@@ -78,31 +76,28 @@ export default class Door{
         const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
 
         if (conditionCollider && conditionPhaeton) {
-          this.animationEndPhaeton.call(true)
-          this.entered.phaeton = true
-
-          if (this.entered.fragment) {
-            this.sceneManager.next()
-          } else {
-            setTimeout(() => {
-              if (!this.entered.fragment) {
-                this.sceneManager.next()
-              }
-            }, 5000);
-          }
+          this.canUse.phaeton = true
         } else if (conditionCollider && conditionFragment) {
-          this.animationEndFragment.call(true)
-          this.entered.fragment = true
-          
-          if (this.entered.phaeton) {
-            this.sceneManager.next()
-          } else {
-            setTimeout(() => {
-              if (!this.entered.phaeton) {
-                this.sceneManager.next()
-              }
-            }, 5000);
-          }
+          this.canUse.fragment = true
+        }
+
+      }
+    });
+
+    Matter.Events.on(this.engine, 'collisionEnd', (event) => {
+      var pairs = event.pairs;
+
+      for (var i = 0, j = pairs.length; i != j; ++i) {
+        var pair = pairs[i];
+
+        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
+        const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
+        const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
+
+        if (conditionCollider && conditionPhaeton) {
+          this.canUse.phaeton = false
+        } else if (conditionCollider && conditionFragment) {
+          this.canUse.fragment = false
         }
 
       }
@@ -134,6 +129,10 @@ export default class Door{
     this.scene.add(this.mesh)
   }
 
+  addElementToPhaeton() {
+    this.phaeton.addInteractionElements(this)
+  }
+
   open () {
     this.opened = true
     if (this.mesh) this.mesh.material.color = new THREE.Color(0x00ffff)
@@ -142,5 +141,11 @@ export default class Door{
   close () {
     this.opened = false
     if (this.mesh) this.mesh.material.color = new THREE.Color(COLOR)
+  }
+
+  interact() {
+    if (!this.canUse.phaeton || !this.canUse.fragment || !this.opened) return
+
+    this.sceneManager.next()
   }
 }

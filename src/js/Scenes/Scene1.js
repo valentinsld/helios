@@ -160,18 +160,37 @@ export default class Scene1 {
       }
     })
 
-    const wallRight= new Box({
+    const wallRight = new Box({
       engine: this.engine,
       scene: this.scene,
       size: {
         x: 400,
-        y: 1500,
+        y: 1000,
         z: 500
       },
       render: false,
       position: {
         x: 820,
-        y: 300,
+        y: 600,
+        z: 0
+      },
+      optionsBox: {
+        label: 'BoxNone'
+      }
+    })
+
+    this.wallDoor = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      size: {
+        x: 400,
+        y: 1200,
+        z: 500
+      },
+      render: false,
+      position: {
+        x: 820,
+        y: -200,
         z: 0
       },
       optionsBox: {
@@ -222,15 +241,17 @@ export default class Scene1 {
       render: false,
       position : {
         x : 600,
-        y : -150,
+        y : -130,
         z : 250
       },
       size: {
         x: 200,
-        y: 400,
+        y: 420,
         z: 1
       },
-      open: this.endEnigme
+      open: this.endEnigme,
+      animationEndPhaeton: this.animationEndPhaeton.bind(this),
+      animationEndFragment: this.animationEndFragment.bind(this)
     })
   }
 
@@ -447,7 +468,7 @@ export default class Scene1 {
           break;
 
         case 'interieureporte':
-          // console.log(node)
+          node.remove()
           break;
 
         case 'fenetre':
@@ -602,6 +623,7 @@ export default class Scene1 {
     this.endEnigme = true
     this.door.open()
 
+    // animation door
     gsap.to(
       this.porteGauche.rotation,
       {
@@ -620,7 +642,40 @@ export default class Scene1 {
       }
     )
 
+    //remove box
+    this.wallDoor.destroyed()
+
     console.log('End enigme !!')
+  }
+
+  animationEndPhaeton () {
+    console.log('animation end Phaeton')
+    this.phaeton.animation = true
+
+    gsap.to(
+      this.phaeton.mesh.position,
+      {
+        x: "+=350",
+        z: -100,
+        duration: 2.5,
+        ease: "sin.inOut"
+      }
+    )
+  }
+
+  animationEndFragment () {
+    console.log('animation end Fragment')
+    this.fragment.animation = true
+
+    gsap.to(
+      this.fragment.mesh.position,
+      {
+        x: "+=350",
+        z: -100,
+        duration: 2.5,
+        ease: "sin.inOut"
+      }
+    )
   }
 
   newPromise (time = 1000) {
@@ -637,6 +692,10 @@ export default class Scene1 {
   async destruct () {
     this.scene.clear()
     Matter.World.clear(this.world);
+
+    if (this.debug) {
+      this.debug.removeFolder('Scene params')
+    }
 
     return new Promise(resolve => {
       setTimeout(() => {

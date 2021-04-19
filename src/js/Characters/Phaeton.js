@@ -24,6 +24,7 @@ export default class Phaeton{
     this.position = position
     this.size = size
 
+    this.animation = null
     this.speed = 16
     this.interactionElements = []
 

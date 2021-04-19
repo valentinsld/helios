@@ -60,7 +60,6 @@ export default class LoaderModelsManager{
     // console.log(progress)
     if (progress === 1) {
       setTimeout(() => {
-        console.log('ENDED', this.domLoader)
         this.domLoader.classList.remove('-show')
       }, 500)
     }

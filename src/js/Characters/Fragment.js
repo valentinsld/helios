@@ -30,6 +30,7 @@ export default class Fragment{
     this.position = position
     this.radius = radius
 
+    this.animation = null
     this.interactionElements = []
     this.interactionElement = null
     this.mouseDown = false
@@ -206,6 +207,8 @@ export default class Fragment{
   }
 
   update() {
+    if (this.animation) return
+
     // interact with element
     if (this.interactionElement) {
       var direction = new THREE.Vector2()
