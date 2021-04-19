@@ -1,6 +1,9 @@
 import * as THREE from 'three'
 import * as Matter from 'matter-js'
 
+import clearScene from '../utils/clearScene'
+import transition from '../utils/transition'
+
 export default class Scene0 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
     this.game = game
@@ -24,7 +27,9 @@ export default class Scene0 {
   // Destruct
   //
   async destruct () {
-    this.scene.clear()
+    const trans = await transition.fade()
+
+    clearScene(this.scene)
     Matter.World.clear(this.world);
 
     return new Promise(resolve => {
