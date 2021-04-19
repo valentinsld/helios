@@ -10,7 +10,7 @@ const POSITION = {
 const SIZE = {
   x: 100,
   y: 200,
-  z: 50
+  z: 10
 }
 
 const COLOR = '#008d02'
@@ -24,6 +24,7 @@ export default class Phaeton{
     this.position = position
     this.size = size
 
+    this.animation = null
     this.speed = 16
     this.interactionElements = []
 

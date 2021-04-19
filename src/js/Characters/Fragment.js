@@ -30,6 +30,7 @@ export default class Fragment{
     this.position = position
     this.radius = radius
 
+    this.animation = null
     this.interactionElements = []
     this.interactionElement = null
     this.mouseDown = false
@@ -41,16 +42,7 @@ export default class Fragment{
       prevY: position.y
     }
 
-    this.screen = {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }
-    
-    this.viewport = {
-      width: this.camera.right * 2 / this.cameraZoom,
-      height: this.camera.top * 2 / this.cameraZoom
-    }
-
+    this.resize()
     this.addFragmentToWorld()
     this.addFragmentToScene()
     // this.addPlaneToScene()
@@ -115,7 +107,7 @@ export default class Fragment{
 
     // ADD ELEMENTS
     this.mesh.add(this.sphere, this.sphereLight)
-    this.mesh.position.z = 250
+    this.mesh.position.z = this.position.z
   }
 
   addPlaneToScene() {
@@ -181,6 +173,20 @@ export default class Fragment{
     window.addEventListener('mousemove', this.cursorMove.bind(this))
     window.addEventListener('mousedown', this.interactWithElements.bind(this))
     window.addEventListener('mouseup', this.mouseUp.bind(this))
+
+    window.addEventListener('resize', this.resize.bind(this))
+  }
+
+  resize () {
+    this.screen = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
+    
+    this.viewport = {
+      width: this.camera.right * 2 / this.cameraZoom,
+      height: this.camera.top * 2 / this.cameraZoom
+    }
   }
 
   cursorMove(e) {
@@ -206,6 +212,8 @@ export default class Fragment{
   }
 
   update() {
+    if (this.animation) return
+
     // interact with element
     if (this.interactionElement) {
       var direction = new THREE.Vector2()

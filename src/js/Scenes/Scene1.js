@@ -1,6 +1,16 @@
 import * as THREE from 'three'
 import * as Matter from 'matter-js'
+
 import gsap from 'gsap'
+import { RoughEase } from 'gsap/EasePack'
+const easeRough = RoughEase.ease.config({
+  template: 'power1.out',
+  strength: 0.5,
+  points: 10,
+  taper: 'none',
+  randomize: true,
+  clamp: false
+})
 
 import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
@@ -10,10 +20,11 @@ import Fire from '../Elements/Fire'
 import Captor from '../Elements/Captor'
 import Door from '../Elements/Door'
 
-import LoaderModelsManager from '../LoaderModelsManager'
+import LoaderModelsManager from '../utils/LoaderModelsManager'
+import clearScene from '../utils/clearScene'
+import transition from '../utils/transition'
 
 import Statue from '../Elements/01_statue'
-import { Vector3 } from 'three'
 
 export default class Scene1 {
   constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game, debug}) {
@@ -64,7 +75,7 @@ export default class Scene1 {
       position : {
         x : -900,
         y : -350,
-        z : 150
+        z : 80
       }
     })
 
@@ -77,7 +88,7 @@ export default class Scene1 {
       position : {
         x : -1100,
         y : -250,
-        z : 120
+        z : 60
       }
     })
 
@@ -92,7 +103,7 @@ export default class Scene1 {
         func: this.initStatue1.bind(this)
       },
       {
-        url: '/models/statue2/statue2.gltf',
+        url: '/models/statue2/statueAssis.gltf',
         func: this.initStatue2.bind(this)
       },
       {
@@ -151,18 +162,18 @@ export default class Scene1 {
       }
     })
 
-    const wallRight= new Box({
+    const wallRight = new Box({
       engine: this.engine,
       scene: this.scene,
       size: {
         x: 400,
-        y: 1500,
+        y: 1000,
         z: 500
       },
       render: false,
       position: {
-        x: 900,
-        y: 300,
+        x: 820,
+        y: 600,
         z: 0
       },
       optionsBox: {
@@ -170,21 +181,23 @@ export default class Scene1 {
       }
     })
 
-    const escalier = new Box({
+    this.wallDoor = new Box({
       engine: this.engine,
       scene: this.scene,
-      render: false,
       size: {
-        x: 150,
-        y: 280,
-        z: 100
+        x: 400,
+        y: 1200,
+        z: 500
       },
-      position : {
-        x: 385,
-        y: -500,
+      render: false,
+      position: {
+        x: 820,
+        y: -200,
         z: 0
       },
-      rotation: Math.PI * 0.7
+      optionsBox: {
+        label: 'BoxNone'
+      }
     })
 
     const palier = new Box({
@@ -193,15 +206,18 @@ export default class Scene1 {
       render: false,
       size: {
         x: 600,
-        y: 400,
+        y: 200,
         z: 100
       },
       position : {
-        x: 760,
-        y: -555,
+        x: 600,
+        y: -465,
         z: 0
       }
     })
+    palier.box.vertices[0].x -= 300
+    Matter.Body.setVertices(palier.box, palier.box.vertices);
+
 
     this.door = new Door({
       scene: this.scene,
@@ -213,19 +229,21 @@ export default class Scene1 {
       render: false,
       position : {
         x : 600,
-        y : -150,
+        y : -130,
         z : 250
       },
       size: {
         x: 200,
-        y: 400,
+        y: 420,
         z: 1
       },
-      open: this.endEnigme
+      open: this.endEnigme,
+      animationEndPhaeton: this.animationEndPhaeton.bind(this),
+      animationEndFragment: this.animationEndFragment.bind(this)
     })
   }
 
-  initStatue1 (gltf) {
+  async initStatue1 (gltf) {
     const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
     texture.flipY = false
     const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
@@ -267,26 +285,28 @@ export default class Scene1 {
         z: 100
       }
     })
+
+    return this.newPromise()
   }
 
-  initStatue2 (gltf) {
-    // const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
-    // texture.flipY = false
-    // const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
-    // normal.flipY = false
+  async initStatue2 (gltf) {
+    const texture = this.textureLoader.load('/models/statue2/textureAssis2.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/statue2/normalAssis.png')
+    normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
-      color: 0x444444,
-      // map: texture,
-      // normalMap: normal,
+      // color: 0x444444,
+      map: texture,
+      normalMap: normal,
       metalness: 0,
       roughness: 0.5,
     })
 
     gltf = gltf.scene
-    gltf.scale.set(300, 300, 300) 
-    gltf.children[0].position.y = -0.17
-    gltf.moreY = Math.PI / 2
+    gltf.scale.set(55, 55, 55)
+    gltf.children[0].position.y = -0.95
+    gltf.moreY = -Math.PI / 2
 
     gltf.traverse( function(node) {
       if (node.isMesh) {
@@ -312,9 +332,11 @@ export default class Scene1 {
         z: 100
       }
     })
+
+    return this.newPromise()
   }
 
-  initPorte (gltf) {
+  async initPorte (gltf) {
     // Material armature
     const textureArmature = this.textureLoader.load('/models/porte/texturearmaturetest.png')
     textureArmature.flipY = false
@@ -391,9 +413,11 @@ export default class Scene1 {
 
       this.debugSceneFolder.add(obj,'openDoor')
     }
+
+    return this.newPromise()
   }
 
-  initTemple (gltf) {
+  async initTemple (gltf) {
     // texture
     const texture = this.textureLoader.load('/models/temple/TextureTemple.png')
     texture.flipY = false
@@ -423,44 +447,75 @@ export default class Scene1 {
     this.temple = gltf.scene
     this.temple.scale.set(300, 300, 300)
 
-    this.temple.traverse( function(node) {
-      if (node.name === 'soleil') {
-        node.material = materialSoleil
-        node.castShadow = true
-        node.receiveShadow = true
-      } else if (node.name === 'interieureporte') {
-        console.log(node)
-      } else if (node.isMesh) {
-        node.material = material
-        node.castShadow = true
-        node.receiveShadow = true
+    this.temple.traverse( (node) => {
+      switch (node.name) {
+        case 'soleil':
+          node.material = materialSoleil
+          node.castShadow = true
+          node.receiveShadow = true
+          break;
+
+        case 'interieureporte':
+          node.remove()
+          break;
+
+        case 'fenetre':
+          node.material = new THREE.MeshStandardMaterial({
+            metalness: 0,
+            roughness: 0.5,
+            emissive: new THREE.Color(0xb36f24),
+            emissiveIntensity: 0.1
+          })
+
+          const lightFenetre = new THREE.PointLight(0xb36f24, 8, 100) // 0xb36f24
+          lightFenetre.position.copy(node.position)
+          lightFenetre.position.z = -0.6
+
+          this.temple.add(lightFenetre)
+
+          //
+          // ANIMATION
+          //
+          const timeline1 = gsap.timeline({repeat: -1, repeatDelay: 0.1});
+          timeline1
+            .to(
+              lightFenetre,
+              {
+                intensity: 12,
+                duration: 0.7,
+                ease: easeRough
+              }
+            )
+            .to(
+              lightFenetre,
+              {
+                intensity: 8,
+                duration: 0.7,
+                ease: easeRough
+              }
+            )
+          break;
+      
+        default:
+          node.material = material
+          node.castShadow = true
+          node.receiveShadow = true
+          break;
       }
     })
 
     this.groupDoorTemple.add(this.temple)
 
     const light = new THREE.PointLight(0xb36f24, 3.5, 700)
-    // const light1 = new THREE.PointLight(0xff00ff, 1.5, 700)
     light.position.set(50,300,-100)
-    // light1.position.set(50,100,-100)
     light.castShadow = true
-    // light1.castShadow = true
-
-    // light.castShadow = true
-    // light.shadow.radius = 8
-    // light.shadow.mapSize.width = 2048
-    // light.shadow.mapSize.height = 2048
-    // light.shadow.bias = - 0.01
-    // light.shadow.camera.far = 1500
 
     this.groupDoorTemple.add(light)
-    // this.groupDoorTemple.add(light1)
 
-    // const pointLightHelper = new THREE.PointLightHelper( light, 100 );
-    // this.scene.add( pointLightHelper );
+    return this.newPromise(2500)
   }
 
-  initBrasier (gltf) {
+  async initBrasier (gltf) {
     gltf = gltf.scene
     gltf.scale.set(300, 300, 300)
     gltf.getObjectByName('brasier').position.y = -0.170
@@ -509,19 +564,43 @@ export default class Scene1 {
     const paramsLight = {
       color: 0xa26d32
     }
-    const light = new THREE.PointLight(paramsLight.color, 5, 1900);
-    light.position.set(-600, -400, -45);
-    this.scene.add( light );
+    this.lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
+    this.lightBrasier.position.set(-450, -400, -45)
+    this.scene.add( this.lightBrasier )
 
     if (this.debugSceneFolder) {
       const color = this.debugSceneFolder.addColor(paramsLight, "color").name('Light Color')
       color.onChange((value) => {
-        light.color = new THREE.Color(value)
+        this.lightBrasier.color = new THREE.Color(value)
       })
 
-      this.debugSceneFolder.add(light, "intensity", 0, 10).name('Light intensity')
-      this.debugSceneFolder.add(light, "distance", 1000, 2000).name('Light distance')
+      this.debugSceneFolder.add(this.lightBrasier, "intensity", 0, 10).name('Light intensity')
+      this.debugSceneFolder.add(this.lightBrasier, "distance", 1000, 2000).name('Light distance')
     }
+
+    //
+    // ANIMATION
+    //
+    const timeline = gsap.timeline({repeat: -1, repeatDelay: 0.1});
+    timeline
+      .to(
+        this.lightBrasier,
+        {
+          intensity: 6, // 5 + 3
+          duration: 0.7,
+          ease: easeRough
+        }
+      )
+      .to(
+        this.lightBrasier,
+        {
+          intensity: 4.5,
+          duration: 0.7,
+          ease: easeRough
+        }
+      )
+
+    return this.newPromise()
   }
 
   getStepStatues () {
@@ -532,6 +611,7 @@ export default class Scene1 {
     this.endEnigme = true
     this.door.open()
 
+    // animation door
     gsap.to(
       this.porteGauche.rotation,
       {
@@ -550,20 +630,65 @@ export default class Scene1 {
       }
     )
 
+    //remove box
+    this.wallDoor.destroyed()
+
     console.log('End enigme !!')
+  }
+
+  animationEndPhaeton () {
+    this.phaeton.animation = true
+
+    gsap.to(
+      this.phaeton.mesh.position,
+      {
+        x: "+=350",
+        z: -100,
+        duration: 2.5,
+        ease: "sin.inOut"
+      }
+    )
+  }
+
+  animationEndFragment () {
+    this.fragment.animation = true
+
+    gsap.to(
+      this.fragment.mesh.position,
+      {
+        x: "+=350",
+        z: -100,
+        duration: 2.5,
+        ease: "sin.inOut"
+      }
+    )
+  }
+
+  newPromise (time = 1000) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, time);
+    });
   }
 
   //
   // Destruct
   //
   async destruct () {
-    this.scene.clear()
+    if (this.debug) {
+      this.debug.removeFolder('Scene params')
+      this.debug.removeFolder('Phaeton')
+      this.debug.removeFolder('Fragment')
+    }
+    
+    const trans = await transition.fade()
+
+    clearScene(this.scene)
     Matter.World.clear(this.world);
 
     return new Promise(resolve => {
-      setTimeout(() => {
-        resolve('destructed');
-      }, 100);
+      resolve('destructed');
     });
   }
 }

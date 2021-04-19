@@ -79,4 +79,14 @@ export default class Box {
     this.mesh.rotation.z = this.box.angle
   }
 
+  destroyed () {
+    Matter.World.remove(this.world, this.box)
+
+    if (this.mesh) {
+      this.mesh.geometry.dispose()
+      this.mesh.material.dispose()
+      this.scene.remove(this.mesh)
+    }
+  }
+
 }
