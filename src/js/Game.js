@@ -245,6 +245,18 @@ export default class Game{
       this.render.canvas.opacity = 1
       this.render.canvas.zoom = 1
 
+      this.paramsPhysicRender = {
+        initPos: {
+          min: { x: -800, y: -600 },
+          max: { x: 800, y: 600 }
+        },
+        zoom: 1,
+        more: {
+          x: 0,
+          y: 0
+        }
+      }
+
       Render.lookAt(
         this.render,
         {
@@ -260,20 +272,28 @@ export default class Game{
         this.render.canvas.style.opacity = value
       })
 
-      const zoomCanvas = physicFolder.add(this.render.canvas, "zoom", 0, 10).name('Zoom')
-      zoomCanvas.onChange((value) => {
-        Render.lookAt(
-          this.render,
-          {
-            min: { x: -800 * value, y: -600 * value },
-            max: { x: 800 * value, y: 600 * value }
-          },
-        )
-      })
+      const zoom = physicFolder.add(this.paramsPhysicRender, "zoom", 0, 3).name('Zoom')
+      const posX = physicFolder.add(this.paramsPhysicRender.more, "x", -500, 500).name('Position X')
+      const posY = physicFolder.add(this.paramsPhysicRender.more, "y", -500, 500).name('Position Y')
+
+      zoom.onChange(this.updatePhysicRender.bind(this))
+      posX.onChange(this.updatePhysicRender.bind(this))
+      posY.onChange(this.updatePhysicRender.bind(this))
 
 
     }
     
+  }
+
+  updatePhysicRender () {
+    const render = this.paramsPhysicRender
+    Matter.Render.lookAt(
+      this.render,
+      {
+        min: { x: render.initPos.min.x * render.zoom + render.more.x, y: render.initPos.min.y * render.zoom + render.more.y },
+        max: { x: render.initPos.max.x * render.zoom + render.more.x, y: render.initPos.max.y * render.zoom + render.more.y }
+      },
+    )
   }
 
   // Scene Manager
