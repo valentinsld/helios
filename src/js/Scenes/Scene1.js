@@ -198,38 +198,24 @@ export default class Scene1 {
       }
     })
 
-    const escalier = new Box({
-      engine: this.engine,
-      scene: this.scene,
-      render: false,
-      size: {
-        x: 150,
-        y: 280,
-        z: 100
-      },
-      position : {
-        x: 305,
-        y: -500,
-        z: 0
-      },
-      rotation: Math.PI * 0.7
-    })
-
     const palier = new Box({
       engine: this.engine,
       scene: this.scene,
       render: false,
       size: {
         x: 600,
-        y: 400,
+        y: 200,
         z: 100
       },
       position : {
-        x: 680,
-        y: -555,
+        x: 600,
+        y: -465,
         z: 0
       }
     })
+    palier.box.vertices[0].x -= 300
+    Matter.Body.setVertices(palier.box, palier.box.vertices);
+
 
     this.door = new Door({
       scene: this.scene,
