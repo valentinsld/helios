@@ -430,41 +430,46 @@ export default class Scene1 {
     this.temple = gltf.scene
     this.temple.scale.set(300, 300, 300)
 
-    this.temple.traverse( function(node) {
-      if (node.name === 'soleil') {
-        node.material = materialSoleil
-        node.castShadow = true
-        node.receiveShadow = true
-      } else if (node.name === 'interieureporte') {
-        // console.log(node)
-      } else if (node.isMesh) {
-        node.material = material
-        node.castShadow = true
-        node.receiveShadow = true
+    this.temple.traverse( (node) => {
+      switch (node.name) {
+        case 'soleil':
+          node.material = materialSoleil
+          node.castShadow = true
+          node.receiveShadow = true
+          break;
+
+        case 'interieureporte':
+          // console.log(node)
+          break;
+
+        case 'fenetre':
+          node.material = new THREE.MeshStandardMaterial({
+            metalness: 0,
+            roughness: 0.5,
+            emissive: new THREE.Color(0xb36f24),
+            emissiveIntensity: 1
+          })
+
+          const lightFenetre = new THREE.PointLight(0xb36f24, 1, 100)
+          lightFenetre.position.copy(node.position)
+          this.groupDoorTemple.add(lightFenetre)
+          break;
+      
+        default:
+          node.material = material
+          node.castShadow = true
+          node.receiveShadow = true
+          break;
       }
     })
 
     this.groupDoorTemple.add(this.temple)
 
     const light = new THREE.PointLight(0xb36f24, 3.5, 700)
-    // const light1 = new THREE.PointLight(0xff00ff, 1.5, 700)
     light.position.set(50,300,-100)
-    // light1.position.set(50,100,-100)
     light.castShadow = true
-    // light1.castShadow = true
-
-    // light.castShadow = true
-    // light.shadow.radius = 8
-    // light.shadow.mapSize.width = 2048
-    // light.shadow.mapSize.height = 2048
-    // light.shadow.bias = - 0.01
-    // light.shadow.camera.far = 1500
 
     this.groupDoorTemple.add(light)
-    // this.groupDoorTemple.add(light1)
-
-    // const pointLightHelper = new THREE.PointLightHelper( light, 100 );
-    // this.scene.add( pointLightHelper );
 
     return this.newPromise(2500)
   }
@@ -518,7 +523,7 @@ export default class Scene1 {
     const paramsLight = {
       color: 0xa26d32
     }
-    this.lightBrasier = new THREE.PointLight(paramsLight.color, 4, 1900);
+    this.lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900);
     this.lightBrasier.position.set(-450, -400, -45);
     this.scene.add( this.lightBrasier );
 
@@ -537,14 +542,14 @@ export default class Scene1 {
     //
     const easeRough = RoughEase.ease.config({
       template: 'power1.out',
-      strength: 1,
+      strength: 0.5,
       points: 10,
       taper: 'none',
       randomize: true,
       clamp: false
     })
 
-    const timeline = gsap.timeline({repeat: -1});
+    const timeline = gsap.timeline({repeat: -1, repeatDelay: 0.1});
     timeline
       .to(
         this.lightBrasier,
@@ -559,10 +564,7 @@ export default class Scene1 {
         {
           intensity: 4.5,
           duration: 1,
-          ease: easeRough,
-          onComplete: () => {
-            console.log('complete')
-          }
+          ease: easeRough
         }
       )
 
