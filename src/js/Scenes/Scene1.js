@@ -3,6 +3,14 @@ import * as Matter from 'matter-js'
 
 import gsap from 'gsap'
 import { RoughEase } from 'gsap/EasePack'
+const easeRough = RoughEase.ease.config({
+  template: 'power1.out',
+  strength: 0.5,
+  points: 10,
+  taper: 'none',
+  randomize: true,
+  clamp: false
+})
 
 import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
@@ -447,12 +455,36 @@ export default class Scene1 {
             metalness: 0,
             roughness: 0.5,
             emissive: new THREE.Color(0xb36f24),
-            emissiveIntensity: 0.5
+            emissiveIntensity: 0.1
           })
 
-          const lightFenetre = new THREE.PointLight(0xff00ff, 1, 100) // 0xb36f24
+          const lightFenetre = new THREE.PointLight(0xb36f24, 8, 100) // 0xb36f24
           lightFenetre.position.copy(node.position)
-          this.groupDoorTemple.add(lightFenetre)
+          lightFenetre.position.z = -0.6
+
+          this.temple.add(lightFenetre)
+
+          //
+          // ANIMATION
+          //
+          const timeline1 = gsap.timeline({repeat: -1, repeatDelay: 0.1});
+          timeline1
+            .to(
+              lightFenetre,
+              {
+                intensity: 12,
+                duration: 0.7,
+                ease: easeRough
+              }
+            )
+            .to(
+              lightFenetre,
+              {
+                intensity: 8,
+                duration: 0.7,
+                ease: easeRough
+              }
+            )
           break;
       
         default:
@@ -523,9 +555,9 @@ export default class Scene1 {
     const paramsLight = {
       color: 0xa26d32
     }
-    this.lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900);
-    this.lightBrasier.position.set(-450, -400, -45);
-    this.scene.add( this.lightBrasier );
+    this.lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
+    this.lightBrasier.position.set(-450, -400, -45)
+    this.scene.add( this.lightBrasier )
 
     if (this.debugSceneFolder) {
       const color = this.debugSceneFolder.addColor(paramsLight, "color").name('Light Color')
@@ -540,15 +572,6 @@ export default class Scene1 {
     //
     // ANIMATION
     //
-    const easeRough = RoughEase.ease.config({
-      template: 'power1.out',
-      strength: 0.5,
-      points: 10,
-      taper: 'none',
-      randomize: true,
-      clamp: false
-    })
-
     const timeline = gsap.timeline({repeat: -1, repeatDelay: 0.1});
     timeline
       .to(
