@@ -115,7 +115,7 @@ export default class Fragment{
 
     // ADD ELEMENTS
     this.mesh.add(this.sphere, this.sphereLight)
-    this.mesh.position.z = 250
+    this.mesh.position.z = this.position.z
   }
 
   addPlaneToScene() {

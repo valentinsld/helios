@@ -10,7 +10,7 @@ const POSITION = {
 const SIZE = {
   x: 100,
   y: 200,
-  z: 50
+  z: 10
 }
 
 const COLOR = '#008d02'

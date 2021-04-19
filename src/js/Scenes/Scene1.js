@@ -73,7 +73,7 @@ export default class Scene1 {
       position : {
         x : -900,
         y : -350,
-        z : 150
+        z : 80
       }
     })
 
@@ -86,7 +86,7 @@ export default class Scene1 {
       position : {
         x : -1100,
         y : -250,
-        z : 120
+        z : 60
       }
     })
 
@@ -170,7 +170,7 @@ export default class Scene1 {
       },
       render: false,
       position: {
-        x: 900,
+        x: 820,
         y: 300,
         z: 0
       },
@@ -189,7 +189,7 @@ export default class Scene1 {
         z: 100
       },
       position : {
-        x: 385,
+        x: 305,
         y: -500,
         z: 0
       },
@@ -206,7 +206,7 @@ export default class Scene1 {
         z: 100
       },
       position : {
-        x: 760,
+        x: 680,
         y: -555,
         z: 0
       }
