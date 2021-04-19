@@ -42,16 +42,7 @@ export default class Fragment{
       prevY: position.y
     }
 
-    this.screen = {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }
-    
-    this.viewport = {
-      width: this.camera.right * 2 / this.cameraZoom,
-      height: this.camera.top * 2 / this.cameraZoom
-    }
-
+    this.resize()
     this.addFragmentToWorld()
     this.addFragmentToScene()
     // this.addPlaneToScene()
@@ -182,6 +173,20 @@ export default class Fragment{
     window.addEventListener('mousemove', this.cursorMove.bind(this))
     window.addEventListener('mousedown', this.interactWithElements.bind(this))
     window.addEventListener('mouseup', this.mouseUp.bind(this))
+
+    window.addEventListener('resize', this.resize.bind(this))
+  }
+
+  resize () {
+    this.screen = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
+    
+    this.viewport = {
+      width: this.camera.right * 2 / this.cameraZoom,
+      height: this.camera.top * 2 / this.cameraZoom
+    }
   }
 
   cursorMove(e) {

@@ -318,7 +318,7 @@ export default class Scene1 {
     gltf = gltf.scene
     gltf.scale.set(55, 55, 55)
     gltf.children[0].position.y = -0.95
-    gltf.moreY = Math.PI / 2
+    gltf.moreY = -Math.PI / 2
 
     gltf.traverse( function(node) {
       if (node.isMesh) {
