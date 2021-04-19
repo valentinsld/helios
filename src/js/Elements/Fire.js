@@ -12,11 +12,6 @@ const SIZE = {
   z: 100
 }
 
-const SENSOR_LIGHT = {
-  width: 1000,
-  height: 60
-}
-
 const COLOR = '#ffff00'
 
 // DOM
@@ -44,7 +39,6 @@ export default class Fire {
     this.activate = false
 
     this.createSensor()
-    // this.createSensorLight()
 
     if (gltf) {
       this.addGltfToScene(gltf)
@@ -110,41 +104,6 @@ export default class Fire {
           // console.log('leave', this.canUse)
         }
       }
-    });
-  }
-
-  createSensorLight() {
-    const startPoint = {
-      x: 300,
-      y: 0
-    }
-    const endPoint = {
-      x: 500,
-      y: -150
-    }
-
-    // console.log(this.render)
-    Matter.Events.on(this.render, 'afterRender', () => {
-      const context = this.render.context,
-        bodies = Matter.Composite.allBodies(this.world)
-
-      var collisions = Matter.Query.ray(bodies, startPoint, endPoint);
-
-      Matter.Render.startViewTransform(this.render);
-
-      context.beginPath();
-      context.moveTo(startPoint.x, startPoint.y);
-      context.lineTo(endPoint.x, endPoint.y);
-      if (collisions.length > 0) {
-        context.strokeStyle = '#fff';
-        console.log('colisioned line')
-      } else {
-        context.strokeStyle = '#555';
-      }
-      context.lineWidth = 4;
-      context.stroke();
-
-      Matter.Render.endViewTransform(this.render);
     });
   }
 
