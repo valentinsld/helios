@@ -20,7 +20,8 @@ import Fire from '../Elements/Fire'
 import Captor from '../Elements/Captor'
 import Door from '../Elements/Door'
 
-import LoaderModelsManager from '../LoaderModelsManager'
+import LoaderModelsManager from '../utils/LoaderModelsManager'
+import clearScene from '../utils/clearScene'
 
 import Statue from '../Elements/01_statue'
 
@@ -635,7 +636,6 @@ export default class Scene1 {
   }
 
   animationEndPhaeton () {
-    console.log('animation end Phaeton')
     this.phaeton.animation = true
 
     gsap.to(
@@ -650,7 +650,6 @@ export default class Scene1 {
   }
 
   animationEndFragment () {
-    console.log('animation end Fragment')
     this.fragment.animation = true
 
     gsap.to(
@@ -676,7 +675,7 @@ export default class Scene1 {
   // Destruct
   //
   async destruct () {
-    this.scene.clear()
+    clearScene(this.scene)
     Matter.World.clear(this.world);
 
     if (this.debug) {
