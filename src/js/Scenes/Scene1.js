@@ -447,10 +447,10 @@ export default class Scene1 {
             metalness: 0,
             roughness: 0.5,
             emissive: new THREE.Color(0xb36f24),
-            emissiveIntensity: 1
+            emissiveIntensity: 0.5
           })
 
-          const lightFenetre = new THREE.PointLight(0xb36f24, 1, 100)
+          const lightFenetre = new THREE.PointLight(0xff00ff, 1, 100) // 0xb36f24
           lightFenetre.position.copy(node.position)
           this.groupDoorTemple.add(lightFenetre)
           break;
@@ -555,7 +555,7 @@ export default class Scene1 {
         this.lightBrasier,
         {
           intensity: 6, // 5 + 3
-          duration: 1,
+          duration: 0.7,
           ease: easeRough
         }
       )
@@ -563,7 +563,7 @@ export default class Scene1 {
         this.lightBrasier,
         {
           intensity: 4.5,
-          duration: 1,
+          duration: 0.7,
           ease: easeRough
         }
       )
