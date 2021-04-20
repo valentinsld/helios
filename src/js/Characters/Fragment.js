@@ -1,6 +1,9 @@
 import * as THREE from 'three'
 import Matter from 'matter-js'
 
+import vertexShader from '../../glsl/vertexShaderSun.glsl'
+import fragmentShader from '../../glsl/fragmentShaderSun.glsl'
+
 const POSITION = {
   x: 0,
   y: 0,
@@ -9,7 +12,8 @@ const POSITION = {
 const RADIUS = 25
 
 export default class Fragment{
-  constructor({canvas, engine, scene, camera, debug, position = POSITION, radius = RADIUS}) {
+  constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS}) {
+    this.game = game
     this.canvas = canvas
     this.world = engine.world
     this.scene = scene
@@ -24,7 +28,9 @@ export default class Fragment{
       emissiveColor: 0xffff00,
       emissiveIntensity: 0.95,
       intensity: 4,
-      distance: 500
+      distance: 500,
+      glowColor: 0xffff00,
+      glowRadius: 2
     }
 
     this.position = position
@@ -108,6 +114,43 @@ export default class Fragment{
     // ADD ELEMENTS
     this.mesh.add(this.sphere, this.sphereLight)
     this.mesh.position.z = this.position.z
+
+
+    //
+    // Glow effect
+    //
+    let glowMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        viewVector: {
+          type: "v3",
+          value: this.camera.position
+        }
+      },
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      side: THREE.FrontSide,
+      blending: THREE.AdditiveBlending,
+      transparent: true
+    });
+
+    let glowGeometry = new THREE.SphereBufferGeometry(
+      this.radius + 25,
+      32, 32
+    );
+    
+    let glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+    this.sphere.add(glowMesh);
+    this.sphere.glow = glowMesh;
+    this.mesh.add(this.sphere);
+    
+    // LOOP
+    this.game.addUpdatedElement('loopGlow', this.loopGlow.bind(this))
+  }
+
+  loopGlow (time) {
+    // let viewVector = new THREE.Vector3().subVectors( this.camera.position, this.sphere.glow.getWorldPosition());
+    let viewVector = new THREE.Vector3().subVectors( this.camera.position, this.sphere.glow.position);
+    this.sphere.glow.material.uniforms.viewVector.value = viewVector;
   }
 
   addPlaneToScene() {
@@ -139,16 +182,6 @@ export default class Fragment{
 
   addDebug () {
     this.debugFolder = this.debug.addFolder('Fragment')
-
-    // this.params = {
-    //   color: 0xffff00, X
-    //   metalness: 0.3,
-    //   roughness: 0.4,
-    //   emissiveColor: 0xffff00, X
-    //   emissiveIntensity: 0.95,
-    //   intensity: 4,
-    //   distance: 500
-    // }
 
     this.debugFolder.addColor(this.params, 'color').onChange((color) => {
       this.sphere.material.color = new THREE.Color(color)

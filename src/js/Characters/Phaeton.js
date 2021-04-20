@@ -97,19 +97,25 @@ export default class Phaeton{
   // Events
   //
   initEvents() {
-    window.addEventListener('keypress', this.keypress.bind(this))
+    window.addEventListener('keydown', this.keydown.bind(this))
     window.addEventListener('keyup', this.keyup.bind(this))
   }
 
-  keypress(event){
+  keydown(event){
     // console.log(event)
 
     switch (event.code) {
       case "KeyA":
         Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
         break;
+      case "ArrowLeft":
+        Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
+        break;
       
       case "KeyD":
+        Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
+        break;
+      case "ArrowRight":
         Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
         break;
 

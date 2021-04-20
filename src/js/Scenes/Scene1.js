@@ -80,6 +80,7 @@ export default class Scene1 {
     })
 
     this.fragment = new Fragment({
+      game: this.game,
       canvas: this.canvas,
       engine: this.engine,
       scene : this.scene,
@@ -424,11 +425,14 @@ export default class Scene1 {
     const normal = this.textureLoader.load('/models/temple/normaltemple.png')
     normal.flipY = false
 
-    const material = new THREE.MeshStandardMaterial({
+    let material = new THREE.MeshStandardMaterial({
       map: texture,
       normalMap: normal,
+      emissive: 0xffffff,
+      emissiveMap: texture,
+      emissiveIntensity: 0.5,
       metalness: 0,
-      roughness: 0.5,
+      roughness: 0.75,
     })
 
     const textureSoleil = this.textureLoader.load('/models/temple/TextureSoleil.png')
@@ -436,9 +440,12 @@ export default class Scene1 {
     const normalSoleil = this.textureLoader.load('/models/temple/normalsoleil.png')
     normalSoleil.flipY = false
 
-    const materialSoleil = new THREE.MeshStandardMaterial({
+    let materialSoleil = new THREE.MeshStandardMaterial({
       map: textureSoleil,
       normalMap: normalSoleil,
+      emissive: 0xffffff,
+      emissiveMap: textureSoleil,
+      emissiveIntensity: 0.5,
       metalness: 0,
       roughness: 0.5,
       side: THREE.DoubleSide
@@ -446,6 +453,19 @@ export default class Scene1 {
 
     this.temple = gltf.scene
     this.temple.scale.set(300, 300, 300)
+
+    let emissive = {
+      intensity: 0.5,
+      color: 0xffffff
+    }
+    this.debugSceneFolder?.add(emissive, 'intensity', -1, 2).name('Emissive temple').onChange((value) => {
+      material.emissiveIntensity = value
+      materialSoleil.emissiveIntensity = value
+    })
+    this.debugSceneFolder?.addColor(emissive, 'color',).name('Emissive color').onChange((value) => {
+      material.emissive = new THREE.Color(value)
+      materialSoleil.emissive = new THREE.Color(value)
+    })
 
     this.temple.traverse( (node) => {
       switch (node.name) {
@@ -463,13 +483,14 @@ export default class Scene1 {
           node.material = new THREE.MeshStandardMaterial({
             metalness: 0,
             roughness: 0.5,
-            emissive: new THREE.Color(0xb36f24),
-            emissiveIntensity: 0.1
+            emissive: new THREE.Color(0xf2b24b),
+            emissiveIntensity: 0.8
           })
 
           const lightFenetre = new THREE.PointLight(0xb36f24, 8, 100) // 0xb36f24
           lightFenetre.position.copy(node.position)
           lightFenetre.position.z = -0.6
+          lightFenetre.position.x = -1.388
 
           this.temple.add(lightFenetre)
 
@@ -566,6 +587,13 @@ export default class Scene1 {
     }
     this.lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
     this.lightBrasier.position.set(-450, -400, -45)
+    
+    this.lightBrasier.castShadow = true
+    this.lightBrasier.shadow.camera.far = 1700
+    this.lightBrasier.shadow.radius = 8
+    this.lightBrasier.shadow.mapSize.width = 1024
+    this.lightBrasier.shadow.mapSize.height = 1024
+
     this.scene.add( this.lightBrasier )
 
     if (this.debugSceneFolder) {
@@ -577,6 +605,7 @@ export default class Scene1 {
       this.debugSceneFolder.add(this.lightBrasier, "intensity", 0, 10).name('Light intensity')
       this.debugSceneFolder.add(this.lightBrasier, "distance", 1000, 2000).name('Light distance')
     }
+
 
     //
     // ANIMATION
