@@ -423,8 +423,6 @@ export default class Scene1 {
     texture.flipY = false
     const normal = this.textureLoader.load('/models/temple/normaltemple.png')
     normal.flipY = false
-    const emissiveMap = this.textureLoader.load('/models/temple/radial_gradient.png')
-    emissiveMap.flipY = false
 
     let material = new THREE.MeshStandardMaterial({
       map: texture,
@@ -459,6 +457,7 @@ export default class Scene1 {
       intensity: 0.5,
       color: 0xffffff
     }
+    console.log(this.debugSceneFolder)
     this.debugSceneFolder.add(emissive, 'intensity', -1, 2).name('Emissive temple').onChange((value) => {
       material.emissiveIntensity = value
       materialSoleil.emissiveIntensity = value
