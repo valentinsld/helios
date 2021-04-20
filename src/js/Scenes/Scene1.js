@@ -80,6 +80,7 @@ export default class Scene1 {
     })
 
     this.fragment = new Fragment({
+      game: this.game,
       canvas: this.canvas,
       engine: this.engine,
       scene : this.scene,
