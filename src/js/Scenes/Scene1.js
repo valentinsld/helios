@@ -457,12 +457,11 @@ export default class Scene1 {
       intensity: 0.5,
       color: 0xffffff
     }
-    console.log(this.debugSceneFolder)
-    this.debugSceneFolder.add(emissive, 'intensity', -1, 2).name('Emissive temple').onChange((value) => {
+    this.debugSceneFolder?.add(emissive, 'intensity', -1, 2).name('Emissive temple').onChange((value) => {
       material.emissiveIntensity = value
       materialSoleil.emissiveIntensity = value
     })
-    this.debugSceneFolder.addColor(emissive, 'color',).name('Emissive color').onChange((value) => {
+    this.debugSceneFolder?.addColor(emissive, 'color',).name('Emissive color').onChange((value) => {
       material.emissive = new THREE.Color(value)
       materialSoleil.emissive = new THREE.Color(value)
     })
