@@ -585,6 +585,13 @@ export default class Scene1 {
     }
     this.lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
     this.lightBrasier.position.set(-450, -400, -45)
+    
+    this.lightBrasier.castShadow = true
+    this.lightBrasier.shadow.camera.far = 1700
+    this.lightBrasier.shadow.radius = 8
+    this.lightBrasier.shadow.mapSize.width = 1024
+    this.lightBrasier.shadow.mapSize.height = 1024
+
     this.scene.add( this.lightBrasier )
 
     if (this.debugSceneFolder) {
@@ -596,6 +603,9 @@ export default class Scene1 {
       this.debugSceneFolder.add(this.lightBrasier, "intensity", 0, 10).name('Light intensity')
       this.debugSceneFolder.add(this.lightBrasier, "distance", 1000, 2000).name('Light distance')
     }
+
+    return this.newPromise()
+
 
     //
     // ANIMATION
