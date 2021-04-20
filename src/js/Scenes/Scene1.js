@@ -423,10 +423,15 @@ export default class Scene1 {
     texture.flipY = false
     const normal = this.textureLoader.load('/models/temple/normaltemple.png')
     normal.flipY = false
+    const emissiveMap = this.textureLoader.load('/models/temple/radial_gradient.png')
+    emissiveMap.flipY = false
 
-    const material = new THREE.MeshStandardMaterial({
+    let material = new THREE.MeshStandardMaterial({
       map: texture,
       normalMap: normal,
+      emissive: 0xffffff,
+      emissiveMap: texture,
+      emissiveIntensity: 0.5,
       metalness: 0,
       roughness: 0.5,
     })
@@ -436,9 +441,12 @@ export default class Scene1 {
     const normalSoleil = this.textureLoader.load('/models/temple/normalsoleil.png')
     normalSoleil.flipY = false
 
-    const materialSoleil = new THREE.MeshStandardMaterial({
+    let materialSoleil = new THREE.MeshStandardMaterial({
       map: textureSoleil,
       normalMap: normalSoleil,
+      emissive: 0xffffff,
+      emissiveMap: textureSoleil,
+      emissiveIntensity: 0.5,
       metalness: 0,
       roughness: 0.5,
       side: THREE.DoubleSide
@@ -446,6 +454,19 @@ export default class Scene1 {
 
     this.temple = gltf.scene
     this.temple.scale.set(300, 300, 300)
+
+    let emissive = {
+      intensity: 0.5,
+      color: 0xffffff
+    }
+    this.debugSceneFolder.add(emissive, 'intensity', -1, 2).name('Emissive temple').onChange((value) => {
+      material.emissiveIntensity = value
+      materialSoleil.emissiveIntensity = value
+    })
+    this.debugSceneFolder.addColor(emissive, 'color',).name('Emissive color').onChange((value) => {
+      material.emissive = new THREE.Color(value)
+      materialSoleil.emissive = new THREE.Color(value)
+    })
 
     this.temple.traverse( (node) => {
       switch (node.name) {
