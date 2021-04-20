@@ -431,7 +431,7 @@ export default class Scene1 {
       emissiveMap: texture,
       emissiveIntensity: 0.5,
       metalness: 0,
-      roughness: 0.5,
+      roughness: 0.75,
     })
 
     const textureSoleil = this.textureLoader.load('/models/temple/TextureSoleil.png')
@@ -482,13 +482,14 @@ export default class Scene1 {
           node.material = new THREE.MeshStandardMaterial({
             metalness: 0,
             roughness: 0.5,
-            emissive: new THREE.Color(0xb36f24),
-            emissiveIntensity: 0.1
+            emissive: new THREE.Color(0xf2b24b),
+            emissiveIntensity: 0.8
           })
 
           const lightFenetre = new THREE.PointLight(0xb36f24, 8, 100) // 0xb36f24
           lightFenetre.position.copy(node.position)
           lightFenetre.position.z = -0.6
+          lightFenetre.position.x = -1.388
 
           this.temple.add(lightFenetre)
 
@@ -603,8 +604,6 @@ export default class Scene1 {
       this.debugSceneFolder.add(this.lightBrasier, "intensity", 0, 10).name('Light intensity')
       this.debugSceneFolder.add(this.lightBrasier, "distance", 1000, 2000).name('Light distance')
     }
-
-    return this.newPromise()
 
 
     //
