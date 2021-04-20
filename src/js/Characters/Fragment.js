@@ -30,7 +30,8 @@ export default class Fragment{
       intensity: 4,
       distance: 500,
       glowColor: 0xffff00,
-      glowRadius: 2
+      glowRadius: 2,
+      glowPow: 6
     }
 
     this.position = position
@@ -119,8 +120,16 @@ export default class Fragment{
     //
     // Glow effect
     //
+    const glowColor = new THREE.Color(this.params.glowColor)
     let glowMaterial = new THREE.ShaderMaterial({
       uniforms: {
+        intensityMultiplicator: {
+          value: this.params.glowRadius,
+        },
+        intensityPow: {
+          value: this.params.glowPow,
+        },
+        color: new THREE.Uniform(glowColor),
         viewVector: {
           type: "v3",
           value: this.camera.position
@@ -139,6 +148,8 @@ export default class Fragment{
     );
     
     let glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+    glowMesh.position.z -= this.radius * 2
+
     this.sphere.add(glowMesh);
     this.sphere.glow = glowMesh;
     this.mesh.add(this.sphere);
@@ -197,6 +208,17 @@ export default class Fragment{
     this.debugFolder.add(this.sphereLight, "intensity", 0, 15)
     this.debugFolder.add(this.sphereLight, "distance", 0, 1000)
 
+    this.debugFolder.addColor(this.params, 'glowColor').onChange((color) => {
+      const colorThree = new THREE.Color(color)
+      this.sphere.glow.material.uniforms.color = new THREE.Uniform(colorThree)
+      
+    })
+    this.debugFolder.add(this.params, "glowRadius", 0, 10).onChange((value) => {
+      this.sphere.glow.material.uniforms.intensityMultiplicator.value = value;
+    })
+    this.debugFolder.add(this.params, "glowPow", 0, 10).onChange((value) => {
+      this.sphere.glow.material.uniforms.intensityPow.value = value;
+    })
   }
 
   //
