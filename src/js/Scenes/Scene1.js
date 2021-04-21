@@ -318,6 +318,7 @@ export default class Scene1 {
       engine: this.engine,
       phaeton: this.phaeton,
       gltf,
+      initStep: 1,
       position: {
         x: -80,
         y: -400,
@@ -360,6 +361,7 @@ export default class Scene1 {
       engine: this.engine,
       phaeton: this.phaeton,
       gltf,
+      initStep: 1,
       position: {
         x: -320,
         y: -400,
@@ -478,7 +480,7 @@ export default class Scene1 {
     const normalSoleil = this.textureLoader.load('/models/temple/normalsoleil.png')
     normalSoleil.flipY = false
 
-    let materialSoleil = new THREE.MeshStandardMaterial({
+    this.materialSoleil = new THREE.MeshStandardMaterial({
       map: textureSoleil,
       normalMap: normalSoleil,
       emissive: 0xffffff,
@@ -498,17 +500,17 @@ export default class Scene1 {
     }
     this.debugSceneFolder?.add(emissive, 'intensity', -1, 2).name('Emissive temple').onChange((value) => {
       material.emissiveIntensity = value
-      materialSoleil.emissiveIntensity = value
+      this.materialSoleil.emissiveIntensity = value
     })
     this.debugSceneFolder?.addColor(emissive, 'color',).name('Emissive color').onChange((value) => {
       material.emissive = new THREE.Color(value)
-      materialSoleil.emissive = new THREE.Color(value)
+      this.materialSoleil.emissive = new THREE.Color(value)
     })
 
     this.temple.traverse( (node) => {
       switch (node.name) {
         case 'soleil':
-          node.material = materialSoleil
+          node.material = this.materialSoleil
           node.castShadow = true
           node.receiveShadow = true
           break;
@@ -693,23 +695,44 @@ export default class Scene1 {
     this.door.open()
 
     // animation door
-    gsap.to(
-      this.porteGauche.rotation,
-      {
-        y: -Math.PI / 1.25,
-        ease: "steps(12)",
-        duration: 2
-      }
-    )
-    gsap.to(
-      this.porteDroit.rotation,
-      {
-        y: Math.PI / 1.25,
-        ease: "steps(12)",
-        delay: 0.5,
-        duration: 2
-      }
-    )
+    const initEmmisive = this.materialSoleil.emissiveIntensity
+    const timeline = gsap.timeline()
+    timeline
+      .to (
+        this.materialSoleil,
+        {
+          emissiveIntensity: 2,
+          ease: "steps(12)",
+          duration: 1
+        }
+      )
+      .to (
+        this.materialSoleil,
+        {
+          emissiveIntensity: initEmmisive + 0.5,
+          ease: "steps(12)",
+          duration: 0.5
+        }
+      )
+      .to(
+        this.porteGauche.rotation,
+        {
+          y: -Math.PI / 1.25,
+          ease: "steps(12)",
+          duration: 2,
+          delay: 0.5
+        }
+      )
+      .to(
+        this.porteDroit.rotation,
+        {
+          y: Math.PI / 1.25,
+          ease: "steps(12)",
+          delay: 0.5,
+          duration: 2
+        },
+        "-=1.6"
+      )
 
     //remove box
     this.wallDoor.destroyed()

@@ -158,7 +158,7 @@ export default class Fire {
   }
 
   createLight() {
-    this.spotLight = new THREE.SpotLight( 0xffffff, 0, this.heightCone, this.angleCone * 3, 1, 1 );
+    this.spotLight = new THREE.SpotLight( 0xdeab3c, 0, this.heightCone, this.angleCone * 3, 1, 1 );
     this.spotLight.power = 15
     this.spotLight.intensity = 0
     this.spotLight.position.copy(this.position)
@@ -181,7 +181,7 @@ export default class Fire {
   }
 
   startInteract() {
-    this.spotLight.intensity = 3
+    this.spotLight.intensity = 10
     this.cone.material.opacity = this.coneOpacity
 
     DOM.style.cursor = 'grabbing'
