@@ -184,7 +184,7 @@ export default class Scene1 {
       },
       render: false,
       position: {
-        x: 820,
+        x: 660,
         y: 600,
         z: 0
       },
@@ -203,7 +203,7 @@ export default class Scene1 {
       },
       render: false,
       position: {
-        x: 820,
+        x: 660,
         y: -200,
         z: 0
       },
@@ -222,7 +222,7 @@ export default class Scene1 {
         z: 100
       },
       position : {
-        x: 600,
+        x: 440,
         y: -465,
         z: 0
       }
@@ -240,7 +240,7 @@ export default class Scene1 {
       // render: this.debug ? true : false,
       render: false,
       position : {
-        x : 600,
+        x : 440,
         y : -130,
         z : 250
       },
