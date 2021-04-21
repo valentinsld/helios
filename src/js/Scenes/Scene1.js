@@ -44,9 +44,16 @@ export default class Scene1 {
     globalScene.add(this.scene)
 
     this.groupDoorTemple = new THREE.Group()
-    this.groupDoorTemple.position.set(800, -470, -180)
+    this.groupDoorTemple.position.set(640, -470, -180)
     this.groupDoorTemple.rotateY(Math.PI * 3/4)
     this.scene.add(this.groupDoorTemple)
+
+    this.groupeBrasier = new THREE.Group()
+    this.groupeBrasier.scale.set(300, 300, 300)
+    this.groupeBrasier.rotation.y = 2.25
+    this.groupeBrasier.position.set(680, -455, -135)
+
+    this.scene.add(this.groupeBrasier)
 
     
     if (this.debug) this.debugSceneFolder = this.debug.addFolder('Scene params')
@@ -99,13 +106,21 @@ export default class Scene1 {
 
   initModels () {
     const arrayModels = [
+      // {
+      //   url: '/models/statuedebout/statuedebout.gltf',
+      //   func: this.initStatue1.bind(this)
+      // },
+      // {
+      //   url: '/models/statue2/statueAssis.gltf',
+      //   func: this.initStatue2.bind(this)
+      // },
+      // {
+      //   url: '/models/brasier/brasier.gltf',
+      //   func: this.initBrasier.bind(this)
+      // },
       {
-        url: '/models/statuedebout/statuedebout.gltf',
-        func: this.initStatue1.bind(this)
-      },
-      {
-        url: '/models/statue2/statueAssis.gltf',
-        func: this.initStatue2.bind(this)
+        url: '/models/statues_brasier/statues_brasier.gltf',
+        func: this.initStatuesBrasier.bind(this)
       },
       {
         url: '/models/porte/porte.gltf',
@@ -114,10 +129,6 @@ export default class Scene1 {
       {
         url: '/models/temple/temple.gltf',
         func: this.initTemple.bind(this)
-      },
-      {
-        url: '/models/brasier/brasier.gltf',
-        func: this.initBrasier.bind(this)
       }
     ]
 
@@ -244,10 +255,47 @@ export default class Scene1 {
     })
   }
 
+  async initStatuesBrasier (gltf) {
+
+    let brasier = null
+    let statue1 = new THREE.Group()
+    let statue2 = new THREE.Group()
+    this.groupeBrasier.add(statue1)
+    this.groupeBrasier.add(statue2)
+
+    const children = [...gltf.scene.children]
+    for (const node of children) {
+      if (node.name === 'statue_debout') {
+        node.position.y = 0.021
+        node.position.z = -2.121
+
+        statue1.add(node)
+        statue1.position.copy(node.position)
+        node.position.set(0,0,0)
+      } else if (node.name === 'statue_assis') {
+        node.position.y = 0.257
+        node.position.z = -2.725
+
+        statue2.add(node)
+        statue2.position.copy(node.position)
+        node.position.set(0,0,0)
+      } else if (node.name === 'brasier') {
+        brasier = node
+        this.groupeBrasier.add(brasier)
+      }
+    }
+    
+    await this.initBrasier(brasier)
+    await this.initStatue1(statue1)
+    await this.initStatue2(statue2)
+
+    return this.newPromise()
+  }
+
   async initStatue1 (gltf) {
-    const texture = this.textureLoader.load('/models/statuedebout/texturestatue1.png')
+    const texture = this.textureLoader.load('/models/statues_brasier/texture_debout_anamorphose.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/statuedebout/normalstatue1.png')
+    const normal = this.textureLoader.load('/models/statues_brasier/normal_debout_anamorphose.png')
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
@@ -256,11 +304,6 @@ export default class Scene1 {
       metalness: 0,
       roughness: 0.5,
     })
-
-    gltf = gltf.scene
-    gltf.scale.set(55, 55, 55)
-    gltf.children[0].position.z = -0.1
-    gltf.children[0].position.y = 0.44
 
     gltf.traverse( function(node) {
       if (node.isMesh) {
@@ -276,7 +319,7 @@ export default class Scene1 {
       phaeton: this.phaeton,
       gltf,
       position: {
-        x: 50,
+        x: -80,
         y: -400,
         z: -30,
       },
@@ -291,9 +334,9 @@ export default class Scene1 {
   }
 
   async initStatue2 (gltf) {
-    const texture = this.textureLoader.load('/models/statue2/textureAssis2.png')
+    const texture = this.textureLoader.load('/models/statues_brasier/texture_assis_anamorphose.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/statue2/normalAssis.png')
+    const normal = this.textureLoader.load('/models/statues_brasier/normal_assis_anamorphose.png')
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
@@ -303,11 +346,6 @@ export default class Scene1 {
       metalness: 0,
       roughness: 0.5,
     })
-
-    gltf = gltf.scene
-    gltf.scale.set(55, 55, 55)
-    gltf.children[0].position.y = -0.95
-    gltf.moreY = -Math.PI / 2
 
     gltf.traverse( function(node) {
       if (node.isMesh) {
@@ -323,12 +361,12 @@ export default class Scene1 {
       phaeton: this.phaeton,
       gltf,
       position: {
-        x: -200,
+        x: -320,
         y: -400,
         z: -80,
       },
       size: {
-        x: 100,
+        x: 160,
         y: 100,
         z: 100
       }
@@ -537,18 +575,14 @@ export default class Scene1 {
   }
 
   async initBrasier (gltf) {
-    gltf = gltf.scene
-    gltf.scale.set(300, 300, 300)
-    gltf.getObjectByName('brasier').position.y = -0.170
-
     this.captor = new Captor ({
       scene: this.scene,
       engine: this.engine,
       fragment: this.fragment,
       position: {
-        x: 950,
-        y: 550,
-        z: 50,
+        x: 450,
+        y: 350,
+        z: -50,
       },
       // render: this.debug ? true : false,
       size: {
@@ -568,9 +602,9 @@ export default class Scene1 {
       debug: this.debug,
       gltf,
       position: {
-        x: -450,
+        x: -630,
         y: -400,
-        z: -45,
+        z: -29,
       },
       size: {
         x: 100,
@@ -586,7 +620,7 @@ export default class Scene1 {
       color: 0xa26d32
     }
     this.lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
-    this.lightBrasier.position.set(-450, -400, -45)
+    this.lightBrasier.position.copy(this.fire.position)
     
     this.lightBrasier.castShadow = true
     this.lightBrasier.shadow.camera.far = 1700

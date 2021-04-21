@@ -151,9 +151,6 @@ export default class Fire {
 
   addGltfToScene (gltf) {
     this.mesh = gltf
-    this.mesh.position.copy(this.position)
-
-    this.scene.add(this.mesh)
   }
 
   addElementToFragment() {
@@ -177,6 +174,10 @@ export default class Fire {
     
     // const spotLightHelper = new THREE.SpotLightHelper( this.spotLight )
     // this.scene.add( spotLightHelper )
+
+    // this.fragment.game.addUpdatedElement('spotLightHelper', () => {
+    //   spotLightHelper.update()
+    // })
   }
 
   startInteract() {
@@ -189,8 +190,10 @@ export default class Fire {
   interact(cursor) {
     const startPoint = this.mesh.position
     const endPoint = cursor
+    let lookAt = new THREE.Vector3().copy(endPoint)
+    lookAt.z += 80
 
-    this.cone.lookAt(new THREE.Vector3().copy(endPoint))
+    this.cone.lookAt(lookAt)
 
 
     const allbodies = Matter.Composite.allBodies(this.world),

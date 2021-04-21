@@ -94,11 +94,6 @@ export default class Statue {
 
   addGltf (gltf) {
     this.mesh = gltf
-    this.mesh.position.copy(this.position)
-    const moreY = this.mesh.moreY || 0
-    this.mesh.rotation.y = this.step * Math.PI / 2 + moreY
-
-    this.scene.add(this.mesh)
   }
 
   addBoxToScene() {

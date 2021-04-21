@@ -1,0 +1,402 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.4.40",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1,
+                2
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "brasier",
+            "rotation" : [
+                0,
+                0.09953638911247253,
+                0,
+                0.9950339198112488
+            ],
+            "scale" : [
+                0.2967081069946289,
+                0.2967081069946289,
+                0.2967081069946289
+            ],
+            "translation" : [
+                2.5323610305786133,
+                0.11810606718063354,
+                -3.559035062789917
+            ]
+        },
+        {
+            "mesh" : 1,
+            "name" : "statue_debout",
+            "rotation" : [
+                0.10218090564012527,
+                -0.7560309767723083,
+                0.28327491879463196,
+                0.581146776676178
+            ],
+            "scale" : [
+                0.18131192028522491,
+                0.18131189048290253,
+                0.18131192028522491
+            ],
+            "translation" : [
+                1.4430454969406128,
+                -0.0005356073379516602,
+                -2.110826015472412
+            ]
+        },
+        {
+            "mesh" : 2,
+            "name" : "statue_assis",
+            "rotation" : [
+                -0.15840905904769897,
+                0.4970347583293915,
+                0.019092626869678497,
+                0.8529351949691772
+            ],
+            "scale" : [
+                14.448226928710938,
+                14.448221206665039,
+                14.787152290344238
+            ],
+            "translation" : [
+                2.2438459396362305,
+                0.27155303955078125,
+                -2.708568572998047
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "emissiveFactor" : [
+                1,
+                1,
+                1
+            ],
+            "emissiveTexture" : {
+                "index" : 0,
+                "texCoord" : 0
+            },
+            "name" : "brasier",
+            "pbrMetallicRoughness" : {}
+        },
+        {
+            "doubleSided" : true,
+            "emissiveFactor" : [
+                1,
+                1,
+                1
+            ],
+            "emissiveTexture" : {
+                "index" : 1,
+                "texCoord" : 0
+            },
+            "name" : "texture_debout",
+            "pbrMetallicRoughness" : {}
+        },
+        {
+            "doubleSided" : true,
+            "emissiveFactor" : [
+                1,
+                1,
+                1
+            ],
+            "emissiveTexture" : {
+                "index" : 2,
+                "texCoord" : 0
+            },
+            "name" : "texture_assis",
+            "pbrMetallicRoughness" : {}
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Plane.036",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                }
+            ]
+        },
+        {
+            "name" : "Plane.069",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 4,
+                        "NORMAL" : 5,
+                        "TEXCOORD_0" : 6,
+                        "COLOR_0" : 7
+                    },
+                    "indices" : 8,
+                    "material" : 1
+                }
+            ]
+        },
+        {
+            "name" : "Plane.059",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 9,
+                        "NORMAL" : 10,
+                        "TEXCOORD_0" : 11,
+                        "COLOR_0" : 12
+                    },
+                    "indices" : 13,
+                    "material" : 2
+                }
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        },
+        {
+            "sampler" : 0,
+            "source" : 1
+        },
+        {
+            "sampler" : 0,
+            "source" : 2
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/png",
+            "name" : "texture_brasier",
+            "uri" : "texture_brasier.png"
+        },
+        {
+            "mimeType" : "image/png",
+            "name" : "texture_debout_anamorphose",
+            "uri" : "texture_debout_anamorphose.png"
+        },
+        {
+            "mimeType" : "image/png",
+            "name" : "texture_assis_anamorphose",
+            "uri" : "texture_assis_anamorphose.png"
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 832,
+            "max" : [
+                1.0084986686706543,
+                0.19766032695770264,
+                0.8241536617279053
+            ],
+            "min" : [
+                -1.0522246360778809,
+                -0.39618340134620667,
+                -0.8652031421661377
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 832,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 832,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 1260,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 5686,
+            "max" : [
+                1.4086230993270874,
+                8.020782470703125,
+                0.8066034317016602
+            ],
+            "min" : [
+                -1.1024609804153442,
+                -0.6992983818054199,
+                -4.765475273132324
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 5686,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 5686,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5123,
+            "count" : 5686,
+            "normalized" : true,
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 8,
+            "componentType" : 5123,
+            "count" : 8454,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 9,
+            "componentType" : 5126,
+            "count" : 5473,
+            "max" : [
+                0.02424345165491104,
+                0.06311659514904022,
+                0.02446189522743225
+            ],
+            "min" : [
+                -0.02889643982052803,
+                -0.025973182171583176,
+                -0.03020659275352955
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 10,
+            "componentType" : 5126,
+            "count" : 5473,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 11,
+            "componentType" : 5126,
+            "count" : 5473,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 12,
+            "componentType" : 5123,
+            "count" : 5473,
+            "normalized" : true,
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 13,
+            "componentType" : 5123,
+            "count" : 8133,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 9984,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 9984,
+            "byteOffset" : 9984
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 6656,
+            "byteOffset" : 19968
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 2520,
+            "byteOffset" : 26624
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 68232,
+            "byteOffset" : 29144
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 68232,
+            "byteOffset" : 97376
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 45488,
+            "byteOffset" : 165608
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 45488,
+            "byteOffset" : 211096
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 16908,
+            "byteOffset" : 256584
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 65676,
+            "byteOffset" : 273492
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 65676,
+            "byteOffset" : 339168
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 43784,
+            "byteOffset" : 404844
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 43784,
+            "byteOffset" : 448628
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 16266,
+            "byteOffset" : 492412
+        }
+    ],
+    "samplers" : [
+        {
+            "magFilter" : 9729,
+            "minFilter" : 9986
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 508680,
+            "uri" : "statues_brasier.bin"
+        }
+    ]
+}

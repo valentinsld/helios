@@ -256,9 +256,7 @@ export default class Fragment{
   }
 
   interactWithElements() {
-    this.interactionElements.forEach((element) => {
-      const dist = this.mesh.position.distanceTo(element.mesh.position)
-      
+    this.interactionElements.forEach((element) => {     
       if (element.canUse) {
         this.interactionElement = element
         element.startInteract()
