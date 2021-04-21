@@ -575,6 +575,24 @@ export default class Scene1 {
   }
 
   async initBrasier (gltf) {
+    const texture = this.textureLoader.load('/models/statues_brasier/texture_brasier.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/statues_brasier/normal_brasier.png')
+    normal.flipY = false
+
+    const material = new THREE.MeshStandardMaterial({
+      map: texture,
+      normalMap: normal,
+      metalness: 0,
+      roughness: 0.5,
+    })
+
+    gltf.traverse( function(node) {
+      if (node.isMesh) {
+        node.material = material
+      }
+    })
+
     this.captor = new Captor ({
       scene: this.scene,
       engine: this.engine,
