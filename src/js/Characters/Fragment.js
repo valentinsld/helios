@@ -22,16 +22,16 @@ export default class Fragment{
     this.debug = debug
 
     this.params = {
-      color: 0xffff00,
+      color: 0xebaf5b,
       metalness: 0.3,
       roughness: 0.4,
-      emissiveColor: 0xffff00,
-      emissiveIntensity: 0.95,
+      emissiveColor: 0xfaa961,
+      emissiveIntensity: 1,
       intensity: 4,
-      distance: 500,
-      glowColor: 0xffff00,
-      glowRadius: 2,
-      glowPow: 6
+      distance: 330,
+      glowColor: 0xf7f77f,
+      glowRadius: 0.7,
+      glowPow: 4.5
     }
 
     this.position = position
