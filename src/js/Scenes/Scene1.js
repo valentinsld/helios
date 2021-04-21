@@ -644,7 +644,7 @@ export default class Scene1 {
     gsap.to(
       this.porteGauche.rotation,
       {
-        y: Math.PI / 2.2,
+        y: -Math.PI / 1.25,
         ease: "steps(12)",
         duration: 2
       }
@@ -652,7 +652,7 @@ export default class Scene1 {
     gsap.to(
       this.porteDroit.rotation,
       {
-        y: -Math.PI / 2.2,
+        y: Math.PI / 1.25,
         ease: "steps(12)",
         delay: 0.5,
         duration: 2
