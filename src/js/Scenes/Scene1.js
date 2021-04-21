@@ -701,16 +701,16 @@ export default class Scene1 {
       .to (
         this.materialSoleil,
         {
-          emissiveIntensity: 2,
-          ease: "steps(12)",
-          duration: 1
+          emissiveIntensity: 3,
+          ease: "steps(14)",
+          duration: 1.2
         }
       )
       .to (
         this.materialSoleil,
         {
           emissiveIntensity: initEmmisive + 0.5,
-          ease: "steps(12)",
+          ease: "steps(5)",
           duration: 0.5
         }
       )
