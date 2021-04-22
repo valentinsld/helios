@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Matter from 'matter-js'
+import gsap from 'gsap'
 
 import vertexShader from '../../glsl/vertexShaderSun.glsl'
 import fragmentShader from '../../glsl/fragmentShaderSun.glsl'
@@ -9,7 +10,11 @@ const POSITION = {
   y: 0,
   z: 0
 }
-const RADIUS = 25
+const RADIUS = 21
+
+// DOM
+const DOM = document.querySelector('body')
+
 
 export default class Fragment{
   constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS}) {
@@ -219,6 +224,22 @@ export default class Fragment{
     this.debugFolder.add(this.params, "glowPow", 0, 10).onChange((value) => {
       this.sphere.glow.material.uniforms.intensityPow.value = value;
     })
+  }
+
+  hover (hov = 'in') {
+    hov = hov === 'in'
+
+    DOM.style.cursor = hov ? 'pointer' : 'initial'
+    gsap.to(
+      this.mesh.scale,
+      {
+        x: hov ? 1.2 : 1,
+        y: hov ? 1.2 : 1,
+        z: hov ? 1.2 : 1,
+        duration: 0.3,
+        ease: 'Power3.out'
+      }
+    )
   }
 
   //

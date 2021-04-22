@@ -14,9 +14,6 @@ const SIZE = {
 
 const COLOR = '#ffff00'
 
-// DOM
-const DOM = document.querySelector('body')
-
 export default class Fire {
   constructor ({fragment, engine, render, gltf, debug, scene, captor, position = POSITION, size = SIZE, optionsBox = {}, heightCone = 3800, angleCone = Math.PI * 0.02}) {
     this.type = 'Fire'
@@ -83,8 +80,8 @@ export default class Fire {
 
         if (conditionCollider && conditionFragment) {
           this.canUse = true
-          DOM.style.cursor = 'pointer'
-          // console.log('enter', this.canUse)
+
+          this.fragment.hover()
         }
       }
     });
@@ -100,8 +97,8 @@ export default class Fire {
 
         if (conditionCollider && conditionFragment) {
           this.canUse = false
-          DOM.style.cursor = 'initial'
-          // console.log('leave', this.canUse)
+
+          this.fragment.hover('out')
         }
       }
     });
