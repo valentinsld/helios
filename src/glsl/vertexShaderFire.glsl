@@ -110,11 +110,11 @@ void main()
   modelPosition.y += uTime * uTimeScaleY;
   modelPosition.y %= maxHeight;
 
-  modelPosition.x += cnoise(vec3((uInitPosition.xz + aRandom * 10.0) * 50.0, uTime * 0.2)) * 100.0;
 
   modelPosition.x *= (modelPosition.y / maxHeight) * uLarge ;
   modelPosition.z *= (modelPosition.y / maxHeight) * uLarge ;
 
+  modelPosition.x += cnoise(vec3((uInitPosition.xz + aRandom * 10.0) * 50.0, uTime * 0.2)) * 50.0;
 
   vec4 viewPosition = viewMatrix * modelPosition;
   viewPosition.xyz += uInitPosition.xyz;
