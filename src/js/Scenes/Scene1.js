@@ -483,7 +483,7 @@ export default class Scene1 {
     this.materialSoleil = new THREE.MeshStandardMaterial({
       map: textureSoleil,
       normalMap: normalSoleil,
-      emissive: 0xffffff,
+      emissive: 0xebaf5b,
       emissiveMap: textureSoleil,
       emissiveIntensity: 0.5,
       metalness: 0,
