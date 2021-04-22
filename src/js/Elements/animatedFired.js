@@ -12,9 +12,9 @@ const POSITION = {
 const PARAMETERS = {
   count: 15,
   size: 10000, // 5000
-  height: 500,
+  height: 600,
   radius: 100,
-  timeScaleY: 100
+  timeScaleY: 200
 }
 
 
@@ -40,6 +40,7 @@ export default class AnimatedFire {
     const positions = new Float32Array(this.parameters.count * 3)
     const colors = new Float32Array(this.parameters.count * 3)
     const scale = new Float32Array(this.parameters.count)
+    const aRandom = new Float32Array(this.parameters.count)
 
     const color = new THREE.Color(0xff6030)
 
@@ -58,6 +59,9 @@ export default class AnimatedFire {
 
       // scale
       scale[i] = 1
+      
+      // random
+      aRandom[i] = Math.random()
     }
 
     this.geometry = new THREE.BufferGeometry()
@@ -81,10 +85,10 @@ export default class AnimatedFire {
           value: 500
         },
         uLarge: {
-          value: 5
+          value: 3
         },
         uDisparition: {
-          value: 50
+          value: 80
         },
         uTimeScaleY: {
           value: this.parameters.timeScaleY
@@ -95,6 +99,7 @@ export default class AnimatedFire {
     this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     this.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
     this.geometry.setAttribute('aScale', new THREE.BufferAttribute(scale, 1))
+    this.geometry.setAttribute('aRandom', new THREE.BufferAttribute(aRandom, 1))
 
     /**
      * Points
@@ -111,6 +116,7 @@ export default class AnimatedFire {
 
   initDebug () {
     const folder = this.debug.addFolder('Fire')
+    folder.open()
     let uniforms = this.material.uniforms
 
     folder.add(uniforms.uHeight, 'value', 200, 1200).name('Hauteur fire')

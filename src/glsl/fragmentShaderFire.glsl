@@ -25,7 +25,7 @@ void main()
   // Final Color
   vec3 color = mix(vec3(0.0), vColor, strength);
 
-  float opacity = 1.0 - smoothstep(uHeight - uDisparition +vPosition.y, uHeight +vPosition.y, vPosition.y);
+  float opacity = 1.0 - smoothstep(uHeight - uDisparition, uHeight, vPosition.y);
   gl_FragColor = vec4(color, opacity);
 
 
