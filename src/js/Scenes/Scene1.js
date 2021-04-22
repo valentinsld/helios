@@ -717,7 +717,8 @@ export default class Scene1 {
       .to(
         this.porteGauche.rotation,
         {
-          y: -Math.PI / 1.25,
+          // y: -Math.PI / 1.25,
+          y: Math.PI / 2.2,
           ease: "steps(12)",
           duration: 2,
           delay: 0.5
@@ -726,7 +727,8 @@ export default class Scene1 {
       .to(
         this.porteDroit.rotation,
         {
-          y: Math.PI / 1.25,
+          // y: Math.PI / 1.25,
+          y: -Math.PI / 2.2,
           ease: "steps(12)",
           delay: 0.5,
           duration: 2
