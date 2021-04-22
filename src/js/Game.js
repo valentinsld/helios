@@ -63,7 +63,7 @@ export default class Game{
   createScene() {
     this.globalScene = new THREE.Scene()
     let color = {
-      background: 0x000000
+      background: 0x170707
     }
     this.globalScene.background = new THREE.Color(color.background)
 
