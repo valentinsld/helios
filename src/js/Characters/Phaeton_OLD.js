@@ -63,9 +63,6 @@ export default class Phaeton{
     Matter.World.add(this.world, this.box);
   }
   addPhaetonToScene() {
-    const phaetonTexture = this.textureLoader.load('/textures/Phaeton.png')
-    const phaetonAlpha = this.textureLoader.load('/textures/PhaetonAlpha.png')
-
     const BOX = new THREE.BoxBufferGeometry(
       this.size.x,
       this.size.y,
@@ -73,10 +70,7 @@ export default class Phaeton{
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
-      map: phaetonTexture,
-      transparent: true,
-      alphaMap: phaetonAlpha,
-      // color: COLOR,
+      color: COLOR,
       metalness: 0.3,
       roughness: 0.4,
     })
