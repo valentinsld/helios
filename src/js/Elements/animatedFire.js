@@ -12,7 +12,7 @@ const POSITION = {
 }
 
 const PARAMETERS = {
-  count: 10,
+  count: 6,
   size: 10000, // 5000
   height: 750,
   radius: 150,
@@ -124,6 +124,7 @@ export default class AnimatedFire {
   }
 
   initMesh (gltf) {
+    // mesh
     this.mesh = gltf.scene
     this.mesh.scale.set(300,300,300)
     this.mesh.position.z += 20
@@ -152,13 +153,13 @@ export default class AnimatedFire {
 
     this.scene.add(this.mesh)
 
+    // animation
     this.mixer = new THREE.AnimationMixer( this.mesh )
     const clips = gltf.animations
 
     const clip = THREE.AnimationClip.findByName( clips, "KeyAction" );
     this.action = this.mixer.clipAction( clip );
     this.action.play();
-
 
     this.lastClock = 0
   }
