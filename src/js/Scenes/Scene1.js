@@ -42,6 +42,7 @@ export default class Scene1 {
     // init scene
     this.scene = new THREE.Group()
     globalScene.add(this.scene)
+    globalScene.fog = new THREE.Fog(globalScene.background, 950, 1200)
 
     this.groupDoorTemple = new THREE.Group()
     this.groupDoorTemple.position.set(640, -470, -180)
@@ -793,6 +794,7 @@ export default class Scene1 {
 
     clearScene(this.scene)
     Matter.World.clear(this.world);
+    this.scene.parent.fog = null
 
     return new Promise(resolve => {
       resolve('destructed');

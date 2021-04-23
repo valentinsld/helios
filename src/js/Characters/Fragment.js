@@ -2,8 +2,8 @@ import * as THREE from 'three'
 import Matter from 'matter-js'
 import gsap from 'gsap'
 
-import vertexShader from '../../glsl/vertexShaderSun.glsl'
-import fragmentShader from '../../glsl/fragmentShaderSun.glsl'
+import vertexShader from '../../glsl/sun/vertex.glsl'
+import fragmentShader from '../../glsl/sun/fragment.glsl'
 
 const POSITION = {
   x: 0,

@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 
-import fragmentShaderFireParticules from '../../glsl/fragmentShaderFireParticules.glsl'
-import vertexShaderFireParticules from '../../glsl/vertexShaderFireParticules.glsl'
-import fragmentShaderFire from '../../glsl/fragmentShaderFire.glsl'
-import vertexShaderFire from '../../glsl/vertexShaderFire.glsl'
+import fragmentShaderFireParticules from '../../glsl/fireParticules/fragment.glsl'
+import vertexShaderFireParticules from '../../glsl/fireParticules/vertex.glsl'
+import fragmentShaderFire from '../../glsl/fire/fragment.glsl'
+import vertexShaderFire from '../../glsl/fire/vertex.glsl'
 
 const POSITION = {
   x: 0,
