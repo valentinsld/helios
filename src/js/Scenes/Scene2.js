@@ -5,7 +5,7 @@ import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import transition from '../utils/transition'
 
-import AnimatedFire from '../Elements/animatedFired'
+import AnimatedFire from '../Elements/animatedFire'
 
 export default class Scene0 {
   constructor({camera, engine, globalScene, gltfLoader, debug, textureLoader, sceneManager, game}) {

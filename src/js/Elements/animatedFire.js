@@ -12,12 +12,12 @@ const POSITION = {
 }
 
 const PARAMETERS = {
-  count: 7,
+  count: 10,
   size: 10000, // 5000
-  height: 700,
-  radius: 100,
-  timeScaleY: 350,
-  windX: 300,
+  height: 750,
+  radius: 150,
+  timeScaleY: 450,
+  windX: 425,
   scaleNoise: 400
 }
 
@@ -37,7 +37,8 @@ export default class AnimatedFire {
 
     this.initParticules()
     this.initMesh(gltf)
-    this.game.addUpdatedElement('fireShader', this.updateTimeShader.bind(this))
+
+    this.game.addUpdatedElement('clip', this.updateAnimationFire.bind(this))
     if (this.debug) this.initDebug()
   }
 
@@ -63,7 +64,7 @@ export default class AnimatedFire {
       colors[i3 + 2] = color.b
 
       // scale
-      scale[i] = 1
+      scale[i] = Math.random() * 0.4 + 0.6
       
       // random
       aRandom[i] = Math.random()
@@ -87,13 +88,13 @@ export default class AnimatedFire {
           value: this.parameters.size * this.game.renderer.getPixelRatio()
         },
         uHeight: {
-          value: 500
+          value: this.parameters.height
         },
         uLarge: {
-          value: 3
+          value: 4
         },
         uDisparition: {
-          value: 80
+          value: 50
         },
         uTimeScaleY: {
           value: this.parameters.timeScaleY
@@ -125,7 +126,7 @@ export default class AnimatedFire {
   initMesh (gltf) {
     this.mesh = gltf.scene
     this.mesh.scale.set(300,300,300)
-    console.log(this.mesh)
+    this.mesh.position.z += 20
 
     const materialShader = new THREE.ShaderMaterial({
       vertexShader: vertexShaderFire,
@@ -160,7 +161,6 @@ export default class AnimatedFire {
 
 
     this.lastClock = 0
-    this.game.addUpdatedElement('clip', this.updateAnimationFire.bind(this))
   }
 
   updateAnimationFire (time) {
@@ -170,12 +170,9 @@ export default class AnimatedFire {
 
     // console.log(dt)
     this.mixer.update( framePerSeconds )
+    this.material.uniforms.uTime.value = time
 
     this.lastClock = time
-  }
-
-  updateTimeShader (elapsedTime) {
-    this.material.uniforms.uTime.value = elapsedTime
   }
 
   initDebug () {
@@ -187,7 +184,7 @@ export default class AnimatedFire {
     folder.add(uniforms.uLarge, 'value', 1, 15).name('Largeur fire')
     folder.add(uniforms.uDisparition, 'value', 1, 150).name('Durée disparition')
 
-    folder.add(uniforms.uTimeScaleY, 'value', 0, 450).name('time scale Y')
+    folder.add(uniforms.uTimeScaleY, 'value', 0, 700).name('time scale Y')
     folder.add(uniforms.uWindX, 'value', -700, 700).name('Wind X')
     folder.add(uniforms.uScaleNoise, 'value', 0, 500).name('Scale Noise')
   }

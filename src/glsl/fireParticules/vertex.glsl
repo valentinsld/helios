@@ -93,7 +93,7 @@ float cnoise(vec3 P)
     float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
     float n111 = dot(g111, Pf1);
 
-    vec3 fade_xyz = fade(Pf0);
+    vec3 fade_xyz = Pf0;
     vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
     vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
     float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x); 
