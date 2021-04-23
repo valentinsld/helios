@@ -1,7 +1,9 @@
 import * as THREE from 'three'
 
-import fragmentShader from '../../glsl/fragmentShaderFire.glsl'
-import vertexShader from '../../glsl/vertexShaderFire.glsl'
+import fragmentShaderFireParticules from '../../glsl/fragmentShaderFireParticules.glsl'
+import vertexShaderFireParticules from '../../glsl/vertexShaderFireParticules.glsl'
+import fragmentShaderFire from '../../glsl/fragmentShaderFire.glsl'
+import vertexShaderFire from '../../glsl/vertexShaderFire.glsl'
 
 const POSITION = {
   x: 0,
@@ -21,7 +23,7 @@ const PARAMETERS = {
 
 
 export default class AnimatedFire {
-  constructor ({game, debug, scene, position = POSITION, parameters}) {
+  constructor ({game, debug, scene, gltf, position = POSITION, parameters}) {
     this.game = game
     this.debug = debug
     this.position = position
@@ -34,6 +36,7 @@ export default class AnimatedFire {
     this.points = null
 
     this.initParticules()
+    this.initMesh(gltf)
     this.game.addUpdatedElement('fireShader', this.updateTimeShader.bind(this))
     if (this.debug) this.initDebug()
   }
@@ -73,8 +76,8 @@ export default class AnimatedFire {
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       vertexColors: true,
-      vertexShader,
-      fragmentShader,
+      vertexShader: vertexShaderFireParticules,
+      fragmentShader: fragmentShaderFireParticules,
       uniforms: {
         uInitPosition : new THREE.Uniform(this.position),
         uTime: {
@@ -117,6 +120,58 @@ export default class AnimatedFire {
     // this.points.position.copy(this.position)
 
     this.scene.add(this.points)
+  }
+
+  initMesh (gltf) {
+    this.mesh = gltf.scene
+    this.mesh.scale.set(300,300,300)
+    console.log(this.mesh)
+
+    const materialShader = new THREE.ShaderMaterial({
+      vertexShader: vertexShaderFire,
+      fragmentShader: fragmentShaderFire,
+      uniforms: {
+        uTime: { value: 0 },
+      },
+    })
+
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x0000ff
+    })
+
+    this.mesh.traverse((node) => {
+      console.log(node.name)
+      if (node.name === 'feu') {
+        console.log(node.material)
+        node.material.color = new THREE.Color(0xffffff) // 0xff6030
+        node.material.emissive = new THREE.Color(0xff6030) // 0xff6030
+        // node.material = material
+      }
+    })
+
+    this.scene.add(this.mesh)
+
+    this.mixer = new THREE.AnimationMixer( this.mesh )
+    const clips = gltf.animations
+
+    const clip = THREE.AnimationClip.findByName( clips, "KeyAction" );
+    this.action = this.mixer.clipAction( clip );
+    this.action.play();
+
+
+    this.lastClock = 0
+    this.game.addUpdatedElement('clip', this.updateAnimationFire.bind(this))
+  }
+
+  updateAnimationFire (time) {
+    const dt = time - this.lastClock
+    const framePerSeconds = 1 / 9
+    if (dt < framePerSeconds) return
+
+    // console.log(dt)
+    this.mixer.update( framePerSeconds )
+
+    this.lastClock = time
   }
 
   updateTimeShader (elapsedTime) {
