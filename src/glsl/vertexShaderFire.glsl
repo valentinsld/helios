@@ -6,6 +6,8 @@ uniform float uHeight;
 uniform float uLarge;
 uniform float uDisparition;
 uniform float uTimeScaleY;
+uniform float uWindX;
+uniform float uScaleNoise;
 
 attribute float aScale;
 attribute float aRandom;
@@ -110,11 +112,13 @@ void main()
   modelPosition.y += uTime * uTimeScaleY;
   modelPosition.y %= maxHeight;
 
+  float modelPosOnHeight = (modelPosition.y / maxHeight);
 
-  modelPosition.x *= (modelPosition.y / maxHeight) * uLarge ;
-  modelPosition.z *= (modelPosition.y / maxHeight) * uLarge ;
+  modelPosition.x *= modelPosOnHeight * uLarge;
+  modelPosition.z *= modelPosOnHeight * uLarge;
 
-  modelPosition.x += cnoise(vec3((uInitPosition.xz + aRandom * 10.0) * 50.0, uTime * 0.2)) * 50.0;
+  modelPosition.x += cnoise(vec3((uInitPosition.xz + aRandom * 10.0) * 50.0, uTime * 0.2)) * uScaleNoise * smoothstep(0.0, 0.8, modelPosOnHeight);
+  modelPosition.x +=  modelPosOnHeight * uWindX;
 
   vec4 viewPosition = viewMatrix * modelPosition;
   viewPosition.xyz += uInitPosition.xyz;

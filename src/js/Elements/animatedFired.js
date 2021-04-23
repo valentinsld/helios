@@ -10,11 +10,13 @@ const POSITION = {
 }
 
 const PARAMETERS = {
-  count: 15,
+  count: 7,
   size: 10000, // 5000
-  height: 600,
+  height: 700,
   radius: 100,
-  timeScaleY: 200
+  timeScaleY: 350,
+  windX: 300,
+  scaleNoise: 400
 }
 
 
@@ -92,10 +94,17 @@ export default class AnimatedFire {
         },
         uTimeScaleY: {
           value: this.parameters.timeScaleY
+        },
+        uWindX: {
+          value: this.parameters.windX
+        },
+        uScaleNoise: {
+          value: this.parameters.windX
         }
       }
     })
 
+    console.log(positions)
     this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     this.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
     this.geometry.setAttribute('aScale', new THREE.BufferAttribute(scale, 1))
@@ -124,5 +133,7 @@ export default class AnimatedFire {
     folder.add(uniforms.uDisparition, 'value', 1, 150).name('Durée disparition')
 
     folder.add(uniforms.uTimeScaleY, 'value', 0, 450).name('time scale Y')
+    folder.add(uniforms.uWindX, 'value', -700, 700).name('Wind X')
+    folder.add(uniforms.uScaleNoise, 'value', 0, 500).name('Scale Noise')
   }
 }
