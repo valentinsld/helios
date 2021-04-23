@@ -14,6 +14,9 @@ const SIZE = {
 
 const COLOR = '#ffff00'
 
+// DOM
+const DOM = document.querySelector('body')
+
 export default class Fire {
   constructor ({fragment, engine, render, gltf, debug, scene, captor, position = POSITION, size = SIZE, optionsBox = {}, heightCone = 3800, angleCone = Math.PI * 0.02}) {
     this.type = 'Fire'
