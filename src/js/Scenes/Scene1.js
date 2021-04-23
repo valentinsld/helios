@@ -79,6 +79,7 @@ export default class Scene1 {
       engine: this.engine,
       scene : this.scene,
       debug: this.debug,
+      textureLoader: this.textureLoader,
       position : {
         x : -900,
         y : -350,
