@@ -154,15 +154,12 @@ export default class AnimatedFire {
           const startVertex = 'varying vec4 vPosition;\n'
           const endVertex = `\nvPosition = modelMatrix * vec4(position, 1.0);\n}`
           shader.vertexShader = startVertex + shader.vertexShader.replace('}', endVertex)
-          // console.log(shader.vertexShader)
 
           // FRAGMENT SHADER
           let fragmentShader = shader.fragmentShader
           const regex = /void main\(\) \{((.|\n)*)\}/g
           
           fragmentShader = fragmentShader.replace(regex, fragmentShaderFire)
-          
-          console.log(fragmentShader)
           shader.fragmentShader = fragmentShader
 
           // if DEBUG
