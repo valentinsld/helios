@@ -145,6 +145,7 @@ export default class Scene1 {
     const floor = new Box({
       engine: this.engine,
       scene: this.scene,
+      color: 0x000000,
       size: {
         x: 4000,
         y: 500,
