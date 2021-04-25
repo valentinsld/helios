@@ -3,7 +3,6 @@ import * as THREE from 'three'
 import fragmentShaderFireParticules from '../../glsl/fireParticules/fragment.glsl'
 import vertexShaderFireParticules from '../../glsl/fireParticules/vertex.glsl'
 import fragmentShaderFire from '../../glsl/fire/fragment.glsl'
-import vertexShaderFire from '../../glsl/fire/vertex.glsl'
 
 const POSITION = {
   x: 0,
@@ -18,7 +17,11 @@ const PARAMETERS = {
   radius: 150,
   timeScaleY: 450,
   windX: 425,
-  scaleNoise: 400
+  scaleNoise: 400,
+  colorBack: 0xc32b33,
+  colorFront: 0xffa400,
+  colorStart: 50,
+  colorEnd: 70,
 }
 
 
@@ -39,7 +42,10 @@ export default class AnimatedFire {
     this.initMesh(gltf)
 
     this.game.addUpdatedElement('clip', this.updateAnimationFire.bind(this))
-    if (this.debug) this.initDebug()
+    if (this.debug) {
+      this.debugFolder = this.debug.addFolder('Fire')
+      this.initDebug()
+    }
   }
 
   initParticules () {
@@ -129,25 +135,54 @@ export default class AnimatedFire {
     this.mesh.scale.set(300,300,300)
     this.mesh.position.z += 20
 
-    const materialShader = new THREE.ShaderMaterial({
-      vertexShader: vertexShaderFire,
-      fragmentShader: fragmentShaderFire,
-      uniforms: {
-        uTime: { value: 0 },
-      },
-    })
-
-    const material = new THREE.MeshStandardMaterial({
-      color: 0x0000ff
-    })
-
+    // add OWN fragment shader
     this.mesh.traverse((node) => {
-      console.log(node.name)
       if (node.name === 'feu') {
-        console.log(node.material)
-        node.material.color = new THREE.Color(0xffffff) // 0xff6030
-        node.material.emissive = new THREE.Color(0xff6030) // 0xff6030
-        // node.material = material
+        let material = node.material
+        material.onBeforeCompile = (shader) => {
+          // ADD UNIFORMS
+          shader.uniforms.colorBack = {
+            value: new THREE.Color(this.parameters.colorBack)
+          }
+          shader.uniforms.colorFront = {
+            value: new THREE.Color(this.parameters.colorFront)
+          }
+          shader.uniforms.uStart = new THREE.Uniform(this.parameters.colorStart)
+          shader.uniforms.uEnd = new THREE.Uniform(this.parameters.colorEnd)
+
+          // VERTEX SHADER
+          const startVertex = 'varying vec4 vPosition;\n'
+          const endVertex = `\nvPosition = modelMatrix * vec4(position, 1.0);\n}`
+          shader.vertexShader = startVertex + shader.vertexShader.replace('}', endVertex)
+          // console.log(shader.vertexShader)
+
+          // FRAGMENT SHADER
+          let fragmentShader = shader.fragmentShader
+          const regex = /void main\(\) \{((.|\n)*)\}/g
+          
+          fragmentShader = fragmentShader.replace(regex, fragmentShaderFire)
+          
+          console.log(fragmentShader)
+          shader.fragmentShader = fragmentShader
+
+          // if DEBUG
+          if (this.debug) {
+            const uniforms = shader.uniforms
+
+            const color1 = this.debugFolder.addColor(this.parameters, "colorBack").name('Color Back')
+            color1.onChange((value) => {
+              uniforms.colorBack.value = new THREE.Color(value)
+            })
+            const color2 = this.debugFolder.addColor(this.parameters, "colorFront").name('Color Front')
+            color2.onChange((value) => {
+              uniforms.colorFront.value = new THREE.Color(value)
+            })
+
+            this.debugFolder.add(uniforms.uStart, 'value', -100, 100).name('Start gradient')
+            this.debugFolder.add(uniforms.uEnd, 'value', -100, 100).name('End Gradient')
+          }
+        }
+
       }
     })
 
@@ -155,6 +190,7 @@ export default class AnimatedFire {
 
     // animation
     this.mixer = new THREE.AnimationMixer( this.mesh )
+    console.log(this.mixer)
     const clips = gltf.animations
 
     const clip = THREE.AnimationClip.findByName( clips, "KeyAction" );
@@ -177,7 +213,7 @@ export default class AnimatedFire {
   }
 
   initDebug () {
-    const folder = this.debug.addFolder('Fire')
+    const folder = this.debugFolder
     folder.open()
     let uniforms = this.material.uniforms
 
