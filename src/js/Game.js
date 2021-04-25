@@ -77,8 +77,8 @@ export default class Game{
   }
   createGradientBackground () {
     let color = {
-      top: 0x914c21, // 0x25180e,
-      bottom: 0x2d200a // 0x170707
+      top: 0x000000, // 0x25180e,
+      bottom: 0xa0f11 // 0x170707
     }
 
     var myGradient = new THREE.Mesh(
@@ -88,9 +88,9 @@ export default class Game{
           uColorA: { value: new THREE.Color(color.bottom) },
           uColorB: { value: new THREE.Color(color.top) },
           uTime: { value: 0 },
-          uSize: { value: 10.0 },
+          uSize: { value: 5 },
           uSizeNoise: { value: 0.02 },
-          uSpeedTime: { value: 1 }
+          uSpeedTime: { value: 0.07 }
         },
         vertexShader,
         fragmentShader
