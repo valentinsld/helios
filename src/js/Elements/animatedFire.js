@@ -12,7 +12,7 @@ const POSITION = {
 
 const PARAMETERS = {
   count: 6,
-  size: 10000, // 5000
+  size: 30, // 5000
   height: 750,
   radius: 150,
   timeScaleY: 450,
@@ -214,6 +214,7 @@ export default class AnimatedFire {
     folder.open()
     let uniforms = this.material.uniforms
 
+    folder.add(uniforms.uSize, 'value', 0, 100).name('Size particules')
     folder.add(uniforms.uHeight, 'value', 200, 1200).name('Hauteur fire')
     folder.add(uniforms.uLarge, 'value', 1, 15).name('Largeur fire')
     folder.add(uniforms.uDisparition, 'value', 1, 150).name('Durée disparition')
