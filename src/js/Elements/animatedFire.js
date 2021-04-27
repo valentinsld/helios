@@ -18,10 +18,10 @@ const PARAMETERS = {
   timeScaleY: 450,
   windX: 425,
   scaleNoise: 400,
-  colorBack: 0xc32b33,
-  colorFront: 0xffa400,
-  colorStart: 50,
-  colorEnd: 70,
+  colorBack: 0xd74216,
+  colorFront: 0xffe572,
+  colorStart: 10,
+  colorEnd: 120,
 }
 
 
@@ -54,7 +54,7 @@ export default class AnimatedFire {
     const scale = new Float32Array(this.parameters.count)
     const aRandom = new Float32Array(this.parameters.count)
 
-    const color = new THREE.Color(0xff6030)
+    const color = new THREE.Color(this.parameters.colorBack)
 
     for(let i = 0; i < this.parameters.count; i++)
     {
