@@ -46,7 +46,10 @@ export default class Scene0 {
       game: this.game,
       scene: this.scene,
       debug: this.debug,
-      gltf
+      gltf,
+      parameters: {
+        height: 1200,
+      }
     })
   }
 

@@ -16,7 +16,7 @@ const PARAMETERS = {
   height: 750,
   radius: 150,
   timeScaleY: 450,
-  windX: 425,
+  windX: 400,
   scaleNoise: 400,
   colorBack: 0xd74216,
   colorFront: 0xffe572,
@@ -124,7 +124,6 @@ export default class AnimatedFire {
      * Points
      */
     this.points = new THREE.Points(this.geometry, this.material)
-    // this.points.position.copy(this.position)
 
     this.scene.add(this.points)
   }
@@ -133,6 +132,7 @@ export default class AnimatedFire {
     // mesh
     this.mesh = gltf.scene
     this.mesh.scale.set(300,300,300)
+    this.mesh.position.copy(this.position)
     this.mesh.position.z += 20
 
     // add OWN fragment shader
@@ -147,8 +147,8 @@ export default class AnimatedFire {
           shader.uniforms.colorFront = {
             value: new THREE.Color(this.parameters.colorFront)
           }
-          shader.uniforms.uStart = new THREE.Uniform(this.parameters.colorStart)
-          shader.uniforms.uEnd = new THREE.Uniform(this.parameters.colorEnd)
+          shader.uniforms.uStart = new THREE.Uniform(this.parameters.colorStart + this.position.z)
+          shader.uniforms.uEnd = new THREE.Uniform(this.parameters.colorEnd + this.position.z)
 
           // VERTEX SHADER
           const startVertex = 'varying vec4 vPosition;\n'
@@ -216,7 +216,7 @@ export default class AnimatedFire {
 
     folder.add(uniforms.uSize, 'value', 0, 100).name('Size particules')
     folder.add(uniforms.uHeight, 'value', 200, 1200).name('Hauteur fire')
-    folder.add(uniforms.uLarge, 'value', 1, 15).name('Largeur fire')
+    folder.add(uniforms.uLarge, 'value', 1, 1500).name('Largeur fire')
     folder.add(uniforms.uDisparition, 'value', 1, 150).name('Durée disparition')
 
     folder.add(uniforms.uTimeScaleY, 'value', 0, 700).name('time scale Y')

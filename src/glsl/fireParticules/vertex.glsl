@@ -103,25 +103,29 @@ float cnoise(vec3 P)
 
 void main()
 {
-  float maxHeight = uHeight + uInitPosition.y;
-  float time = mod(uTime, maxHeight);
+  float maxHeight = uHeight;
+  // float time = mod(uTime, maxHeight);
 
   // Position
   vec4 modelPosition = modelMatrix * vec4(position, 1.0);
   
   modelPosition.y += uTime * uTimeScaleY;
   modelPosition.y %= maxHeight;
+  modelPosition.y += uInitPosition.y;
 
-  float modelPosOnHeight = (modelPosition.y / maxHeight);
+  float modelPosOnHeight = modelPosition.y / maxHeight;
+  // modelPosition.x += uLarge * modelPosOnHeight - 0.5;
 
   modelPosition.x *= modelPosOnHeight * uLarge;
   modelPosition.z *= modelPosOnHeight * uLarge;
 
+
   modelPosition.x += cnoise(vec3((uInitPosition.xz + aRandom * 10.0) * 50.0, uTime * 0.2)) * uScaleNoise * smoothstep(0.0, 0.8, modelPosOnHeight);
   modelPosition.x +=  modelPosOnHeight * uWindX;
 
+  modelPosition.xz += uInitPosition.xz;
+
   vec4 viewPosition = viewMatrix * modelPosition;
-  viewPosition.xyz += uInitPosition.xyz;
   vec4 projectedPosition = projectionMatrix * viewPosition;
 
   gl_Position = projectedPosition;
