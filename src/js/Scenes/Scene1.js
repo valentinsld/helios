@@ -631,12 +631,43 @@ export default class Scene1 {
       angleCone: Math.PI * 0.01
     })
 
+
+    return this.newPromise()
+  }
+
+  async initFeu (gltf) {
+    this.fireAnimated = new AnimatedFire({
+      game: this.game,
+      scene: this.scene,
+      debug: this.debug,
+      gltf,
+      position: {
+        x: -620,
+        y: -420,
+        z: -80
+      },
+      parameters: {
+        scale: 70,
+        height: 250,
+        radius: 10,
+        timeScaleY: 250,
+        windX: 100,
+        largeur: 20
+      }
+    })
+
+    this.initLightBrasier()
+
+    return this.newPromise()
+  }
+
+  initLightBrasier () {
     // point light
     const paramsLight = {
       color: 0xa26d32
     }
     this.lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
-    this.lightBrasier.position.copy(this.fire.position)
+    this.lightBrasier.position.copy(this.fireAnimated.position)
     
     this.lightBrasier.castShadow = true
     this.lightBrasier.shadow.camera.far = 1700
@@ -665,8 +696,8 @@ export default class Scene1 {
       .to(
         this.lightBrasier,
         {
-          intensity: 6, // 5 + 3
-          duration: 0.7,
+          intensity: 5.5, 
+          duration: 0.2,
           ease: easeRough
         }
       )
@@ -674,36 +705,26 @@ export default class Scene1 {
         this.lightBrasier,
         {
           intensity: 4.5,
-          duration: 0.7,
+          duration: 0.15,
           ease: easeRough
         }
       )
-
-    return this.newPromise()
-  }
-
-  async initFeu (gltf) {
-    this.fireAnimated = new AnimatedFire({
-      game: this.game,
-      scene: this.scene,
-      debug: this.debug,
-      gltf,
-      position: {
-        x: -620,
-        y: -420,
-        z: -80
-      },
-      parameters: {
-        scale: 70,
-        height: -200,
-        height: 0,
-        radius: 10
-      }
-    })
-
-    console.log(this.fireAnimated)
-
-    return this.newPromise()
+      .to(
+        this.lightBrasier,
+        {
+          intensity: 5,
+          duration: 0.2,
+          ease: easeRough
+        }
+      )
+      .to(
+        this.lightBrasier,
+        {
+          intensity: 4,
+          duration: 0.15,
+          ease: easeRough
+        }
+      )
   }
 
   getStepStatues () {
@@ -806,6 +827,7 @@ export default class Scene1 {
       this.debug.removeFolder('Scene params')
       this.debug.removeFolder('Phaeton')
       this.debug.removeFolder('Fragment')
+      this.debug.removeFolder('Fire')
     }
     
     const trans = await transition.fade()
