@@ -111,7 +111,6 @@ void main()
   
   modelPosition.y += uTime * uTimeScaleY;
   modelPosition.y %= maxHeight;
-  modelPosition.y += uInitPosition.y;
 
   float modelPosOnHeight = modelPosition.y / maxHeight;
   // modelPosition.x += uLarge * modelPosOnHeight - 0.5;
@@ -123,7 +122,7 @@ void main()
   modelPosition.x += cnoise(vec3((uInitPosition.xz + aRandom * 10.0) * 50.0, uTime * 0.2)) * uScaleNoise * smoothstep(0.0, 0.8, modelPosOnHeight);
   modelPosition.x +=  modelPosOnHeight * uWindX;
 
-  modelPosition.xz += uInitPosition.xz;
+  modelPosition.xyz += uInitPosition.xyz;
 
   vec4 viewPosition = viewMatrix * modelPosition;
   vec4 projectedPosition = projectionMatrix * viewPosition;

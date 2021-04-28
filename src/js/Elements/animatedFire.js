@@ -14,6 +14,7 @@ const PARAMETERS = {
   scale: 100,
   count: 6,
   size: 30, // 5000
+  largeur: 5,
   height: 750,
   radius: 150,
   timeScaleY: 450,
@@ -98,7 +99,7 @@ export default class AnimatedFire {
           value: this.parameters.height
         },
         uLarge: {
-          value: 4
+          value: this.parameters.largeur
         },
         uDisparition: {
           value: 50
@@ -189,7 +190,6 @@ export default class AnimatedFire {
 
     // animation
     this.mixer = new THREE.AnimationMixer( this.mesh )
-    console.log(this.mixer)
     const clips = gltf.animations
 
     const clip = THREE.AnimationClip.findByName( clips, "KeyAction" );
@@ -218,7 +218,7 @@ export default class AnimatedFire {
 
     folder.add(uniforms.uSize, 'value', 0, 100).name('Size particules')
     folder.add(uniforms.uHeight, 'value', 200, 1200).name('Hauteur fire')
-    folder.add(uniforms.uLarge, 'value', 1, 1500).name('Largeur fire')
+    folder.add(uniforms.uLarge, 'value', 1, 100).name('Largeur fire')
     folder.add(uniforms.uDisparition, 'value', 1, 150).name('Durée disparition')
 
     folder.add(uniforms.uTimeScaleY, 'value', 0, 700).name('time scale Y')
