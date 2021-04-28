@@ -1,3 +1,4 @@
+varying float vHeight;
 varying vec3 vColor;
 varying vec4 vPosition;
 
@@ -25,7 +26,7 @@ void main()
   // Final Color
   vec3 color = mix(vec3(0.0), vColor, strength);
 
-  float opacity = 1.0 - smoothstep(uHeight - uDisparition, uHeight, vPosition.y);
+  float opacity = 1.0 - smoothstep(0.6 , 1.0, vHeight);
   gl_FragColor = vec4(color, opacity);
 
 

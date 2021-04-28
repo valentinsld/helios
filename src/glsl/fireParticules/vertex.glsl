@@ -12,6 +12,7 @@ uniform float uScaleNoise;
 attribute float aScale;
 attribute float aRandom;
 varying vec3 vColor;
+varying float vHeight;
 varying vec4 vPosition;
 
 
@@ -135,5 +136,6 @@ void main()
 
   // pass color to fragment
   vColor = color;
+  vHeight = modelPosOnHeight;
   vPosition = modelPosition;
 }
