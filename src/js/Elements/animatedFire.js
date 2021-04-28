@@ -11,6 +11,7 @@ const POSITION = {
 }
 
 const PARAMETERS = {
+  scale: 100,
   count: 6,
   size: 30, // 5000
   height: 750,
@@ -21,7 +22,7 @@ const PARAMETERS = {
   colorBack: 0xd74216,
   colorFront: 0xffe572,
   colorStart: 10,
-  colorEnd: 120,
+  colorEnd: 50,
 }
 
 
@@ -131,7 +132,8 @@ export default class AnimatedFire {
   initMesh (gltf) {
     // mesh
     this.mesh = gltf.scene
-    this.mesh.scale.set(300,300,300)
+    const scale = this.parameters.scale
+    this.mesh.scale.set(scale,scale,scale)
     this.mesh.position.copy(this.position)
     this.mesh.position.z += 20
 
@@ -211,7 +213,7 @@ export default class AnimatedFire {
 
   initDebug () {
     const folder = this.debugFolder
-    folder.open()
+    // folder.open()
     let uniforms = this.material.uniforms
 
     folder.add(uniforms.uSize, 'value', 0, 100).name('Size particules')

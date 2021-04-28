@@ -25,6 +25,7 @@ import clearScene from '../utils/clearScene'
 import transition from '../utils/transition'
 
 import Statue from '../Elements/01_statue'
+import AnimatedFire from '../Elements/animatedFire'
 
 export default class Scene1 {
   constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game, debug}) {
@@ -108,18 +109,6 @@ export default class Scene1 {
 
   initModels () {
     const arrayModels = [
-      // {
-      //   url: '/models/statuedebout/statuedebout.gltf',
-      //   func: this.initStatue1.bind(this)
-      // },
-      // {
-      //   url: '/models/statue2/statueAssis.gltf',
-      //   func: this.initStatue2.bind(this)
-      // },
-      // {
-      //   url: '/models/brasier/brasier.gltf',
-      //   func: this.initBrasier.bind(this)
-      // },
       {
         url: '/models/statues_brasier/statues_brasier.gltf',
         func: this.initStatuesBrasier.bind(this)
@@ -131,6 +120,10 @@ export default class Scene1 {
       {
         url: '/models/temple/temple.gltf',
         func: this.initTemple.bind(this)
+      },
+      {
+        url: '/models/feu/feu.gltf',
+        func: this.initFeu.bind(this)
       }
     ]
 
@@ -685,6 +678,30 @@ export default class Scene1 {
           ease: easeRough
         }
       )
+
+    return this.newPromise()
+  }
+
+  async initFeu (gltf) {
+    this.fireAnimated = new AnimatedFire({
+      game: this.game,
+      scene: this.scene,
+      debug: this.debug,
+      gltf,
+      position: {
+        x: -620,
+        y: -420,
+        z: -80
+      },
+      parameters: {
+        scale: 70,
+        height: -200,
+        height: 0,
+        radius: 10
+      }
+    })
+
+    console.log(this.fireAnimated)
 
     return this.newPromise()
   }
