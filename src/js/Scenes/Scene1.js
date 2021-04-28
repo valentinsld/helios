@@ -648,9 +648,9 @@ export default class Scene1 {
       },
       parameters: {
         scale: 70,
-        height: 250,
+        height: 380,
         radius: 10,
-        timeScaleY: 250,
+        timeScaleY: 365,
         windX: 100,
         largeur: 20
       }
