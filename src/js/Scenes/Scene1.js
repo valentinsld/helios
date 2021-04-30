@@ -124,6 +124,10 @@ export default class Scene1 {
       {
         url: '/models/feu/feu.gltf',
         func: this.initFeu.bind(this)
+      },
+      {
+        url: '/models/cailloux_arbre/cailloux_arbre.gltf',
+        func: this.initarbres.bind(this)
       }
     ]
 
@@ -725,6 +729,52 @@ export default class Scene1 {
           ease: easeRough
         }
       )
+  }
+
+  async initarbres (gltf) {
+    const textureArbre = this.textureLoader.load('/models/cailloux_arbre/arbre.png')
+    textureArbre.flipY = false
+    const normalArbre = this.textureLoader.load('/models/cailloux_arbre/normal_arbre.png')
+    normalArbre.flipY = false
+
+    const materialArbre = new THREE.MeshStandardMaterial({
+      map: textureArbre,
+      normalMap: normalArbre,
+      metalness: 0,
+      roughness: 0.5,
+    })
+
+    const textureCailloux = this.textureLoader.load('/models/cailloux_arbre/cailloux.png')
+    textureCailloux.flipY = false
+    const normalCailloux = this.textureLoader.load('/models/cailloux_arbre/normal_cailloux.png')
+    normalCailloux.flipY = false
+
+    const materialCailloux = new THREE.MeshStandardMaterial({
+      map: textureCailloux,
+      normalMap: normalCailloux,
+      metalness: 0,
+      roughness: 0.5,
+    })
+
+
+    this.arbreCailloux = gltf.scene
+    this.arbreCailloux.scale.set(300, 300, 300)
+    this.arbreCailloux.rotation.y = -450
+    this.arbreCailloux.position.set(680, -455, -135)
+    
+    
+    console.log(this.arbreCailloux)
+    this.arbreCailloux.traverse( function(node) {
+      if (node.name === 'arbre') {
+        node.material = materialArbre
+      } else if (node.name === 'cailloux') {
+        node.material = materialCailloux
+      }
+    })
+
+    this.scene.add(this.arbreCailloux)
+
+    return this.newPromise()
   }
 
   getStepStatues () {
