@@ -461,9 +461,9 @@ export default class Scene1 {
 
   async initTemple (gltf) {
     // texture
-    const texture = this.textureLoader.load('/models/temple/TextureTemple.png')
+    const texture = this.textureLoader.load('/models/temple/TextureTemple-min.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/temple/normal_Temple.png')
+    const normal = this.textureLoader.load('/models/temple/normal_Temple-min.png')
     normal.flipY = false
 
     let material = new THREE.MeshStandardMaterial({
@@ -511,8 +511,8 @@ export default class Scene1 {
       switch (node.name) {
         case 'soleil':
           node.material = this.materialSoleil
-          node.castShadow = true
-          node.receiveShadow = true
+          // node.castShadow = true
+          // node.receiveShadow = true
           break;
 
         case 'interieureporte':
@@ -559,7 +559,7 @@ export default class Scene1 {
       
         default:
           node.material = material
-          node.castShadow = true
+          // node.castShadow = true
           node.receiveShadow = true
           break;
       }
@@ -569,7 +569,7 @@ export default class Scene1 {
 
     const light = new THREE.PointLight(0xb36f24, 3.5, 700)
     light.position.set(50,300,-100)
-    light.castShadow = true
+    // light.castShadow = true
 
     this.groupDoorTemple.add(light)
 
