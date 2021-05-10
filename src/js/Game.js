@@ -188,7 +188,8 @@ export default class Game{
 
   initRenderer() {
     this.renderer = new THREE.WebGLRenderer({
-      canvas: this.canvas
+      canvas: this.canvas,
+      antialias: true
     })
 
     this.renderer.shadowMap.enabled = true
