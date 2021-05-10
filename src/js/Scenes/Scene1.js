@@ -411,11 +411,11 @@ export default class Scene1 {
       if (node.name === 'armaturedroit' || node.name === 'armaturegauche') {
         console.log
         node.material = materialArmature
-        node.castShadow = true
+        // node.castShadow = true
         node.receiveShadow = true
       } else if(node.isMesh) {
         node.material = material
-        node.castShadow = true
+        // node.castShadow = true
         node.receiveShadow = true
       }
     })
