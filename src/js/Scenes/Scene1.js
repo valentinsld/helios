@@ -635,6 +635,7 @@ export default class Scene1 {
       angleCone: Math.PI * 0.01
     })
 
+    this.initLightBrasier()
 
     return this.newPromise()
   }
@@ -660,8 +661,6 @@ export default class Scene1 {
       }
     })
 
-    this.initLightBrasier()
-
     return this.newPromise()
   }
 
@@ -671,7 +670,7 @@ export default class Scene1 {
       color: 0xa26d32
     }
     this.lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
-    this.lightBrasier.position.copy(this.fireAnimated.position)
+    this.lightBrasier.position.copy(this.fire.position)
     
     this.lightBrasier.castShadow = true
     this.lightBrasier.shadow.camera.far = 1700
