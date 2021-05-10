@@ -1,15 +1,20 @@
 import * as THREE from 'three'
 import Matter from 'matter-js'
+import gsap from 'gsap'
 
-import vertexShader from '../../glsl/vertexShaderSun.glsl'
-import fragmentShader from '../../glsl/fragmentShaderSun.glsl'
+import vertexShader from '../../glsl/sun/vertex.glsl'
+import fragmentShader from '../../glsl/sun/fragment.glsl'
 
 const POSITION = {
   x: 0,
   y: 0,
   z: 0
 }
-const RADIUS = 25
+const RADIUS = 21
+
+// DOM
+const DOM = document.querySelector('body')
+
 
 export default class Fragment{
   constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS}) {
@@ -22,15 +27,16 @@ export default class Fragment{
     this.debug = debug
 
     this.params = {
-      color: 0xffff00,
+      color: 0xebaf5b,
       metalness: 0.3,
       roughness: 0.4,
-      emissiveColor: 0xffff00,
-      emissiveIntensity: 0.95,
+      emissiveColor: 0xfaa961,
+      emissiveIntensity: 1,
       intensity: 4,
-      distance: 500,
-      glowColor: 0xffff00,
-      glowRadius: 2
+      distance: 330,
+      glowColor: 0xf7f77f,
+      glowRadius: 0.7,
+      glowPow: 4.5
     }
 
     this.position = position
@@ -119,8 +125,16 @@ export default class Fragment{
     //
     // Glow effect
     //
+    const glowColor = new THREE.Color(this.params.glowColor)
     let glowMaterial = new THREE.ShaderMaterial({
       uniforms: {
+        intensityMultiplicator: {
+          value: this.params.glowRadius,
+        },
+        intensityPow: {
+          value: this.params.glowPow,
+        },
+        color: new THREE.Uniform(glowColor),
         viewVector: {
           type: "v3",
           value: this.camera.position
@@ -139,6 +153,8 @@ export default class Fragment{
     );
     
     let glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+    glowMesh.position.z -= this.radius * 2
+
     this.sphere.add(glowMesh);
     this.sphere.glow = glowMesh;
     this.mesh.add(this.sphere);
@@ -197,6 +213,33 @@ export default class Fragment{
     this.debugFolder.add(this.sphereLight, "intensity", 0, 15)
     this.debugFolder.add(this.sphereLight, "distance", 0, 1000)
 
+    this.debugFolder.addColor(this.params, 'glowColor').onChange((color) => {
+      const colorThree = new THREE.Color(color)
+      this.sphere.glow.material.uniforms.color = new THREE.Uniform(colorThree)
+      
+    })
+    this.debugFolder.add(this.params, "glowRadius", 0, 10).onChange((value) => {
+      this.sphere.glow.material.uniforms.intensityMultiplicator.value = value;
+    })
+    this.debugFolder.add(this.params, "glowPow", 0, 10).onChange((value) => {
+      this.sphere.glow.material.uniforms.intensityPow.value = value;
+    })
+  }
+
+  hover (hov = 'in') {
+    hov = hov === 'in'
+
+    DOM.style.cursor = hov ? 'pointer' : 'initial'
+    gsap.to(
+      this.mesh.scale,
+      {
+        x: hov ? 1.2 : 1,
+        y: hov ? 1.2 : 1,
+        z: hov ? 1.2 : 1,
+        duration: 0.3,
+        ease: 'Power3.out'
+      }
+    )
   }
 
   //
@@ -234,9 +277,7 @@ export default class Fragment{
   }
 
   interactWithElements() {
-    this.interactionElements.forEach((element) => {
-      const dist = this.mesh.position.distanceTo(element.mesh.position)
-      
+    this.interactionElements.forEach((element) => {     
       if (element.canUse) {
         this.interactionElement = element
         element.startInteract()

@@ -1,0 +1,272 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.4.40",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0,
+                1
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "cailloux",
+            "rotation" : [
+                0.202123761177063,
+                -0.8226690888404846,
+                0.008235381916165352,
+                0.5313132405281067
+            ],
+            "translation" : [
+                -2.2399516105651855,
+                0.055286914110183716,
+                -1.3954969644546509
+            ]
+        },
+        {
+            "mesh" : 1,
+            "name" : "arbre",
+            "rotation" : [
+                0,
+                0.8771541714668274,
+                0,
+                -0.4802088439464569
+            ],
+            "scale" : [
+                0.7026210427284241,
+                0.7026209831237793,
+                0.7026210427284241
+            ],
+            "translation" : [
+                3.503267288208008,
+                1.1629936695098877,
+                -3.4369401931762695
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "emissiveFactor" : [
+                1,
+                1,
+                1
+            ],
+            "emissiveTexture" : {
+                "index" : 0,
+                "texCoord" : 0
+            },
+            "name" : "grand_caillou",
+            "pbrMetallicRoughness" : {}
+        },
+        {
+            "doubleSided" : true,
+            "emissiveFactor" : [
+                1,
+                1,
+                1
+            ],
+            "emissiveTexture" : {
+                "index" : 1,
+                "texCoord" : 0
+            },
+            "name" : "tree",
+            "pbrMetallicRoughness" : {}
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Plane.017",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2,
+                        "COLOR_0" : 3
+                    },
+                    "indices" : 4,
+                    "material" : 0
+                }
+            ]
+        },
+        {
+            "name" : "Plane.006",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 5,
+                        "NORMAL" : 6,
+                        "TEXCOORD_0" : 7
+                    },
+                    "indices" : 8,
+                    "material" : 1
+                }
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        },
+        {
+            "sampler" : 0,
+            "source" : 1
+        }
+    ],
+    "images" : [
+        {
+            "mimeType" : "image/png",
+            "name" : "cailloux",
+            "uri" : "cailloux.png"
+        },
+        {
+            "mimeType" : "image/png",
+            "name" : "arbre",
+            "uri" : "arbre.png"
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 8102,
+            "max" : [
+                0.2068934142589569,
+                0.24420030415058136,
+                0.2959650754928589
+            ],
+            "min" : [
+                -5.177262306213379,
+                -3.1369645595550537,
+                -5.403429985046387
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 8102,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 8102,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 8102,
+            "normalized" : true,
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5123,
+            "count" : 12006,
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 5,
+            "componentType" : 5126,
+            "count" : 3120,
+            "max" : [
+                0.9232290983200073,
+                1.096746563911438,
+                0.2511308491230011
+            ],
+            "min" : [
+                -0.9241203665733337,
+                -1.0976741313934326,
+                -0.2505654990673065
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 6,
+            "componentType" : 5126,
+            "count" : 3120,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 7,
+            "componentType" : 5126,
+            "count" : 3120,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 8,
+            "componentType" : 5123,
+            "count" : 4674,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 97224,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 97224,
+            "byteOffset" : 97224
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 64816,
+            "byteOffset" : 194448
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 64816,
+            "byteOffset" : 259264
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 24012,
+            "byteOffset" : 324080
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 37440,
+            "byteOffset" : 348092
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 37440,
+            "byteOffset" : 385532
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 24960,
+            "byteOffset" : 422972
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 9348,
+            "byteOffset" : 447932
+        }
+    ],
+    "samplers" : [
+        {
+            "magFilter" : 9729,
+            "minFilter" : 9986
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 457280,
+            "uri" : "cailloux_arbre.bin"
+        }
+    ]
+}

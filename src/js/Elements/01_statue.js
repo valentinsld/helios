@@ -14,7 +14,7 @@ const SIZE = {
 }
 
 export default class Statue {
-  constructor ({scene, engine, phaeton, gltf = null, position = POSITION, size = SIZE}) {
+  constructor ({scene, engine, phaeton, gltf = null, initStep, position = POSITION, size = SIZE}) {
     this.type = 'Statue'
     this.scene = scene
     this.engine = engine
@@ -26,7 +26,7 @@ export default class Statue {
     this.size = size
     
     this.canInteract = false
-    this.step = Math.floor(Math.random() * 4)
+    this.step = initStep || Math.floor(Math.random() * 4)
     this.activate = this.step % 4 === 0
 
     this.addColisionToWorld()
@@ -94,11 +94,9 @@ export default class Statue {
 
   addGltf (gltf) {
     this.mesh = gltf
-    this.mesh.position.copy(this.position)
+
     const moreY = this.mesh.moreY || 0
     this.mesh.rotation.y = this.step * Math.PI / 2 + moreY
-
-    this.scene.add(this.mesh)
   }
 
   addBoxToScene() {

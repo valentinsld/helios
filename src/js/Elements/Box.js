@@ -22,14 +22,17 @@ const OPTIONS = {
   }
 }
 
+const COLOR = 0x777777
+
 export default class Box {
-  constructor ({engine, scene, position = POSITION, rotation = 0, size = SIZE, optionsBox = OPTIONS, render = true}) {
+  constructor ({engine, scene, position = POSITION, rotation = 0, size = SIZE, color = COLOR, optionsBox = OPTIONS, render = true}) {
     this.world = engine.world
     this.scene = scene
 
     this.position = position
     this.rotation = rotation
     this.size = size
+    this.color = color
     this.optionsBox = Object.assign(OPTIONS, optionsBox)
 
     this.addBoxToWorld()
@@ -60,7 +63,7 @@ export default class Box {
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: '#777777',
+      color: this.color,
       metalness: 0.3,
       roughness: 0.4,
     })

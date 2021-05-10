@@ -16,9 +16,10 @@ const SIZE = {
 const COLOR = '#008d02'
 
 export default class Phaeton{
-  constructor({engine, scene, debug, position = POSITION, size = SIZE}) {
+  constructor({engine, scene, debug, textureLoader, position = POSITION, size = SIZE}) {
     this.world = engine.world
     this.scene = scene
+    this.textureLoader = textureLoader
 
     this.debug = debug
     this.position = position
@@ -62,6 +63,9 @@ export default class Phaeton{
     Matter.World.add(this.world, this.box);
   }
   addPhaetonToScene() {
+    const phaetonTexture = this.textureLoader.load('/textures/Phaeton.png')
+    const phaetonAlpha = this.textureLoader.load('/textures/PhaetonAlpha.png')
+
     const BOX = new THREE.BoxBufferGeometry(
       this.size.x,
       this.size.y,
@@ -69,7 +73,10 @@ export default class Phaeton{
       32, 32
     )
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: COLOR,
+      map: phaetonTexture,
+      transparent: true,
+      alphaMap: phaetonAlpha,
+      // color: COLOR,
       metalness: 0.3,
       roughness: 0.4,
     })

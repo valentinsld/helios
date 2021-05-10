@@ -83,8 +83,8 @@ export default class Fire {
 
         if (conditionCollider && conditionFragment) {
           this.canUse = true
-          DOM.style.cursor = 'pointer'
-          // console.log('enter', this.canUse)
+
+          this.fragment.hover()
         }
       }
     });
@@ -100,8 +100,8 @@ export default class Fire {
 
         if (conditionCollider && conditionFragment) {
           this.canUse = false
-          DOM.style.cursor = 'initial'
-          // console.log('leave', this.canUse)
+
+          this.fragment.hover('out')
         }
       }
     });
@@ -151,9 +151,6 @@ export default class Fire {
 
   addGltfToScene (gltf) {
     this.mesh = gltf
-    this.mesh.position.copy(this.position)
-
-    this.scene.add(this.mesh)
   }
 
   addElementToFragment() {
@@ -161,7 +158,7 @@ export default class Fire {
   }
 
   createLight() {
-    this.spotLight = new THREE.SpotLight( 0xffffff, 0, this.heightCone, this.angleCone * 3, 1, 1 );
+    this.spotLight = new THREE.SpotLight( 0xebaf5b, 0, this.heightCone, this.angleCone * 3, 1, 1 );
     this.spotLight.power = 15
     this.spotLight.intensity = 0
     this.spotLight.position.copy(this.position)
@@ -177,10 +174,14 @@ export default class Fire {
     
     // const spotLightHelper = new THREE.SpotLightHelper( this.spotLight )
     // this.scene.add( spotLightHelper )
+
+    // this.fragment.game.addUpdatedElement('spotLightHelper', () => {
+    //   spotLightHelper.update()
+    // })
   }
 
   startInteract() {
-    this.spotLight.intensity = 3
+    this.spotLight.intensity = 10
     this.cone.material.opacity = this.coneOpacity
 
     DOM.style.cursor = 'grabbing'
@@ -189,8 +190,10 @@ export default class Fire {
   interact(cursor) {
     const startPoint = this.mesh.position
     const endPoint = cursor
+    let lookAt = new THREE.Vector3().copy(endPoint)
+    lookAt.z += 80
 
-    this.cone.lookAt(new THREE.Vector3().copy(endPoint))
+    this.cone.lookAt(lookAt)
 
 
     const allbodies = Matter.Composite.allBodies(this.world),
