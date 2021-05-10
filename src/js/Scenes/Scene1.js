@@ -43,7 +43,7 @@ export default class Scene1 {
     // init scene
     this.scene = new THREE.Group()
     globalScene.add(this.scene)
-    globalScene.fog = new THREE.Fog(globalScene.background, 950, 1200)
+    // globalScene.fog = new THREE.Fog(globalScene.background, 950, 1200)
 
     this.groupDoorTemple = new THREE.Group()
     this.groupDoorTemple.position.set(640, -470, -180)
@@ -758,8 +758,8 @@ export default class Scene1 {
 
     this.arbreCailloux = gltf.scene
     this.arbreCailloux.scale.set(300, 300, 300)
-    this.arbreCailloux.rotation.y = -450
-    this.arbreCailloux.position.set(680, -455, -135)
+    this.arbreCailloux.rotation.y = Math.PI * 0.68
+    this.arbreCailloux.position.set(675, -455, -60)
     
     
     console.log(this.arbreCailloux)
