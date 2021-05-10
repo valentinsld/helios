@@ -118,7 +118,7 @@ export default class Scene1 {
         func: this.initPorte.bind(this)
       },
       {
-        url: '/models/temple/temple.gltf',
+        url: '/models/temple/temple_soleil.gltf',
         func: this.initTemple.bind(this)
       },
       {
@@ -462,7 +462,7 @@ export default class Scene1 {
     // texture
     const texture = this.textureLoader.load('/models/temple/TextureTemple.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/temple/normaltemple.png')
+    const normal = this.textureLoader.load('/models/temple/normal_Temple.png')
     normal.flipY = false
 
     let material = new THREE.MeshStandardMaterial({
@@ -470,14 +470,14 @@ export default class Scene1 {
       normalMap: normal,
       emissive: 0xffffff,
       emissiveMap: texture,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 0.14,
       metalness: 0,
       roughness: 0.75,
     })
 
-    const textureSoleil = this.textureLoader.load('/models/temple/TextureSoleil.png')
+    const textureSoleil = this.textureLoader.load('/models/temple/Texture_Soleil.png')
     textureSoleil.flipY = false
-    const normalSoleil = this.textureLoader.load('/models/temple/normalsoleil.png')
+    const normalSoleil = this.textureLoader.load('/models/temple/Normal_Soleil.png')
     normalSoleil.flipY = false
 
     this.materialSoleil = new THREE.MeshStandardMaterial({
@@ -487,12 +487,12 @@ export default class Scene1 {
       emissiveMap: textureSoleil,
       emissiveIntensity: 0.5,
       metalness: 0,
-      roughness: 0.5,
-      side: THREE.DoubleSide
+      roughness: 0.5
     })
 
     this.temple = gltf.scene
     this.temple.scale.set(300, 300, 300)
+    this.temple.position.y = 20
 
     let emissive = {
       intensity: 0.5,
@@ -761,8 +761,6 @@ export default class Scene1 {
     this.arbreCailloux.rotation.y = Math.PI * 0.68
     this.arbreCailloux.position.set(675, -455, -60)
     
-    
-    console.log(this.arbreCailloux)
     this.arbreCailloux.traverse( function(node) {
       if (node.name === 'arbre') {
         node.material = materialArbre
