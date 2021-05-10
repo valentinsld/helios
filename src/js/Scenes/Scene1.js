@@ -46,7 +46,7 @@ export default class Scene1 {
     // globalScene.fog = new THREE.Fog(globalScene.background, 950, 1200)
 
     this.groupDoorTemple = new THREE.Group()
-    this.groupDoorTemple.position.set(640, -470, -180)
+    this.groupDoorTemple.position.set(640, -450, -180)
     this.groupDoorTemple.rotateY(Math.PI * 3/4)
     this.scene.add(this.groupDoorTemple)
 
@@ -379,9 +379,9 @@ export default class Scene1 {
 
   async initPorte (gltf) {
     // Material armature
-    const textureArmature = this.textureLoader.load('/models/porte/texturearmaturetest.png')
+    const textureArmature = this.textureLoader.load('/models/porte/armature_gauche.png')
     textureArmature.flipY = false
-    const normaleArmature = this.textureLoader.load('/models/porte/normalarmature.png')
+    const normaleArmature = this.textureLoader.load('/models/porte/normal_armature_gauche.png')
     normaleArmature.flipY = false
 
     const materialArmature = new THREE.MeshStandardMaterial({
@@ -392,9 +392,9 @@ export default class Scene1 {
     })
 
     // Material armature
-    const textureBois = this.textureLoader.load('/models/porte/textureporteboistest.png')
+    const textureBois = this.textureLoader.load('/models/porte/bois_gauche.png')
     textureBois.flipY = false
-    const normaleBois = this.textureLoader.load('/models/porte/normalboisporte.png')
+    const normaleBois = this.textureLoader.load('/models/porte/normal_bois_gauche.png')
     normaleBois.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
@@ -409,6 +409,7 @@ export default class Scene1 {
 
     this.porte.traverse( function(node) {
       if (node.name === 'armaturedroit' || node.name === 'armaturegauche') {
+        console.log
         node.material = materialArmature
         node.castShadow = true
         node.receiveShadow = true
@@ -492,7 +493,6 @@ export default class Scene1 {
 
     this.temple = gltf.scene
     this.temple.scale.set(300, 300, 300)
-    this.temple.position.y = 20
 
     let emissive = {
       intensity: 0.5,
