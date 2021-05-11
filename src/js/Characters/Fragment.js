@@ -110,12 +110,12 @@ export default class Fragment{
 
     // LIGHT
     this.sphereLight = new THREE.PointLight(this.params.color, this.params.intensity, this.params.distance)
-    this.sphereLight.castShadow = true
-    this.sphereLight.shadow.radius = 8
-    this.sphereLight.shadow.mapSize.width = 2048
-    this.sphereLight.shadow.mapSize.height = 2048
+    // this.sphereLight.castShadow = true
+    this.sphereLight.shadow.mapSize.width = 512
+    this.sphereLight.shadow.mapSize.height = 512
     this.sphereLight.shadow.bias = - 0.01
-    this.sphereLight.shadow.camera.far = 800
+    this.sphereLight.shadow.camera.near = 50
+    this.sphereLight.shadow.camera.far = 600
 
     // ADD ELEMENTS
     this.mesh.add(this.sphere, this.sphereLight)
