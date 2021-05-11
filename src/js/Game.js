@@ -138,11 +138,11 @@ export default class Game{
   }
 
   initGltfLoader() {
-    const dracoLoader = new DRACOLoader()
-    dracoLoader.setDecoderPath('/draco/')
+    // const dracoLoader = new DRACOLoader()
+    // dracoLoader.setDecoderPath('/draco/')
 
     this.gltfLoader = new GLTFLoader()
-    this.gltfLoader.setDRACOLoader(dracoLoader)
+    // this.gltfLoader.setDRACOLoader(dracoLoader)
 
     // gltfLoader.load(
     //   '/models/Duck/glTF/Duck.gltf',
