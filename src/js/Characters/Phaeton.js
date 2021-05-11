@@ -82,8 +82,8 @@ export default class Phaeton{
     })
 
     this.mesh = new THREE.Mesh(BOX, MATERIAL)
-    this.mesh.receiveShadow = true
-    this.mesh.castShadow = true
+    // this.mesh.receiveShadow = true
+    // this.mesh.castShadow = true
     this.mesh.position.z = this.position.z
 
     this.scene.add(this.mesh)

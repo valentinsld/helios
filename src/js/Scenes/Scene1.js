@@ -309,7 +309,6 @@ export default class Scene1 {
       if (node.isMesh) {
         node.material = material
         node.castShadow = true
-        // node.receiveShadow = true
       }
     })
 
@@ -341,7 +340,6 @@ export default class Scene1 {
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
-      // color: 0x444444,
       map: texture,
       normalMap: normal,
       metalness: 0,
@@ -352,7 +350,6 @@ export default class Scene1 {
       if (node.isMesh) {
         node.material = material
         node.castShadow = true
-        // node.receiveShadow = true
       }
     })
 
@@ -486,7 +483,7 @@ export default class Scene1 {
       normalMap: normalSoleil,
       emissive: 0xebaf5b,
       emissiveMap: textureSoleil,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 0.25,
       metalness: 0,
       roughness: 0.5
     })
@@ -511,12 +508,12 @@ export default class Scene1 {
       switch (node.name) {
         case 'soleil':
           node.material = this.materialSoleil
-          // node.castShadow = true
-          // node.receiveShadow = true
           break;
 
         case 'interieureporte':
           node.remove()
+          node.geometry.dispose()
+          node.material.dispose()
           break;
 
         case 'fenetre':
