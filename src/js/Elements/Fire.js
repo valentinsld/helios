@@ -171,9 +171,6 @@ export default class Fire {
     this.spotLight.shadow.mapSize.width = 512
     this.spotLight.shadow.mapSize.height = 512
 
-    const cameraHelper = new THREE.CameraHelper(this.spotLight.shadow.camera)
-    this.scene.add(cameraHelper)
-
     this.scene.add( this.spotLight )
 
     this.spotLight.target = this.fragment.targetObject
