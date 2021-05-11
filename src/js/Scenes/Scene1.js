@@ -673,10 +673,11 @@ export default class Scene1 {
     this.lightBrasier.position.copy(this.fire.position)
     
     this.lightBrasier.castShadow = true
-    this.lightBrasier.shadow.camera.far = 1700
-    this.lightBrasier.shadow.radius = 8
-    this.lightBrasier.shadow.mapSize.width = 1024
-    this.lightBrasier.shadow.mapSize.height = 1024
+    this.lightBrasier.shadow.camera.far = 1800
+    this.lightBrasier.shadow.camera.near = 200
+    this.lightBrasier.shadow.radius = 4
+    this.lightBrasier.shadow.mapSize.width = 512
+    this.lightBrasier.shadow.mapSize.height = 512
 
     this.scene.add( this.lightBrasier )
 
