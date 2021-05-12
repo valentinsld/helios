@@ -508,6 +508,7 @@ export default class Scene1 {
       switch (node.name) {
         case 'soleil':
           node.material = this.materialSoleil
+          node.receiveShadow = true
           break;
 
         case 'interieureporte':
