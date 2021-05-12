@@ -15,6 +15,11 @@ const SIZE = {
 
 const COLOR = '#008d02'
 
+const ANIMATIONS = {
+  idle: 'idle',
+  marche: 'marche_avant'
+}
+
 export default class Phaeton{
   constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE}) {
     this.world = engine.world
@@ -94,7 +99,35 @@ export default class Phaeton{
     this.mesh.position.z = this.position.z
     this.mesh.rotation.y = Math.PI * 1.5
 
+    this.mesh.castShadow = true
+    this.mesh.receiveShadow = true
+
     this.scene.add(this.mesh)
+
+    // animation
+    this.mixer = new THREE.AnimationMixer( this.mesh )
+
+    this.actions = {};
+
+    for ( let i = 0; i < gltf.animations.length; i ++ ) {
+
+      const clip = gltf.animations[ i ]
+      const action = this.mixer.clipAction( clip )
+      this.actions[ clip.name ] = action
+    }
+
+    this.activeAction = this.actions[ANIMATIONS.idle]
+    this.activeAction.play()
+
+    this.previousAction = {
+      _clip: {
+        name: null
+      }
+    }
+
+    console.log(this.activeAction._clip.name)
+
+    this.lastClock = 0
   }
 
   addPhaetonToScene () {
@@ -148,16 +181,20 @@ export default class Phaeton{
 
     switch (event.code) {
       case "KeyA":
+        this.fadeToAction(ANIMATIONS.marche, 1);
         Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
         break;
       case "ArrowLeft":
+        this.fadeToAction(ANIMATIONS.marche, 1);
         Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
         break;
       
       case "KeyD":
+        this.fadeToAction(ANIMATIONS.marche, 1);
         Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
         break;
       case "ArrowRight":
+        this.fadeToAction(ANIMATIONS.marche, 1);
         Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
         break;
 
@@ -173,6 +210,7 @@ export default class Phaeton{
         break;  
 
       default:
+        this.fadeToAction(ANIMATIONS.idle, 1);
         break;
     }
   }
@@ -235,11 +273,36 @@ export default class Phaeton{
     )
   }
 
-  update() {
+  fadeToAction( name, duration ) {
+    if (this.activeAction._clip.name === name) return
+
+    this.previousAction = this.activeAction
+    this.activeAction = this.actions[ name ];
+
+    if ( this.previousAction !== this.activeAction ) {
+
+      this.previousAction.fadeOut( duration )
+
+    }
+
+    this.activeAction
+      .reset()
+      .setEffectiveTimeScale( 1 )
+      .setEffectiveWeight( 1 )
+      .fadeIn( duration )
+      .play()
+
+  }
+
+  update(time) {
     if (this.animation || !this.mesh) return
     this.mesh.position.x = this.box.position.x
     this.mesh.position.y = this.box.position.y - this.size.y / 2
 
-    // this.mesh.rotation.z = this.box.angle
+    const dt = time - this.lastClock;
+
+    if ( this.mixer ) this.mixer.update( dt );
+
+    this.lastClock = time
   }
 }
