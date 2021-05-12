@@ -82,6 +82,7 @@ export default class Scene1 {
       scene : this.scene,
       debug: this.debug,
       textureLoader: this.textureLoader,
+      gltfLoader: this.gltfLoader,
       position : {
         x : -900,
         y : -350,
@@ -563,7 +564,7 @@ export default class Scene1 {
       }
     })
 
-    this.groupDoorTemple.add(this.temple)
+    // this.groupDoorTemple.add(this.temple)
 
     const light = new THREE.PointLight(0xb36f24, 3.5, 500)
     light.position.set(50,300,-100)

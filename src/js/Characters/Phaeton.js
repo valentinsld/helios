@@ -16,10 +16,11 @@ const SIZE = {
 const COLOR = '#008d02'
 
 export default class Phaeton{
-  constructor({engine, scene, debug, textureLoader, position = POSITION, size = SIZE}) {
+  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE}) {
     this.world = engine.world
     this.scene = scene
     this.textureLoader = textureLoader
+    this.gltfLoader = gltfLoader
 
     this.debug = debug
     this.position = position
@@ -30,13 +31,13 @@ export default class Phaeton{
     this.interactionElements = []
 
     this.addPhaetonToWorld()
-    this.addPhaetonToScene()
+    this.loadGltf()
     if(this.debug) this.addDebug()
 
     this.initEvents()
   }
 
-  addPhaetonToWorld() {
+  addPhaetonToWorld () {
     this.box = Matter.Bodies.rectangle(
       this.position.x,
       this.position.y,
@@ -62,7 +63,41 @@ export default class Phaeton{
 
     Matter.World.add(this.world, this.box);
   }
-  addPhaetonToScene() {
+
+  loadGltf () {
+    this.gltfLoader.load(
+      '/models/Phaeton/anims/phaeton.gltf',
+      (gltf) =>
+      {
+          console.log('success')
+          console.log(gltf)
+          this.initPhaetonModel(gltf)
+      },
+      (progress) =>
+      {
+          // console.log('progress')
+          // console.log(progress)
+      },
+      (error) =>
+      {
+          console.log('error')
+          console.log(error)
+          this.addPhaetonToScene()
+      }
+    )
+  }
+
+  initPhaetonModel (gltf) {
+    this.mesh = gltf.scene
+    this.mesh.scale.set(50, 50, 50)
+    this.mesh.name = 'Phaeton'
+    this.mesh.position.z = this.position.z
+    this.mesh.rotation.y = Math.PI * 1.5
+
+    this.scene.add(this.mesh)
+  }
+
+  addPhaetonToScene () {
     const phaetonTexture = this.textureLoader.load('/textures/Phaeton.png')
     const phaetonAlpha = this.textureLoader.load('/textures/PhaetonAlpha.png')
 
@@ -94,7 +129,7 @@ export default class Phaeton{
     this.debugFolder.add(this, "speed", 0, 20)
   }
 
-  addInteractionElements(element) {
+  addInteractionElements (element) {
     this.interactionElements.push(element)
     // console.log(this.interactionElements)
   }
@@ -103,12 +138,12 @@ export default class Phaeton{
   //
   // Events
   //
-  initEvents() {
+  initEvents () {
     window.addEventListener('keydown', this.keydown.bind(this))
     window.addEventListener('keyup', this.keyup.bind(this))
   }
 
-  keydown(event){
+  keydown (event){
     // console.log(event)
 
     switch (event.code) {
@@ -201,9 +236,9 @@ export default class Phaeton{
   }
 
   update() {
-    if (this.animation) return
+    if (this.animation || !this.mesh) return
     this.mesh.position.x = this.box.position.x
-    this.mesh.position.y = this.box.position.y
+    this.mesh.position.y = this.box.position.y - this.size.y / 2
 
     // this.mesh.rotation.z = this.box.angle
   }
