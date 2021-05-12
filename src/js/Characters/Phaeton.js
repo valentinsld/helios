@@ -32,7 +32,8 @@ export default class Phaeton{
     this.size = size
 
     this.animation = null
-    this.speed = 16
+    this.speed = 9.5
+    this.isTurnedTo = 'right'
     this.interactionElements = []
 
     this.addPhaetonToWorld()
@@ -74,20 +75,18 @@ export default class Phaeton{
       '/models/Phaeton/anims/phaeton.gltf',
       (gltf) =>
       {
-          console.log('success')
-          console.log(gltf)
-          this.initPhaetonModel(gltf)
+        this.initPhaetonModel(gltf)
       },
       (progress) =>
       {
-          // console.log('progress')
-          // console.log(progress)
+        // console.log('progress')
+        // console.log(progress)
       },
       (error) =>
       {
-          console.log('error')
-          console.log(error)
-          this.addPhaetonToScene()
+        console.log('error')
+        console.log(error)
+        this.addPhaetonToScene()
       }
     )
   }
@@ -118,14 +117,6 @@ export default class Phaeton{
 
     this.activeAction = this.actions[ANIMATIONS.idle]
     this.activeAction.play()
-
-    this.previousAction = {
-      _clip: {
-        name: null
-      }
-    }
-
-    console.log(this.activeAction._clip.name)
 
     this.lastClock = 0
   }
@@ -177,30 +168,59 @@ export default class Phaeton{
   }
 
   keydown (event){
-    // console.log(event)
-
     switch (event.code) {
       case "KeyA":
-        this.fadeToAction(ANIMATIONS.marche, 1);
-        Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
+        this.goToLeft()
         break;
       case "ArrowLeft":
-        this.fadeToAction(ANIMATIONS.marche, 1);
-        Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
+        this.goToLeft()
         break;
       
       case "KeyD":
-        this.fadeToAction(ANIMATIONS.marche, 1);
-        Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
+        this.goToRight()
         break;
       case "ArrowRight":
-        this.fadeToAction(ANIMATIONS.marche, 1);
-        Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
+        this.goToRight()
         break;
 
       default:
         break;
     }
+  }
+
+  goToLeft () {
+    this.fadeToAction(ANIMATIONS.marche, 1)
+    Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
+
+    if (this.isTurnedTo === 'right') {
+      gsap.to(
+        this.mesh.rotation,
+        {
+          y: Math.PI * 0.5,
+          duration: 0.8,
+          ease: 'Power2.out'
+        }
+      )
+    }
+
+    this.isTurnedTo = 'left'
+  }
+  goToRight () {
+    this.fadeToAction(ANIMATIONS.marche, 1)
+    Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
+
+    if (this.isTurnedTo === 'left') {
+      gsap.to(
+        this.mesh.rotation,
+        {
+          y: Math.PI * 1.5,
+          duration: 0.8,
+          ease: 'Power2.out'
+        }
+      )
+    }
+
+    this.isTurnedTo = 'right'
   }
 
   keyup(event){
@@ -210,7 +230,7 @@ export default class Phaeton{
         break;  
 
       default:
-        this.fadeToAction(ANIMATIONS.idle, 1);
+        this.fadeToAction(ANIMATIONS.idle, 0.5);
         break;
     }
   }
