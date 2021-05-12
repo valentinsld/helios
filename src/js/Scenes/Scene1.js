@@ -309,7 +309,6 @@ export default class Scene1 {
       if (node.isMesh) {
         node.material = material
         node.castShadow = true
-        // node.receiveShadow = true
       }
     })
 
@@ -341,7 +340,6 @@ export default class Scene1 {
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
-      // color: 0x444444,
       map: texture,
       normalMap: normal,
       metalness: 0,
@@ -352,7 +350,6 @@ export default class Scene1 {
       if (node.isMesh) {
         node.material = material
         node.castShadow = true
-        // node.receiveShadow = true
       }
     })
 
@@ -411,11 +408,11 @@ export default class Scene1 {
       if (node.name === 'armaturedroit' || node.name === 'armaturegauche') {
         console.log
         node.material = materialArmature
-        node.castShadow = true
+        // node.castShadow = true
         node.receiveShadow = true
       } else if(node.isMesh) {
         node.material = material
-        node.castShadow = true
+        // node.castShadow = true
         node.receiveShadow = true
       }
     })
@@ -461,9 +458,9 @@ export default class Scene1 {
 
   async initTemple (gltf) {
     // texture
-    const texture = this.textureLoader.load('/models/temple/TextureTemple.png')
+    const texture = this.textureLoader.load('/models/temple/TextureTemple-min.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/temple/normal_Temple.png')
+    const normal = this.textureLoader.load('/models/temple/normal_Temple-min.png')
     normal.flipY = false
 
     let material = new THREE.MeshStandardMaterial({
@@ -486,7 +483,7 @@ export default class Scene1 {
       normalMap: normalSoleil,
       emissive: 0xebaf5b,
       emissiveMap: textureSoleil,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 0.25,
       metalness: 0,
       roughness: 0.5
     })
@@ -511,12 +508,12 @@ export default class Scene1 {
       switch (node.name) {
         case 'soleil':
           node.material = this.materialSoleil
-          node.castShadow = true
-          node.receiveShadow = true
           break;
 
         case 'interieureporte':
           node.remove()
+          node.geometry.dispose()
+          node.material.dispose()
           break;
 
         case 'fenetre':
@@ -559,7 +556,7 @@ export default class Scene1 {
       
         default:
           node.material = material
-          node.castShadow = true
+          // node.castShadow = true
           node.receiveShadow = true
           break;
       }
@@ -567,9 +564,9 @@ export default class Scene1 {
 
     this.groupDoorTemple.add(this.temple)
 
-    const light = new THREE.PointLight(0xb36f24, 3.5, 700)
+    const light = new THREE.PointLight(0xb36f24, 3.5, 500)
     light.position.set(50,300,-100)
-    light.castShadow = true
+    // light.castShadow = true
 
     this.groupDoorTemple.add(light)
 
@@ -673,10 +670,11 @@ export default class Scene1 {
     this.lightBrasier.position.copy(this.fire.position)
     
     this.lightBrasier.castShadow = true
-    this.lightBrasier.shadow.camera.far = 1700
-    this.lightBrasier.shadow.radius = 8
-    this.lightBrasier.shadow.mapSize.width = 1024
-    this.lightBrasier.shadow.mapSize.height = 1024
+    this.lightBrasier.shadow.camera.far = 1800
+    this.lightBrasier.shadow.camera.near = 200
+    this.lightBrasier.shadow.radius = 4
+    this.lightBrasier.shadow.mapSize.width = 512
+    this.lightBrasier.shadow.mapSize.height = 512
 
     this.scene.add( this.lightBrasier )
 
