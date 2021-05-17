@@ -526,7 +526,7 @@ export default class Scene1 {
             emissiveIntensity: 0.8
           })
 
-          const lightFenetre = new THREE.PointLight(0xb36f24, 8, 100) // 0xb36f24
+          const lightFenetre = new THREE.PointLight(0xb36f24, 8, 70) // 0xb36f24
           lightFenetre.position.copy(node.position)
           lightFenetre.position.z = -0.6
           lightFenetre.position.x = -1.388
