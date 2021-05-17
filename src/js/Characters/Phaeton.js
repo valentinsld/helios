@@ -16,8 +16,9 @@ const SIZE = {
 const COLOR = '#008d02'
 
 const ANIMATIONS = {
-  idle: 'idle',
-  marche: 'marche_avant'
+  idle: 'iddle2',
+  marche: 'course',
+  echelle: 'echelle'
 }
 
 export default class Phaeton{
@@ -72,7 +73,7 @@ export default class Phaeton{
 
   loadGltf () {
     this.gltfLoader.load(
-      '/models/Phaeton/anims/phaeton.gltf',
+      '/models/Phaeton/phaeton.gltf',
       (gltf) =>
       {
         this.initPhaetonModel(gltf)
@@ -100,6 +101,44 @@ export default class Phaeton{
 
     this.mesh.castShadow = true
     this.mesh.receiveShadow = true
+
+    const texture = this.textureLoader.load('/models/Phaeton/texture_full.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/Phaeton/normal_phaeton.png')
+    normal.flipY = false
+
+    const material = new THREE.MeshStandardMaterial({
+      map: texture,
+      normalMap: normal,
+      emissive: 0xebaf5b,
+      emissiveMap: texture,
+      emissiveIntensity: 0.25,
+      metalness: 0,
+      roughness: 0.5
+    })
+
+    const emissive = {
+      intensity: 0.5,
+      color: 0x25231e
+    }
+
+    this.mesh.traverse((node) => {
+      if (node.isMesh) {
+        const material = node.material
+
+        material.map = texture
+        material.normalMap = normal
+        material.emissive = new THREE.Color(emissive.color)
+        material.emissiveIntensity = emissive.intensity
+
+        if (this.debugFolder) {
+          this.debugFolder.add(material, 'emissiveIntensity', 0, 1).name('Emissive intensity')
+          this.debugFolder.addColor(emissive, 'color',).name('Emissive color').onChange((value) => {
+            material.emissive = new THREE.Color(value)
+          })
+        }
+      }
+    })
 
     this.scene.add(this.mesh)
 
