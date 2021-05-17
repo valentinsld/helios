@@ -856,7 +856,7 @@ export default class Scene1 {
   }
 
   animationEndPhaeton () {
-    this.phaeton.animation = true
+    this.phaeton.playWalk()
 
     gsap.to(
       this.phaeton.mesh.position,

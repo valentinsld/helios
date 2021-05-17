@@ -262,6 +262,11 @@ export default class Phaeton{
     this.isTurnedTo = 'right'
   }
 
+  playWalk() {
+    this.animation = true
+    this.fadeToAction(ANIMATIONS.marche, 1)
+  }
+
   keyup(event){
     switch (event.code) {  
       case "Space":
@@ -354,14 +359,12 @@ export default class Phaeton{
   }
 
   update(time) {
+    const dt = time - this.lastClock;
+    if ( this.mixer ) this.mixer.update( dt );
+    this.lastClock = time
+
     if (this.animation || !this.mesh) return
     this.mesh.position.x = this.box.position.x
     this.mesh.position.y = this.box.position.y - this.size.y / 2
-
-    const dt = time - this.lastClock;
-
-    if ( this.mixer ) this.mixer.update( dt );
-
-    this.lastClock = time
   }
 }
