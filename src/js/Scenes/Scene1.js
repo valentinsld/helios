@@ -219,7 +219,7 @@ export default class Scene1 {
       render: false,
       size: {
         x: 600,
-        y: 200,
+        y: 210,
         z: 100
       },
       position : {
