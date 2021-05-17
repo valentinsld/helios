@@ -254,6 +254,31 @@ export default class Scene1 {
       animationEndPhaeton: this.animationEndPhaeton.bind(this),
       animationEndFragment: this.animationEndFragment.bind(this)
     })
+
+    // first plan
+    const paln = this.textureLoader.load('/models/premier_plan.png')
+    // paln.flipY = false
+    const textureFirstPlan = new THREE.MeshStandardMaterial({
+      color: 0x000000,
+      transparent: true,
+      alphaMap: paln
+    })
+
+    console.log( this.game.camera)
+
+    const ww = (this.game.camera.right - this.game.camera.left) / this.game.camera.zoom
+    const plane = new THREE.PlaneBufferGeometry(
+      ww,
+      ww * 0.12, // 231/1920
+      1,
+      1
+    )
+
+    const planeMesh = new THREE.Mesh(plane, textureFirstPlan)
+    console.log((this.game.camera.top - this.game.camera.bottom) / 2)
+    planeMesh.position.set(0, -330, 150)
+
+    this.scene.add(planeMesh)
   }
 
   async initStatuesBrasier (gltf) {
@@ -758,7 +783,7 @@ export default class Scene1 {
 
     this.arbreCailloux = gltf.scene
     this.arbreCailloux.scale.set(300, 300, 300)
-    this.arbreCailloux.rotation.y = Math.PI * 0.68
+    this.arbreCailloux.rotation.y = Math.PI * 0.69
     this.arbreCailloux.position.set(675, -455, -60)
     
     this.arbreCailloux.traverse( function(node) {
