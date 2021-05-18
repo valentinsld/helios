@@ -636,6 +636,7 @@ export default class Scene1 {
     })
 
     this.fire = new Fire ({
+      game: this.game,
       scene: this.scene,
       engine: this.engine,
       render: this.render,

@@ -138,6 +138,9 @@ export default class Fragment{
         intensityPow: {
           value: this.params.glowPow,
         },
+        opacity: {
+          value: 1
+        },
         color: new THREE.Uniform(glowColor),
         viewVector: {
           type: "v3",
@@ -325,7 +328,7 @@ export default class Fragment{
       )
 
       angle = Math.atan2(forceY, forceX)
-      if (this.box.positionPrev.x != this.box.position.x)scale = Math.max(1.5 * this.box.speed / 60, 1)
+      if (this.box.positionPrev.x != this.box.position.x)scale = Math.max(1.3 * this.box.speed / 60, 1)
     }
 
     // update position mesh
