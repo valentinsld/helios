@@ -264,8 +264,6 @@ export default class Scene1 {
       alphaMap: paln
     })
 
-    console.log( this.game.camera)
-
     const ww = (this.game.camera.right - this.game.camera.left) / this.game.camera.zoom
     const plane = new THREE.PlaneBufferGeometry(
       ww,
@@ -275,7 +273,6 @@ export default class Scene1 {
     )
 
     const planeMesh = new THREE.Mesh(plane, textureFirstPlan)
-    console.log((this.game.camera.top - this.game.camera.bottom) / 2)
     planeMesh.position.set(0, -330, 150)
 
     this.scene.add(planeMesh)

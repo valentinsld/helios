@@ -34,6 +34,7 @@ export default class Phaeton{
 
     this.animation = null
     this.speed = 9.5
+    this.runed = false
     this.isTurnedTo = 'right'
     this.interactionElements = []
 
@@ -106,16 +107,6 @@ export default class Phaeton{
     texture.flipY = false
     const normal = this.textureLoader.load('/models/Phaeton/normal_phaeton.png')
     normal.flipY = false
-
-    const material = new THREE.MeshStandardMaterial({
-      map: texture,
-      normalMap: normal,
-      emissive: 0xebaf5b,
-      emissiveMap: texture,
-      emissiveIntensity: 0.25,
-      metalness: 0,
-      roughness: 0.5
-    })
 
     const emissive = {
       intensity: 0.25,
@@ -229,24 +220,30 @@ export default class Phaeton{
 
   goToLeft () {
     this.fadeToAction(ANIMATIONS.marche, 1)
-    Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
 
     if (this.isTurnedTo === 'right') {
       gsap.to(
         this.mesh.rotation,
         {
-          y: Math.PI * 0.5,
+          y: Math.PI * 2.5,
           duration: 0.8,
-          ease: 'Power2.out'
+          ease: 'Power2.out',
+          onStart: () => {
+            this.animation = true
+
+            setTimeout(() => {
+              this.animation = false
+            }, 500);
+          }
         }
       )
     }
 
+    if (!this.runed) this.runed = this.lastClock
     this.isTurnedTo = 'left'
   }
   goToRight () {
     this.fadeToAction(ANIMATIONS.marche, 1)
-    Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
 
     if (this.isTurnedTo === 'left') {
       gsap.to(
@@ -254,11 +251,19 @@ export default class Phaeton{
         {
           y: Math.PI * 1.5,
           duration: 0.8,
-          ease: 'Power2.out'
+          ease: 'Power2.out',
+          onStart: () => {
+            this.animation = true
+
+            setTimeout(() => {
+              this.animation = false
+            }, 500);
+          }
         }
       )
     }
 
+    if (!this.runed) this.runed = this.lastClock
     this.isTurnedTo = 'right'
   }
 
@@ -268,6 +273,8 @@ export default class Phaeton{
   }
 
   keyup(event){
+    this.runed = false
+
     switch (event.code) {  
       case "Space":
         this.interactWithElements()
@@ -364,6 +371,12 @@ export default class Phaeton{
     this.lastClock = time
 
     if (this.animation || !this.mesh) return
+    if (this.runed) {
+      let speed = this.isTurnedTo === 'right' ? this.speed : -this.speed
+      speed = speed * Math.min(time - this.runed, 1)
+      Matter.Body.translate(this.box, Matter.Vector.create(speed, 0))
+    }
+
     this.mesh.position.x = this.box.position.x
     this.mesh.position.y = this.box.position.y - this.size.y / 2
   }
