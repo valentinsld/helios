@@ -15,28 +15,37 @@ const SIZE = {
 
 const COLOR = '#008d02'
 
+const ANIMATIONS = {
+  idle: 'iddle2',
+  marche: 'course',
+  echelle: 'echelle'
+}
+
 export default class Phaeton{
-  constructor({engine, scene, debug, textureLoader, position = POSITION, size = SIZE}) {
+  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE}) {
     this.world = engine.world
     this.scene = scene
     this.textureLoader = textureLoader
+    this.gltfLoader = gltfLoader
 
     this.debug = debug
     this.position = position
     this.size = size
 
     this.animation = null
-    this.speed = 16
+    this.speed = 9.5
+    this.runed = false
+    this.isTurnedTo = 'right'
     this.interactionElements = []
 
     this.addPhaetonToWorld()
-    this.addPhaetonToScene()
+    this.loadGltf()
     if(this.debug) this.addDebug()
 
     this.initEvents()
   }
 
-  addPhaetonToWorld() {
+  addPhaetonToWorld () {
     this.box = Matter.Bodies.rectangle(
       this.position.x,
       this.position.y,
@@ -62,7 +71,87 @@ export default class Phaeton{
 
     Matter.World.add(this.world, this.box);
   }
-  addPhaetonToScene() {
+
+  loadGltf () {
+    this.gltfLoader.load(
+      '/models/Phaeton/phaeton.gltf',
+      (gltf) =>
+      {
+        this.initPhaetonModel(gltf)
+      },
+      (progress) =>
+      {
+        // console.log('progress')
+        // console.log(progress)
+      },
+      (error) =>
+      {
+        console.log('error')
+        console.log(error)
+        this.addPhaetonToScene()
+      }
+    )
+  }
+
+  initPhaetonModel (gltf) {
+    this.mesh = gltf.scene
+    this.mesh.scale.set(50, 50, 50)
+    this.mesh.name = 'Phaeton'
+    this.mesh.position.z = this.position.z
+    this.mesh.rotation.y = Math.PI * 1.5
+
+    this.mesh.castShadow = true
+    this.mesh.receiveShadow = true
+
+    const texture = this.textureLoader.load('/models/Phaeton/texture_full.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/Phaeton/normal_phaeton.png')
+    normal.flipY = false
+
+    const emissive = {
+      intensity: 0.25,
+      color: 0x25231e
+    }
+
+    this.mesh.traverse((node) => {
+      if (node.isMesh) {
+        const material = node.material
+
+        material.map = texture
+        material.normalMap = normal
+        material.emissive = new THREE.Color(emissive.color)
+        material.emissiveIntensity = emissive.intensity
+
+        if (this.debugFolder) {
+          this.debugFolder.add(material, 'emissiveIntensity', 0, 1).name('Emissive intensity')
+          this.debugFolder.addColor(emissive, 'color',).name('Emissive color').onChange((value) => {
+            material.emissive = new THREE.Color(value)
+          })
+        }
+      }
+    })
+
+    this.scene.add(this.mesh)
+
+    // animation
+    this.mixer = new THREE.AnimationMixer( this.mesh )
+
+    this.actions = {};
+
+    for ( let i = 0; i < gltf.animations.length; i ++ ) {
+
+      const clip = gltf.animations[ i ]
+      const action = this.mixer.clipAction( clip )
+      this.actions[ clip.name ] = action
+    }
+
+    this.activeAction = this.actions[ANIMATIONS.idle]
+    this.activeAction.play()
+
+    this.lastClock = 0
+  }
+
+  addPhaetonToScene () {
     const phaetonTexture = this.textureLoader.load('/textures/Phaeton.png')
     const phaetonAlpha = this.textureLoader.load('/textures/PhaetonAlpha.png')
 
@@ -94,7 +183,7 @@ export default class Phaeton{
     this.debugFolder.add(this, "speed", 0, 20)
   }
 
-  addInteractionElements(element) {
+  addInteractionElements (element) {
     this.interactionElements.push(element)
     // console.log(this.interactionElements)
   }
@@ -103,27 +192,25 @@ export default class Phaeton{
   //
   // Events
   //
-  initEvents() {
+  initEvents () {
     window.addEventListener('keydown', this.keydown.bind(this))
     window.addEventListener('keyup', this.keyup.bind(this))
   }
 
-  keydown(event){
-    // console.log(event)
-
+  keydown (event){
     switch (event.code) {
       case "KeyA":
-        Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
+        this.goToLeft()
         break;
       case "ArrowLeft":
-        Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
+        this.goToLeft()
         break;
       
       case "KeyD":
-        Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
+        this.goToRight()
         break;
       case "ArrowRight":
-        Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
+        this.goToRight()
         break;
 
       default:
@@ -131,13 +218,70 @@ export default class Phaeton{
     }
   }
 
+  goToLeft () {
+    this.fadeToAction(ANIMATIONS.marche, 1)
+
+    if (this.isTurnedTo === 'right') {
+      gsap.to(
+        this.mesh.rotation,
+        {
+          y: Math.PI * 2.5,
+          duration: 0.8,
+          ease: 'Power2.out',
+          onStart: () => {
+            this.animation = true
+
+            setTimeout(() => {
+              this.animation = false
+            }, 500);
+          }
+        }
+      )
+    }
+
+    if (!this.runed) this.runed = this.lastClock
+    this.isTurnedTo = 'left'
+  }
+  goToRight () {
+    this.fadeToAction(ANIMATIONS.marche, 1)
+
+    if (this.isTurnedTo === 'left') {
+      gsap.to(
+        this.mesh.rotation,
+        {
+          y: Math.PI * 1.5,
+          duration: 0.8,
+          ease: 'Power2.out',
+          onStart: () => {
+            this.animation = true
+
+            setTimeout(() => {
+              this.animation = false
+            }, 500);
+          }
+        }
+      )
+    }
+
+    if (!this.runed) this.runed = this.lastClock
+    this.isTurnedTo = 'right'
+  }
+
+  playWalk() {
+    this.animation = true
+    this.fadeToAction(ANIMATIONS.marche, 1)
+  }
+
   keyup(event){
+    this.runed = false
+
     switch (event.code) {  
       case "Space":
         this.interactWithElements()
         break;  
 
       default:
+        this.fadeToAction(ANIMATIONS.idle, 0.5);
         break;
     }
   }
@@ -200,11 +344,40 @@ export default class Phaeton{
     )
   }
 
-  update() {
-    if (this.animation) return
-    this.mesh.position.x = this.box.position.x
-    this.mesh.position.y = this.box.position.y
+  fadeToAction( name, duration ) {
+    if (this.activeAction._clip.name === name) return
 
-    // this.mesh.rotation.z = this.box.angle
+    this.previousAction = this.activeAction
+    this.activeAction = this.actions[ name ];
+
+    if ( this.previousAction !== this.activeAction ) {
+
+      this.previousAction.fadeOut( duration )
+
+    }
+
+    this.activeAction
+      .reset()
+      .setEffectiveTimeScale( 1 )
+      .setEffectiveWeight( 1 )
+      .fadeIn( duration )
+      .play()
+
+  }
+
+  update(time) {
+    const dt = time - this.lastClock;
+    if ( this.mixer ) this.mixer.update( dt );
+    this.lastClock = time
+
+    if (this.animation || !this.mesh) return
+    if (this.runed) {
+      let speed = this.isTurnedTo === 'right' ? this.speed : -this.speed
+      speed = speed * Math.min(time - this.runed, 1)
+      Matter.Body.translate(this.box, Matter.Vector.create(speed, 0))
+    }
+
+    this.mesh.position.x = this.box.position.x
+    this.mesh.position.y = this.box.position.y - this.size.y / 2
   }
 }
