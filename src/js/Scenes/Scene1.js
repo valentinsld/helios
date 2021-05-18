@@ -119,7 +119,7 @@ export default class Scene1 {
         func: this.initPorte.bind(this)
       },
       {
-        url: '/models/temple/Temple_Soleil.gltf',
+        url: '/models/temple/temple_soleil.gltf',
         func: this.initTemple.bind(this)
       },
       {
