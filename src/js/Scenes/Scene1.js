@@ -119,7 +119,7 @@ export default class Scene1 {
         func: this.initPorte.bind(this)
       },
       {
-        url: '/models/temple/temple_soleil.gltf',
+        url: '/models/temple/Temple_Soleil.gltf',
         func: this.initTemple.bind(this)
       },
       {
@@ -484,9 +484,9 @@ export default class Scene1 {
 
   async initTemple (gltf) {
     // texture
-    const texture = this.textureLoader.load('/models/temple/TextureTemple-min.png')
+    const texture = this.textureLoader.load('/models/temple/Texture_Temple.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/temple/normal_Temple-min.png')
+    const normal = this.textureLoader.load('/models/temple/Normal_Temple.png')
     normal.flipY = false
 
     let material = new THREE.MeshStandardMaterial({
