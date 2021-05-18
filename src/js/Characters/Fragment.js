@@ -63,6 +63,10 @@ export default class Fragment{
     if(this.debug) this.addDebug()
 
     this.initEvents()
+
+    setTimeout(() => {
+      console.log(this.box)
+    }, 2500);
   }
 
   addFragmentToWorld() {
@@ -288,6 +292,9 @@ export default class Fragment{
   update() {
     if (this.animation) return
 
+    let angle = 0
+    let scale = 1
+
     // interact with element
     if (this.interactionElement) {
       var direction = new THREE.Vector2()
@@ -317,10 +324,16 @@ export default class Fragment{
         Matter.Vector.create(forceX, forceY)
       )
 
+      angle = Math.atan2(forceY, forceX)
+      if (this.box.positionPrev.x != this.box.position.x)scale = Math.max(1.5 * this.box.speed / 60, 1)
     }
 
-      // update position mesh
-      this.mesh.position.x = this.box.position.x
-      this.mesh.position.y = this.box.position.y
+    // update position mesh
+    this.mesh.position.x = this.box.position.x
+    this.mesh.position.y = this.box.position.y
+
+    this.mesh.rotation.z = angle
+    this.mesh.scale.x = scale
+    this.mesh.scale.y = 1/scale
   } 
 }
