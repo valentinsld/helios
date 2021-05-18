@@ -499,7 +499,7 @@ export default class Scene1 {
       roughness: 0.75,
     })
 
-    const textureSoleil = this.textureLoader.load('/models/temple/Texture_Soleil.png')
+    const textureSoleil = this.textureLoader.load('/models/temple/Texture_Soleil2.png')
     textureSoleil.flipY = false
     const normalSoleil = this.textureLoader.load('/models/temple/Normal_Soleil.png')
     normalSoleil.flipY = false
@@ -532,12 +532,12 @@ export default class Scene1 {
 
     this.temple.traverse( (node) => {
       switch (node.name) {
-        case 'soleil':
+        case 'soleil002':
           node.material = this.materialSoleil
           node.receiveShadow = true
           break;
 
-        case 'interieureporte':
+        case 'interieure_porte':
           node.remove()
           node.geometry.dispose()
           node.material.dispose()
