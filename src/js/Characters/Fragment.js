@@ -28,6 +28,7 @@ export default class Fragment{
 
     this.params = {
       color: 0xebaf5b,
+      colorHover: 0xe34f22,
       metalness: 0.3,
       roughness: 0.4,
       emissiveColor: 0xfaa961,
@@ -63,10 +64,6 @@ export default class Fragment{
     if(this.debug) this.addDebug()
 
     this.initEvents()
-
-    setTimeout(() => {
-      console.log(this.box)
-    }, 2500);
   }
 
   addFragmentToWorld() {
@@ -210,6 +207,7 @@ export default class Fragment{
       this.sphere.material.color = new THREE.Color(color)
       this.sphereLight.color = new THREE.Color(color)
     })
+    this.debugFolder.addColor(this.params, "colorHover")
     this.debugFolder.add(this.sphere.material, "metalness", 0, 1)
     this.debugFolder.add(this.sphere.material, "roughness", 0, 1)
     this.debugFolder.addColor(this.params, 'emissiveColor').onChange((color) => {
@@ -245,6 +243,26 @@ export default class Fragment{
         z: hov ? 1.2 : 1,
         duration: 0.3,
         ease: 'Power3.out'
+      }
+    )
+
+    const newColor = hov ? new THREE.Color(this.params.colorHover) : new THREE.Color(this.params.color)
+
+    gsap.to(
+      this.sphere.material.color,
+      {
+        r: newColor.r,
+        g: newColor.g,
+        b: newColor.b
+      }
+    )
+
+    gsap.to(
+      this.sphere.glow.material.uniforms.color.value,
+      {
+        r: newColor.r,
+        g: newColor.g,
+        b: newColor.b
       }
     )
   }
