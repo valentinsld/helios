@@ -29,7 +29,7 @@ export default class Cursor {
       this.animation = gsap.to(
         this,
         {
-          scale: 2,
+          scale: 2.2,
           duration: 0.3,
           onComplete: () => {
             this.animation = null
