@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import Matter from 'matter-js'
 import gsap from 'gsap'
 
+import Cursor from './Cursor'
+
 import vertexShader from '../../glsl/sun/vertex.glsl'
 import fragmentShader from '../../glsl/sun/fragment.glsl'
 
@@ -58,6 +60,7 @@ export default class Fragment{
     this.resize()
     this.addFragmentToWorld()
     this.addFragmentToScene()
+    this.initCursor()
     // this.addPlaneToScene()
     this.createTargetObject()
 
@@ -189,6 +192,10 @@ export default class Fragment{
     this.scene.add(this.plane)
   }
 
+  initCursor () {
+    this.cursor.el = new Cursor()
+  }
+
   createTargetObject() {
     this.targetObject = new THREE.Object3D();
     this.scene.add(this.targetObject);
@@ -234,7 +241,8 @@ export default class Fragment{
   hover (hov = 'in') {
     hov = hov === 'in'
 
-    DOM.style.cursor = hov ? 'pointer' : 'initial'
+    // DOM.style.cursor = hov ? 'pointer' : 'initial'
+    this.cursor.el.hover(hov)
     gsap.to(
       this.mesh.scale,
       {
@@ -293,6 +301,9 @@ export default class Fragment{
   cursorMove(e) {
     this.cursor.x = (e.clientX - this.screen.width / 2) * this.viewport.width / window.innerWidth
     this.cursor.y = (-e.clientY + this.screen.height/ 2) * this.viewport.height / window.innerHeight
+  
+    this.cursor.realX = e.clientX
+    this.cursor.realY = e.clientY
   }
   mouseUp() {
     if (!this.interactionElement) return
@@ -311,6 +322,8 @@ export default class Fragment{
   }
 
   update() {
+    this.cursor.el.update(this.cursor.realX, this.cursor.realY)
+
     if (this.animation) return
 
     let angle = 0
