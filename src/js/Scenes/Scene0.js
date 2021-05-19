@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import * as Matter from 'matter-js'
+import Intro from '../Intro'
 
 export default class Scene0 {
   constructor({camera, engine, globalScene, game, sceneManager}) {
@@ -15,15 +16,16 @@ export default class Scene0 {
     globalScene.add(this.scene)
 
     this.initScene()
+    this.intro = new Intro(sceneManager)
   }
 
   initScene() {
     console.log('scene 0')
 
-    setTimeout(() => {
-      const sceneManager = this.game.sceneManager
-      sceneManager.next()
-    }, 2000);
+    // setTimeout(() => {
+    //   const sceneManager = this.game.sceneManager
+    //   sceneManager.next()
+    // }, 2000);
   }
 
   //

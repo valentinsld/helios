@@ -1,5 +1,8 @@
 export default class Intro{
-  constructor() {
+  constructor(game) {
     console.log('Start intro !')
+    console.log(game)
   }
 }
+
+//game.sceneManager.next()

@@ -1,3 +1,60 @@
-/* body {
-  background-color: red;
-} */
+@font-face {
+  font-family: "helios";
+  src: url("/static/fonts/HELIOS-01-Regular.woff2") format("woff2"),
+      url("/static/fonts/HELIOS-01-Regular.woff") format("woff");
+}
+
+body {
+  font-family: 'nueva-std', serif;
+  font-weight: 700;
+  font-style: normal;
+  background-image: url('/static/img/background.jpg');
+  background-size: cover;
+  color: #FFC75B;
+}
+
+h1 {
+  font-size: 15em;
+  font-weight: 100;
+  text-shadow: 0 0 9px #FF0000;
+  font-family: "helios";
+  animation: fadeIn 18s;
+}
+
+.subtitle {
+  margin-top: -50px;
+  font-size: 35px;
+  animation: fadeIn 21s;
+}
+
+a {
+  color: #FF912C;
+  animation: fadeIn 18s;
+}
+
+.webgl{
+  display: none;
+}
+
+.intro {
+  margin-top: 15%;
+  text-align: center;
+}
+
+.button{
+  margin-top: 60px;
+}
+
+.sound {
+  margin-top: 10%;
+  animation: fadeIn 28s;
+}
+
+.scene1 {
+  display: none;
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
