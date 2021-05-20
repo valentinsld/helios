@@ -39,11 +39,11 @@
 #cursor {
   position: fixed;
   pointer-events: none;
-  top: -10px;
-  left: -10px;
+  top: -0.65vw;
+  left: -0.65vw;
 
-  height: 20px;
-  width: 20px;
+  height: 1.3vw;
+  width: 1.3vw;
 
   border: 1px solid white;
   border-radius: 60px;
