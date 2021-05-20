@@ -98,8 +98,8 @@ export default class Scene1 {
       camera : this.camera,
       debug: this.debug,
       position : {
-        x : -1100,
-        y : -250,
+        x : -800,
+        y : -200,
         z : 60
       }
     })
@@ -398,28 +398,17 @@ export default class Scene1 {
   }
 
   async initPorte (gltf) {
-    // Material armature
-    const textureArmature = this.textureLoader.load('/models/porte/armature_gauche.png')
-    textureArmature.flipY = false
-    const normaleArmature = this.textureLoader.load('/models/porte/normal_armature_gauche.png')
-    normaleArmature.flipY = false
-
-    const materialArmature = new THREE.MeshStandardMaterial({
-      map: textureArmature,
-      normalMap: normaleArmature,
-      metalness: 0,
-      roughness: 0.5,
-    })
+    console.log(gltf)
 
     // Material armature
-    const textureBois = this.textureLoader.load('/models/porte/bois_gauche.png')
-    textureBois.flipY = false
-    const normaleBois = this.textureLoader.load('/models/porte/normal_bois_gauche.png')
-    normaleBois.flipY = false
+    const texture = this.textureLoader.load('/models/porte/texture_porte.png')
+    texture.flipY = false
+    const normale = this.textureLoader.load('/models/porte/normal_porte.png')
+    normale.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
-      map: textureBois,
-      normalMap: normaleBois,
+      map: texture,
+      normalMap: normale,
       metalness: 0,
       roughness: 0.5,
     })
@@ -427,25 +416,19 @@ export default class Scene1 {
     this.porte = gltf.scene
     this.porte.scale.set(300, 300, 300)
 
-    this.porte.traverse( function(node) {
-      if (node.name === 'armaturedroit' || node.name === 'armaturegauche') {
-        console.log
-        node.material = materialArmature
-        // node.castShadow = true
-        node.receiveShadow = true
-      } else if(node.isMesh) {
+    this.porte.traverse( (node) => {
+      if(node.isMesh) {
         node.material = material
-        // node.castShadow = true
         node.receiveShadow = true
       }
     })
 
     this.groupDoorTemple.add(this.porte)
 
-    const boisgauche = this.groupDoorTemple.getObjectByName("boisgauche")
-    const boisdroit = this.groupDoorTemple.getObjectByName("boisdroit")
-    const armaturegauche = this.groupDoorTemple.getObjectByName("armaturegauche")
-    const armaturedroit = this.groupDoorTemple.getObjectByName("armaturedroit")
+    const boisgauche = this.groupDoorTemple.getObjectByName("batant_g")
+    const boisdroit = this.groupDoorTemple.getObjectByName("batant_d")
+    const armaturegauche = this.groupDoorTemple.getObjectByName("armature_g")
+    const armaturedroit = this.groupDoorTemple.getObjectByName("armature_d")
 
     // create portes
     this.porteGauche = new THREE.Group()

@@ -228,8 +228,6 @@ export default class Fire {
   startInteract() {
     this.spotLight.intensity = 10
     this.cone.material.uniforms.opacity.value = this.coneOpacity
-
-    DOM.style.cursor = 'grabbing'
   }
 
   interact(cursor) {
