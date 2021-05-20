@@ -98,8 +98,8 @@ export default class Scene1 {
       camera : this.camera,
       debug: this.debug,
       position : {
-        x : -1100,
-        y : -250,
+        x : -800,
+        y : -200,
         z : 60
       }
     })
