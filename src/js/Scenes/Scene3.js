@@ -50,8 +50,8 @@ export default class Scene3 {
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
       position : {
-        x : -900,
-        y : -350,
+        x : -1200,
+        y : 50,
         z : 80
       }
     })
@@ -90,6 +90,7 @@ export default class Scene3 {
   }
 
   addElements () {
+    // FLOORS
     const floor1 = new Box({
       engine: this.engine,
       scene: this.scene,
@@ -138,7 +139,7 @@ export default class Scene3 {
     const topFloor = new Box({
       engine: this.engine,
       scene: this.scene,
-      color: 0xff0000,
+      color: 0xff00ff,
       size: {
         x: 900,
         y: 150,
@@ -148,9 +149,15 @@ export default class Scene3 {
         x: -1100,
         y: -150,
         z: 0
+      },
+      optionsBox: {
+        collisionFilter: {
+          category: 0x0004
+        },
       }
     })
 
+    // WALLS
     const wall1 = new Box({
       engine: this.engine,
       scene: this.scene,
@@ -164,6 +171,11 @@ export default class Scene3 {
         x: -1650,
         y: 0,
         z: 0
+      },
+      optionsBox: {
+        collisionFilter: {
+          category: 0x0001 || 0x0002
+        },
       }
     })
     const wall2 = new Box({
@@ -179,6 +191,54 @@ export default class Scene3 {
         x: 1550,
         y: 0,
         z: 0
+      },
+      optionsBox: {
+        collisionFilter: {
+          category: 0x0001 || 0x0002
+        },
+      }
+    })
+
+    // block phaeton
+    const blockTopFloor = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff00ff,
+      size: {
+        x: 100,
+        y: 400,
+        z: 100
+      },
+      position : {
+        x: -600,
+        y: 100,
+        z: 0
+      },
+      optionsBox: {
+        collisionFilter: {
+          category: 0x0004
+        },
+      }
+    })
+
+    this.blockCenter = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff00ff,
+      size: {
+        x: 300,
+        y: 400,
+        z: 100
+      },
+      position : {
+        x: 100,
+        y: -500,
+        z: 0
+      },
+      optionsBox: {
+        collisionFilter: {
+          category: 0x0004
+        },
       }
     })
   }

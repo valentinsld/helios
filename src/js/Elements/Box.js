@@ -25,7 +25,7 @@ const OPTIONS = {
 const COLOR = 0x777777
 
 export default class Box {
-  constructor ({engine, scene, position = POSITION, rotation = 0, size = SIZE, color = COLOR, optionsBox = OPTIONS, render = true}) {
+  constructor ({engine, scene, position = POSITION, rotation = 0, size = SIZE, color = COLOR, optionsBox = {}, render = true}) {
     this.world = engine.world
     this.scene = scene
 
