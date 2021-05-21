@@ -6,6 +6,7 @@ import Fragment from '../Characters/Fragment'
 
 import Box from '../Elements/Box'
 import Plaque from '../Elements/Plaque'
+import Ladder from '../Elements/Ladder'
 import Fire from '../Elements/Fire'
 import Door from '../Elements/Door'
 
@@ -36,6 +37,7 @@ export default class Scene3 {
     this.initScene()
     this.addWallsAndFloors()
     this.addPlaques()
+    this.addLadder()
   }
 
   initZoomCamera () {
@@ -305,6 +307,24 @@ export default class Scene3 {
       this.plaques.push(plaque)
     })
 
+  }
+  
+  addLadder () {
+    this.ladder = new Ladder({
+      scene: this.scene,
+      engine: this.engine,
+      phaeton: this.phaeton,
+      position : {
+        x : -900,
+        y : -570,
+        z : 0
+      },
+      size: {
+        x: 100,
+        y: 400,
+        z: 0
+      }
+    })
   }
 
   pressPlaque (i) {

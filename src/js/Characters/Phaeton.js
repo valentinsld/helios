@@ -301,9 +301,9 @@ export default class Phaeton{
           // console.log('Start ', distStart, ' ; End ', distEnd)
 
           if (distStart <= element.distanceInteraction) {
-            this.moveTo(start, end)
+            this.useLadder(start, end)
           } else if(distEnd <= element.distanceInteraction) {
-            this.moveTo(end, start)
+            this.useLadder(end, start)
           }
           
           break;
@@ -315,8 +315,10 @@ export default class Phaeton{
     })
   }
   
-  moveTo(start, end) {
+  useLadder (start, end) {
     this.animation = gsap.timeline()
+
+    this.fadeToAction(ANIMATIONS.echelle, 0.5)
 
     this.animation.to(
       this.mesh.position,
@@ -326,10 +328,28 @@ export default class Phaeton{
       }
     )
     .to(
+      this.mesh.rotation,
+      {
+        duration: 0.3,
+        y: Math.PI * 2,
+      },
+      '<'
+    )
+    .to(
       this.mesh.position,
       {
-        duration: 3,
-        y: end.y + this.size.y / 2,
+        duration: 2,
+        y: end.y,
+        onComplete: () => {
+          this.fadeToAction(ANIMATIONS.idle, 0.5)
+        }
+      }
+    )
+    .to(
+      this.mesh.rotation,
+      {
+        duration: 0.3,
+        y: Math.PI * 1.5,
         onComplete: () => {
           // translation du bodie
           const newPos = Matter.Vector.create(

@@ -95,7 +95,7 @@ export default class Ladder{
    
 
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: '#ff0004',
+      color: 0x00ffff,
       metalness: 0.3,
       roughness: 0.4,
     })
