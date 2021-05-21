@@ -34,3 +34,17 @@
   opacity: 1;
   pointer-events: initial;
 }
+
+
+#cursor {
+  position: fixed;
+  pointer-events: none;
+  top: -0.65vw;
+  left: -0.65vw;
+
+  height: 1.3vw;
+  width: 1.3vw;
+
+  border: 1px solid white;
+  border-radius: 60px;
+}

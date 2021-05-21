@@ -82,6 +82,7 @@ export default class Scene1 {
       scene : this.scene,
       debug: this.debug,
       textureLoader: this.textureLoader,
+      gltfLoader: this.gltfLoader,
       position : {
         x : -900,
         y : -350,
@@ -97,8 +98,8 @@ export default class Scene1 {
       camera : this.camera,
       debug: this.debug,
       position : {
-        x : -1100,
-        y : -250,
+        x : -800,
+        y : -200,
         z : 60
       }
     })
@@ -218,7 +219,7 @@ export default class Scene1 {
       render: false,
       size: {
         x: 600,
-        y: 200,
+        y: 210,
         z: 100
       },
       position : {
@@ -253,6 +254,28 @@ export default class Scene1 {
       animationEndPhaeton: this.animationEndPhaeton.bind(this),
       animationEndFragment: this.animationEndFragment.bind(this)
     })
+
+    // first plan
+    const paln = this.textureLoader.load('/models/premier_plan.png')
+    // paln.flipY = false
+    const textureFirstPlan = new THREE.MeshStandardMaterial({
+      color: 0x000000,
+      transparent: true,
+      alphaMap: paln
+    })
+
+    const ww = (this.game.camera.right - this.game.camera.left) / this.game.camera.zoom
+    const plane = new THREE.PlaneBufferGeometry(
+      ww,
+      ww * 0.12, // 231/1920
+      1,
+      1
+    )
+
+    const planeMesh = new THREE.Mesh(plane, textureFirstPlan)
+    planeMesh.position.set(0, -330, 150)
+
+    this.scene.add(planeMesh)
   }
 
   async initStatuesBrasier (gltf) {
@@ -375,28 +398,17 @@ export default class Scene1 {
   }
 
   async initPorte (gltf) {
-    // Material armature
-    const textureArmature = this.textureLoader.load('/models/porte/armature_gauche.png')
-    textureArmature.flipY = false
-    const normaleArmature = this.textureLoader.load('/models/porte/normal_armature_gauche.png')
-    normaleArmature.flipY = false
-
-    const materialArmature = new THREE.MeshStandardMaterial({
-      map: textureArmature,
-      normalMap: normaleArmature,
-      metalness: 0,
-      roughness: 0.5,
-    })
+    console.log(gltf)
 
     // Material armature
-    const textureBois = this.textureLoader.load('/models/porte/bois_gauche.png')
-    textureBois.flipY = false
-    const normaleBois = this.textureLoader.load('/models/porte/normal_bois_gauche.png')
-    normaleBois.flipY = false
+    const texture = this.textureLoader.load('/models/porte/texture_porte.png')
+    texture.flipY = false
+    const normale = this.textureLoader.load('/models/porte/normal_porte.png')
+    normale.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
-      map: textureBois,
-      normalMap: normaleBois,
+      map: texture,
+      normalMap: normale,
       metalness: 0,
       roughness: 0.5,
     })
@@ -404,25 +416,19 @@ export default class Scene1 {
     this.porte = gltf.scene
     this.porte.scale.set(300, 300, 300)
 
-    this.porte.traverse( function(node) {
-      if (node.name === 'armaturedroit' || node.name === 'armaturegauche') {
-        console.log
-        node.material = materialArmature
-        // node.castShadow = true
-        node.receiveShadow = true
-      } else if(node.isMesh) {
+    this.porte.traverse( (node) => {
+      if(node.isMesh) {
         node.material = material
-        // node.castShadow = true
         node.receiveShadow = true
       }
     })
 
     this.groupDoorTemple.add(this.porte)
 
-    const boisgauche = this.groupDoorTemple.getObjectByName("boisgauche")
-    const boisdroit = this.groupDoorTemple.getObjectByName("boisdroit")
-    const armaturegauche = this.groupDoorTemple.getObjectByName("armaturegauche")
-    const armaturedroit = this.groupDoorTemple.getObjectByName("armaturedroit")
+    const boisgauche = this.groupDoorTemple.getObjectByName("batant_g")
+    const boisdroit = this.groupDoorTemple.getObjectByName("batant_d")
+    const armaturegauche = this.groupDoorTemple.getObjectByName("armature_g")
+    const armaturedroit = this.groupDoorTemple.getObjectByName("armature_d")
 
     // create portes
     this.porteGauche = new THREE.Group()
@@ -458,9 +464,9 @@ export default class Scene1 {
 
   async initTemple (gltf) {
     // texture
-    const texture = this.textureLoader.load('/models/temple/TextureTemple-min.png')
+    const texture = this.textureLoader.load('/models/temple/Texture_Temple.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/temple/normal_Temple-min.png')
+    const normal = this.textureLoader.load('/models/temple/normal_Temple.png')
     normal.flipY = false
 
     let material = new THREE.MeshStandardMaterial({
@@ -473,7 +479,7 @@ export default class Scene1 {
       roughness: 0.75,
     })
 
-    const textureSoleil = this.textureLoader.load('/models/temple/Texture_Soleil.png')
+    const textureSoleil = this.textureLoader.load('/models/temple/Texture_Soleil2.png')
     textureSoleil.flipY = false
     const normalSoleil = this.textureLoader.load('/models/temple/Normal_Soleil.png')
     normalSoleil.flipY = false
@@ -506,11 +512,12 @@ export default class Scene1 {
 
     this.temple.traverse( (node) => {
       switch (node.name) {
-        case 'soleil':
+        case 'soleil002':
           node.material = this.materialSoleil
+          node.receiveShadow = true
           break;
 
-        case 'interieureporte':
+        case 'interieure_porte':
           node.remove()
           node.geometry.dispose()
           node.material.dispose()
@@ -524,7 +531,7 @@ export default class Scene1 {
             emissiveIntensity: 0.8
           })
 
-          const lightFenetre = new THREE.PointLight(0xb36f24, 8, 100) // 0xb36f24
+          const lightFenetre = new THREE.PointLight(0xb36f24, 8, 70) // 0xb36f24
           lightFenetre.position.copy(node.position)
           lightFenetre.position.z = -0.6
           lightFenetre.position.x = -1.388
@@ -612,6 +619,7 @@ export default class Scene1 {
     })
 
     this.fire = new Fire ({
+      game: this.game,
       scene: this.scene,
       engine: this.engine,
       render: this.render,
@@ -756,7 +764,7 @@ export default class Scene1 {
 
     this.arbreCailloux = gltf.scene
     this.arbreCailloux.scale.set(300, 300, 300)
-    this.arbreCailloux.rotation.y = Math.PI * 0.68
+    this.arbreCailloux.rotation.y = Math.PI * 0.69
     this.arbreCailloux.position.set(675, -455, -60)
     
     this.arbreCailloux.traverse( function(node) {
@@ -829,7 +837,7 @@ export default class Scene1 {
   }
 
   animationEndPhaeton () {
-    this.phaeton.animation = true
+    this.phaeton.playWalk()
 
     gsap.to(
       this.phaeton.mesh.position,

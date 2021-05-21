@@ -13,17 +13,17 @@ const POSITION = {
 const PARAMETERS = {
   scale: 100,
   count: 6,
-  size: 30, // 5000
-  largeur: 5,
-  height: 750,
+  size: 24, // 5000
+  largeur: 15,
+  height: 300,
   radius: 150,
-  timeScaleY: 450,
-  windX: 400,
-  scaleNoise: 400,
-  colorBack: 0xd74216,
-  colorFront: 0xffe572,
-  colorStart: 10,
-  colorEnd: 50,
+  timeScaleY: 150,
+  windX: 170,
+  scaleNoise: 300,
+  colorBack: 0xf55b25,
+  colorFront: 0xffc773,
+  colorStart: 20,
+  colorEnd: 37,
 }
 
 

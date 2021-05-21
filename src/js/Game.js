@@ -78,7 +78,7 @@ export default class Game{
   createGradientBackground () {
     let color = {
       top: 0x000000, // 0x25180e,
-      bottom: 0xa0f11 // 0x170707
+      bottom: 0xf1414 // 0x170707
     }
 
     var myGradient = new THREE.Mesh(
