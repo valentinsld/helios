@@ -317,13 +317,14 @@ export default class Scene3 {
   }
 
   pressPlaque (i) {
+    if (this.open) return
     this.symboles[i].material.color = new THREE.Color(0xffffff)
     this.code.push(i)
 
     console.log(i, this.code)
 
     if (JSON.stringify(this.code) === JSON.stringify(CODE)) {
-      console.log('SAME')
+      this.endScene()
     } else if (this.code.length === CODE.length) {
       this.code = []
 
@@ -331,7 +332,8 @@ export default class Scene3 {
         sym.material.color = new THREE.Color(0xff00ff)
       })
     }
-  }  
+  }
+
   addLadder () {
     this.ladder = new Ladder({
       scene: this.scene,

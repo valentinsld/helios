@@ -361,6 +361,7 @@ export default class Phaeton{
           Matter.Body.translate(this.box, newPos)
 
           this.animation = null
+          this.isTurnedTo = 'right'
         }  
       }
     )
