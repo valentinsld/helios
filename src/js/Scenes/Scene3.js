@@ -5,8 +5,8 @@ import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
 
 import Box from '../Elements/Box'
+import Plaque from '../Elements/Plaque'
 import Fire from '../Elements/Fire'
-import Captor from '../Elements/Captor'
 import Door from '../Elements/Door'
 
 import LoaderModelsManager from '../utils/LoaderModelsManager'
@@ -34,7 +34,8 @@ export default class Scene3 {
     this.initCharacters()
     this.initModels()
     this.initScene()
-    this.addElements()
+    this.addWallsAndFloors()
+    this.addPlaques()
   }
 
   initZoomCamera () {
@@ -89,7 +90,7 @@ export default class Scene3 {
     })
   }
 
-  addElements () {
+  addWallsAndFloors () {
     // FLOORS
     const floor1 = new Box({
       engine: this.engine,
@@ -243,12 +244,93 @@ export default class Scene3 {
     })
   }
 
+  addPlaques () {
+    this.plaques = []
+
+    const plaques = [
+      {
+        x: -750,
+        y: -35,
+        z: 0,
+      },
+      {
+        x: -1050,
+        y: -35,
+        z: 0,
+      },
+      {
+        x: -750,
+        y: -435,
+        z: 0,
+      },
+      {
+        x: -1150,
+        y: -435,
+        z: 0,
+      }
+    ]
+
+    plaques.forEach((pos, i) => {
+      const plaque = new Plaque({
+        scene: this.scene,
+        engine: this.engine,
+        func: this.pressPlaque.bind(this),
+        funcParam: i,
+        box: {
+          position: {
+            x: pos.x,
+            y: pos.y,
+            z: 0,
+          },
+          size: {
+            x: 100,
+            y: 100,
+            z: 100
+          }
+        },
+        plaque: {
+          position: {
+            x: pos.x,
+            y: pos.y - 40,
+            z: 0,
+          },
+          size: {
+            x: 100,
+            y: 25,
+            z: 100
+          }
+        }
+      })
+
+      this.plaques.push(plaque)
+    })
+
+  }
+
+  pressPlaque (i) {
+    this.symboles[i].material.color = new THREE.Color(0xffffff)
+    console.log(i)
+  }
+
   initSousTerrain (gltf) {
     this.sousTerrain = gltf.scene
     this.sousTerrain.scale.set(450, 450, 450)
     this.sousTerrain.position.y = -800
 
     this.scene.add(this.sousTerrain)
+
+    this.symboles = []
+    this.sousTerrain.traverse((node)=> {
+      if (node.isMesh && ['1','2','3','4'].includes(node.name)) {
+        const material = new THREE.MeshStandardMaterial({
+          color: 0xff00ff
+        })
+        node.material = material
+
+        this.symboles.push(node)
+      }
+    })
+
   }
 
   initScene () {
