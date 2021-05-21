@@ -95,9 +95,11 @@ export default class Ladder{
    
 
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: 0x00ffff,
+      color: 0x00ff00,
       metalness: 0.3,
       roughness: 0.4,
+      transparent: true,
+      opacity: 0.2
     })
 
     this.mesh = new THREE.Mesh(BOX, MATERIAL)

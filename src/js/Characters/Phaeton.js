@@ -338,10 +338,11 @@ export default class Phaeton{
     .to(
       this.mesh.position,
       {
-        duration: 2,
+        duration: 3.8,
         y: end.y,
+        ease: 'linear',
         onComplete: () => {
-          this.fadeToAction(ANIMATIONS.idle, 0.5)
+          this.fadeToAction(ANIMATIONS.idle, 0.3)
         }
       }
     )
