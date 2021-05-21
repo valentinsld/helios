@@ -41,7 +41,8 @@ export default class Scene3 {
   }
 
   initZoomCamera () {
-    this.camera.zoom = 0.55
+    this.camera.zoom = 0.62
+    
     this.camera.updateProjectionMatrix()
   }
 
@@ -105,7 +106,7 @@ export default class Scene3 {
       },
       position : {
         x: -800,
-        y: -550,
+        y: -450,
         z: 0
       }
     })
@@ -120,7 +121,7 @@ export default class Scene3 {
       },
       position : {
         x: 1000,
-        y: -550,
+        y: -450,
         z: 0
       }
     })
@@ -150,7 +151,7 @@ export default class Scene3 {
       },
       position : {
         x: -1100,
-        y: -150,
+        y: -50,
         z: 0
       },
       optionsBox: {
@@ -172,7 +173,7 @@ export default class Scene3 {
       },
       position : {
         x: -1650,
-        y: 0,
+        y: 100,
         z: 0
       },
       optionsBox: {
@@ -192,7 +193,7 @@ export default class Scene3 {
       },
       position : {
         x: 1550,
-        y: 0,
+        y: 100,
         z: 0
       },
       optionsBox: {
@@ -214,7 +215,7 @@ export default class Scene3 {
       },
       position : {
         x: -600,
-        y: 100,
+        y: 0,
         z: 0
       },
       optionsBox: {
@@ -235,7 +236,7 @@ export default class Scene3 {
       },
       position : {
         x: 100,
-        y: -500,
+        y: -400,
         z: 0
       },
       optionsBox: {
@@ -252,22 +253,22 @@ export default class Scene3 {
     const plaques = [
       {
         x: -750,
-        y: -35,
+        y: 65,
         z: 0,
       },
       {
         x: -1050,
-        y: -35,
+        y: 65,
         z: 0,
       },
       {
         x: -750,
-        y: -435,
+        y: -335,
         z: 0,
       },
       {
         x: -1150,
-        y: -435,
+        y: -335,
         z: 0,
       }
     ]
@@ -316,7 +317,7 @@ export default class Scene3 {
       phaeton: this.phaeton,
       position : {
         x : -900,
-        y : -570,
+        y : -470,
         z : 0
       },
       size: {
@@ -335,7 +336,7 @@ export default class Scene3 {
   initSousTerrain (gltf) {
     this.sousTerrain = gltf.scene
     this.sousTerrain.scale.set(450, 450, 450)
-    this.sousTerrain.position.y = -800
+    this.sousTerrain.position.y = -700
 
     this.scene.add(this.sousTerrain)
 
