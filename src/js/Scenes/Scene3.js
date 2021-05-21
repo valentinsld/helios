@@ -16,6 +16,8 @@ import transition from '../utils/transition'
 
 import AnimatedFire from '../Elements/animatedFire'
 
+const CODE = [1,0,2,3]
+
 export default class Scene3 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
     this.game = game
@@ -31,13 +33,17 @@ export default class Scene3 {
     this.scene = new THREE.Group()
     globalScene.add(this.scene)
 
+    this.code = []
+    this.open = false
+
     this.initZoomCamera()
     this.initCharacters()
     this.initModels()
-    this.initScene()
+    
     this.addWallsAndFloors()
     this.addPlaques()
     this.addLadder()
+    this.addDoor()
   }
 
   initZoomCamera () {
@@ -215,7 +221,7 @@ export default class Scene3 {
       },
       position : {
         x: -600,
-        y: 0,
+        y: 100,
         z: 0
       },
       optionsBox: {
@@ -309,7 +315,23 @@ export default class Scene3 {
     })
 
   }
-  
+
+  pressPlaque (i) {
+    this.symboles[i].material.color = new THREE.Color(0xffffff)
+    this.code.push(i)
+
+    console.log(i, this.code)
+
+    if (JSON.stringify(this.code) === JSON.stringify(CODE)) {
+      console.log('SAME')
+    } else if (this.code.length === CODE.length) {
+      this.code = []
+
+      this.symboles.forEach((sym) => {
+        sym.material.color = new THREE.Color(0xff00ff)
+      })
+    }
+  }  
   addLadder () {
     this.ladder = new Ladder({
       scene: this.scene,
@@ -328,9 +350,29 @@ export default class Scene3 {
     })
   }
 
-  pressPlaque (i) {
-    this.symboles[i].material.color = new THREE.Color(0xffffff)
-    console.log(i)
+  addDoor () {
+    this.door = new Door({
+      scene: this.scene,
+      engine: this.engine,
+      sceneManager: this.sceneManager,
+      phaeton: this.phaeton,
+      fragment: this.fragment,
+      render: this.debug ? true : false,
+      render: false,
+      position : {
+        x : 1240,
+        y : -130,
+        z : 250
+      },
+      size: {
+        x: 200,
+        y: 420,
+        z: 1
+      },
+      open: this.endEnigme,
+      animationEndPhaeton: this.animationEndPhaeton.bind(this),
+      animationEndFragment: this.animationEndFragment.bind(this)
+    })
   }
 
   initSousTerrain (gltf) {
@@ -354,8 +396,20 @@ export default class Scene3 {
 
   }
 
-  initScene () {
-    console.log('scene 3')
+  endScene () {
+    this.open = true
+    this.door.open()
+
+    // moove center block
+    console.log(this.blockCenter.box)
+    Matter.Body.translate(this.blockCenter.box, Matter.Vector.create(0, -180))
+  }
+
+  animationEndPhaeton () {
+    console.log('end animation Phaeton')
+  }
+  animationEndFragment () {
+    console.log('end animation fragment')
   }
 
   //

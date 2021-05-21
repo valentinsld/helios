@@ -53,6 +53,8 @@ export default class Ladder{
 
     Matter.World.add(this.world, collider)
 
+    return
+
     // init events
     Matter.Events.on(this.engine, 'collisionStart', function(event) {
       var pairs = event.pairs;

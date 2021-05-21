@@ -132,8 +132,6 @@ export default class Plaque {
         y: 1
       }
     )
-
-    this.func.call(null, this.funcParam)
   }
 
 }

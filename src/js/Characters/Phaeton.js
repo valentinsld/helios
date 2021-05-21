@@ -301,9 +301,9 @@ export default class Phaeton{
           // console.log('Start ', distStart, ' ; End ', distEnd)
 
           if (distStart <= element.distanceInteraction) {
-            this.useLadder(start, end)
+            this.useLadder(start, end, true)
           } else if(distEnd <= element.distanceInteraction) {
-            this.useLadder(end, start)
+            this.useLadder(end, start, false)
           }
           
           break;
@@ -315,7 +315,7 @@ export default class Phaeton{
     })
   }
   
-  useLadder (start, end) {
+  useLadder (start, end, upDown) {
     this.animation = gsap.timeline()
 
     this.fadeToAction(ANIMATIONS.echelle, 0.6)
@@ -325,7 +325,7 @@ export default class Phaeton{
       {
         duration: 0.8,
         x: start.x,
-        y: "-=150"
+        y: upDown ? "-=0" : "-=150"
       }
     )
     .to(
