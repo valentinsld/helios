@@ -318,19 +318,20 @@ export default class Phaeton{
   useLadder (start, end) {
     this.animation = gsap.timeline()
 
-    this.fadeToAction(ANIMATIONS.echelle, 0.5)
+    this.fadeToAction(ANIMATIONS.echelle, 0.6)
 
     this.animation.to(
       this.mesh.position,
       {
-        duration: 0.3,
+        duration: 0.8,
         x: start.x,
+        y: "-=150"
       }
     )
     .to(
       this.mesh.rotation,
       {
-        duration: 0.3,
+        duration: 0.5,
         y: Math.PI * 2,
       },
       '<'
@@ -338,7 +339,7 @@ export default class Phaeton{
     .to(
       this.mesh.position,
       {
-        duration: 3.8,
+        duration: 3,
         y: end.y,
         ease: 'linear',
         onComplete: () => {
