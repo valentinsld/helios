@@ -41,6 +41,7 @@ export default class Scene3 {
     this.initModels()
     
     this.addWallsAndFloors()
+    // this.initSousTerrainWorld()
     this.addPlaques()
     this.addLadder()
     this.addDoor()
@@ -87,7 +88,7 @@ export default class Scene3 {
   initModels () {
     const arrayModels = [
       {
-        url: '/models/sous_terrain/sous_terrain.gltf',
+        url: '/models/Scene3/Enigme_3.gltf',
         func: this.initSousTerrain.bind(this)
       }
     ]
@@ -379,23 +380,97 @@ export default class Scene3 {
 
   initSousTerrain (gltf) {
     this.sousTerrain = gltf.scene
-    this.sousTerrain.scale.set(450, 450, 450)
-    this.sousTerrain.position.y = -700
+    this.sousTerrain.scale.set(470, 470, 470)
+    this.sousTerrain.position.set(-100, -700, 180)
 
-    this.scene.add(this.sousTerrain)
+    this.scene.add(this.sousTerrain) 
+
+    // TEXTURE MAP
+    const texturemap = this.textureLoader.load('/models/Scene3/Texture_Enigme3_modif.png')
+    texturemap.flipY = false
+    const normalmap = this.textureLoader.load('/models/Scene3/Normal_Decors.png')
+    normalmap.flipY = false
+
+    const materialMap = new THREE.MeshStandardMaterial({
+      map: texturemap,
+      normalMap: normalmap,
+      metalness: 0,
+      roughness: 0.5,
+    })
+
+    // TEXTURE Statues
+    const textureStatues = this.textureLoader.load('/models/Scene3/Texture_statues.png')
+    textureStatues.flipY = false
+    const normalStatues = this.textureLoader.load('/models/Scene3/Normal_statues.png')
+    normalStatues.flipY = false
+
+    const materialStatues = new THREE.MeshStandardMaterial({
+      map: textureStatues,
+      normalMap: normalStatues,
+      metalness: 0,
+      roughness: 0.5,
+    })
 
     this.symboles = []
     this.sousTerrain.traverse((node)=> {
-      if (node.isMesh && ['1','2','3','4'].includes(node.name)) {
+      if (node.isMesh && ['Plaque_1','Plaque_2','Plaque_3','Plaque_4'].includes(node.name)) {
         const material = new THREE.MeshStandardMaterial({
-          color: 0xff00ff
+          color: 0xffffff
         })
         node.material = material
 
         this.symboles.push(node)
+      } else if (['Helios','Phaeton','Renes'].includes(node.name)) {
+        node.material = materialStatues
+      } else if(!['premier_plan'].includes(node.name)) {
+        node.material = materialMap
       }
     })
 
+  }
+
+  initSousTerrainWorld () {
+    const select = function(root, selector) {
+      return Array.prototype.slice.call(root.querySelectorAll(selector));
+    };
+
+    const loadSvg = function(url) {
+      return fetch(url)
+          .then(function(response) { return response.text(); })
+          .then(function(raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
+    };
+
+    loadSvg('https://raw.githubusercontent.com/liabru/matter-js/master/demo/svg/terrain.svg')
+      .then(function(root) {
+          var paths = select(root, 'path');
+
+          console.log(paths)
+          var vertexSets = paths.map(function(path) { return Matter.Svg.pathToVertices(path, 30); });
+
+          var terrain = Matter.Bodies.fromVertices(400, 350, vertexSets, {
+            isStatic: true,
+            render: {
+              fillStyle: '#060a19',
+              strokeStyle: '#060a19',
+              lineWidth: 1
+            }
+          }, true);
+
+          Matter.Composite.add(this.world, terrain);
+
+          var bodyOptions = {
+            frictionAir: 0, 
+            friction: 0.0001,
+            restitution: 0.6
+          };
+          
+          Matter.Composite.add(this.world, Matter.Composites.stack(80, 100, 20, 20, 10, 10, function(x, y) {
+            if (Matter.Query.point([terrain], { x: x, y: y }).length === 0) {
+              return Matter.Bodies.polygon(x, y, 5, 12, bodyOptions);
+            }
+          }));
+      });
+    
   }
 
   endScene () {

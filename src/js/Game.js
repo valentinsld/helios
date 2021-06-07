@@ -174,7 +174,7 @@ export default class Game{
     // Controls
     if (this.debug) {
       this.controls = new OrbitControls(this.camera, this.canvas)
-      this.controls.enabled = false
+      this.controls.enabled = true
       this.controls.enableDamping = true
 
       this.debug.data.orbitControls = this.controls.enabled
@@ -203,7 +203,7 @@ export default class Game{
   initLights() {
     const light = {
       color: 0xffffff,
-      intensity: 0.4
+      intensity: 1
     }
     const ambientLight = new THREE.AmbientLight(light.color, light.intensity)
     this.globalScene.add(ambientLight)
