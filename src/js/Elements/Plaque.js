@@ -17,7 +17,7 @@ const INIT = {
 
 // copy from Lever
 export default class Plaque {
-  constructor ({scene, engine, box = INIT, plaque = INIT, func, funcParam, optionsBox = {}}) {
+  constructor ({scene, engine, box = INIT, gltf, plaque = INIT, func, funcParam, optionsBox = {}}) {
     this.type = 'Plaque'
     this.scene = scene
     this.engine = engine
@@ -33,7 +33,11 @@ export default class Plaque {
     this.animation = null
     
     this.addColisionToWorld()
-    this.addBoxToScene()
+    if (gltf) {
+      this.initPlaqueGltf(gltf)
+    } else {
+      this.addBoxToScene()
+    }
   }
 
   
@@ -109,6 +113,11 @@ export default class Plaque {
     this.mesh.position.copy(this.plaque.position)
     
     this.scene.add(this.mesh)
+  }
+
+  initPlaqueGltf (gltf) {
+    this.mesh = gltf
+    // this.mesh.position.copy(this.plaque.position)
   }
 
   startInteract () {

@@ -203,22 +203,22 @@ export default class Game{
   initLights() {
     const light = {
       color: 0xffffff,
-      intensity: 1
+      intensity: 0.4
     }
-    const ambientLight = new THREE.AmbientLight(light.color, light.intensity)
-    this.globalScene.add(ambientLight)
+    this.ambientLight = new THREE.AmbientLight(light.color, light.intensity)
+    this.globalScene.add(this.ambientLight)
 
     if (this.debug) {
       const ambiantlightFoler = this.debugGlobalFolder.addFolder('Ambient light')
 
       const color = ambiantlightFoler.addColor(light, "color").name('Color')
       color.onChange((value) => {
-        ambientLight.color = new THREE.Color(value)
+        this.ambientLight.color = new THREE.Color(value)
       })
 
       const intensity = ambiantlightFoler.add(light, "intensity", 0, 1).name('Intensity')
       intensity.onChange((value) => {
-        ambientLight.intensity = value
+        this.ambientLight.intensity = value
       })
     }
   }

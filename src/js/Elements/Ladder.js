@@ -101,7 +101,7 @@ export default class Ladder{
       metalness: 0.3,
       roughness: 0.4,
       transparent: true,
-      opacity: 0.2
+      opacity: 0
     })
 
     this.mesh = new THREE.Mesh(BOX, MATERIAL)

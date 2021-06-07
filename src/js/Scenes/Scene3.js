@@ -42,7 +42,6 @@ export default class Scene3 {
     
     this.addWallsAndFloors()
     // this.initSousTerrainWorld()
-    this.addPlaques()
     this.addLadder()
     this.addDoor()
   }
@@ -61,8 +60,8 @@ export default class Scene3 {
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
       position : {
-        x : -1200,
-        y : 50,
+        x : -1300,
+        y : 100,
         z : 80
       }
     })
@@ -101,6 +100,8 @@ export default class Scene3 {
   }
 
   addWallsAndFloors () {
+    this.game.ambientLight.intensity = 1 // 0.2
+    
     // FLOORS
     const floor1 = new Box({
       engine: this.engine,
@@ -112,8 +113,8 @@ export default class Scene3 {
         z: 100
       },
       position : {
-        x: -800,
-        y: -450,
+        x: -930,
+        y: -414,
         z: 0
       }
     })
@@ -127,8 +128,8 @@ export default class Scene3 {
         z: 100
       },
       position : {
-        x: 1000,
-        y: -450,
+        x: 890,
+        y: -414,
         z: 0
       }
     })
@@ -158,7 +159,7 @@ export default class Scene3 {
       },
       position : {
         x: -1100,
-        y: -50,
+        y: -10,
         z: 0
       },
       optionsBox: {
@@ -242,7 +243,7 @@ export default class Scene3 {
         z: 100
       },
       position : {
-        x: 100,
+        x: 0,
         y: -400,
         z: 0
       },
@@ -252,69 +253,6 @@ export default class Scene3 {
         },
       }
     })
-  }
-
-  addPlaques () {
-    this.plaques = []
-
-    const plaques = [
-      {
-        x: -750,
-        y: 65,
-        z: 0,
-      },
-      {
-        x: -1050,
-        y: 65,
-        z: 0,
-      },
-      {
-        x: -750,
-        y: -335,
-        z: 0,
-      },
-      {
-        x: -1150,
-        y: -335,
-        z: 0,
-      }
-    ]
-
-    plaques.forEach((pos, i) => {
-      const plaque = new Plaque({
-        scene: this.scene,
-        engine: this.engine,
-        func: this.pressPlaque.bind(this),
-        funcParam: i,
-        box: {
-          position: {
-            x: pos.x,
-            y: pos.y,
-            z: 0,
-          },
-          size: {
-            x: 100,
-            y: 100,
-            z: 100
-          }
-        },
-        plaque: {
-          position: {
-            x: pos.x,
-            y: pos.y - 40,
-            z: 0,
-          },
-          size: {
-            x: 100,
-            y: 25,
-            z: 100
-          }
-        }
-      })
-
-      this.plaques.push(plaque)
-    })
-
   }
 
   pressPlaque (i) {
@@ -341,8 +279,8 @@ export default class Scene3 {
       engine: this.engine,
       phaeton: this.phaeton,
       position : {
-        x : -900,
-        y : -470,
+        x : -1030,
+        y : -430,
         z : 0
       },
       size: {
@@ -379,11 +317,11 @@ export default class Scene3 {
   }
 
   initSousTerrain (gltf) {
-    this.sousTerrain = gltf.scene
-    this.sousTerrain.scale.set(470, 470, 470)
-    this.sousTerrain.position.set(-100, -700, 180)
+    this.map = gltf.scene
+    this.map.scale.set(470, 470, 470)
+    this.map.position.set(-100, -680, 180)
 
-    this.scene.add(this.sousTerrain) 
+    this.scene.add(this.map) 
 
     // TEXTURE MAP
     const texturemap = this.textureLoader.load('/models/Scene3/Texture_Enigme3_modif.png')
@@ -412,19 +350,80 @@ export default class Scene3 {
     })
 
     this.symboles = []
-    this.sousTerrain.traverse((node)=> {
-      if (node.isMesh && ['Plaque_1','Plaque_2','Plaque_3','Plaque_4'].includes(node.name)) {
-        const material = new THREE.MeshStandardMaterial({
-          color: 0xffffff
-        })
-        node.material = material
-
+    this.map.traverse((node)=> {
+      if (node.isMesh && ['F','I','L','S'].includes(node.name)) {
         this.symboles.push(node)
+        node.material = materialMap
       } else if (['Helios','Phaeton','Renes'].includes(node.name)) {
         node.material = materialStatues
       } else if(!['premier_plan'].includes(node.name)) {
         node.material = materialMap
       }
+    })
+
+    this.initPlaques()
+  }
+
+  initPlaques () {
+    this.plaques = []
+
+    const plaques = [
+      {
+        x: -1150,
+        y: 105,
+        z: 0,
+      },
+      {
+        x: -880,
+        y: 105,
+        z: 0,
+      },
+      {
+        x: -1200,
+        y: -305,
+        z: 0,
+      },
+      {
+        x: -800,
+        y: -305,
+        z: 0,
+      }
+    ]
+
+    plaques.forEach((pos, i) => {
+      const plaque = new Plaque({
+        scene: this.scene,
+        engine: this.engine,
+        func: this.pressPlaque.bind(this),
+        funcParam: i,
+        gltf: this.map.getObjectByName(`Plaque_${i+1}`),
+        box: {
+          position: {
+            x: pos.x,
+            y: pos.y,
+            z: 0,
+          },
+          size: {
+            x: 100,
+            y: 100,
+            z: 100
+          }
+        },
+        plaque: {
+          position: {
+            x: pos.x,
+            y: pos.y - 40,
+            z: 0,
+          },
+          size: {
+            x: 100,
+            y: 25,
+            z: 100
+          }
+        }
+      })
+
+      this.plaques.push(plaque)
     })
 
   }
