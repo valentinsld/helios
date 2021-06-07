@@ -16,7 +16,7 @@ import transition from '../utils/transition'
 
 import AnimatedFire from '../Elements/animatedFire'
 
-const CODE = [1,0,2,3]
+const CODE = [0,1,2,3]
 
 export default class Scene3 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
@@ -44,6 +44,8 @@ export default class Scene3 {
     // this.initSousTerrainWorld()
     this.addLadder()
     this.addDoor()
+
+    this.endScene()
   }
 
   initZoomCamera () {
@@ -59,6 +61,8 @@ export default class Scene3 {
       debug: this.debug,
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
+      scale: 65,
+      speed: 15,
       position : {
         x : -1300,
         y : 100,
@@ -73,6 +77,8 @@ export default class Scene3 {
       scene : this.scene,
       camera : this.camera,
       debug: this.debug,
+      radius: 30,
+      distance: 400,
       position : {
         x : -800,
         y : -200,
@@ -100,13 +106,14 @@ export default class Scene3 {
   }
 
   addWallsAndFloors () {
-    this.game.ambientLight.intensity = 1 // 0.2
+    this.game.ambientLight.intensity = this.debug ? 1 : 0.17
     
     // FLOORS
     const floor1 = new Box({
       engine: this.engine,
       scene: this.scene,
       color: 0xff0000,
+      render: false,
       size: {
         x: 1600,
         y: 150,
@@ -121,6 +128,7 @@ export default class Scene3 {
     const floor2 = new Box({
       engine: this.engine,
       scene: this.scene,
+      render: false,
       color: 0xff0000,
       size: {
         x: 1540,
@@ -136,6 +144,7 @@ export default class Scene3 {
     const lastFloor = new Box({
       engine: this.engine,
       scene: this.scene,
+      render: false,
       color: 0xff0000,
       size: {
         x: 3400,
@@ -151,6 +160,7 @@ export default class Scene3 {
     const topFloor = new Box({
       engine: this.engine,
       scene: this.scene,
+      render: false,
       color: 0xff00ff,
       size: {
         x: 900,
@@ -174,13 +184,14 @@ export default class Scene3 {
       engine: this.engine,
       scene: this.scene,
       color: 0xff0000,
+      render: false,
       size: {
         x: 400,
         y: 2000,
         z: 100
       },
       position : {
-        x: -1650,
+        x: -1620,
         y: 100,
         z: 0
       },
@@ -194,13 +205,14 @@ export default class Scene3 {
       engine: this.engine,
       scene: this.scene,
       color: 0xff0000,
+      render: false,
       size: {
         x: 400,
         y: 2000,
         z: 100
       },
       position : {
-        x: 1550,
+        x: 1390,
         y: 100,
         z: 0
       },
@@ -215,6 +227,7 @@ export default class Scene3 {
     const blockTopFloor = new Box({
       engine: this.engine,
       scene: this.scene,
+      render: false,
       color: 0xff00ff,
       size: {
         x: 100,
@@ -222,7 +235,7 @@ export default class Scene3 {
         z: 100
       },
       position : {
-        x: -600,
+        x: -700,
         y: 100,
         z: 0
       },
@@ -237,6 +250,7 @@ export default class Scene3 {
       engine: this.engine,
       scene: this.scene,
       color: 0xff00ff,
+      render: false,
       size: {
         x: 300,
         y: 400,
@@ -257,7 +271,7 @@ export default class Scene3 {
 
   pressPlaque (i) {
     if (this.open) return
-    this.symboles[i].material.color = new THREE.Color(0xffffff)
+    this.symboles[i].material.emissiveIntensity = 0.25
     this.code.push(i)
 
     console.log(i, this.code)
@@ -268,7 +282,7 @@ export default class Scene3 {
       this.code = []
 
       this.symboles.forEach((sym) => {
-        sym.material.color = new THREE.Color(0xff00ff)
+        sym.material.emissiveIntensity = 0
       })
     }
   }
@@ -346,14 +360,22 @@ export default class Scene3 {
       map: textureStatues,
       normalMap: normalStatues,
       metalness: 0,
-      roughness: 0.5,
+      roughness: 0.5
     })
 
     this.symboles = []
     this.map.traverse((node)=> {
       if (node.isMesh && ['F','I','L','S'].includes(node.name)) {
+        const mat = new THREE.MeshStandardMaterial({
+          map: texturemap,
+          normalMap: normalmap,
+          metalness: 0,
+          roughness: 0.5,
+          emissive: new THREE.Color(0xfaa961),
+          emissiveIntensity: 0
+        })
         this.symboles.push(node)
-        node.material = materialMap
+        node.material = mat
       } else if (['Helios','Phaeton','Renes'].includes(node.name)) {
         node.material = materialStatues
       } else if(!['premier_plan'].includes(node.name)) {
@@ -368,26 +390,27 @@ export default class Scene3 {
     this.plaques = []
 
     const plaques = [
-      {
+      { // 0
         x: -1150,
         y: 105,
-        z: 0,
+        z: 0
       },
-      {
-        x: -880,
-        y: 105,
-        z: 0,
-      },
-      {
-        x: -1200,
-        y: -305,
-        z: 0,
-      },
-      {
+      { // 3
         x: -800,
         y: -305,
-        z: 0,
-      }
+        z: 0
+      },
+      { // 1
+        x: -880,
+        y: 105,
+        z: 0
+      },
+      { // 2
+        x: -1200,
+        y: -305,
+        z: 0
+      },
+
     ]
 
     plaques.forEach((pos, i) => {
@@ -478,7 +501,7 @@ export default class Scene3 {
 
     // moove center block
     console.log(this.blockCenter.box)
-    Matter.Body.translate(this.blockCenter.box, Matter.Vector.create(0, -180))
+    Matter.Body.translate(this.blockCenter.box, Matter.Vector.create(0, -140))
   }
 
   animationEndPhaeton () {

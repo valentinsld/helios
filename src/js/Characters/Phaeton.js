@@ -14,7 +14,7 @@ const SIZE = {
 }
 
 const COLOR = '#008d02'
-
+const SCALE = 50
 const ANIMATIONS = {
   idle: 'iddle2',
   marche: 'course',
@@ -22,7 +22,7 @@ const ANIMATIONS = {
 }
 
 export default class Phaeton{
-  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE}) {
+  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE, scale = SCALE, speed = 9.5}) {
     this.world = engine.world
     this.scene = scene
     this.textureLoader = textureLoader
@@ -31,9 +31,10 @@ export default class Phaeton{
     this.debug = debug
     this.position = position
     this.size = size
+    this.scale = scale
 
     this.animation = null
-    this.speed = 9.5
+    this.speed = speed
     this.runed = false
     this.isTurnedTo = 'right'
     this.interactionElements = []
@@ -95,7 +96,7 @@ export default class Phaeton{
 
   initPhaetonModel (gltf) {
     this.mesh = gltf.scene
-    this.mesh.scale.set(50, 50, 50)
+    this.mesh.scale.set(this.scale, this.scale, this.scale)
     this.mesh.name = 'Phaeton'
     this.mesh.position.z = this.position.z
     this.mesh.rotation.y = Math.PI * 1.5

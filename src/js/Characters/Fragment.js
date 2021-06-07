@@ -23,7 +23,7 @@ const DOM = document.querySelector('body')
 
 
 export default class Fragment{
-  constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS}) {
+  constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS, distance = 330}) {
     this.game = game
     this.canvas = canvas
     this.world = engine.world
@@ -40,7 +40,7 @@ export default class Fragment{
       emissiveColor: 0xfaa961,
       emissiveIntensity: 1,
       intensity: 4,
-      distance: 330,
+      distance: distance,
       glowColor: 0xf7f77f,
       glowRadius: 0.7,
       glowPow: 4.5
