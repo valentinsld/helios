@@ -11,6 +11,8 @@ body {
   background-image: url('/static/img/background.jpg');
   background-size: cover;
   color: #FFC75B;
+  width: 100%;
+  height: 100vh;
 }
 
 h1 {
@@ -37,27 +39,31 @@ a {
   margin-top: 10%;
   text-align: center;
   opacity: 1;
-  -webkit-transition: all 2s ease-in-out;
-  -moz-transition: all 2s ease-in-out;
-  -ms-transition: all 2s ease-in-out;
-  -o-transition: all 2s ease-in-out;
-  transition: all 2s ease-in-out;
 }
 
 #button{
   margin-top: 60px;
+  cursor: pointer;
 }
 
 .sound {
   margin-top: 10%;
   animation: fadeIn 10s;
 }
-
-.scene1 {
-  
+#scene1 {
+  margin-top: 10%;
+  visibility: hidden;
+  display: flex;
+  flex-grow: 50%;
 }
 
-/* @keyframes fadeIn {
+.phaeton{
+  width: 200%;
+  animation: fadeIn 20s;
+}
+
+
+@keyframes fadeIn {
   0% {opacity:0;}
   100% {opacity:1;}
-} */
+}
