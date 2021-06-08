@@ -5,4 +5,9 @@ export default class Intro{
   }
 }
 
+$('#button').on('click', function() {
+  if ($('#intro').css('opacity') == 0) $('#intro').css('opacity', 1);
+  else $('#intro').css('opacity', 0);
+});
+
 //game.sceneManager.next()

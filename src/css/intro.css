@@ -18,43 +18,46 @@ h1 {
   font-weight: 100;
   text-shadow: 0 0 9px #FF0000;
   font-family: "helios";
-  animation: fadeIn 18s;
 }
 
 .subtitle {
   margin-top: -50px;
   font-size: 35px;
-  animation: fadeIn 21s;
 }
 
 a {
   color: #FF912C;
-  animation: fadeIn 18s;
 }
 
 .webgl{
   display: none;
 }
 
-.intro {
-  margin-top: 15%;
+#intro {
+  margin-top: 10%;
   text-align: center;
+  opacity: 1;
+  -webkit-transition: all 2s ease-in-out;
+  -moz-transition: all 2s ease-in-out;
+  -ms-transition: all 2s ease-in-out;
+  -o-transition: all 2s ease-in-out;
+  transition: all 2s ease-in-out;
 }
 
-.button{
+#button{
   margin-top: 60px;
 }
 
 .sound {
   margin-top: 10%;
-  animation: fadeIn 28s;
+  animation: fadeIn 10s;
 }
 
 .scene1 {
-  display: none;
+  
 }
 
-@keyframes fadeIn {
+/* @keyframes fadeIn {
   0% {opacity:0;}
   100% {opacity:1;}
-}
+} */

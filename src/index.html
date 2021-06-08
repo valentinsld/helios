@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/intro.css">
     <link rel="stylesheet" href="https://use.typekit.net/vaj6pfe.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <title>Helios</title>
 </head>
 <body>
-  <div class="intro">
+  <div id="intro">
     <div class="title">
       <h1>HELIOS</h1>
-      <img src="" alt="logo">
       <p class="subtitle">Une odyssée à la recherche du soleil</p>
     </div>
-    <div class="button">
-      <a href="#">Lancer l'expérience</a>
+    <div id="button">
+      <a id="button" href="#">Lancer l'expérience</a>
     </div>
     <div class="sound">
       <p>Utilisez des hauts-parleurs pour profiter pleinement de l'expérience</p>
@@ -23,9 +23,13 @@
   </div>
 
   <div class="scene1">
-    <strong><p>Accompagne-moi</p></strong>
-    <p>là où Zeus garde confisquée</p>
-    <p>ton enveloppe initiale</p>
+    <div class="text">
+      <strong><p>Par ma faute</p></strong>
+      <p>tu es tout ce qu'il reste du soleil</p>
+    </div>
+   <div class="pictures">
+    <img src="https://helios.vercel.app/img/Phaeton.png" alt="">
+   </div>
   </div>
 
   
@@ -37,6 +41,7 @@
     </div>
   </div>
   <canvas class="webgl"></canvas>
+  
 </body>
 </html>
 
