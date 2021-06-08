@@ -80,8 +80,8 @@ export default class Scene3 {
       radius: 30,
       distance: 400,
       position : {
-        x : -800,
-        y : -200,
+        x : -1150,
+        y : 200,
         z : 60
       }
     })

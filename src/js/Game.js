@@ -174,7 +174,7 @@ export default class Game{
     // Controls
     if (this.debug) {
       this.controls = new OrbitControls(this.camera, this.canvas)
-      this.controls.enabled = true
+      this.controls.enabled = false
       this.controls.enableDamping = true
 
       this.debug.data.orbitControls = this.controls.enabled
