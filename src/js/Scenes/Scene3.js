@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import * as Matter from 'matter-js'
+import gsap from 'gsap'
 
 import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
@@ -44,8 +45,6 @@ export default class Scene3 {
     // this.initSousTerrainWorld()
     this.addLadder()
     this.addDoor()
-
-    this.endScene()
   }
 
   initZoomCamera () {
@@ -271,14 +270,15 @@ export default class Scene3 {
 
   pressPlaque (i) {
     if (this.open) return
-    this.symboles[i].material.emissiveIntensity = 0.25
-    this.code.push(i)
-
-    console.log(i, this.code)
+    let inc = this.code.includes(i)
+    if (!this.code.includes(i)) {
+      this.symboles[i].material.emissiveIntensity = 0.25
+      this.code.push(i)
+    }
 
     if (JSON.stringify(this.code) === JSON.stringify(CODE)) {
       this.endScene()
-    } else if (this.code.length === CODE.length) {
+    } else if (this.code.length === CODE.length || inc) {
       this.code = []
 
       this.symboles.forEach((sym) => {
@@ -336,6 +336,21 @@ export default class Scene3 {
     this.map.position.set(-100, -680, 180)
 
     this.scene.add(this.map) 
+
+    this.renePhaeton = new THREE.Group()
+    this.renePhaeton.position.set(0.67, 0.7, 0)
+    const phaeton = this.map.getObjectByName('Phaeton')
+    const renes = this.map.getObjectByName('Renes')
+    
+    this.renePhaeton.add(phaeton)
+    this.renePhaeton.add(renes)
+    this.map.add(this.renePhaeton)
+
+    phaeton.position.x = 0
+    phaeton.position.y = 0
+
+    renes.position.x = -0.350
+    renes.position.y = 1.330
 
     // TEXTURE MAP
     const texturemap = this.textureLoader.load('/models/Scene3/Texture_Enigme3_modif.png')
@@ -499,8 +514,68 @@ export default class Scene3 {
     this.open = true
     this.door.open()
 
+    const tl = gsap.timeline()
+
+    // add light
+    const spotLight = new THREE.SpotLight(0xfaa961, 0, 1200)
+    spotLight.decay = -0.1
+    spotLight.penumbra = 0.3
+    spotLight.power = 15
+
+    spotLight.position.set(0, 1200, 40)
+    this.scene.add( spotLight )
+
+    // const spotLightHelper = new THREE.SpotLightHelper( spotLight )
+    // this.scene.add( spotLightHelper )
+
+    tl.to(
+      spotLight,
+      {
+        intensity: 3,
+        angle: 0.5
+      }
+    )
+
+    // animation lanière
+    tl.to(
+      this.map.getObjectByName('Renes').position,
+      {
+        delay: 0.5,
+        y: 1,
+        ease: "power2.in"
+      }
+    )
+
+    // animation personnage
+    tl.to(
+      this.renePhaeton.rotation,
+      {
+        z: Math.PI * 0.45,
+        duration: 3,
+        ease: "power4.in"
+      },
+      '-=0.5'
+    )
+    tl.to(
+      this.renePhaeton.rotation,
+      {
+        z: Math.PI * 0.43,
+        duration: 0.2,
+        ease: "power2.out"
+      }
+    )
+    tl.to(
+      this.renePhaeton.rotation,
+      {
+        z: Math.PI * 0.45,
+        duration: 0.15,
+        ease: "power1.in"
+      }
+    )
+
+    // animation porte
+
     // moove center block
-    console.log(this.blockCenter.box)
     Matter.Body.translate(this.blockCenter.box, Matter.Vector.create(0, -140))
   }
 
