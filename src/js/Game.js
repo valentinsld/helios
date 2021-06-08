@@ -317,7 +317,7 @@ export default class Game{
         this.render.canvas.style.opacity = value
       })
 
-      const zoom = physicFolder.add(this.paramsPhysicRender, "zoom", 0, 3).name('Zoom')
+      const zoom = physicFolder.add(this.paramsPhysicRender, "zoom", 0, 10).name('Zoom')
       const posX = physicFolder.add(this.paramsPhysicRender.more, "x", -500, 500).name('Position X')
       const posY = physicFolder.add(this.paramsPhysicRender.more, "y", -500, 500).name('Position Y')
 

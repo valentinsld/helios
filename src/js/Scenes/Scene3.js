@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import * as Matter from 'matter-js'
+import SVGPathSeg from '../_libs/pathseg'
 import gsap from 'gsap'
 
 import Phaeton from '../Characters/Phaeton'
@@ -40,9 +41,9 @@ export default class Scene3 {
     this.initZoomCamera()
     this.initCharacters()
     this.initModels()
-    
+
     this.addWallsAndFloors()
-    // this.initSousTerrainWorld()
+    this.initSousTerrainWorld()
     this.addLadder()
     this.addDoor()
   }
@@ -313,7 +314,6 @@ export default class Scene3 {
       sceneManager: this.sceneManager,
       phaeton: this.phaeton,
       fragment: this.fragment,
-      render: this.debug ? true : false,
       render: false,
       position : {
         x : 1140,
@@ -414,8 +414,6 @@ export default class Scene3 {
     this.lightDoor.shadow.camera.near = 0.5; // default
     this.lightDoor.shadow.camera.far = 500; // default
 
-    console.log(this.game.renderer.shadowMap)
-
     this.initPlaques()
   }
 
@@ -495,35 +493,24 @@ export default class Scene3 {
           .then(function(raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
     };
 
-    loadSvg('https://raw.githubusercontent.com/liabru/matter-js/master/demo/svg/terrain.svg')
-      .then(function(root) {
+    loadSvg('./models/terrain.svg')
+      .then((root) => {
           var paths = select(root, 'path');
 
-          console.log(paths)
-          var vertexSets = paths.map(function(path) { return Matter.Svg.pathToVertices(path, 30); });
+          var vertexSets = paths.map(function(path) {
+            return Matter.Svg.pathToVertices(path, 30);
+          });
 
-          var terrain = Matter.Bodies.fromVertices(400, 350, vertexSets, {
+          var terrain = Matter.Bodies.fromVertices(-90, -650, vertexSets, {
             isStatic: true,
             render: {
-              fillStyle: '#060a19',
+              fillStyle: '#ffff00',
               strokeStyle: '#060a19',
               lineWidth: 1
             }
           }, true);
 
           Matter.Composite.add(this.world, terrain);
-
-          var bodyOptions = {
-            frictionAir: 0, 
-            friction: 0.0001,
-            restitution: 0.6
-          };
-          
-          Matter.Composite.add(this.world, Matter.Composites.stack(80, 100, 20, 20, 10, 10, function(x, y) {
-            if (Matter.Query.point([terrain], { x: x, y: y }).length === 0) {
-              return Matter.Bodies.polygon(x, y, 5, 12, bodyOptions);
-            }
-          }));
       });
     
   }
@@ -536,6 +523,7 @@ export default class Scene3 {
 
     // add light
     const spotLight = new THREE.SpotLight(0xfaa961, 0, 1200)
+    spotLight.angle = 0.5
     spotLight.decay = -0.1
     spotLight.penumbra = 0.3
     spotLight.power = 15
@@ -543,14 +531,16 @@ export default class Scene3 {
     spotLight.position.set(0, 1200, 40)
     this.scene.add( spotLight )
 
-    // const spotLightHelper = new THREE.SpotLightHelper( spotLight )
-    // this.scene.add( spotLightHelper )
 
-    tl.to(
+    tl.fromTo(
       spotLight,
       {
+        intensity: 0,
+      },
+      {
+        delay: 1,
         intensity: 3,
-        angle: 0.5
+        duration: 2
       }
     )
 
