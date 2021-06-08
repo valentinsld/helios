@@ -270,6 +270,7 @@ export default class Scene3 {
 
   pressPlaque (i) {
     if (this.open) return
+
     let inc = this.code.includes(i)
     if (!this.code.includes(i)) {
       this.symboles[i].material.emissiveIntensity = 0.25
@@ -315,7 +316,7 @@ export default class Scene3 {
       render: this.debug ? true : false,
       render: false,
       position : {
-        x : 1240,
+        x : 1140,
         y : -130,
         z : 250
       },
@@ -397,6 +398,23 @@ export default class Scene3 {
         node.material = materialMap
       }
     })
+
+    // add light door
+    this.map.getObjectByName('porte').castShadow = true
+    this.map.getObjectByName('murs').receiveShadow = true
+
+    this.lightDoor = new THREE.PointLight(0xfaa961, 5, 300, 0.5)
+    this.lightDoor.castShadow = true
+    this.lightDoor.position.set(3.17, 1.5, 0)
+    this.map.add(this.lightDoor)
+
+    //Set up shadow properties for the light
+    this.lightDoor.shadow.mapSize.width = 512; // default
+    this.lightDoor.shadow.mapSize.height = 512; // default
+    this.lightDoor.shadow.camera.near = 0.5; // default
+    this.lightDoor.shadow.camera.far = 500; // default
+
+    console.log(this.game.renderer.shadowMap)
 
     this.initPlaques()
   }
@@ -574,16 +592,73 @@ export default class Scene3 {
     )
 
     // animation porte
+    tl.to(
+      this.map.getObjectByName('porte').position,
+      {
+        y: 2.5,
+        duration: 1.5,
+        ease: "power1.in"
+      }
+    )
 
     // moove center block
     Matter.Body.translate(this.blockCenter.box, Matter.Vector.create(0, -140))
+
+    // add block
+    const up = Matter.Bodies.rectangle(
+      0,
+      -325,
+      250,
+      50,
+      {
+        label: 'Box',
+        isStatic: true,
+        friction: 1,
+        frictionStatic: Infinity,
+        render: {
+          fillStyle: 'transparent',
+          lineWidth: 2
+        }
+      }
+    );
+    Matter.World.add(this.world, up);
+
+    up.vertices[0].x -= 100
+    up.vertices[1].x += 100
+    Matter.Body.setVertices(up, up.vertices);
   }
 
   animationEndPhaeton () {
     console.log('end animation Phaeton')
+    this.phaeton.playWalk()
+
+    this.phaeton.mesh.position.z = 120
+    this.phaeton.animation = true
+
+    gsap.to(
+      this.phaeton.mesh.position,
+      {
+        x: "+=450",
+        y: -70,
+        z: 120,
+        duration: 1.5,
+        ease: "sin.in"
+      }
+    )
   }
   animationEndFragment () {
     console.log('end animation fragment')
+    this.fragment.animation = true
+
+    gsap.to(
+      this.fragment.mesh.position,
+      {
+        x: "+=450",
+        z: 120,
+        duration: 2.5,
+        ease: "sin.inOut"
+      }
+    )
   }
 
   //
