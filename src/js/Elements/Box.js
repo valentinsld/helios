@@ -69,7 +69,7 @@ export default class Box {
     })
 
     this.mesh = new THREE.Mesh(BOX, MATERIAL)
-    this.mesh.receiveShadow = true
+    // this.mesh.receiveShadow = true
     
     this.scene.add(this.mesh)
   }

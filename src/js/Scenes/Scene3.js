@@ -46,6 +46,11 @@ export default class Scene3 {
     this.initSousTerrainWorld()
     this.addLadder()
     this.addDoor()
+    this.addCacheForSymboles()
+
+    setTimeout(() => {
+      this.endScene()
+    }, 2000);
   }
 
   initZoomCamera () {
@@ -267,6 +272,23 @@ export default class Scene3 {
         },
       }
     })
+
+    //
+    // Shadow bottom
+    //
+    const BOX = new THREE.BoxBufferGeometry(1000, 600, 100, 32, 32)
+    const MATERIAL = new THREE.MeshStandardMaterial({
+      color: 0x000000,
+      metalness: 0.3,
+      roughness: 0.4,
+      transparent: true,
+      opacity: 0
+    })
+
+    this.shadowCenter = new THREE.Mesh(BOX, MATERIAL)
+    this.shadowCenter.position.set(0, -640, 300)
+    
+    this.scene.add(this.shadowCenter)
   }
 
   pressPlaque (i) {
@@ -274,7 +296,7 @@ export default class Scene3 {
 
     let inc = this.code.includes(i)
     if (!this.code.includes(i)) {
-      this.symboles[i].material.emissiveIntensity = 0.25
+      this.symboles[i].material.emissiveIntensity = 0.5
       this.code.push(i)
     }
 
@@ -329,6 +351,95 @@ export default class Scene3 {
       animationEndPhaeton: this.animationEndPhaeton.bind(this),
       animationEndFragment: this.animationEndFragment.bind(this)
     })
+  }
+
+  addCacheForSymboles () {
+    const pos = {
+      x: -900,
+      y: -600,
+      z: 300,
+    }
+    const size = {
+      x: 1000,
+      y: 400,
+      z: 100
+    }
+
+
+    //
+    // Scene
+    //
+    const BOX = new THREE.BoxBufferGeometry(
+      size.x,
+      size.y,
+      size.z,
+      32, 32
+    )
+    const MATERIAL = new THREE.MeshStandardMaterial({
+      color: 0x000000,
+      metalness: 0.3,
+      roughness: 0.4,
+      transparent: true,
+      opacity: 1
+    })
+
+    const cache = new THREE.Mesh(BOX, MATERIAL)
+    cache.position.copy(pos)
+    
+    this.scene.add(cache)
+
+
+    //
+    // Worl
+    //
+    var collider = Matter.Bodies.rectangle(
+      pos.x + 100, pos.y,
+      size.x + 300, size.y,
+      {
+        label: 'boxColider',
+        isSensor: true,
+        isStatic: true,
+        render: {
+          strokeStyle: '#ff00ff',
+          fillStyle: 'transparent',
+          lineWidth: 2
+        }
+      }
+    );
+
+    Matter.World.add(this.world, collider)
+
+    // init events
+    Matter.Events.on(this.engine, 'collisionStart', (event) => {
+      var pairs = event.pairs;
+      
+      for (var i = 0, j = pairs.length; i != j; ++i) {
+        var pair = pairs[i];
+
+        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
+        const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
+
+        if (conditionCollider && conditionFragment) {
+          MATERIAL.opacity = 0
+        }
+      }
+    });
+
+    Matter.Events.on(this.engine, 'collisionEnd', (event) => {
+      var pairs = event.pairs;
+      
+      for (var i = 0, j = pairs.length; i != j; ++i) {
+        var pair = pairs[i];
+
+        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
+        const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
+
+        if (conditionCollider && conditionFragment) {
+          MATERIAL.opacity = 1
+        }
+      }
+    });
+    
   }
 
   initSousTerrain (gltf) {
@@ -523,12 +634,12 @@ export default class Scene3 {
 
     // add light
     const spotLight = new THREE.SpotLight(0xfaa961, 0, 1200)
-    spotLight.angle = 0.5
+    spotLight.angle = 0.4
     spotLight.decay = -0.1
     spotLight.penumbra = 0.3
     spotLight.power = 15
 
-    spotLight.position.set(0, 1200, 40)
+    spotLight.position.set(-300, 1400, 40)
     this.scene.add( spotLight )
 
 
@@ -545,6 +656,7 @@ export default class Scene3 {
     )
 
     // animation lanière
+    const endRotation = Math.PI * 0.45
     tl.to(
       this.map.getObjectByName('Renes').position,
       {
@@ -558,9 +670,11 @@ export default class Scene3 {
     tl.to(
       this.renePhaeton.rotation,
       {
-        z: Math.PI * 0.45,
+        z: endRotation,
         duration: 3,
-        ease: "power4.in"
+        ease: "power4.in",
+        onUpdate: this.changeColorShadowCenter.bind(this),
+        onUpdateParams: [endRotation]
       },
       '-=0.5'
     )
@@ -569,15 +683,19 @@ export default class Scene3 {
       {
         z: Math.PI * 0.43,
         duration: 0.2,
-        ease: "power2.out"
+        ease: "power2.out",
+        onUpdate: this.changeColorShadowCenter.bind(this),
+        onUpdateParams: [endRotation]
       }
     )
     tl.to(
       this.renePhaeton.rotation,
       {
-        z: Math.PI * 0.45,
+        z: endRotation,
         duration: 0.15,
-        ease: "power1.in"
+        ease: "power1.in",
+        onUpdate: this.changeColorShadowCenter.bind(this),
+        onUpdateParams: [endRotation]
       }
     )
 
@@ -616,6 +734,14 @@ export default class Scene3 {
     up.vertices[0].x -= 100
     up.vertices[1].x += 100
     Matter.Body.setVertices(up, up.vertices);
+  }
+
+  changeColorShadowCenter (maxZ) {
+    const value = this.renePhaeton.rotation.z
+    const ratio = value / maxZ
+
+    this.shadowCenter.material.opacity = ratio
+    console.log(value, ratio)
   }
 
   animationEndPhaeton () {
