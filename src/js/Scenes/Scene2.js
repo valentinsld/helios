@@ -16,8 +16,13 @@ import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import transition from '../utils/transition'
 
+import Phaeton from '../Characters/Phaeton'
+import Fragment from '../Characters/Fragment'
+
 import Box from '../Elements/Box'
 import AnimatedFire from '../Elements/animatedFire'
+import Plaque from '../Elements/Plaque'
+import Door from '../Elements/Door'
 
 export default class Scene0 {
   constructor({camera, engine, globalScene, gltfLoader, debug, textureLoader, sceneManager, game}) {
@@ -29,15 +34,19 @@ export default class Scene0 {
     this.textureLoader = textureLoader
     this.engine = engine
     this.world = this.engine.world
+    this.sceneManager = sceneManager
 
     // init scene
     this.scene = new THREE.Group()
     globalScene.add(this.scene)
 
+    this.open = false
+
     this.initZoomCamera()
 
-    // this.initCharacters()
     this.initSol()
+    this.initCharacters()
+    this.initDoor()
     this.initModels()
   }
 
@@ -47,13 +56,49 @@ export default class Scene0 {
     this.camera.updateProjectionMatrix()
   }
 
+  initCharacters () {
+    this.phaeton = new Phaeton({
+      engine: this.engine,
+      scene : this.scene,
+      debug: this.debug,
+      textureLoader: this.textureLoader,
+      gltfLoader: this.gltfLoader,
+      scale: 80,
+      speed: 15,
+      position : {
+        x : -1300,
+        y : -600,
+        z : 80
+      }
+    })
+
+    this.fragment = new Fragment({
+      game: this.game,
+      canvas: this.canvas,
+      engine: this.engine,
+      scene : this.scene,
+      camera : this.camera,
+      debug: this.debug,
+      radius: 35,
+      distance: 400,
+      position : {
+        x : -1150,
+        y : -400,
+        z : 60
+      }
+    })
+
+    this.game.addUpdatedElement('phaeton', this.phaeton.update.bind(this.phaeton))
+    this.game.addUpdatedElement('fragment', this.fragment.update.bind(this.fragment))
+  }
+
   initSol () {
     // FLOORS
     const floor = new Box({
       engine: this.engine,
       scene: this.scene,
       color: 0xff0000,
-      // render: false,
+      render: false,
       size: {
         x: 3600,
         y: 400,
@@ -67,38 +112,62 @@ export default class Scene0 {
     })
 
     // Walls
-    const wallLeft = new Box({
-      engine: this.engine,
-      scene: this.scene,
-      color: 0xff0000,
-      // render: false,
-      size: {
-        x: 400,
-        y: 1800,
-        z: 100
-      },
-      position : {
-        x: 1500,
-        y: 0,
-        z: 100
-      }
-    })
-
     const wallRight = new Box({
       engine: this.engine,
       scene: this.scene,
       color: 0xff0000,
-      // render: false,
+      render: false,
       size: {
         x: 400,
-        y: 1800,
+        y: 2000,
         z: 100
       },
       position : {
-        x: -1500,
-        y: 0,
+        x: 1550,
+        y: 200,
         z: 100
       }
+    })
+
+    const wallLeft = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      render: false,
+      size: {
+        x: 400,
+        y: 2000,
+        z: 100
+      },
+      position : {
+        x: -1600,
+        y: 200,
+        z: 100
+      }
+    })
+  }
+
+  initDoor () {
+    this.door = new Door({
+      scene: this.scene,
+      engine: this.engine,
+      sceneManager: this.sceneManager,
+      phaeton: this.phaeton,
+      fragment: this.fragment,
+      // render: false,
+      position : {
+        x : 1200,
+        y : -500,
+        z : 250
+      },
+      size: {
+        x: 400,
+        y: 400,
+        z: 1
+      },
+      open: this.open,
+      animationEndPhaeton: this.animationEndPhaeton.bind(this),
+      animationEndFragment: this.animationEndFragment.bind(this)
     })
   }
 
@@ -136,7 +205,7 @@ export default class Scene0 {
       position: {
         x: -920,
         y: -600,
-        z: -60,
+        z: -260,
       },
       size: {
         x: 100,
@@ -162,7 +231,7 @@ export default class Scene0 {
       position: {
         x: 890,
         y: -600,
-        z: -70,
+        z: -270,
       },
       size: {
         x: 100,
@@ -249,7 +318,7 @@ export default class Scene0 {
   async initSalle (gltf) {
     this.map = gltf.scene
     this.map.scale.set(250, 250, 250)
-    this.map.position.set(-100, -680, 0)
+    this.map.position.set(-100, -680, -200)
 
     this.scene.add(this.map) 
 
@@ -287,7 +356,95 @@ export default class Scene0 {
       }
     })
 
+    this.initPlaque()
+
     return this.newPromise()
+  }
+
+  initPlaque () {
+    const pos = {
+      x: 500,
+      y: -600
+    }
+
+    this.plaque = new Plaque({
+      scene: this.scene,
+      engine: this.engine,
+      func: this.endScene.bind(this),
+      gltf: this.map.getObjectByName(`Plaque`),
+      box: {
+        position: {
+          x: pos.x,
+          y: pos.y,
+          z: 0,
+        },
+        size: {
+          x: 200,
+          y: 200,
+          z: 200
+        }
+      },
+      plaque: {
+        position: {
+          x: pos.x,
+          y: pos.y - 40,
+          z: 0,
+        },
+        size: {
+          x: 100,
+          y: 25,
+          z: 100
+        }
+      }
+    })
+  }
+
+  animationEndPhaeton () {
+    // console.log('end animation Phaeton')
+    this.phaeton.playWalk()
+
+    this.phaeton.animation = true
+
+    gsap.to(
+      this.phaeton.mesh.position,
+      {
+        x: "+=450",
+        duration: 1.5,
+        ease: "sin.in"
+      }
+    )
+  }
+  animationEndFragment () {
+    // console.log('end animation fragment')
+    this.fragment.animation = true
+
+    gsap.to(
+      this.fragment.mesh.position,
+      {
+        x: "+=450",
+        duration: 2.5,
+        ease: "sin.inOut"
+      }
+    )
+  }
+
+  endScene () {
+    if (this.open) return;
+
+    this.open = true
+    this.door.open()
+    console.log('EndScene')
+    // x: 5.7, y:1.9
+
+    gsap.to(
+      this.map.getObjectByName(`PORTE`).position,
+      {
+        x: 5.7,
+        y: 1.9,
+        duration: 1.7,
+        ease: 'power3.in'
+      }
+    )
   }
 
   newPromise (time = 1000) {

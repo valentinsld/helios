@@ -785,7 +785,7 @@ export default class Scene3 {
   }
 
   animationEndPhaeton () {
-    console.log('end animation Phaeton')
+    // console.log('end animation Phaeton')
     this.phaeton.playWalk()
 
     this.phaeton.mesh.position.z = 120
@@ -803,7 +803,7 @@ export default class Scene3 {
     )
   }
   animationEndFragment () {
-    console.log('end animation fragment')
+    // console.log('end animation fragment')
     this.fragment.animation = true
 
     gsap.to(
