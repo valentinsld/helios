@@ -398,7 +398,7 @@ export default class Scene1 {
   }
 
   async initPorte (gltf) {
-    console.log(gltf)
+    // console.log(gltf)
 
     // Material armature
     const texture = this.textureLoader.load('/models/porte/texture_porte.png')
@@ -833,7 +833,7 @@ export default class Scene1 {
     //remove box
     this.wallDoor.destroyed()
 
-    console.log('End enigme !!')
+    // console.log('End enigme !!')
   }
 
   animationEndPhaeton () {
