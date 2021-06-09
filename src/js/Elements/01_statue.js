@@ -144,7 +144,7 @@ export default class Statue {
       this.activate = false
       if (!this.gltf) this.mesh.material.color = new THREE.Color("#0000ff")
     }
-    console.log(this.activate)
+    // console.log(this.activate)
   }
 
 }

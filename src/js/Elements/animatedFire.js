@@ -116,7 +116,7 @@ export default class AnimatedFire {
       }
     })
 
-    console.log(positions)
+    // console.log(positions)
     this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     this.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
     this.geometry.setAttribute('aScale', new THREE.BufferAttribute(scale, 1))
