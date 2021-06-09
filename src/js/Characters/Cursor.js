@@ -13,6 +13,11 @@ export default class Cursor {
 
   disableCursor () {
     this.body.style.cursor = 'none'
+
+    //
+    if (document.querySelector('#cursor')) {
+      document.querySelector('#cursor').remove()
+    }
   }
 
   createElement () {
