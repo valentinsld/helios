@@ -48,9 +48,9 @@ export default class Scene3 {
     this.addDoor()
     this.addCacheForSymboles()
 
-    setTimeout(() => {
-      this.endScene()
-    }, 2000);
+    // setTimeout(() => {
+    //   this.endScene()
+    // }, 2000);
   }
 
   initZoomCamera () {
@@ -296,7 +296,15 @@ export default class Scene3 {
 
     let inc = this.code.includes(i)
     if (!this.code.includes(i)) {
-      this.symboles[i].material.emissiveIntensity = 0.5
+      gsap.to(
+        this.symboles[i].material,
+        {
+          emissiveIntensity: 0.5,
+          duration: 2,
+          ease: "back.out(2.5)"
+        }
+      )
+      // this.symboles[i].material.emissiveIntensity = 0.5
       this.code.push(i)
     }
 
@@ -306,7 +314,14 @@ export default class Scene3 {
       this.code = []
 
       this.symboles.forEach((sym) => {
-        sym.material.emissiveIntensity = 0
+        gsap.to(
+          sym.material,
+          {
+            emissiveIntensity: 0,
+            duration: 1.4,
+            ease: "power4.out"
+          }
+        )
       })
     }
   }
@@ -741,7 +756,6 @@ export default class Scene3 {
     const ratio = value / maxZ
 
     this.shadowCenter.material.opacity = ratio
-    console.log(value, ratio)
   }
 
   animationEndPhaeton () {
