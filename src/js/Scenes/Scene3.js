@@ -292,12 +292,11 @@ export default class Scene3 {
   }
 
   pressPlaque (i) {
-    console.log(i)
     if (this.open) return
 
     let inc = this.code.includes(i)
     if (!this.code.includes(i)) {
-      gsap.to(
+      this.animationSym = gsap.to(
         this.symboles[i].material,
         {
           emissiveIntensity: 0.5,
@@ -646,7 +645,7 @@ export default class Scene3 {
     this.open = true
     this.door.open()
 
-    const tl = gsap.timeline()
+    const tl = gsap.timeline({delay: 1})
 
     // add light
     const spotLight = new THREE.SpotLight(0xfaa961, 0, 1200)
@@ -658,8 +657,24 @@ export default class Scene3 {
     spotLight.position.set(-300, 1400, 40)
     this.scene.add( spotLight )
 
+    // animation lights
+    this.symboles.forEach((sym, i) => {
+      tl.to(
+        sym.material,
+        {
+          emissiveIntensity: 0,
+          duration: 1.5,
+          ease: "back.in(10)",
+          onStart: () => {
+            this.animationSym.kill()
+          }
+        },
+        '<'
+      )
+    })
 
-    tl.fromTo(
+    // animation light
+    tl.fromTo(  
       spotLight,
       {
         intensity: 0,
@@ -668,7 +683,8 @@ export default class Scene3 {
         delay: 1,
         intensity: 3,
         duration: 2
-      }
+      },
+      '-=1'
     )
 
     // animation lanière
@@ -723,6 +739,15 @@ export default class Scene3 {
         duration: 1.5,
         ease: "power1.in"
       }
+    )
+    .to(
+      this.lightDoor,
+      {
+        distance: 500,
+        duration: 1.5,
+        ease: "power1.in"
+      },
+      '<'
     )
 
     // moove center block
