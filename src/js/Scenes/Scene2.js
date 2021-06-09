@@ -16,6 +16,7 @@ import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import transition from '../utils/transition'
 
+import Box from '../Elements/Box'
 import AnimatedFire from '../Elements/animatedFire'
 
 export default class Scene0 {
@@ -35,6 +36,8 @@ export default class Scene0 {
 
     this.initZoomCamera()
 
+    // this.initCharacters()
+    this.initSol()
     this.initModels()
   }
 
@@ -42,6 +45,61 @@ export default class Scene0 {
     this.camera.zoom = 0.62
     
     this.camera.updateProjectionMatrix()
+  }
+
+  initSol () {
+    // FLOORS
+    const floor = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      // render: false,
+      size: {
+        x: 3600,
+        y: 400,
+        z: 100
+      },
+      position : {
+        x: 0,
+        y: -880,
+        z: 0
+      }
+    })
+
+    // Walls
+    const wallLeft = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      // render: false,
+      size: {
+        x: 400,
+        y: 1800,
+        z: 100
+      },
+      position : {
+        x: 1500,
+        y: 0,
+        z: 100
+      }
+    })
+
+    const wallRight = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      // render: false,
+      size: {
+        x: 400,
+        y: 1800,
+        z: 100
+      },
+      position : {
+        x: -1500,
+        y: 0,
+        z: 100
+      }
+    })
   }
 
   initModels() {

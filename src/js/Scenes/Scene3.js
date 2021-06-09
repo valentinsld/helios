@@ -9,14 +9,14 @@ import Fragment from '../Characters/Fragment'
 import Box from '../Elements/Box'
 import Plaque from '../Elements/Plaque'
 import Ladder from '../Elements/Ladder'
-import Fire from '../Elements/Fire'
+// import Fire from '../Elements/Fire'
 import Door from '../Elements/Door'
 
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import transition from '../utils/transition'
 
-import AnimatedFire from '../Elements/animatedFire'
+// import AnimatedFire from '../Elements/animatedFire'
 
 const CODE = [0,3,1,2]
 
