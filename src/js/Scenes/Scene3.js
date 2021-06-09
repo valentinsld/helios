@@ -18,7 +18,7 @@ import transition from '../utils/transition'
 
 import AnimatedFire from '../Elements/animatedFire'
 
-const CODE = [0,1,2,3]
+const CODE = [0,3,1,2]
 
 export default class Scene3 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
@@ -66,7 +66,7 @@ export default class Scene3 {
       debug: this.debug,
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
-      scale: 65,
+      scale: 60,
       speed: 15,
       position : {
         x : -1300,
@@ -292,6 +292,7 @@ export default class Scene3 {
   }
 
   pressPlaque (i) {
+    console.log(i)
     if (this.open) return
 
     let inc = this.code.includes(i)
@@ -527,11 +528,12 @@ export default class Scene3 {
 
     // add light door
     this.map.getObjectByName('porte').castShadow = true
+    this.map.getObjectByName('porte').receiveShadow = true
     this.map.getObjectByName('murs').receiveShadow = true
 
     this.lightDoor = new THREE.PointLight(0xfaa961, 5, 300, 0.5)
     this.lightDoor.castShadow = true
-    this.lightDoor.position.set(3.17, 1.5, 0)
+    this.lightDoor.position.set(3.17, 1.57, 0)
     this.map.add(this.lightDoor)
 
     //Set up shadow properties for the light
@@ -552,11 +554,6 @@ export default class Scene3 {
         y: 105,
         z: 0
       },
-      { // 3
-        x: -800,
-        y: -305,
-        z: 0
-      },
       { // 1
         x: -880,
         y: 105,
@@ -567,7 +564,11 @@ export default class Scene3 {
         y: -305,
         z: 0
       },
-
+      { // 3
+        x: -800,
+        y: -305,
+        z: 0
+      }
     ]
 
     plaques.forEach((pos, i) => {
