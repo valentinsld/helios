@@ -14,7 +14,7 @@ const SIZE = {
 }
 
 const COLOR = '#008d02'
-
+const SCALE = 50
 const ANIMATIONS = {
   idle: 'iddle2',
   marche: 'course',
@@ -22,7 +22,7 @@ const ANIMATIONS = {
 }
 
 export default class Phaeton{
-  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE}) {
+  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE, scale = SCALE, speed = 9.5}) {
     this.world = engine.world
     this.scene = scene
     this.textureLoader = textureLoader
@@ -31,9 +31,10 @@ export default class Phaeton{
     this.debug = debug
     this.position = position
     this.size = size
+    this.scale = scale
 
     this.animation = null
-    this.speed = 9.5
+    this.speed = speed
     this.runed = false
     this.isTurnedTo = 'right'
     this.interactionElements = []
@@ -95,7 +96,7 @@ export default class Phaeton{
 
   initPhaetonModel (gltf) {
     this.mesh = gltf.scene
-    this.mesh.scale.set(50, 50, 50)
+    this.mesh.scale.set(this.scale, this.scale, this.scale)
     this.mesh.name = 'Phaeton'
     this.mesh.position.z = this.position.z
     this.mesh.rotation.y = Math.PI * 1.5
@@ -301,9 +302,9 @@ export default class Phaeton{
           // console.log('Start ', distStart, ' ; End ', distEnd)
 
           if (distStart <= element.distanceInteraction) {
-            this.moveTo(start, end)
+            this.useLadder(start, end, true)
           } else if(distEnd <= element.distanceInteraction) {
-            this.moveTo(end, start)
+            this.useLadder(end, start, false)
           }
           
           break;
@@ -315,21 +316,43 @@ export default class Phaeton{
     })
   }
   
-  moveTo(start, end) {
+  useLadder (start, end, upDown) {
     this.animation = gsap.timeline()
+
+    this.fadeToAction(ANIMATIONS.echelle, 0.6)
 
     this.animation.to(
       this.mesh.position,
       {
-        duration: 0.3,
+        duration: 0.8,
         x: start.x,
+        y: upDown ? "-=0" : "-=150"
       }
+    )
+    .to(
+      this.mesh.rotation,
+      {
+        duration: 0.5,
+        y: Math.PI * 2,
+      },
+      '<'
     )
     .to(
       this.mesh.position,
       {
         duration: 3,
-        y: end.y + this.size.y / 2,
+        y: end.y,
+        ease: 'linear',
+        onComplete: () => {
+          this.fadeToAction(ANIMATIONS.idle, 0.3)
+        }
+      }
+    )
+    .to(
+      this.mesh.rotation,
+      {
+        duration: 0.3,
+        y: Math.PI * 1.5,
         onComplete: () => {
           // translation du bodie
           const newPos = Matter.Vector.create(
@@ -339,6 +362,7 @@ export default class Phaeton{
           Matter.Body.translate(this.box, newPos)
 
           this.animation = null
+          this.isTurnedTo = 'right'
         }  
       }
     )
