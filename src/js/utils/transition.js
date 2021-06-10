@@ -30,11 +30,14 @@ class Transition {
     this.minDuration = duration
 
     // add text
+    this.elContainerText.innerHTML = ''
+    const paragraphes = []
     TEXTS[textIndex].forEach((text) => {
       const paragraphe = document.createElement('p')
       paragraphe.innerHTML = text
 
       this.elContainerText.append(paragraphe)
+      paragraphes.push(paragraphe)
     })
 
     // animation
