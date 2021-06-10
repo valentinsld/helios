@@ -5,8 +5,8 @@ import gsap from 'gsap'
 import Cursor from './Cursor'
 import easingsFunctions from '../utils/easingsFunctions'
 
-import vertexShader from '../../glsl/sun/vertex.glsl'
-import fragmentShader from '../../glsl/sun/fragment.glsl'
+// import vertexShader from '../../glsl/sun/vertex.glsl'
+// import fragmentShader from '../../glsl/sun/fragment.glsl'
 
 import fragmentShaderParticules from '../../glsl/sunParticules/fragment.glsl'
 import vertexShaderParticules from '../../glsl/sunParticules/vertex.glsl'
@@ -17,10 +17,6 @@ const POSITION = {
   z: 0
 }
 const RADIUS = 21
-
-// DOM
-const DOM = document.querySelector('body')
-
 
 export default class Fragment{
   constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS, distance = 330}) {

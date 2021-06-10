@@ -43,7 +43,7 @@ export default class AnimatedFire {
     this.initParticules()
     this.initMesh(gltf)
 
-    this.game.addUpdatedElement('clip', this.updateAnimationFire.bind(this))
+    this.game.addUpdatedElement(`clip${Math.random()}`, this.updateAnimationFire.bind(this))
     if (this.debug) {
       this.debugFolder = this.debug.addFolder('Fire')
       this.initDebug()

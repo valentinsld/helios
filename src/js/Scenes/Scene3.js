@@ -9,14 +9,14 @@ import Fragment from '../Characters/Fragment'
 import Box from '../Elements/Box'
 import Plaque from '../Elements/Plaque'
 import Ladder from '../Elements/Ladder'
-import Fire from '../Elements/Fire'
+// import Fire from '../Elements/Fire'
 import Door from '../Elements/Door'
 
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
-import transition from '../utils/transition'
+import Transition from '../utils/transition'
 
-import AnimatedFire from '../Elements/animatedFire'
+// import AnimatedFire from '../Elements/animatedFire'
 
 const CODE = [0,3,1,2]
 
@@ -106,8 +106,17 @@ export default class Scene3 {
     new LoaderModelsManager({
       arrayModels,
       gltfLoader: this.gltfLoader,
-      // progressFunction: this.updateProgress.bind(this)
+      endFunction: this.endLoadingModels.bind(this)
     })
+  }
+
+  endLoadingModels () {
+    const endTrans = Transition.fadeOut(this.endtransitionIntro.bind(this))
+  }
+
+  endtransitionIntro () {
+    // TODO : animation characters appear
+    console.log('endLoadingModels')
   }
 
   addWallsAndFloors () {
@@ -785,7 +794,7 @@ export default class Scene3 {
   }
 
   animationEndPhaeton () {
-    console.log('end animation Phaeton')
+    // console.log('end animation Phaeton')
     this.phaeton.playWalk()
 
     this.phaeton.mesh.position.z = 120
@@ -803,7 +812,7 @@ export default class Scene3 {
     )
   }
   animationEndFragment () {
-    console.log('end animation fragment')
+    // console.log('end animation fragment')
     this.fragment.animation = true
 
     gsap.to(
@@ -821,7 +830,7 @@ export default class Scene3 {
   // Destruct
   //
   async destruct () {
-    const trans = await transition.fade()
+    const trans = await Transition.fadeIn(2)
 
     clearScene(this.scene)
     Matter.World.clear(this.world);
