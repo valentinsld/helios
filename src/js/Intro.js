@@ -58,27 +58,40 @@ var tlS1 = new TimelineLite({
 
 var tlText1S2 = new TimelineLite({
   paused: true,
+  delay: 2
+})
+
+var tlText2S2 = new TimelineLite({
+  paused: true,
   delay: 3
-})
-
-var tlText2S2 = new TimelineLite({
-  paused: true,
-  delay: 4
-})
-
-var tlText2S2 = new TimelineLite({
-  paused: true,
-  delay: 5
 })
 
 var tlText3S2 = new TimelineLite({
   paused: true,
-  delay: 6
+  delay: 4
 })
 
 var tlTemple = new TimelineLite({
+  paused: true
+})
+
+var tlSun = new TimelineLite({
+  paused: true
+})
+
+var tlText1S3 = new TimelineLite({
   paused: true,
-  delay: 1
+  delay: 2
+})
+
+var tlText2S3 = new TimelineLite({
+  paused: true,
+  delay: 3
+})
+
+var tlText3S3 = new TimelineLite({
+  paused: true,
+  delay: 4
 })
 
 tl.set("#phaeton", {
@@ -162,6 +175,40 @@ tlTemple.set("#temple", {
     width: "100%"
   });
 
+tlSun.set("#sun", {
+    opacity: 0,
+    width: "140%",
+    ease: Expo.easeInOut
+  })
+  .to("#sun", 10, {
+    opacity: 1,
+    rotation: "+=60",
+    width: "170%"
+  });
+
+tlText1S3.set("#text1S3", {
+    opacity: 0,
+    ease: Expo.easeInOut
+  })
+  .to("#text1S3", 3, {
+    opacity: 1
+  });
+
+tlText2S3.set("#text2S3", {
+    opacity: 0,
+    ease: Expo.easeInOut
+  })
+  .to("#text2S3", 3, {
+    opacity: 1
+  });
+
+tlText3S3.set("#text3S3", {
+    opacity: 0,
+    ease: Expo.easeInOut
+  })
+  .to("#text3S3", 3, {
+    opacity: 1
+  });
 
 
 $("#button").on("click", function () {
@@ -176,13 +223,22 @@ $("#suite").on("click", function () {
 })
 
 
-$("#phaeton").on("click", function () {
+$("#suite").on("click", function () {
   $('#scene1').delay(500).fadeOut(2000);
   document.getElementById('scene1').style.display = 'none';
   tlText1S2.play();
   tlText2S2.play();
   tlText3S2.play();
   tlTemple.play();
+})
+
+
+$("#suite2").on("click", function () {
+  document.getElementById('scene2').style.display = 'none';
+  tlSun.play();
+  tlText1S3.play();
+  tlText2S3.play();
+  tlText3S3.play();
 })
 
 
