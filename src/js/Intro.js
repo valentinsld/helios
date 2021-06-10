@@ -5,34 +5,6 @@ export default class Intro {
   }
 }
 
-
-// TweenMax.from(".header h1", 3, {
-//   left: "-140%",
-//   ease: Expo.easeInOut,
-//   delay: 3.4,
-// });
-// TweenMax.staggerFrom(
-//   ".images > div",
-//   1, {
-//     y: "60",
-//     opacity: 0,
-//     ease: Power2.easeOut,
-//     delay: 6,
-//   },
-//   0.2
-// );
-
-// TweenMax.staggerFrom(
-//   ".header > p",
-//   1, {
-//     y: "60",
-//     opacity: 0,
-//     ease: Power2.easeOut,
-//     delay: 5.6,
-//   },
-//   0.2
-// );
-
 var tl = new TimelineLite({
   paused: true
 })
@@ -58,40 +30,46 @@ var tlS1 = new TimelineLite({
 
 var tlText1S2 = new TimelineLite({
   paused: true,
-  delay: 2
+  delay: 4
 })
 
 var tlText2S2 = new TimelineLite({
   paused: true,
-  delay: 3
+  delay: 5
 })
 
 var tlText3S2 = new TimelineLite({
   paused: true,
-  delay: 4
+  delay: 6
 })
 
 var tlTemple = new TimelineLite({
-  paused: true
+  paused: true,
+  delay: 5
 })
 
 var tlSun = new TimelineLite({
-  paused: true
+  paused: true,
+  delay: 7,
+  onComplete : start
 })
 
 var tlText1S3 = new TimelineLite({
   paused: true,
-  delay: 2
+  delay: 8,
+  onComplete : start
 })
 
 var tlText2S3 = new TimelineLite({
   paused: true,
-  delay: 3
+  delay: 9,
+  onComplete : start
 })
 
 var tlText3S3 = new TimelineLite({
   paused: true,
-  delay: 4
+  delay: 10,
+  onComplete : start
 })
 
 tl.set("#phaeton", {
@@ -225,7 +203,6 @@ $("#suite").on("click", function () {
 
 $("#suite").on("click", function () {
   $('#scene1').delay(500).fadeOut(2000);
-  document.getElementById('scene1').style.display = 'none';
   tlText1S2.play();
   tlText2S2.play();
   tlText3S2.play();
@@ -234,14 +211,16 @@ $("#suite").on("click", function () {
 
 
 $("#suite2").on("click", function () {
-  document.getElementById('scene2').style.display = 'none';
+  $('#scene2').delay(500).fadeOut(4000)
   tlSun.play();
   tlText1S3.play();
   tlText2S3.play();
   tlText3S3.play();
 })
 
-
+function start() {
+  $('#scene3').delay(500).fadeOut(4000)
+}
 
 // $('#scene1').delay(5000).fadeOut(4000);
 

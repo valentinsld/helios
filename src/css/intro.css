@@ -133,7 +133,7 @@ a:hover:after {
   cursor: pointer;
 }
 
-#scene2, .scene3 {
+#scene2, #scene3 {
   display: flex;
   width: 100%;
 }
@@ -183,6 +183,17 @@ a:hover:after {
 
 #text2S3{
   margin-left: 10%;
+}
+
+#endStart {
+  text-align: center;
+  font-size: 3em;
+  padding: 10%;
+  margin-top: 10%;
+}
+
+.startAD {
+  margin-top: 30px;
 }
 
 @keyframes fadeIn {
