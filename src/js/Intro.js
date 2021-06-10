@@ -6,16 +6,18 @@ export default class Intro {
 }
 
 var tl = new TimelineLite({
-  paused: true
+  paused: true,
+  delay: 3
 })
 
 var tlF = new TimelineLite({
   paused: true,
+  delay: 4
 })
 
 var tlT1 = new TimelineLite({
   paused: true,
-  delay: 3
+  delay: 5
 })
 
 var tlT2 = new TimelineLite({
@@ -190,6 +192,8 @@ tlText3S3.set("#text3S3", {
 
 
 $("#button").on("click", function () {
+  $('#intro').delay(500).fadeOut(2000);
+  $('#scene1').delay(500).fadeIn(2000);
   tl.play();
   tlF.play();
   tlT1.play();

@@ -75,8 +75,12 @@ a:hover:after {
 }
 
 #scene1 {
-  display: none;
+  display: flex;
   width: 100%;
+}
+
+#phaeton {
+  opacity: 0;
 }
 
 .column {
@@ -103,6 +107,7 @@ a:hover:after {
 
 
 #fragment {
+  opacity: 0;
   margin-top: 50%;
   width: 100% !important;
   animation: animatedFragment 10s linear infinite alternate;
