@@ -1,0 +1,24 @@
+.transition {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #000;
+  color: white;
+  opacity: 0;
+  pointer-events: none;
+
+  /* transition: opacity 0ms ease-in-out; */
+}
+
+.transition__texts {
+  padding: 50px;
+}
+
+/* .transition.-see {
+  opacity: 1;
+  pointer-events: initial;
+} */
