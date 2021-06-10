@@ -1,7 +1,7 @@
 @font-face {
   font-family: "helios";
   src: url("/static/fonts/HELIOS-01-Regular.woff2") format("woff2"),
-      url("/static/fonts/HELIOS-01-Regular.woff") format("woff");
+    url("/static/fonts/HELIOS-01-Regular.woff") format("woff");
 }
 
 body {
@@ -22,6 +22,10 @@ h1 {
   font-family: "helios";
 }
 
+a{
+  cursor: pointer;
+}
+
 .subtitle {
   margin-top: -50px;
   font-size: 35px;
@@ -31,7 +35,7 @@ a {
   color: #FF912C;
 }
 
-.webgl{
+.webgl {
   display: none;
 }
 
@@ -41,7 +45,7 @@ a {
   opacity: 1;
 }
 
-#button{
+#button {
   margin-top: 60px;
   cursor: pointer;
 }
@@ -79,24 +83,24 @@ a {
 }
 
 
-#fragment{
+#fragment {
   margin-top: 50%;
   width: 100% !important;
   animation: animatedFragment 10s linear infinite alternate;
 }
 
-#header{
+#header {
   font-weight: 50;
   margin-top: 60%;
-  font-size: 2em;
+  font-size: 3em;
   margin-left: -170%;
 }
 
-#text1{
+#text1 {
   opacity: 0;
 }
 
-#text2{
+#text2 {
   opacity: 0;
   margin-left: 10%;
   font-size: 1em;
@@ -121,36 +125,46 @@ a {
   font-size: 3em;
 }
 
-#text2S2{
+#text2S2 {
   margin-left: 35%;
 }
 
-#temple{
+#temple {
   margin-top: -30%;
   width: 100%;
 }
 
-#leftColumn, #rightColumn{
+#leftColumn,
+#rightColumn {
   width: 50%;
 }
 
-#text1S2, #text2S2, #text3S2{
+#temple,
+#text1S2,
+#text2S2,
+#text3S2 {
   opacity: 0;
 }
 
 @keyframes fadeIn {
-  0% {opacity:0;}
-  100% {opacity:1;}
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
-  
+
 @keyframes animatedFragment {
-	from {
-	  object-position: 0px 10px;
-	  width: 50%;
-	}
-	to {
-	  object-position: 0px 0px;
-	  width: 52%;
-	}
+  from {
+    object-position: 0px 10px;
+    width: 50%;
   }
+
+  to {
+    object-position: 0px 0px;
+    width: 52%;
+  }
+}

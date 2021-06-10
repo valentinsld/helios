@@ -76,6 +76,11 @@ var tlText3S2 = new TimelineLite({
   delay: 6
 })
 
+var tlTemple = new TimelineLite({
+  paused: true,
+  delay: 1
+})
+
 tl.set("#phaeton", {
     y: 90,
     width: 1400,
@@ -131,7 +136,7 @@ tlText1S2.set("#text1S2", {
     opacity: 1
   });
 
-  tlText2S2.set("#text2S2", {
+tlText2S2.set("#text2S2", {
     opacity: 0,
     ease: Expo.easeInOut
   })
@@ -139,12 +144,22 @@ tlText1S2.set("#text1S2", {
     opacity: 1
   });
 
-  tlText3S2.set("#text3S2", {
+tlText3S2.set("#text3S2", {
     opacity: 0,
     ease: Expo.easeInOut
   })
   .to("#text3S2", 3, {
     opacity: 1
+  });
+
+tlTemple.set("#temple", {
+    opacity: 0,
+    width: "80%",
+    ease: Expo.easeInOut
+  })
+  .to("#temple", 8, {
+    opacity: 1,
+    width: "100%"
   });
 
 
@@ -167,6 +182,7 @@ $("#phaeton").on("click", function () {
   tlText1S2.play();
   tlText2S2.play();
   tlText3S2.play();
+  tlTemple.play();
 })
 
 
