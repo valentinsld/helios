@@ -14,7 +14,7 @@ const easeRough = RoughEase.ease.config({
 
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
-import transition from '../utils/transition'
+import Transition from '../utils/transition'
 
 import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
@@ -192,8 +192,17 @@ export default class Scene0 {
     new LoaderModelsManager({
       arrayModels,
       gltfLoader: this.gltfLoader,
-      // progressFunction: this.updateProgress.bind(this)
+      endFunction: this.endLoadingModels.bind(this)
     })
+  }
+
+  endLoadingModels () {
+    const endTrans = Transition.fadeOut(this.endtransitionIntro.bind(this))
+  }
+
+  endtransitionIntro () {
+    // TODO : animation characters appear
+    console.log('endLoadingModels')
   }
 
   async initFeuLeft (gltf) {
@@ -459,7 +468,7 @@ export default class Scene0 {
   // Destruct
   //
   async destruct () {
-    const trans = await transition.fade()
+    const trans = await Transition.fadeIn(1)
 
     clearScene(this.scene)
     Matter.World.clear(this.world);

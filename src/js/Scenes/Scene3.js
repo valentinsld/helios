@@ -14,7 +14,7 @@ import Door from '../Elements/Door'
 
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
-import transition from '../utils/transition'
+import Transition from '../utils/transition'
 
 // import AnimatedFire from '../Elements/animatedFire'
 
@@ -106,8 +106,17 @@ export default class Scene3 {
     new LoaderModelsManager({
       arrayModels,
       gltfLoader: this.gltfLoader,
-      // progressFunction: this.updateProgress.bind(this)
+      endFunction: this.endLoadingModels.bind(this)
     })
+  }
+
+  endLoadingModels () {
+    const endTrans = Transition.fadeOut(this.endtransitionIntro.bind(this))
+  }
+
+  endtransitionIntro () {
+    // TODO : animation characters appear
+    console.log('endLoadingModels')
   }
 
   addWallsAndFloors () {
@@ -821,7 +830,7 @@ export default class Scene3 {
   // Destruct
   //
   async destruct () {
-    const trans = await transition.fade()
+    const trans = await Transition.fadeIn(2)
 
     clearScene(this.scene)
     Matter.World.clear(this.world);

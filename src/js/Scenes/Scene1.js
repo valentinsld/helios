@@ -22,7 +22,7 @@ import Door from '../Elements/Door'
 
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
-import transition from '../utils/transition'
+import Transition from '../utils/transition'
 
 import Statue from '../Elements/01_statue'
 import AnimatedFire from '../Elements/animatedFire'
@@ -135,7 +135,7 @@ export default class Scene1 {
     new LoaderModelsManager({
       arrayModels,
       gltfLoader: this.gltfLoader,
-      // progressFunction: this.updateProgress.bind(this)
+      // endFunction: this.endLoadingModels.bind(this)
     })
   }
 
@@ -883,7 +883,7 @@ export default class Scene1 {
       this.debug.removeFolder('Fire')
     }
     
-    const trans = await transition.fade()
+    const trans = await Transition.fadeIn(0)
 
     clearScene(this.scene)
     Matter.World.clear(this.world);
