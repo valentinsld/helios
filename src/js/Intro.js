@@ -52,26 +52,31 @@ var tlTemple = new TimelineLite({
 
 var tlSun = new TimelineLite({
   paused: true,
-  delay: 7,
-  onComplete : start
+  delay: 5,
+  onComplete: start
 })
 
 var tlText1S3 = new TimelineLite({
   paused: true,
-  delay: 8,
-  onComplete : start
+  delay: 6,
+  onComplete: start
 })
 
 var tlText2S3 = new TimelineLite({
   paused: true,
-  delay: 9,
-  onComplete : start
+  delay: 7,
+  onComplete: start
 })
 
 var tlText3S3 = new TimelineLite({
   paused: true,
-  delay: 10,
-  onComplete : start
+  delay: 8,
+  onComplete: start
+})
+
+var tlStart = new TimelineLite({
+  paused: true,
+  delay: 2,
 })
 
 tl.set("#phaeton", {
@@ -190,6 +195,13 @@ tlText3S3.set("#text3S3", {
     opacity: 1
   });
 
+tlStart.set("#endStart", {
+    opacity: 0,
+    ease: Expo.easeInOut
+  })
+  .to("#endStart", 3, {
+    opacity: 1
+  });
 
 $("#button").on("click", function () {
   $('#intro').delay(500).fadeOut(2000);
@@ -224,6 +236,7 @@ $("#suite2").on("click", function () {
 
 function start() {
   $('#scene3').delay(500).fadeOut(4000)
+  tlStart.play();
 }
 
 // $('#scene1').delay(5000).fadeOut(4000);

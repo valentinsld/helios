@@ -201,6 +201,10 @@ a:hover:after {
   margin-top: 30px;
 }
 
+#endStart {
+  opacity: 0;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
