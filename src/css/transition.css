@@ -6,16 +6,46 @@
   width: 100vw;
   height: 100vh;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'Nueva Std';
+  font-size: 35px;
+  color: #FFB662;
+
   background-color: #000;
-  color: white;
   opacity: 0;
   pointer-events: none;
 
   /* transition: opacity 0ms ease-in-out; */
 }
+.transition__top {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}
 
 .transition__texts {
-  padding: 50px;
+  width: 80%;
+  max-width: 1900px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.texts p {
+  max-width: 700px;
+  margin-bottom: 50px;
+}
+.texts p:nth-child(2),
+.texts p:nth-child(4) {
+  text-align: right;
+  margin-left: auto;
+}
+.texts p:last-child {
+  margin-bottom: 0px;
 }
 
 /* .transition.-see {

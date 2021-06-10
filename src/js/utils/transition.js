@@ -2,18 +2,18 @@ import gsap from 'gsap'
 
 const TEXTS = [
   [
-    'Scene1 -> Scene 2',
+    // 'Scene1 -> Scene 2',
     'Jamais le soleil n’avait rayonné si proche de la Terre ...',
     'Sans l’intervention de Zeus, ciel, terre et océans se seraient changés en flammes.'
   ],
   [
-    'Scene2 -> Scene 3',
+    // 'Scene2 -> Scene 3',
     'Jamais le soleil n’avait rayonné si proche de la Terre ...',
     'Sans l’intervention de Zeus, ciel, terre et océans se seraient changés en flammes.'
   ]
   ,
   [
-    'Scene3 -> Scene 4',
+    // 'Scene3 -> Scene 4',
     'Jamais le soleil n’avait rayonné si proche de la Terre ...',
     'Sans l’intervention de Zeus, ciel, terre et océans se seraient changés en flammes.'
   ]
