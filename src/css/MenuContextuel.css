@@ -1,0 +1,41 @@
+.MenuContextuel {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 18vw;
+  max-width: 300px;
+  min-width: 250px;
+  min-height: 200px;
+  pointer-events: none;
+
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: all 800ms ease-in-out;
+}
+.MenuContextuel.-see {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.MenuContextuel[hidden] {
+  display: none;
+  opacity: 0;
+}
+
+.MenuContextuel svg {
+  width: 100%;
+}
+
+.MenuContextuel__content {
+  text-align: center;
+  padding: 0 16px;
+
+  font-family: 'Nueva Std';
+  font-size: clamp(18px, 1.5vw, 22px);
+  color: #FFB662;
+}

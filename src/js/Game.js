@@ -8,6 +8,7 @@ import Stats from 'stats.js'
 import Matter from 'matter-js'
 
 import SceneManager from './Scenes'
+import { menuContextuelsCamera } from './utils/MenuContextuels'
 
 import vertexShader from '../glsl/gradient/vertex.glsl'
 import fragmentShader from '../glsl/gradient/fragment.glsl'
@@ -184,6 +185,9 @@ export default class Game{
           this.controls.enabled = this.debug.data.orbitControls
         })
     }
+
+    // add to menu contextuels
+    menuContextuelsCamera.init(this.camera)
   }
 
   initRenderer() {
