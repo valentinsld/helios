@@ -250,6 +250,7 @@ export default class Fire {
 
     this.cone.lookAt(lookAt)
 
+    MenuContextuels.removeMenu('captorFire')
 
     const allbodies = Matter.Composite.allBodies(this.world),
       bodies = allbodies.filter(bodie => 

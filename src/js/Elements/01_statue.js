@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import Matter from 'matter-js'
 import gsap from 'gsap'
 
+import MenuContextuels from '../utils/MenuContextuels'
+
 const POSITION = {
   x: 0,
   y: 0,
@@ -72,6 +74,12 @@ export default class Statue {
 
         if (conditionCollider && conditionPhaeton) {
           this.canInteract = true
+
+          MenuContextuels.addMenu({
+            id: 'Statues',
+            text: 'Intéragissez avec espace pour tourner la statue',
+            position: new THREE.Vector3(-330, -200, 0)
+          })
         }
       }
     });
@@ -87,6 +95,8 @@ export default class Statue {
 
         if (conditionCollider && conditionPhaeton) {
           this.canInteract = false
+
+          MenuContextuels.removeMenu('Statues')
         }
       }
     });
@@ -122,6 +132,8 @@ export default class Statue {
 
   interact() {
     if (!this.canInteract) return
+
+    MenuContextuels.removeMenu('Statues')
 
     this.step += 1
     // console.log(this.step, this.step % 4 === 0)
