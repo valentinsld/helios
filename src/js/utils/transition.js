@@ -75,7 +75,7 @@ class Transition {
     // calculer delay before play animation
     const nowDate = new Date()
     const delay = Math.max(this.minDuration - (nowDate - this.timeStartAnimation), 0) / 1000
-    console.log(delay)
+    // console.log(delay)
 
 
     // animation
