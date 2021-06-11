@@ -42,7 +42,7 @@ class CAMERA {
 
 export const menuContextuelsCamera =  new CAMERA()
 
-export default class MenuContextuels {
+class Menu {
   constructor ({ text = 'No text', position = {x: 0, y: 0, z: 0} }) {
     this.text = text
     this.position = position
@@ -86,3 +86,21 @@ export default class MenuContextuels {
     }, delay + 800);
   }
 }
+
+class MenuContextuels {
+  constructor() {
+    this.menus = {}
+  }
+
+  addMenu ({id, text, position}) {
+    if (this.menus[id]) return
+
+    this.menus[id] = new Menu({text, position})
+  }
+
+  removeMenu(id) {
+    this.menus[id].remove()
+  }
+}
+
+export default new MenuContextuels()

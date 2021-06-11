@@ -4,6 +4,8 @@ import Matter from 'matter-js'
 import vertexShader from '../../glsl/sun/vertex.glsl'
 import fragmentShader from '../../glsl/sun/fragment.glsl'
 
+import MenuContextuels from '../utils/MenuContextuels'
+
 const POSITION = {
   x: 0,
   y: 0,
@@ -89,6 +91,13 @@ export default class Fire {
           this.canUse = true
 
           this.fragment.hover()
+
+          if (!this.captor) return
+          MenuContextuels.addMenu({
+            id: 'captorFire',
+            text: 'Cliquez et maintenez pour diriger le faisceau',
+            position: new THREE.Vector3(-580, -300, 0)
+          })
         }
       }
     });
@@ -106,6 +115,9 @@ export default class Fire {
           this.canUse = false
 
           this.fragment.hover('out')
+
+          if (!this.captor) return
+          MenuContextuels.removeMenu('captorFire')
         }
       }
     });
