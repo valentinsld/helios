@@ -15,6 +15,7 @@ const easeRough = RoughEase.ease.config({
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import Transition from '../utils/transition'
+import MenuContextuels from '../utils/MenuContextuels'
 
 import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
@@ -440,6 +441,13 @@ export default class Scene0 {
   endScene () {
     if (this.open) return;
 
+    // menu
+    MenuContextuels.addMenu({
+      id: 'endScene2',
+      text: 'Lorsque vous marchez sur des plaques de pression, vous activez des mecanismes',
+      position: new THREE.Vector3(550, -100, 0)
+    })
+
     this.open = true
     this.door.open()
     console.log('EndScene')
@@ -469,6 +477,8 @@ export default class Scene0 {
   //
   async destruct () {
     const trans = await Transition.fadeIn(1)
+
+    MenuContextuels.removeMenu('endScene2')
 
     clearScene(this.scene)
     Matter.World.clear(this.world);
