@@ -15,6 +15,7 @@ import Door from '../Elements/Door'
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import Transition from '../utils/transition'
+import MenuContextuels from '../utils/MenuContextuels'
 
 // import AnimatedFire from '../Elements/animatedFire'
 
@@ -47,10 +48,6 @@ export default class Scene3 {
     this.addLadder()
     this.addDoor()
     this.addCacheForSymboles()
-
-    // setTimeout(() => {
-    //   this.endScene()
-    // }, 2000);
   }
 
   initZoomCamera () {
@@ -351,6 +348,65 @@ export default class Scene3 {
         z: 0
       }
     })
+
+    // add menucontextuel
+    const pos = {
+      x: -1050,
+      y: 110
+    }
+    var collider = Matter.Bodies.rectangle(
+      pos.x,
+      pos.y,
+      120,
+     100,
+      {
+        label: 'captorMenu',
+        isSensor: true,
+        isStatic: true,
+        render: {
+          strokeStyle: '#ff00ff',
+          fillStyle: 'transparent',
+          lineWidth: 5
+        }
+      }
+    );
+
+    Matter.World.add(this.world, collider)
+
+    // init events
+    Matter.Events.on(this.engine, 'collisionStart', (event) => {
+      var pairs = event.pairs;
+      
+      for (var i = 0, j = pairs.length; i != j; ++i) {
+        var pair = pairs[i];
+
+        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
+        const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
+
+        if (conditionCollider && conditionPhaeton) {
+          MenuContextuels.addMenu({
+            id: 'echelle',
+            text: 'Appuyez sur espace pour utiliser l\'échelle',
+            position: new THREE.Vector3(pos.x + 410, pos.y + 100, 0)
+          })
+        }
+      }
+    });
+
+    Matter.Events.on(this.engine, 'collisionEnd', (event) => {
+      var pairs = event.pairs;
+      
+      for (var i = 0, j = pairs.length; i != j; ++i) {
+        var pair = pairs[i];
+
+        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
+        const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
+
+        if (conditionCollider && conditionPhaeton) {
+          MenuContextuels.removeMenu('echelle')
+        }
+      }
+    });
   }
 
   addDoor () {
