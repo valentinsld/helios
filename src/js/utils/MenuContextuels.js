@@ -31,7 +31,7 @@ class CAMERA {
     // scale these values to our viewport size
     const left = percX * window.innerWidth
     const top = percY * window.innerHeight
-    console.log(left, top)
+    // console.log(left, top)
 
     return {
       x: left,

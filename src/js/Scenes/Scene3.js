@@ -647,7 +647,6 @@ export default class Scene3 {
     this.map.getObjectByName(`Plaque_4`).position.z = -0.3
 
     plaques.forEach((pos) => {
-      console.log(pos.id)
       const plaque = new Plaque({
         scene: this.scene,
         engine: this.engine,
