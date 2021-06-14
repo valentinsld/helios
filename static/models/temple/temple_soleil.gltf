@@ -11,23 +11,29 @@
                 0,
                 1,
                 2,
-                3
+                3,
+                4
             ]
         }
     ],
     "nodes" : [
         {
-            "mesh" : 0,
-            "name" : "temple",
+            "name" : "Camera",
+            "rotation" : [
+                -0.28199511766433716,
+                0.6513378024101257,
+                -0.6462697386741638,
+                -0.28030925989151
+            ],
             "translation" : [
-                0.8791079521179199,
-                0.003785073757171631,
-                0.7143239378929138
+                -4.070659160614014,
+                1.6536017656326294,
+                -5.742638111114502
             ]
         },
         {
-            "mesh" : 1,
-            "name" : "soleil",
+            "mesh" : 0,
+            "name" : "soleil.002",
             "rotation" : [
                 0.39741748571395874,
                 -0.5864222645759583,
@@ -41,6 +47,15 @@
             ]
         },
         {
+            "mesh" : 1,
+            "name" : "temple_opti",
+            "translation" : [
+                0.8791079521179199,
+                0.003785073757171631,
+                0.7143239378929138
+            ]
+        },
+        {
             "mesh" : 2,
             "name" : "fenetre",
             "scale" : [
@@ -51,7 +66,7 @@
             "translation" : [
                 -1.2781834602355957,
                 2.1011343002319336,
-                -0.4872879385948181
+                -0.48651593923568726
             ]
         },
         {
@@ -87,7 +102,7 @@
                 "index" : 0,
                 "texCoord" : 0
             },
-            "name" : "texture",
+            "name" : "texturesoleil",
             "pbrMetallicRoughness" : {}
         },
         {
@@ -101,7 +116,7 @@
                 "index" : 1,
                 "texCoord" : 0
             },
-            "name" : "texturesoleil",
+            "name" : "texture",
             "pbrMetallicRoughness" : {}
         },
         {
@@ -117,7 +132,7 @@
     ],
     "meshes" : [
         {
-            "name" : "Plane.025",
+            "name" : "Plane.007",
             "primitives" : [
                 {
                     "attributes" : {
@@ -131,7 +146,7 @@
             ]
         },
         {
-            "name" : "Plane.030",
+            "name" : "Plane.013",
             "primitives" : [
                 {
                     "attributes" : {
@@ -186,82 +201,82 @@
     "images" : [
         {
             "mimeType" : "image/png",
-            "name" : "TextureTemple",
-            "uri" : "TextureTemple.png"
+            "name" : "Texture_Soleil2",
+            "uri" : "Texture_Soleil2.png"
         },
         {
             "mimeType" : "image/png",
-            "name" : "Texture_Soleil",
-            "uri" : "Texture_Soleil.png"
+            "name" : "Texture_Temple",
+            "uri" : "Texture_Temple.png"
         }
     ],
     "accessors" : [
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 19459,
+            "count" : 1154,
             "max" : [
-                0.995988667011261,
-                3.9040324687957764,
-                -0.8924588561058044
+                0.44021689891815186,
+                0.024702778086066246,
+                0.42564406991004944
             ],
             "min" : [
-                -3.351097583770752,
-                -0.032559096813201904,
-                -2.705151081085205
+                -0.41557860374450684,
+                -0.035951923578977585,
+                -0.39196622371673584
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 19459,
+            "count" : 1154,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 19459,
+            "count" : 1154,
             "type" : "VEC2"
         },
         {
             "bufferView" : 3,
             "componentType" : 5123,
-            "count" : 29670,
+            "count" : 1728,
             "type" : "SCALAR"
         },
         {
             "bufferView" : 4,
             "componentType" : 5126,
-            "count" : 2402,
+            "count" : 3558,
             "max" : [
-                0.44021689891815186,
-                0.024704867973923683,
-                0.42564406991004944
+                0.9959890842437744,
+                3.9040324687957764,
+                -0.8892595171928406
             ],
             "min" : [
-                -0.41557860374450684,
-                -0.03595234453678131,
-                -0.39196619391441345
+                -3.351097583770752,
+                -0.002583928406238556,
+                -2.705151081085205
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 5,
             "componentType" : 5126,
-            "count" : 2402,
+            "count" : 3558,
             "type" : "VEC3"
         },
         {
             "bufferView" : 6,
             "componentType" : 5126,
-            "count" : 2402,
+            "count" : 3558,
             "type" : "VEC2"
         },
         {
             "bufferView" : 7,
             "componentType" : 5123,
-            "count" : 3612,
+            "count" : 5448,
             "type" : "SCALAR"
         },
         {
@@ -330,78 +345,78 @@
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 233508,
+            "byteLength" : 13848,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 233508,
-            "byteOffset" : 233508
+            "byteLength" : 13848,
+            "byteOffset" : 13848
         },
         {
             "buffer" : 0,
-            "byteLength" : 155672,
-            "byteOffset" : 467016
+            "byteLength" : 9232,
+            "byteOffset" : 27696
         },
         {
             "buffer" : 0,
-            "byteLength" : 59340,
-            "byteOffset" : 622688
+            "byteLength" : 3456,
+            "byteOffset" : 36928
         },
         {
             "buffer" : 0,
-            "byteLength" : 28824,
-            "byteOffset" : 682028
+            "byteLength" : 42696,
+            "byteOffset" : 40384
         },
         {
             "buffer" : 0,
-            "byteLength" : 28824,
-            "byteOffset" : 710852
+            "byteLength" : 42696,
+            "byteOffset" : 83080
         },
         {
             "buffer" : 0,
-            "byteLength" : 19216,
-            "byteOffset" : 739676
+            "byteLength" : 28464,
+            "byteOffset" : 125776
         },
         {
             "buffer" : 0,
-            "byteLength" : 7224,
-            "byteOffset" : 758892
-        },
-        {
-            "buffer" : 0,
-            "byteLength" : 48,
-            "byteOffset" : 766116
+            "byteLength" : 10896,
+            "byteOffset" : 154240
         },
         {
             "buffer" : 0,
             "byteLength" : 48,
-            "byteOffset" : 766164
+            "byteOffset" : 165136
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 48,
+            "byteOffset" : 165184
         },
         {
             "buffer" : 0,
             "byteLength" : 32,
-            "byteOffset" : 766212
+            "byteOffset" : 165232
         },
         {
             "buffer" : 0,
             "byteLength" : 12,
-            "byteOffset" : 766244
+            "byteOffset" : 165264
         },
         {
             "buffer" : 0,
             "byteLength" : 48,
-            "byteOffset" : 766256
+            "byteOffset" : 165276
         },
         {
             "buffer" : 0,
             "byteLength" : 48,
-            "byteOffset" : 766304
+            "byteOffset" : 165324
         },
         {
             "buffer" : 0,
             "byteLength" : 32,
-            "byteOffset" : 766352
+            "byteOffset" : 165372
         }
     ],
     "samplers" : [
@@ -412,7 +427,7 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 766384,
+            "byteLength" : 165404,
             "uri" : "temple_soleil.bin"
         }
     ]

@@ -1,9 +1,9 @@
 export default class LoaderModelsManager{
-  constructor({ arrayModels, gltfLoader, progressFunction }) {
+  constructor({ arrayModels, gltfLoader, endFunction }) {
     this.array = arrayModels
     this.arrayLength = arrayModels.length
     this.gltfLoader = gltfLoader
-    this.progressFunction = progressFunction
+    this.endFunction = endFunction
 
     this.domLoader = document.querySelector('.modelLoader')
     this.textLoader = this.domLoader.querySelector('.modelLoader__text')
@@ -16,7 +16,7 @@ export default class LoaderModelsManager{
   }
   
   initLoading() {
-    this.domLoader.classList.add('-show')
+    // this.domLoader.classList.add('-show')
 
     for (let index in this.array) {
       this.array[index].state = 0
@@ -54,14 +54,18 @@ export default class LoaderModelsManager{
 
     const progress = this.progress / this.arrayLength
 
-    this.textLoader.innerText = progress * 100 + '%'
-    this.barLoader.style.width = progress * 100 + '%'
+    // this.textLoader.innerText = progress * 100 + '%'
+    // this.barLoader.style.width = progress * 100 + '%'
 
     // console.log(progress)
     if (progress === 1) {
-      setTimeout(() => {
-        this.domLoader.classList.remove('-show')
-      }, 500)
+      // setTimeout(() => {
+      //   this.domLoader.classList.remove('-show')
+      // }, 500)
+
+      if (this.endFunction) {
+        this.endFunction.call()
+      }
     }
   }
 }

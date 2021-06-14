@@ -1,6 +1,11 @@
 import * as THREE from 'three'
 import Matter from 'matter-js'
 
+import vertexShader from '../../glsl/sun/vertex.glsl'
+import fragmentShader from '../../glsl/sun/fragment.glsl'
+
+import MenuContextuels from '../utils/MenuContextuels'
+
 const POSITION = {
   x: 0,
   y: 0,
@@ -18,7 +23,8 @@ const COLOR = '#ffff00'
 const DOM = document.querySelector('body')
 
 export default class Fire {
-  constructor ({fragment, engine, render, gltf, debug, scene, captor, position = POSITION, size = SIZE, optionsBox = {}, heightCone = 3800, angleCone = Math.PI * 0.02}) {
+  constructor ({game, fragment, engine, render, gltf, debug, scene, captor, position = POSITION, size = SIZE, optionsBox = {}, heightCone = 3800, angleCone = Math.PI * 0.02}) {
+    this.game = game
     this.type = 'Fire'
     this.scene = scene
     this.fragment = fragment
@@ -85,6 +91,13 @@ export default class Fire {
           this.canUse = true
 
           this.fragment.hover()
+
+          if (!this.captor) return
+          MenuContextuels.addMenu({
+            id: 'captorFire',
+            text: 'Cliquez et maintenez pour diriger le faisceau',
+            position: new THREE.Vector3(-580, -300, 0)
+          })
         }
       }
     });
@@ -102,26 +115,67 @@ export default class Fire {
           this.canUse = false
 
           this.fragment.hover('out')
+
+          if (!this.captor) return
+          MenuContextuels.removeMenu('captorFire')
         }
       }
     });
   }
 
   createCone() {
-    const radius = (this.heightCone * Math.tan(this.angleCone * 0.5)) * 2 * 0.8
-    const geometryBis = new THREE.ConeGeometry(radius, this.heightCone, 32);
+    const radius = (this.heightCone * Math.tan(this.angleCone)) * 2 * 0.8
+    const geometryBis = new THREE.ConeGeometry(radius, this.heightCone, 80);
     geometryBis.applyMatrix4( new THREE.Matrix4().setPosition( 0, this.heightCone * -0.5, 0 ) );
     geometryBis.rotateX(-Math.PI / 2);
-    const materialBis = new THREE.MeshStandardMaterial({
+    const material = new THREE.MeshStandardMaterial({
       color: 0xe8b591,
-      transparent: true,  
+      transparent: true,
       opacity: 0,
       metalness: 1,
       emissive: 0xe8b591,
       emissiveIntensity: 0.5
     });
+
+    const params = {
+      glowColor: 0xffc773,
+      glowRadius: 0.4,
+      glowPow: 2
+    }
+
+    const glowColor = new THREE.Color(params.glowColor)
+    const glowMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        intensityMultiplicator: {
+          value: params.glowRadius,
+        },
+        intensityPow: {
+          value: params.glowPow,
+        },
+        opacity: {
+          value: 0
+        },
+        color: new THREE.Uniform(glowColor),
+        viewVector: {
+          type: "v3",
+          value: this.game.camera.position
+        }
+      },
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      side: THREE.FrontSide,
+      blending: THREE.AdditiveBlending,
+      transparent: true
+    });
+
+    if (this.debug) {
+      const folder = this.debug.addFolder('Fire rayon')
+      folder.add(glowMaterial.uniforms.intensityMultiplicator, 'value', 0, 1).name('intensityMultiplicator')
+      folder.add(glowMaterial.uniforms.intensityPow, 'value', 2, 12).name('intensityPow')
+    }
+
     this.coneOpacity = 0.5
-    this.cone = new THREE.Mesh(geometryBis, materialBis);
+    this.cone = new THREE.Mesh(geometryBis, glowMaterial);
     this.scene.add(this.cone);
     this.cone.name = 'Cone'
 
@@ -158,8 +212,8 @@ export default class Fire {
   }
 
   createLight() {
-    this.spotLight = new THREE.SpotLight( 0xebaf5b, 0, this.heightCone, this.angleCone * 3, 1, 1 );
-    this.spotLight.power = 15
+    this.spotLight = new THREE.SpotLight( 0xebaf5b, 0, this.heightCone, this.angleCone * 2, 1, 1 );
+    this.spotLight.power = 8
     this.spotLight.intensity = 0
     this.spotLight.position.copy(this.position)
 
@@ -185,19 +239,18 @@ export default class Fire {
 
   startInteract() {
     this.spotLight.intensity = 10
-    this.cone.material.opacity = this.coneOpacity
-
-    DOM.style.cursor = 'grabbing'
+    this.cone.material.uniforms.opacity.value = this.coneOpacity
   }
 
   interact(cursor) {
     const startPoint = this.mesh.position
     const endPoint = cursor
     let lookAt = new THREE.Vector3().copy(endPoint)
-    lookAt.z += 80
+    lookAt.z -= 10
 
     this.cone.lookAt(lookAt)
 
+    MenuContextuels.removeMenu('captorFire')
 
     const allbodies = Matter.Composite.allBodies(this.world),
       bodies = allbodies.filter(bodie => 
@@ -237,7 +290,7 @@ export default class Fire {
 
   endInteract() {
     this.spotLight.intensity = 0
-    this.cone.material.opacity = 0
+    this.cone.material.uniforms.opacity.value = 0
   }
 
 }

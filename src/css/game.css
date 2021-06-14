@@ -16,7 +16,7 @@
   transform: rotateX(180deg);
 }
 
-.transition {
+#cursor {
   position: fixed;
   z-index: 1000;
   top: 0;
@@ -27,10 +27,12 @@
   /* background-color: #000; */
   opacity: 0;
   pointer-events: none;
+  top: -0.65vw;
+  left: -0.65vw;
 
-  transition: opacity 0ms ease-in-out;
-}
-.transition.-fade {
-  opacity: 1;
-  pointer-events: initial;
+  height: 1.3vw;
+  width: 1.3vw;
+
+  border: 1px solid white;
+  border-radius: 60px;
 }
