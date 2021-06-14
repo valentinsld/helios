@@ -373,6 +373,16 @@ export default class Fragment{
   update(time) {
     this.cursor.el.update(this.cursor.realX, this.cursor.realY)
 
+    // animation trails
+    const oldTrails = this.trailsPositions.slice(3, this.countTrails * 3)
+    const newPos = [this.mesh.position.x, this.mesh.position.y, this.mesh.position.z - this.radius]
+
+    this.trailsPositions = new Float32Array(this.countTrails * 3)
+    this.trailsPositions.set([...oldTrails, ...newPos])
+
+    this.trails.geometry.setAttribute('position', new THREE.BufferAttribute(this.trailsPositions, 3))
+    this.trails.geometry.attributes.position.needsUpdate = true
+
     if (this.animation) return
 
     let angle = 0
@@ -418,16 +428,5 @@ export default class Fragment{
     this.mesh.rotation.z = angle
     this.mesh.scale.x = scale
     this.mesh.scale.y = 1/scale
-
-    // if (time > 7) return
-    // animation trails
-    const oldTrails = this.trailsPositions.slice(3, this.countTrails * 3)
-    const newPos = [this.box.position.x, this.box.position.y, this.position.z - this.radius]
-
-    this.trailsPositions = new Float32Array(this.countTrails * 3)
-    this.trailsPositions.set([...oldTrails, ...newPos])
-
-    this.trails.geometry.setAttribute('position', new THREE.BufferAttribute(this.trailsPositions, 3))
-    this.trails.geometry.attributes.position.needsUpdate = true
   }
 }
