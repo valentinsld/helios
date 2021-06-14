@@ -22,6 +22,10 @@ h1 {
   font-family: "helios";
 }
 
+.webgl {
+  z-index: -1;
+}
+
 a {
   color: #FF912C;
   text-transform: uppercase;
@@ -52,10 +56,6 @@ a:hover:after {
 .subtitle {
   margin-top: -50px;
   font-size: 35px;
-}
-
-.webgl {
-  display: none;
 }
 
 #intro {
@@ -199,7 +199,7 @@ a:hover:after {
   margin-top: 10%;
 }
 
-.startAD {
+#startGame {
   margin-top: 30px;
 }
 
