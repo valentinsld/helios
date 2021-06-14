@@ -14,14 +14,15 @@ const SIZE = {
 }
 
 const COLOR = '#008d02'
-
+const SCALE = 50
 const ANIMATIONS = {
-  idle: 'idle',
-  marche: 'marche_avant'
+  idle: 'iddle2',
+  marche: 'course',
+  echelle: 'echelle'
 }
 
 export default class Phaeton{
-  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE}) {
+  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE, scale = SCALE, speed = 9.5}) {
     this.world = engine.world
     this.scene = scene
     this.textureLoader = textureLoader
@@ -30,9 +31,11 @@ export default class Phaeton{
     this.debug = debug
     this.position = position
     this.size = size
+    this.scale = scale
 
     this.animation = null
-    this.speed = 9.5
+    this.speed = speed
+    this.runed = false
     this.isTurnedTo = 'right'
     this.interactionElements = []
 
@@ -72,7 +75,7 @@ export default class Phaeton{
 
   loadGltf () {
     this.gltfLoader.load(
-      '/models/Phaeton/anims/phaeton.gltf',
+      '/models/Phaeton/phaeton.gltf',
       (gltf) =>
       {
         this.initPhaetonModel(gltf)
@@ -93,13 +96,41 @@ export default class Phaeton{
 
   initPhaetonModel (gltf) {
     this.mesh = gltf.scene
-    this.mesh.scale.set(50, 50, 50)
+    this.mesh.scale.set(this.scale, this.scale, this.scale)
     this.mesh.name = 'Phaeton'
     this.mesh.position.z = this.position.z
     this.mesh.rotation.y = Math.PI * 1.5
 
     this.mesh.castShadow = true
     this.mesh.receiveShadow = true
+
+    const texture = this.textureLoader.load('/models/Phaeton/texture_full.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/Phaeton/normal_phaeton.png')
+    normal.flipY = false
+
+    const emissive = {
+      intensity: 0.25,
+      color: 0x25231e
+    }
+
+    this.mesh.traverse((node) => {
+      if (node.isMesh) {
+        const material = node.material
+
+        material.map = texture
+        material.normalMap = normal
+        material.emissive = new THREE.Color(emissive.color)
+        material.emissiveIntensity = emissive.intensity
+
+        if (this.debugFolder) {
+          this.debugFolder.add(material, 'emissiveIntensity', 0, 1).name('Emissive intensity')
+          this.debugFolder.addColor(emissive, 'color',).name('Emissive color').onChange((value) => {
+            material.emissive = new THREE.Color(value)
+          })
+        }
+      }
+    })
 
     this.scene.add(this.mesh)
 
@@ -190,24 +221,30 @@ export default class Phaeton{
 
   goToLeft () {
     this.fadeToAction(ANIMATIONS.marche, 1)
-    Matter.Body.translate(this.box, Matter.Vector.create(-this.speed, 0))
 
     if (this.isTurnedTo === 'right') {
       gsap.to(
         this.mesh.rotation,
         {
-          y: Math.PI * 0.5,
+          y: Math.PI * 2.5,
           duration: 0.8,
-          ease: 'Power2.out'
+          ease: 'Power2.out',
+          onStart: () => {
+            this.animation = true
+
+            setTimeout(() => {
+              this.animation = false
+            }, 500);
+          }
         }
       )
     }
 
+    if (!this.runed) this.runed = this.lastClock
     this.isTurnedTo = 'left'
   }
   goToRight () {
     this.fadeToAction(ANIMATIONS.marche, 1)
-    Matter.Body.translate(this.box, Matter.Vector.create(this.speed, 0))
 
     if (this.isTurnedTo === 'left') {
       gsap.to(
@@ -215,15 +252,30 @@ export default class Phaeton{
         {
           y: Math.PI * 1.5,
           duration: 0.8,
-          ease: 'Power2.out'
+          ease: 'Power2.out',
+          onStart: () => {
+            this.animation = true
+
+            setTimeout(() => {
+              this.animation = false
+            }, 500);
+          }
         }
       )
     }
 
+    if (!this.runed) this.runed = this.lastClock
     this.isTurnedTo = 'right'
   }
 
+  playWalk() {
+    this.animation = true
+    this.fadeToAction(ANIMATIONS.marche, 1)
+  }
+
   keyup(event){
+    this.runed = false
+
     switch (event.code) {  
       case "Space":
         this.interactWithElements()
@@ -250,9 +302,9 @@ export default class Phaeton{
           // console.log('Start ', distStart, ' ; End ', distEnd)
 
           if (distStart <= element.distanceInteraction) {
-            this.moveTo(start, end)
+            this.useLadder(start, end, true)
           } else if(distEnd <= element.distanceInteraction) {
-            this.moveTo(end, start)
+            this.useLadder(end, start, false)
           }
           
           break;
@@ -264,21 +316,43 @@ export default class Phaeton{
     })
   }
   
-  moveTo(start, end) {
+  useLadder (start, end, upDown) {
     this.animation = gsap.timeline()
+
+    this.fadeToAction(ANIMATIONS.echelle, 0.6)
 
     this.animation.to(
       this.mesh.position,
       {
-        duration: 0.3,
+        duration: 0.8,
         x: start.x,
+        y: upDown ? "-=0" : "-=150"
       }
+    )
+    .to(
+      this.mesh.rotation,
+      {
+        duration: 0.5,
+        y: Math.PI * 2,
+      },
+      '<'
     )
     .to(
       this.mesh.position,
       {
         duration: 3,
-        y: end.y + this.size.y / 2,
+        y: end.y,
+        ease: 'linear',
+        onComplete: () => {
+          this.fadeToAction(ANIMATIONS.idle, 0.3)
+        }
+      }
+    )
+    .to(
+      this.mesh.rotation,
+      {
+        duration: 0.3,
+        y: Math.PI * 1.5,
         onComplete: () => {
           // translation du bodie
           const newPos = Matter.Vector.create(
@@ -288,6 +362,7 @@ export default class Phaeton{
           Matter.Body.translate(this.box, newPos)
 
           this.animation = null
+          this.isTurnedTo = 'right'
         }  
       }
     )
@@ -315,14 +390,18 @@ export default class Phaeton{
   }
 
   update(time) {
+    const dt = time - this.lastClock;
+    if ( this.mixer ) this.mixer.update( dt );
+    this.lastClock = time
+
     if (this.animation || !this.mesh) return
+    if (this.runed) {
+      let speed = this.isTurnedTo === 'right' ? this.speed : -this.speed
+      speed = speed * Math.min(time - this.runed, 1)
+      Matter.Body.translate(this.box, Matter.Vector.create(speed, 0))
+    }
+
     this.mesh.position.x = this.box.position.x
     this.mesh.position.y = this.box.position.y - this.size.y / 2
-
-    const dt = time - this.lastClock;
-
-    if ( this.mixer ) this.mixer.update( dt );
-
-    this.lastClock = time
   }
 }

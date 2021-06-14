@@ -2,8 +2,14 @@ import * as THREE from 'three'
 import Matter from 'matter-js'
 import gsap from 'gsap'
 
-import vertexShader from '../../glsl/sun/vertex.glsl'
-import fragmentShader from '../../glsl/sun/fragment.glsl'
+import Cursor from './Cursor'
+import easingsFunctions from '../utils/easingsFunctions'
+
+// import vertexShader from '../../glsl/sun/vertex.glsl'
+// import fragmentShader from '../../glsl/sun/fragment.glsl'
+
+import fragmentShaderParticules from '../../glsl/sunParticules/fragment.glsl'
+import vertexShaderParticules from '../../glsl/sunParticules/vertex.glsl'
 
 const POSITION = {
   x: 0,
@@ -12,12 +18,8 @@ const POSITION = {
 }
 const RADIUS = 21
 
-// DOM
-const DOM = document.querySelector('body')
-
-
 export default class Fragment{
-  constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS}) {
+  constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS, distance = 330}) {
     this.game = game
     this.canvas = canvas
     this.world = engine.world
@@ -28,12 +30,13 @@ export default class Fragment{
 
     this.params = {
       color: 0xebaf5b,
+      colorHover: 0xe34f22,
       metalness: 0.3,
       roughness: 0.4,
       emissiveColor: 0xfaa961,
       emissiveIntensity: 1,
       intensity: 4,
-      distance: 330,
+      distance: distance,
       glowColor: 0xf7f77f,
       glowRadius: 0.7,
       glowPow: 4.5
@@ -57,8 +60,10 @@ export default class Fragment{
     this.resize()
     this.addFragmentToWorld()
     this.addFragmentToScene()
+    this.initCursor()
     // this.addPlaneToScene()
     this.createTargetObject()
+    this.createTrail()
 
     if(this.debug) this.addDebug()
 
@@ -125,42 +130,45 @@ export default class Fragment{
     //
     // Glow effect
     //
-    const glowColor = new THREE.Color(this.params.glowColor)
-    let glowMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        intensityMultiplicator: {
-          value: this.params.glowRadius,
-        },
-        intensityPow: {
-          value: this.params.glowPow,
-        },
-        color: new THREE.Uniform(glowColor),
-        viewVector: {
-          type: "v3",
-          value: this.camera.position
-        }
-      },
-      vertexShader: vertexShader,
-      fragmentShader: fragmentShader,
-      side: THREE.FrontSide,
-      blending: THREE.AdditiveBlending,
-      transparent: true
-    });
+    // const glowColor = new THREE.Color(this.params.glowColor)
+    // let glowMaterial = new THREE.ShaderMaterial({
+    //   uniforms: {
+    //     intensityMultiplicator: {
+    //       value: this.params.glowRadius,
+    //     },
+    //     intensityPow: {
+    //       value: this.params.glowPow,
+    //     },
+    //     opacity: {
+    //       value: 1
+    //     },
+    //     color: new THREE.Uniform(glowColor),
+    //     viewVector: {
+    //       type: "v3",
+    //       value: this.camera.position
+    //     }
+    //   },
+    //   vertexShader: vertexShader,
+    //   fragmentShader: fragmentShader,
+    //   side: THREE.FrontSide,
+    //   blending: THREE.AdditiveBlending,
+    //   transparent: true
+    // });
 
-    let glowGeometry = new THREE.SphereBufferGeometry(
-      this.radius + 25,
-      32, 32
-    );
+    // let glowGeometry = new THREE.SphereBufferGeometry(
+    //   this.radius + 25,
+    //   32, 32
+    // );
     
-    let glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
-    glowMesh.position.z -= this.radius * 2
+    // let glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+    // glowMesh.position.z -= this.radius * 0.5
 
-    this.sphere.add(glowMesh);
-    this.sphere.glow = glowMesh;
+    // this.sphere.add(glowMesh);
+    // this.sphere.glow = glowMesh;
     this.mesh.add(this.sphere);
     
     // LOOP
-    this.game.addUpdatedElement('loopGlow', this.loopGlow.bind(this))
+    // this.game.addUpdatedElement('loopGlow', this.loopGlow.bind(this))
   }
 
   loopGlow (time) {
@@ -185,6 +193,61 @@ export default class Fragment{
     this.scene.add(this.plane)
   }
 
+  createTrail () {
+    this.countTrails = 10
+
+    this.trailsPositions = new Float32Array(this.countTrails * 3)
+    const sizes = new Float32Array(this.countTrails)
+
+    for (let i = 0; i < this.countTrails; i++) {
+      const i2 = i * 3
+
+      // Position
+      this.trailsPositions[i2    ] = this.position.x
+      this.trailsPositions[i2 + 1] = this.position.y
+      this.trailsPositions[i2 + 1] = this.position.z
+
+      //sizes
+      sizes[i] = easingsFunctions.easeOutQuad(i / this.countTrails)
+    }
+
+    const geometry = new THREE.BufferGeometry()
+    const material = new THREE.ShaderMaterial({
+      // size: parameters.size,
+      // sizeAttenuation: true,
+      side: THREE.FrontSide,
+      // blending: THREE.AdditiveBlending,
+      transparent: true,
+      vertexShader: vertexShaderParticules,
+      fragmentShader: fragmentShaderParticules,
+      uniforms: {
+        size: {
+          value: 75
+        },
+        uColor: {
+          value: new THREE.Color(this.params.color)
+        },
+        uPixel: {
+          value: this.game.renderer.getPixelRatio()
+        }
+      }
+    })
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(this.trailsPositions, 3))
+    geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1))
+
+    /**
+     * Points
+     */
+    this.trails = new THREE.Points(geometry, material)
+
+    this.scene.add(this.trails)
+  }
+
+  initCursor () {
+    this.cursor.el = new Cursor()
+  }
+
   createTargetObject() {
     this.targetObject = new THREE.Object3D();
     this.scene.add(this.targetObject);
@@ -203,6 +266,7 @@ export default class Fragment{
       this.sphere.material.color = new THREE.Color(color)
       this.sphereLight.color = new THREE.Color(color)
     })
+    this.debugFolder.addColor(this.params, "colorHover")
     this.debugFolder.add(this.sphere.material, "metalness", 0, 1)
     this.debugFolder.add(this.sphere.material, "roughness", 0, 1)
     this.debugFolder.addColor(this.params, 'emissiveColor').onChange((color) => {
@@ -229,7 +293,8 @@ export default class Fragment{
   hover (hov = 'in') {
     hov = hov === 'in'
 
-    DOM.style.cursor = hov ? 'pointer' : 'initial'
+    // DOM.style.cursor = hov ? 'pointer' : 'initial'
+    this.cursor.el.hover(hov)
     gsap.to(
       this.mesh.scale,
       {
@@ -238,6 +303,26 @@ export default class Fragment{
         z: hov ? 1.2 : 1,
         duration: 0.3,
         ease: 'Power3.out'
+      }
+    )
+
+    const newColor = hov ? new THREE.Color(this.params.colorHover) : new THREE.Color(this.params.color)
+
+    gsap.to(
+      this.sphere.material.color,
+      {
+        r: newColor.r,
+        g: newColor.g,
+        b: newColor.b
+      }
+    )
+
+    gsap.to(
+      this.trails.material.uniforms.uColor.value,
+      {
+        r: newColor.r,
+        g: newColor.g,
+        b: newColor.b
       }
     )
   }
@@ -268,6 +353,9 @@ export default class Fragment{
   cursorMove(e) {
     this.cursor.x = (e.clientX - this.screen.width / 2) * this.viewport.width / window.innerWidth
     this.cursor.y = (-e.clientY + this.screen.height/ 2) * this.viewport.height / window.innerHeight
+  
+    this.cursor.realX = e.clientX
+    this.cursor.realY = e.clientY
   }
   mouseUp() {
     if (!this.interactionElement) return
@@ -285,8 +373,23 @@ export default class Fragment{
     })
   }
 
-  update() {
+  update(time) {
+    this.cursor.el.update(this.cursor.realX, this.cursor.realY)
+
+    // animation trails
+    const oldTrails = this.trailsPositions.slice(3, this.countTrails * 3)
+    const newPos = [this.mesh.position.x, this.mesh.position.y, this.mesh.position.z - this.radius]
+
+    this.trailsPositions = new Float32Array(this.countTrails * 3)
+    this.trailsPositions.set([...oldTrails, ...newPos])
+
+    this.trails.geometry.setAttribute('position', new THREE.BufferAttribute(this.trailsPositions, 3))
+    this.trails.geometry.attributes.position.needsUpdate = true
+
     if (this.animation) return
+
+    let angle = 0
+    let scale = 1
 
     // interact with element
     if (this.interactionElement) {
@@ -317,10 +420,16 @@ export default class Fragment{
         Matter.Vector.create(forceX, forceY)
       )
 
+      angle = Math.atan2(forceY, forceX)
+      if (this.box.positionPrev.x != this.box.position.x) scale = Math.min(Math.max(1.3 * this.box.speed / 60, 1), 1.4)
     }
 
-      // update position mesh
-      this.mesh.position.x = this.box.position.x
-      this.mesh.position.y = this.box.position.y
-  } 
+    // update position mesh
+    this.mesh.position.x = this.box.position.x
+    this.mesh.position.y = this.box.position.y
+
+    this.mesh.rotation.z = angle
+    this.mesh.scale.x = scale
+    this.mesh.scale.y = 1/scale
+  }
 }

@@ -1,6 +1,8 @@
 @import './css/intro.css';
 @import './css/ModelsLoader.css';
+@import './css/transition.css';
 @import './css/game.css';
+@import './css/MenuContextuel.css';
 
 *
 {

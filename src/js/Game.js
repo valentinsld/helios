@@ -8,6 +8,7 @@ import Stats from 'stats.js'
 import Matter from 'matter-js'
 
 import SceneManager from './Scenes'
+import { menuContextuelsCamera } from './utils/MenuContextuels'
 
 import vertexShader from '../glsl/gradient/vertex.glsl'
 import fragmentShader from '../glsl/gradient/fragment.glsl'
@@ -78,7 +79,7 @@ export default class Game{
   createGradientBackground () {
     let color = {
       top: 0x000000, // 0x25180e,
-      bottom: 0xa0f11 // 0x170707
+      bottom: 0xf1414 // 0x170707
     }
 
     var myGradient = new THREE.Mesh(
@@ -184,6 +185,9 @@ export default class Game{
           this.controls.enabled = this.debug.data.orbitControls
         })
     }
+
+    // add to menu contextuels
+    menuContextuelsCamera.init(this.camera)
   }
 
   initRenderer() {
@@ -205,20 +209,20 @@ export default class Game{
       color: 0xffffff,
       intensity: 0.4
     }
-    const ambientLight = new THREE.AmbientLight(light.color, light.intensity)
-    this.globalScene.add(ambientLight)
+    this.ambientLight = new THREE.AmbientLight(light.color, light.intensity)
+    this.globalScene.add(this.ambientLight)
 
     if (this.debug) {
       const ambiantlightFoler = this.debugGlobalFolder.addFolder('Ambient light')
 
       const color = ambiantlightFoler.addColor(light, "color").name('Color')
       color.onChange((value) => {
-        ambientLight.color = new THREE.Color(value)
+        this.ambientLight.color = new THREE.Color(value)
       })
 
       const intensity = ambiantlightFoler.add(light, "intensity", 0, 1).name('Intensity')
       intensity.onChange((value) => {
-        ambientLight.intensity = value
+        this.ambientLight.intensity = value
       })
     }
   }
@@ -317,7 +321,7 @@ export default class Game{
         this.render.canvas.style.opacity = value
       })
 
-      const zoom = physicFolder.add(this.paramsPhysicRender, "zoom", 0, 3).name('Zoom')
+      const zoom = physicFolder.add(this.paramsPhysicRender, "zoom", 0, 10).name('Zoom')
       const posX = physicFolder.add(this.paramsPhysicRender.more, "x", -500, 500).name('Position X')
       const posY = physicFolder.add(this.paramsPhysicRender.more, "y", -500, 500).name('Position Y')
 

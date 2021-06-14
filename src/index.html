@@ -95,15 +95,37 @@
     <a id="startGame">Commencez l'aventure</a>
   </div>
   
-
+  <!-- Model Loader -->
   <div class="modelLoader">
     <div class="modelLoader__container">
       <p class="modelLoader__text">%</p>
       <div class="modelLoader__bar"></div>
     </div>
   </div>
+  <!-- Transition -->
+  <div class="transition">
+    <div class="transition__top">
+      <svg width="258" height="14" viewBox="0 0 258 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M146.923 6.71387H257.5" stroke="#FFB662"/>
+        <path d="M0 6.71387H55.29H110.58" stroke="#FFB662"/>
+        <path d="M126.484 8.7404H133.943V1.39746H119.373V12.9581" stroke="#FFB662" stroke-miterlimit="10"/>
+        <path d="M130.311 5.21767H122.853V12.5606H137.423V1" stroke="#FFB662" stroke-miterlimit="10"/>
+      </svg>
+    </div>
+    <div class="transition__texts texts"></div>
+  </div>
+
   <canvas class="webgl"></canvas>
-  
+
+  <div id="ModelMenu" class="MenuContextuel" hidden>
+    <svg width="258" height="14" viewBox="0 0 258 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M146.923 6.71387H257.5" stroke="#FFB662"/>
+      <path d="M0 6.71387H55.29H110.58" stroke="#FFB662"/>
+      <path d="M126.484 8.7404H133.943V1.39746H119.373V12.9581" stroke="#FFB662" stroke-miterlimit="10"/>
+      <path d="M130.311 5.21767H122.853V12.5606H137.423V1" stroke="#FFB662" stroke-miterlimit="10"/>
+    </svg>
+    <p class="MenuContextuel__content"></p>
+  </div>
 </body>
 </html>
 

@@ -53,6 +53,8 @@ export default class Ladder{
 
     Matter.World.add(this.world, collider)
 
+    return
+
     // init events
     Matter.Events.on(this.engine, 'collisionStart', function(event) {
       var pairs = event.pairs;
@@ -95,9 +97,11 @@ export default class Ladder{
    
 
     const MATERIAL = new THREE.MeshStandardMaterial({
-      color: '#ff0004',
+      color: 0x00ff00,
       metalness: 0.3,
       roughness: 0.4,
+      transparent: true,
+      opacity: 0
     })
 
     this.mesh = new THREE.Mesh(BOX, MATERIAL)

@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import * as Matter from 'matter-js'
 
+import Transition from '../utils/transition'
+
 export default class Scene0 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
     this.game = game
@@ -18,6 +20,18 @@ export default class Scene0 {
 
   initScene() {
     console.log('scene 4')
+
+    // TODO : replace by initModels
+    this.endLoadingModels()
+  }
+
+  endLoadingModels () {
+    const endTrans = Transition.fadeOut(this.endtransitionIntro.bind(this))
+  }
+
+  endtransitionIntro () {
+    // TODO : animation characters appear
+    console.log('endLoadingModels')
   }
 
   //

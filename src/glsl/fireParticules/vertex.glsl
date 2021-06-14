@@ -111,7 +111,7 @@ void main()
   vec4 modelPosition = modelMatrix * vec4(position, 1.0);
   
   modelPosition.y += uTime * uTimeScaleY;
-  modelPosition.y %= maxHeight;
+  modelPosition.y = mod(modelPosition.y, maxHeight);
 
   float modelPosOnHeight = modelPosition.y / maxHeight;
   // modelPosition.x += uLarge * modelPosOnHeight - 0.5;

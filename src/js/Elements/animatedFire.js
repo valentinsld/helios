@@ -13,17 +13,17 @@ const POSITION = {
 const PARAMETERS = {
   scale: 100,
   count: 6,
-  size: 30, // 5000
-  largeur: 5,
-  height: 750,
+  size: 24, // 5000
+  largeur: 15,
+  height: 300,
   radius: 150,
-  timeScaleY: 450,
-  windX: 400,
-  scaleNoise: 400,
-  colorBack: 0xd74216,
-  colorFront: 0xffe572,
-  colorStart: 10,
-  colorEnd: 50,
+  timeScaleY: 150,
+  windX: 170,
+  scaleNoise: 300,
+  colorBack: 0xf55b25,
+  colorFront: 0xffc773,
+  colorStart: 20,
+  colorEnd: 37,
 }
 
 
@@ -43,7 +43,7 @@ export default class AnimatedFire {
     this.initParticules()
     this.initMesh(gltf)
 
-    this.game.addUpdatedElement('clip', this.updateAnimationFire.bind(this))
+    this.game.addUpdatedElement(`clip${Math.random()}`, this.updateAnimationFire.bind(this))
     if (this.debug) {
       this.debugFolder = this.debug.addFolder('Fire')
       this.initDebug()
@@ -116,7 +116,7 @@ export default class AnimatedFire {
       }
     })
 
-    console.log(positions)
+    // console.log(positions)
     this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     this.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
     this.geometry.setAttribute('aScale', new THREE.BufferAttribute(scale, 1))
