@@ -1,6 +1,7 @@
-
 import gsap from 'gsap'
-import { Expo } from "gsap";
+import {
+  Expo
+} from "gsap";
 
 export default class Intro {
   constructor(game) {
@@ -11,24 +12,25 @@ export default class Intro {
 
 
 var tl = gsap.timeline({
-  paused: true,
-  delay: 3
+  paused: true
 })
 
-// var tlF = gsap.timeline({
-//   paused: true,
-//   delay: 4
-// })
+var tl2 = gsap.timeline({
+  paused: true,
+  delay: 1
+})
 
-// var tlT1 = gsap.timeline({
-//   paused: true,
-//   delay: 5
-// })
+var tl3 = gsap.timeline({
+  paused: true,
+  delay: 3,
+  onComplete: start
+})
 
-// var tlT2 = gsap.timeline({
-//   paused: true,
-//   delay: 6
-// })
+var tl4 = gsap.timeline({
+  paused: true,
+  delay: 1,
+})
+
 
 tl.set("#phaeton", {
   y: 90,
@@ -54,7 +56,6 @@ tl.set("#text2", {
 })
 
 
-
 tl.to("#phaeton", 6, {
   y: -10,
   width: 1000,
@@ -75,197 +76,153 @@ tl.to("#text1", 7, {
 
 tl.to("#text2", 7, {
   opacity: 1
+}, "< 1");
+
+
+
+
+
+
+tl2.set("#scene1", {
+  opacity: 1,
+  ease: Expo.easeInOut
+});
+
+tl2.set("#text1S2", {
+  opacity: 0,
+  ease: Expo.easeInOut
+});
+
+tl2.set("#text2S2", {
+  opacity: 0,
+  ease: Expo.easeInOut
+});
+
+tl2.set("#text3S2", {
+  opacity: 0,
+  ease: Expo.easeInOut
+});
+
+tl2.set("#temple", {
+  opacity: 0,
+  width: "80%",
+  ease: Expo.easeInOut
+});
+
+tl2.to("#scene1", {
+  opacity: 0
+});
+
+tl2.to("#temple", 10, {
+  opacity: 1,
+  width: "100%"
+}, "< 1");
+
+tl2.to("#text1S2", 2, {
+  opacity: 1
+}, "< 2");
+
+tl2.to("#text2S2", 2, {
+  opacity: 1
+}, "< 2");
+
+
+tl2.to("#text3S2", 2, {
+  opacity: 1
+}, "< 1");
+
+
+tl3.set("#sun", {
+  opacity: 0,
+  width: "140%",
+  ease: Expo.easeInOut
+})
+
+tl3.set("#text1S3", {
+  opacity: 0,
+  ease: Expo.easeInOut
+})
+
+tl3.set("#text2S3", {
+  opacity: 0,
+  ease: Expo.easeInOut
+})
+
+tl3.set("#text3S3", {
+  opacity: 0,
+  ease: Expo.easeInOut
+})
+
+
+tl3.set("#text2S3", {
+  opacity: 0,
+  ease: Expo.easeInOut
+})
+
+
+tl3.to("#sun", 13, {
+  opacity: 1,
+  rotation: "+=60",
+  width: "170%"
+});
+
+tl3.to("#text1S3", 3, {
+  opacity: 1
+}, "< 2");
+
+
+tl3.to("#text2S3", 3, {
+  opacity: 1
 }, "< 3");
 
 
+tl3.to("#text3S3", 3, {
+  opacity: 1
+}, "< 4");
 
 
 
-
-
-
-
-
-
-
-
-
-var tlS1 = gsap.timeline({
-  paused: true,
-  delay: 6
+tl4.set("#endStart", {
+  opacity: 0,
+  ease: Expo.easeInOut
 })
-
-var tlText1S2 = gsap.timeline({
-  paused: true,
-  delay: 4
-})
-
-var tlText2S2 = gsap.timeline({
-  paused: true,
-  delay: 5
-})
-
-var tlText3S2 = gsap.timeline({
-  paused: true,
-  delay: 6
-})
-
-var tlTemple = gsap.timeline({
-  paused: true,
-  delay: 5
-})
-
-var tlSun = gsap.timeline({
-  paused: true,
-  delay: 5,
-  onComplete: start
-})
-
-var tlText1S3 = gsap.timeline({
-  paused: true,
-  delay: 6,
-  onComplete: start
-})
-
-var tlText2S3 = gsap.timeline({
-  paused: true,
-  delay: 7,
-  onComplete: start
-})
-
-var tlText3S3 = gsap.timeline({
-  paused: true,
-  delay: 8,
-  onComplete: start
-})
-
-var tlStart = gsap.timeline({
-  paused: true,
-  delay: 2,
-})
+tl4.to("#endStart", 3, {
+  opacity: 1
+});
 
 
+var button = document.getElementById('button')
+var suite = document.getElementById('suite')
+var intro = document.getElementById('intro')
+var scene1 = document.getElementById("scene1")
+var scene2 = document.getElementById('scene2')
+var scene3 = document.getElementById('scene3')
 
-
-tlS1.set("#scene1", {
-    opacity: 1,
-    ease: Expo.easeInOut
-  })
-  .to("#scene1", 3, {
-    opacity: 0
-  });
-
-tlText1S2.set("#text1S2", {
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#text1S2", 3, {
-    opacity: 1
-  });
-
-tlText2S2.set("#text2S2", {
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#text2S2", 3, {
-    opacity: 1
-  });
-
-tlText3S2.set("#text3S2", {
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#text3S2", 3, {
-    opacity: 1
-  });
-
-tlTemple.set("#temple", {
-    opacity: 0,
-    width: "80%",
-    ease: Expo.easeInOut
-  })
-  .to("#temple", 8, {
-    opacity: 1,
-    width: "100%"
-  });
-
-tlSun.set("#sun", {
-    opacity: 0,
-    width: "140%",
-    ease: Expo.easeInOut
-  })
-  .to("#sun", 10, {
-    opacity: 1,
-    rotation: "+=60",
-    width: "170%"
-  });
-
-tlText1S3.set("#text1S3", {
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#text1S3", 3, {
-    opacity: 1
-  });
-
-tlText2S3.set("#text2S3", {
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#text2S3", 3, {
-    opacity: 1
-  });
-
-tlText3S3.set("#text3S3", {
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#text3S3", 3, {
-    opacity: 1
-  });
-
-tlStart.set("#endStart", {
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#endStart", 3, {
-    opacity: 1
-  });
-
-$("#button").on("click", function () {
-  $('#intro').delay(500).fadeOut(2000);
-  $('#scene1').delay(500).fadeIn(2000);
+button.addEventListener("click", () => {
+  console.log('click')
+  intro.classList.add('hide');
+  scene1.classList.add('show');
   tl.play();
 })
 
-$("#suite").on("click", function () {
-  tlS1.play();
+suite.addEventListener("click", () => {
+  scene1.classList.add('hide');
+  scene2.classList.add('show');
+  tl2.play();
 })
 
-
-$("#suite").on("click", function () {
-  $('#scene1').delay(500).fadeOut(2000);
-  tlText1S2.play();
-  tlText2S2.play();
-  tlText3S2.play();
-  tlTemple.play();
-})
-
-
-$("#suite2").on("click", function () {
-  $('#scene2').delay(500).fadeOut(4000)
-  tlSun.play();
-  tlText1S3.play();
-  tlText2S3.play();
-  tlText3S3.play();
+suite2.addEventListener("click", () => {
+  scene2.classList.add('hide');
+  scene3.classList.add('show');
+  tl3.play();
 })
 
 function start() {
-  $('#scene3').delay(500).fadeOut(4000)
-  tlStart.play();
+  scene3.classList.add('hide');
+  tl4.play();
 }
 
-// $('#scene1').delay(5000).fadeOut(4000);
+
 
 
 //game.sceneManager.next()
