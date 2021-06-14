@@ -19,7 +19,7 @@ import MenuContextuels from '../utils/MenuContextuels'
 
 // import AnimatedFire from '../Elements/animatedFire'
 
-const CODE = [0,3,1,2]
+const CODE = [0,1,2,3]
 
 export default class Scene3 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
@@ -312,6 +312,8 @@ export default class Scene3 {
       )
       // this.symboles[i].material.emissiveIntensity = 0.5
       this.code.push(i)
+
+      console.log(this.code)
     }
 
     if (JSON.stringify(this.code) === JSON.stringify(CODE)) {
@@ -618,6 +620,11 @@ export default class Scene3 {
         y: 105,
         z: 0
       },
+      { // 3
+        x: -800,
+        y: -305,
+        z: 0
+      },
       { // 1
         x: -880,
         y: 105,
@@ -628,11 +635,7 @@ export default class Scene3 {
         y: -305,
         z: 0
       },
-      { // 3
-        x: -800,
-        y: -305,
-        z: 0
-      }
+
     ]
 
     plaques.forEach((pos, i) => {
