@@ -312,8 +312,6 @@ export default class Scene3 {
       )
       // this.symboles[i].material.emissiveIntensity = 0.5
       this.code.push(i)
-
-      console.log(this.code)
     }
 
     if (JSON.stringify(this.code) === JSON.stringify(CODE)) {
@@ -547,7 +545,7 @@ export default class Scene3 {
     renes.position.y = 1.330
 
     // TEXTURE MAP
-    const texturemap = this.textureLoader.load('/models/Scene3/Texture_Enigme3_modif.png')
+    const texturemap = this.textureLoader.load('/models/Scene3/Texture_Enigme3_modif2.png')
     texturemap.flipY = false
     const normalmap = this.textureLoader.load('/models/Scene3/Normal_Decors.png')
     normalmap.flipY = false
@@ -615,36 +613,47 @@ export default class Scene3 {
     this.plaques = []
 
     const plaques = [
-      { // 0
+      {
         x: -1150,
         y: 105,
-        z: 0
+        z: 0,
+        id: 1,
+        sym: 1,
       },
-      { // 3
-        x: -800,
-        y: -305,
-        z: 0
-      },
-      { // 1
+      {
         x: -880,
         y: 105,
-        z: 0
+        z: 0,
+        id: 2,
+        sym: 3,
       },
-      { // 2
+      {
         x: -1200,
         y: -305,
-        z: 0
+        z: 0,
+        id: 3,
+        sym: 4,
       },
-
+      {
+        x: -800,
+        y: -305,
+        z: 0,
+        id: 4,
+        sym: 2,
+      },
     ]
 
-    plaques.forEach((pos, i) => {
+    this.map.getObjectByName(`Plaque_3`).position.z = -0.3
+    this.map.getObjectByName(`Plaque_4`).position.z = -0.3
+
+    plaques.forEach((pos) => {
+      console.log(pos.id)
       const plaque = new Plaque({
         scene: this.scene,
         engine: this.engine,
         func: this.pressPlaque.bind(this),
-        funcParam: i,
-        gltf: this.map.getObjectByName(`Plaque_${i+1}`),
+        funcParam: pos.sym - 1,
+        gltf: this.map.getObjectByName(`Plaque_${pos.id}`),
         box: {
           position: {
             x: pos.x,
