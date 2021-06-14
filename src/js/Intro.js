@@ -1,3 +1,7 @@
+
+import gsap from 'gsap'
+import { Expo } from "gsap";
+
 export default class Intro {
   constructor(game) {
     console.log('Start intro !')
@@ -5,117 +9,142 @@ export default class Intro {
   }
 }
 
-var tl = new TimelineLite({
+
+var tl = gsap.timeline({
   paused: true,
   delay: 3
 })
 
-var tlF = new TimelineLite({
+// var tlF = gsap.timeline({
+//   paused: true,
+//   delay: 4
+// })
+
+// var tlT1 = gsap.timeline({
+//   paused: true,
+//   delay: 5
+// })
+
+// var tlT2 = gsap.timeline({
+//   paused: true,
+//   delay: 6
+// })
+
+tl.set("#phaeton", {
+  y: 90,
+  width: 1400,
+  opacity: 0,
+  ease: Expo.easeInOut
+})
+
+tl.set("#fragment", {
+  x: 140,
+  opacity: 0,
+  ease: Expo.easeInOut
+})
+
+tl.set("#text1", {
+  opacity: 0,
+  ease: Expo.easeInOut
+})
+
+tl.set("#text2", {
+  opacity: 0,
+  ease: Expo.easeInOut
+})
+
+
+
+tl.to("#phaeton", 6, {
+  y: -10,
+  width: 1000,
+  opacity: 1
+});
+
+
+tl.to("#fragment", 7, {
+  x: -100,
+  opacity: 1
+}, "< 2");
+
+
+tl.to("#text1", 7, {
+  opacity: 1
+}, "< 3");
+
+
+tl.to("#text2", 7, {
+  opacity: 1
+}, "< 3");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var tlS1 = gsap.timeline({
+  paused: true,
+  delay: 6
+})
+
+var tlText1S2 = gsap.timeline({
   paused: true,
   delay: 4
 })
 
-var tlT1 = new TimelineLite({
+var tlText2S2 = gsap.timeline({
   paused: true,
   delay: 5
 })
 
-var tlT2 = new TimelineLite({
+var tlText3S2 = gsap.timeline({
   paused: true,
   delay: 6
 })
 
-var tlS1 = new TimelineLite({
-  paused: true,
-  delay: 6
-})
-
-var tlText1S2 = new TimelineLite({
-  paused: true,
-  delay: 4
-})
-
-var tlText2S2 = new TimelineLite({
+var tlTemple = gsap.timeline({
   paused: true,
   delay: 5
 })
 
-var tlText3S2 = new TimelineLite({
-  paused: true,
-  delay: 6
-})
-
-var tlTemple = new TimelineLite({
-  paused: true,
-  delay: 5
-})
-
-var tlSun = new TimelineLite({
+var tlSun = gsap.timeline({
   paused: true,
   delay: 5,
   onComplete: start
 })
 
-var tlText1S3 = new TimelineLite({
+var tlText1S3 = gsap.timeline({
   paused: true,
   delay: 6,
   onComplete: start
 })
 
-var tlText2S3 = new TimelineLite({
+var tlText2S3 = gsap.timeline({
   paused: true,
   delay: 7,
   onComplete: start
 })
 
-var tlText3S3 = new TimelineLite({
+var tlText3S3 = gsap.timeline({
   paused: true,
   delay: 8,
   onComplete: start
 })
 
-var tlStart = new TimelineLite({
+var tlStart = gsap.timeline({
   paused: true,
   delay: 2,
 })
 
-tl.set("#phaeton", {
-    y: 90,
-    width: 1400,
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#phaeton", 10, {
-    y: -10,
-    width: 1000,
-    opacity: 1
-  });
 
-tlF.set("#fragment", {
-    x: 140,
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#fragment", 12, {
-    x: -100,
-    opacity: 1
-  });
-
-tlT1.set("#text1", {
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#text1", 8, {
-    opacity: 1
-  });
-
-tlT2.set("#text2", {
-    opacity: 0,
-    ease: Expo.easeInOut
-  })
-  .to("#text2", 11, {
-    opacity: 1
-  });
 
 
 tlS1.set("#scene1", {
@@ -207,9 +236,6 @@ $("#button").on("click", function () {
   $('#intro').delay(500).fadeOut(2000);
   $('#scene1').delay(500).fadeIn(2000);
   tl.play();
-  tlF.play();
-  tlT1.play();
-  tlT2.play();
 })
 
 $("#suite").on("click", function () {
