@@ -1,5 +1,6 @@
 attribute float aSize;
 uniform float size;
+uniform float uPixel;
 
 void main()
 {
@@ -13,5 +14,5 @@ void main()
   gl_Position = projectedPosition;
 
   // Size
-  gl_PointSize = size * aSize;
+  gl_PointSize = size * aSize * uPixel;
 }

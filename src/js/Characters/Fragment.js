@@ -226,6 +226,9 @@ export default class Fragment{
         },
         uColor: {
           value: new THREE.Color(this.params.color)
+        },
+        uPixel: {
+          value: this.game.renderer.getPixelRatio()
         }
       }
     })
