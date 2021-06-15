@@ -288,21 +288,22 @@ export default class Scene1 {
 
     const children = [...gltf.scene.children]
     for (const node of children) {
+      console.log(node.name)
       if (node.name === 'statue_debout') {
-        node.position.y = 0.021
-        node.position.z = -2.121
+        // node.position.y = 0.021
+        // node.position.z = -2.121
 
         statue1.add(node)
         statue1.position.copy(node.position)
         node.position.set(0,0,0)
-      } else if (node.name === 'statue_assis') {
-        node.position.y = 0.257
-        node.position.z = -2.725
+      } else if (node.name === 'statue_assise') {
+        // node.position.y = 0.257
+        // node.position.z = -2.725
 
         statue2.add(node)
         statue2.position.copy(node.position)
         node.position.set(0,0,0)
-      } else if (node.name === 'brasier') {
+      } else if (node.name === 'brazier') {
         brasier = node
         this.groupeBrasier.add(brasier)
       }
@@ -316,9 +317,9 @@ export default class Scene1 {
   }
 
   async initStatue1 (gltf) {
-    const texture = this.textureLoader.load('/models/statues_brasier/texture_debout_anamorphose.png')
+    const texture = this.textureLoader.load('/models/statues_brasier/Texture_Statues_Brasier_bake.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/statues_brasier/normal_debout_anamorphose.png')
+    const normal = this.textureLoader.load('/models/statues_brasier/Normal_Statues_Brasier_bake.png')
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
@@ -357,9 +358,9 @@ export default class Scene1 {
   }
 
   async initStatue2 (gltf) {
-    const texture = this.textureLoader.load('/models/statues_brasier/texture_assis_anamorphose.png')
+    const texture = this.textureLoader.load('/models/statues_brasier/Texture_Statues_Brasier_bake.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/statues_brasier/normal_assis_anamorphose.png')
+    const normal = this.textureLoader.load('/models/statues_brasier/Normal_Statues_Brasier_bake.png')
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
@@ -581,9 +582,9 @@ export default class Scene1 {
   }
 
   async initBrasier (gltf) {
-    const texture = this.textureLoader.load('/models/statues_brasier/texture_brasier.png')
+    const texture = this.textureLoader.load('/models/statues_brasier/Texture_Statues_Brasier_bake.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/statues_brasier/normal_brasier.png')
+    const normal = this.textureLoader.load('/models/statues_brasier/Normal_Statues_Brasier_bake.png')
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
