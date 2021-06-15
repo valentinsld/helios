@@ -196,7 +196,7 @@ a:hover:after {
   text-align: center;
   font-size: 3em;
   padding: 10%;
-  margin-top: 10%;
+  margin-top: 5%;
 }
 
 #startGame {
@@ -226,6 +226,20 @@ a:hover:after {
   z-index: 4 !important;
   font-size: 20px !important;
   cursor: pointer;
+}
+
+.players{
+  display: flex;
+  font-size: 20px;
+  margin-top: 10%;
+}
+
+.playerPhaeton{
+  width: 50%;
+}
+
+.playerFragment{
+  width: 50%;
 }
 
 
