@@ -27,6 +27,9 @@ import Transition from '../utils/transition'
 import Statue from '../Elements/01_statue'
 import AnimatedFire from '../Elements/animatedFire'
 
+import vertexShader from '../../glsl/gradient/vertex.glsl'
+import fragmentShader from '../../glsl/gradient/fragment.glsl'
+
 export default class Scene1 {
   constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game, debug}) {
     this.game = game
@@ -66,6 +69,7 @@ export default class Scene1 {
     this.initCharacters()
     this.initModels()
     this.addElements()
+    this.createGradientBackground()
   }
 
   initZoomCamera () {
@@ -278,6 +282,54 @@ export default class Scene1 {
     this.scene.add(planeMesh)
   }
 
+  createGradientBackground () {
+    let color = {
+      top: 0x000000, // 0x25180e,
+      bottom: 0xf1414 // 0x170707
+    }
+
+    var myGradient = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(2,2,1,1),
+      new THREE.ShaderMaterial({
+        uniforms: {
+          uColorA: { value: new THREE.Color(color.bottom) },
+          uColorB: { value: new THREE.Color(color.top) },
+          uTime: { value: 0 },
+          uSize: { value: 5 },
+          uSizeNoise: { value: 0.02 },
+          uSpeedTime: { value: 0.07 }
+        },
+        vertexShader,
+        fragmentShader
+      })
+    )
+    const uniforms = myGradient.material.uniforms
+    myGradient.material.depthWrite = false
+    myGradient.renderOrder = -99999
+
+    this.scene.add(myGradient)
+
+    this.game.addUpdatedElement('gradient', (time) => {
+      uniforms.uTime.value = time
+    })
+
+    if (this.debug) {
+      const colorTop = this.debugSceneFolder.addColor(color, "top").name('background color')
+      colorTop.onChange((value) => {
+        uniforms.uColorB.value = new THREE.Color(value)
+      })
+
+      const colorBottom = this.debugSceneFolder.addColor(color, "bottom").name('background color')
+      colorBottom.onChange((value) => {
+        uniforms.uColorA.value = new THREE.Color(value)
+      })
+
+      this.debugSceneFolder.add(uniforms.uSize, "value", 0, 150).name('Size')
+      this.debugSceneFolder.add(uniforms.uSizeNoise, "value", 0, 0.1).name('Size noise')
+      this.debugSceneFolder.add(uniforms.uSpeedTime, "value", 0, 4).name('Speed noise')
+    }
+  }
+
   async initStatuesBrasier (gltf) {
 
     let brasier = null
@@ -288,7 +340,6 @@ export default class Scene1 {
 
     const children = [...gltf.scene.children]
     for (const node of children) {
-      console.log(node.name)
       if (node.name === 'statue_debout') {
         // node.position.y = 0.021
         // node.position.z = -2.121
