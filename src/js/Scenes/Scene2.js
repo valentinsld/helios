@@ -328,7 +328,7 @@ export default class Scene0 {
   async initSalle (gltf) {
     this.map = gltf.scene
     this.map.scale.set(250, 250, 250)
-    this.map.position.set(-100, -680, -200)
+    this.map.position.set(-50, -680, -200)
 
     this.scene.add(this.map) 
 
