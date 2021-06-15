@@ -86,8 +86,8 @@ export default class Scene0 {
 
   initMap (gltf) {
     this.map = gltf.scene
-    this.map.scale.set(470, 470, 470)
-    this.map.position.set(-100, -680, 180)
+    this.map.scale.set(310, 310, 310)
+    this.map.position.set(-50, -700, -600)
 
     this.scene.add(this.map)
 
@@ -105,8 +105,10 @@ export default class Scene0 {
     })
 
     this.map.traverse((node) => {
-      console.log(node.name)
-      if (node.isMesh) {
+      // console.log(node.name)
+      if (node.name === '1er_plan') {
+        return
+      } else if (node.isMesh) {
         node.material = material
       }
     })
