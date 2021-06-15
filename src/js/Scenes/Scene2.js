@@ -98,8 +98,8 @@ export default class Scene0 {
     const floor = new Box({
       engine: this.engine,
       scene: this.scene,
-      color: 0xff0000,
-      render: false,
+      color: 0x000000,
+      // render: false,
       size: {
         x: 3600,
         y: 400,
@@ -108,7 +108,7 @@ export default class Scene0 {
       position : {
         x: 0,
         y: -880,
-        z: 0
+        z: 200
       }
     })
 
@@ -157,7 +157,7 @@ export default class Scene0 {
       fragment: this.fragment,
       // render: false,
       position : {
-        x : 1200,
+        x : 1350,
         y : -500,
         z : 250
       },
@@ -420,6 +420,7 @@ export default class Scene0 {
       this.phaeton.mesh.position,
       {
         x: "+=450",
+        y: "-=250",
         duration: 1.5,
         ease: "sin.in"
       }
@@ -433,6 +434,7 @@ export default class Scene0 {
       this.fragment.mesh.position,
       {
         x: "+=450",
+        y: "-=250",
         duration: 2.5,
         ease: "sin.inOut"
       }
