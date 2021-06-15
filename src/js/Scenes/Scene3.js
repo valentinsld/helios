@@ -81,6 +81,7 @@ export default class Scene3 {
       debug: this.debug,
       radius: 30,
       distance: 400,
+      multiplicatorSpeed: 1.5,
       position : {
         x : -1150,
         y : 200,
