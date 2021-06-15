@@ -213,7 +213,7 @@ export default class Scene0 {
       // debug: this.debug,
       gltf,
       position: {
-        x: -920,
+        x: -870,
         y: -600,
         z: -260,
       },
@@ -227,7 +227,7 @@ export default class Scene0 {
       }
     })
 
-    this.initLightBrasier(this.fireLeft)
+    this.initLightBrasier(this.fireLeft, 50)
 
     return this.newPromise()
   }
@@ -239,7 +239,7 @@ export default class Scene0 {
       // debug: this.debug,
       gltf,
       position: {
-        x: 890,
+        x: 940,
         y: -600,
         z: -270,
       },
@@ -253,18 +253,19 @@ export default class Scene0 {
       }
     })
 
-    this.initLightBrasier(this.fireRight)
+    this.initLightBrasier(this.fireRight, -50)
 
     return this.newPromise()
   }
 
-  initLightBrasier (fire) {
+  initLightBrasier (fire, translateX = 0) {
     // point light
     const paramsLight = {
       color: 0xa26d32
     }
     const lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
     lightBrasier.position.copy(fire.position)
+    lightBrasier.position.x += translateX
     
     lightBrasier.castShadow = true
     lightBrasier.shadow.camera.far = 1800
