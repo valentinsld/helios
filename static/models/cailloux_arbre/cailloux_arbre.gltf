@@ -16,6 +16,15 @@
     "nodes" : [
         {
             "mesh" : 0,
+            "name" : "arbre",
+            "translation" : [
+                3.503267288208008,
+                1.1629936695098877,
+                -3.4369401931762695
+            ]
+        },
+        {
+            "mesh" : 1,
             "name" : "cailloux",
             "rotation" : [
                 0.202123761177063,
@@ -28,85 +37,49 @@
                 0.055286914110183716,
                 -1.3954969644546509
             ]
-        },
-        {
-            "mesh" : 1,
-            "name" : "arbre",
-            "rotation" : [
-                0,
-                0.8771541714668274,
-                0,
-                -0.4802088439464569
-            ],
-            "scale" : [
-                0.7026210427284241,
-                0.7026209831237793,
-                0.7026210427284241
-            ],
-            "translation" : [
-                3.503267288208008,
-                1.1629936695098877,
-                -3.4369401931762695
-            ]
         }
     ],
     "materials" : [
         {
             "doubleSided" : true,
-            "emissiveFactor" : [
-                1,
-                1,
-                1
-            ],
-            "emissiveTexture" : {
-                "index" : 0,
-                "texCoord" : 0
-            },
-            "name" : "grand_caillou",
-            "pbrMetallicRoughness" : {}
-        },
-        {
-            "doubleSided" : true,
-            "emissiveFactor" : [
-                1,
-                1,
-                1
-            ],
-            "emissiveTexture" : {
-                "index" : 1,
-                "texCoord" : 0
-            },
-            "name" : "tree",
-            "pbrMetallicRoughness" : {}
+            "name" : "Texture_cailloux_arbre_bake",
+            "pbrMetallicRoughness" : {
+                "baseColorTexture" : {
+                    "index" : 0,
+                    "texCoord" : 0
+                },
+                "metallicFactor" : 0,
+                "roughnessFactor" : 0.5
+            }
         }
     ],
     "meshes" : [
         {
-            "name" : "Plane.017",
+            "name" : "Plane.095",
             "primitives" : [
                 {
                     "attributes" : {
                         "POSITION" : 0,
                         "NORMAL" : 1,
-                        "TEXCOORD_0" : 2,
-                        "COLOR_0" : 3
+                        "TEXCOORD_0" : 2
                     },
-                    "indices" : 4,
+                    "indices" : 3,
                     "material" : 0
                 }
             ]
         },
         {
-            "name" : "Plane.006",
+            "name" : "Plane.096",
             "primitives" : [
                 {
                     "attributes" : {
-                        "POSITION" : 5,
-                        "NORMAL" : 6,
-                        "TEXCOORD_0" : 7
+                        "POSITION" : 4,
+                        "NORMAL" : 5,
+                        "TEXCOORD_0" : 6,
+                        "COLOR_0" : 7
                     },
                     "indices" : 8,
-                    "material" : 1
+                    "material" : 0
                 }
             ]
         }
@@ -115,146 +88,137 @@
         {
             "sampler" : 0,
             "source" : 0
-        },
-        {
-            "sampler" : 0,
-            "source" : 1
         }
     ],
     "images" : [
         {
             "mimeType" : "image/png",
-            "name" : "cailloux",
-            "uri" : "cailloux.png"
-        },
-        {
-            "mimeType" : "image/png",
-            "name" : "arbre",
-            "uri" : "arbre.png"
+            "name" : "Texture_Cailloux_Arbre",
+            "uri" : "Texture_Cailloux_Arbre.png"
         }
     ],
     "accessors" : [
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 8102,
+            "count" : 595,
             "max" : [
-                0.2068934142589569,
-                0.24420030415058136,
-                0.2959650754928589
+                0.4843800961971283,
+                0.7727707624435425,
+                0.4893812835216522
             ],
             "min" : [
-                -5.177262306213379,
-                -3.1369645595550537,
-                -5.403429985046387
+                -0.49600949883461,
+                -0.7182239294052124,
+                -0.4886314868927002
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 8102,
+            "count" : 595,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 8102,
+            "count" : 595,
             "type" : "VEC2"
         },
         {
             "bufferView" : 3,
             "componentType" : 5123,
-            "count" : 8102,
-            "normalized" : true,
-            "type" : "VEC4"
+            "count" : 891,
+            "type" : "SCALAR"
         },
         {
             "bufferView" : 4,
-            "componentType" : 5123,
-            "count" : 12006,
-            "type" : "SCALAR"
+            "componentType" : 5126,
+            "count" : 343,
+            "max" : [
+                0.41376423835754395,
+                0.17536719143390656,
+                -0.3035491704940796
+            ],
+            "min" : [
+                -5.124061107635498,
+                -3.0853004455566406,
+                -4.739862442016602
+            ],
+            "type" : "VEC3"
         },
         {
             "bufferView" : 5,
             "componentType" : 5126,
-            "count" : 3120,
-            "max" : [
-                0.9232290983200073,
-                1.096746563911438,
-                0.2511308491230011
-            ],
-            "min" : [
-                -0.9241203665733337,
-                -1.0976741313934326,
-                -0.2505654990673065
-            ],
+            "count" : 343,
             "type" : "VEC3"
         },
         {
             "bufferView" : 6,
             "componentType" : 5126,
-            "count" : 3120,
-            "type" : "VEC3"
+            "count" : 343,
+            "type" : "VEC2"
         },
         {
             "bufferView" : 7,
-            "componentType" : 5126,
-            "count" : 3120,
-            "type" : "VEC2"
+            "componentType" : 5123,
+            "count" : 343,
+            "normalized" : true,
+            "type" : "VEC4"
         },
         {
             "bufferView" : 8,
             "componentType" : 5123,
-            "count" : 4674,
+            "count" : 507,
             "type" : "SCALAR"
         }
     ],
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 97224,
+            "byteLength" : 7140,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 97224,
-            "byteOffset" : 97224
+            "byteLength" : 7140,
+            "byteOffset" : 7140
         },
         {
             "buffer" : 0,
-            "byteLength" : 64816,
-            "byteOffset" : 194448
+            "byteLength" : 4760,
+            "byteOffset" : 14280
         },
         {
             "buffer" : 0,
-            "byteLength" : 64816,
-            "byteOffset" : 259264
+            "byteLength" : 1782,
+            "byteOffset" : 19040
         },
         {
             "buffer" : 0,
-            "byteLength" : 24012,
-            "byteOffset" : 324080
+            "byteLength" : 4116,
+            "byteOffset" : 20824
         },
         {
             "buffer" : 0,
-            "byteLength" : 37440,
-            "byteOffset" : 348092
+            "byteLength" : 4116,
+            "byteOffset" : 24940
         },
         {
             "buffer" : 0,
-            "byteLength" : 37440,
-            "byteOffset" : 385532
+            "byteLength" : 2744,
+            "byteOffset" : 29056
         },
         {
             "buffer" : 0,
-            "byteLength" : 24960,
-            "byteOffset" : 422972
+            "byteLength" : 2744,
+            "byteOffset" : 31800
         },
         {
             "buffer" : 0,
-            "byteLength" : 9348,
-            "byteOffset" : 447932
+            "byteLength" : 1014,
+            "byteOffset" : 34544
         }
     ],
     "samplers" : [
@@ -265,7 +229,7 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 457280,
+            "byteLength" : 35560,
             "uri" : "cailloux_arbre.bin"
         }
     ]
