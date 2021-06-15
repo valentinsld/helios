@@ -737,30 +737,29 @@ export default class Scene1 {
   }
 
   async initarbres (gltf) {
-    const textureArbre = this.textureLoader.load('/models/cailloux_arbre/arbre.png')
-    textureArbre.flipY = false
-    const normalArbre = this.textureLoader.load('/models/cailloux_arbre/normal_arbre.png')
-    normalArbre.flipY = false
+    const texture = this.textureLoader.load('/models/cailloux_arbre/Texture_Cailloux_Arbre.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/cailloux_arbre/Normal_Cailloux_Arbre.png')
+    normal.flipY = false
 
-    const materialArbre = new THREE.MeshStandardMaterial({
-      map: textureArbre,
-      normalMap: normalArbre,
+    const material = new THREE.MeshStandardMaterial({
+      map: texture,
+      normalMap: normal,
       metalness: 0,
       roughness: 0.5,
     })
 
-    const textureCailloux = this.textureLoader.load('/models/cailloux_arbre/cailloux.png')
-    textureCailloux.flipY = false
-    const normalCailloux = this.textureLoader.load('/models/cailloux_arbre/normal_cailloux.png')
-    normalCailloux.flipY = false
+    // const textureCailloux = this.textureLoader.load('/models/cailloux_arbre/cailloux.png')
+    // textureCailloux.flipY = false
+    // const normalCailloux = this.textureLoader.load('/models/cailloux_arbre/normal_cailloux.png')
+    // normalCailloux.flipY = false
 
-    const materialCailloux = new THREE.MeshStandardMaterial({
-      map: textureCailloux,
-      normalMap: normalCailloux,
-      metalness: 0,
-      roughness: 0.5,
-    })
-
+    // const materialCailloux = new THREE.MeshStandardMaterial({
+    //   map: textureCailloux,
+    //   normalMap: normalCailloux,
+    //   metalness: 0,
+    //   roughness: 0.5,
+    // })
 
     this.arbreCailloux = gltf.scene
     this.arbreCailloux.scale.set(300, 300, 300)
@@ -768,11 +767,7 @@ export default class Scene1 {
     this.arbreCailloux.position.set(675, -455, -60)
     
     this.arbreCailloux.traverse( function(node) {
-      if (node.name === 'arbre') {
-        node.material = materialArbre
-      } else if (node.name === 'cailloux') {
-        node.material = materialCailloux
-      }
+      node.material = material
     })
 
     this.scene.add(this.arbreCailloux)
