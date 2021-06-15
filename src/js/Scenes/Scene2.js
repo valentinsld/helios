@@ -124,7 +124,7 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: 1550,
+        x: 1600,
         y: 200,
         z: 100
       }
@@ -141,11 +141,32 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: -1600,
+        x: -1550,
         y: 200,
         z: 100
       }
     })
+
+    // Block door
+    this.physicDoor = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      render: false,
+      size: {
+        x: 300,
+        y: 600,
+        z: 100
+      },
+      position : {
+        x: 1480,
+        y: -400,
+        z: 100
+      }
+    })
+
+    this.physicDoor.box.vertices[0].x -= 300
+    Matter.Body.setVertices(this.physicDoor.box, this.physicDoor.box.vertices);
   }
 
   initDoor () {
@@ -420,7 +441,7 @@ export default class Scene0 {
       this.phaeton.mesh.position,
       {
         x: "+=450",
-        y: "-=250",
+        y: "-=200",
         duration: 1.5,
         ease: "sin.in"
       }
@@ -434,7 +455,7 @@ export default class Scene0 {
       this.fragment.mesh.position,
       {
         x: "+=450",
-        y: "-=250",
+        y: "-=200",
         duration: 2.5,
         ease: "sin.inOut"
       }
@@ -455,6 +476,9 @@ export default class Scene0 {
     this.door.open()
     console.log('EndScene')
     // x: 5.7, y:1.9
+
+    this.physicDoor
+    Matter.World.remove(this.world, this.physicDoor.box)
 
     gsap.to(
       this.map.getObjectByName(`PORTE`).position,
