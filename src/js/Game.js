@@ -63,7 +63,7 @@ export default class Game{
   // create scene
   createScene() {
     this.globalScene = new THREE.Scene()
-    this.globalScene.background = new THREE.Color(0x170707)
+    this.globalScene.background = new THREE.Color(0x000000)
 
     if (this.debug) {
       this.debugGlobalFolder = this.debug.addFolder('Global Scene')
