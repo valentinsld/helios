@@ -217,6 +217,7 @@ export default class Game{
         },
       });
       this.render.canvas.id = 'matterRender'
+      this.render.canvas.style.opacity = '0'
       Render.run(this.render);
 
       //
