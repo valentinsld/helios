@@ -30,7 +30,6 @@ export default class Scene0 {
     this.camera.far = 4500
 
     this.camera.updateProjectionMatrix()
-    console.log(this.camera)
   }
 
   initCharacters () {
@@ -88,6 +87,7 @@ export default class Scene0 {
     this.map = gltf.scene
     this.map.scale.set(310, 310, 310)
     this.map.position.set(-50, -700, -600)
+    this.map.animations = gltf.animations
 
     this.scene.add(this.map)
 
@@ -105,14 +105,68 @@ export default class Scene0 {
     })
 
     this.map.traverse((node) => {
-      // console.log(node.name)
-      if (node.name === '1er_plan') {
-        return
-      } else if (node.isMesh) {
+      console.log(node.name)
+      if (node.isMesh && ['roue002', 'mur', 'char', 'land', 'arbres', 'COLONNES'].includes(node.name)) {
         node.material = material
       }
     })
 
+    this.initAnimations()
+    this.initLights()
+  }
+
+  initAnimations () {
+    // ANIMATION
+    this.mixer = new THREE.AnimationMixer( this.map )
+    const clips = this.map.animations
+    this.lastClock = 0
+
+    // ALL
+    clips.forEach((clip) => {
+      // console.log(clip.name)
+      const clipAction = this.mixer.clipAction(clip)
+      clipAction.time = Math.random() * 10
+      clipAction.play()
+    })
+
+
+    this.game.addUpdatedElement(`clips_scene4`, this.updateAnimation.bind(this))
+  }
+
+  updateAnimation (time) {
+    const dt = time - this.lastClock
+    const framePerSeconds = 1 / 9
+    if (dt < framePerSeconds) return
+
+    this.mixer.update( dt )
+
+    this.lastClock = time
+  }
+
+  initLights () {   
+    for (let i = 0; i < 7; i++) {
+      const name = `feu${i === 0 ? '' : '00' + i}`
+      const fire = this.map.getObjectByName(name)
+      
+      const light = new THREE.PointLight(0xfaa961, 2.5, 300, 0.5)
+      light.position.copy(fire.position)
+
+      this.map.add(light)
+    }
+
+    // LIGHTS
+    const spotLight = new THREE.SpotLight( 0xfaa961, 2.5, 2500, Math.PI * 0.4 )
+    spotLight.position.set(0, 4.5, -4)
+
+    this.map.add( spotLight )
+
+    // target
+    const targetObject = new THREE.Object3D()
+    targetObject.position.copy(spotLight.position)
+    targetObject.position.y -= 5
+    this.map.add(targetObject)
+
+    spotLight.target = targetObject
   }
 
   endLoadingModels () {
