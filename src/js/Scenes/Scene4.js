@@ -167,6 +167,25 @@ export default class Scene0 {
     this.map.add(targetObject)
 
     spotLight.target = targetObject
+
+    // Global light
+    const globalLight = new THREE.PointLight(0xfaa961, 1.2, 3400, 0.5)
+    globalLight.position.set(0, 0, 0.3)
+    
+    this.map.add( globalLight )
+
+    // Second light
+    const secondLight = new THREE.PointLight(0xfaa961, 1, 3000, 0.5)
+    secondLight.position.set(0, 0.1, -5.6)
+    
+    this.map.add( secondLight )
+
+    
+    // Light Door
+    const lightDoor = new THREE.PointLight(0xfaa961, 5, 1000)
+    lightDoor.position.set(8, 0.87, 0.3)
+    
+    this.map.add( lightDoor )
   }
 
   endLoadingModels () {
