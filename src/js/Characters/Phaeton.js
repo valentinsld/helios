@@ -199,6 +199,8 @@ export default class Phaeton{
   }
 
   keydown (event){
+    if (this.animation) return
+
     switch (event.code) {
       case "KeyA":
         this.goToLeft()
@@ -233,7 +235,7 @@ export default class Phaeton{
             this.animation = true
 
             setTimeout(() => {
-              this.animation = false
+              this.animation = null
             }, 500);
           }
         }
@@ -257,7 +259,7 @@ export default class Phaeton{
             this.animation = true
 
             setTimeout(() => {
-              this.animation = false
+              this.animation = null
             }, 500);
           }
         }
