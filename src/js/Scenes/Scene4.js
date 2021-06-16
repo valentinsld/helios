@@ -1,5 +1,12 @@
 import * as THREE from 'three'
 import * as Matter from 'matter-js'
+import gsap from 'gsap'
+
+import Phaeton from '../Characters/Phaeton'
+import Fragment from '../Characters/Fragment'
+
+import Box from '../Elements/Box'
+import Door from '../Elements/Door'
 
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
@@ -14,6 +21,7 @@ export default class Scene0 {
     this.engine = engine
     this.gltfLoader = gltfLoader
     this.textureLoader = textureLoader
+    this.sceneManager = sceneManager
     this.world = this.engine.world
 
     // init scene
@@ -21,7 +29,9 @@ export default class Scene0 {
     globalScene.add(this.scene)
 
     this.cameraFar()
-    // this.initCharacters()
+    this.initCharacters()
+    this.initBox()
+    this.addDoor()
 
     this.initModels()
   }
@@ -39,12 +49,12 @@ export default class Scene0 {
       debug: this.debug,
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
-      scale: 60,
+      scale: 85,
       speed: 15,
       position : {
-        x : -1300,
-        y : 100,
-        z : 80
+        x : -1550,
+        y : -550,
+        z : -250
       }
     })
 
@@ -55,12 +65,13 @@ export default class Scene0 {
       scene : this.scene,
       camera : this.camera,
       debug: this.debug,
-      radius: 30,
-      distance: 400,
+      radius: 33,
+      distance: 500,
+      multiplicatorSpeed: 1.5,
       position : {
-        x : -1150,
-        y : 200,
-        z : 60
+        x : -1400,
+        y : -300,
+        z : -200
       }
     })
 
@@ -80,6 +91,120 @@ export default class Scene0 {
       arrayModels,
       gltfLoader: this.gltfLoader,
       endFunction: this.endLoadingModels.bind(this)
+    })
+  }
+
+  initBox () {
+    // FLOORS
+    const floor = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      render: false,
+      size: {
+        x: 4000,
+        y: 350,
+        z: 100
+      },
+      position : {
+        x: 0,
+        y: -880,
+        z: 0
+      }
+    })
+
+    //
+    // WALLS
+    //
+    const wallLeft = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      render: false,
+      size: {
+        x: 300,
+        y: 3000,
+        z: 100
+      },
+      position : {
+        x: -2000,
+        y: 0,
+        z: 0
+      }
+    })
+    const wallRight = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      render: false,
+      size: {
+        x: 300,
+        y: 3000,
+        z: 100
+      },
+      position : {
+        x: 2000,
+        y: 0,
+        z: 0
+      }
+    })
+
+    // Walls bis
+    const wallLeft2 = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      render: false,
+      size: {
+        x: 300,
+        y: 1000,
+        z: 100
+      },
+      position : {
+        x: -1900,
+        y: 520,
+        z: 0
+      }
+    })
+    const wallRigh2 = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      render: false,
+      size: {
+        x: 300,
+        y: 1000,
+        z: 100
+      },
+      position : {
+        x: 1800,
+        y: 520,
+        z: 0
+      }
+    })
+  }
+ 
+  addDoor () {
+    this.door = new Door({
+      scene: this.scene,
+      engine: this.engine,
+      sceneManager: this.sceneManager,
+      phaeton: this.phaeton,
+      fragment: this.fragment,
+      render: false,
+      position : {
+        x : 1800,
+        y : -450,
+        z : 250
+      },
+      size: {
+        x: 200,
+        y: 800,
+        z: 1
+      },
+      open: true,
+      animationEndPhaeton: this.animationEndPhaeton.bind(this),
+      animationEndFragment: this.animationEndFragment.bind(this)
     })
   }
 
@@ -105,7 +230,6 @@ export default class Scene0 {
     })
 
     this.map.traverse((node) => {
-      console.log(node.name)
       if (node.isMesh && ['roue002', 'mur', 'char', 'land', 'arbres', 'COLONNES'].includes(node.name)) {
         node.material = material
       }
@@ -197,10 +321,42 @@ export default class Scene0 {
     console.log('endLoadingModels')
   }
 
+  
+  animationEndPhaeton () {
+    // console.log('end animation Phaeton')
+    this.phaeton.playWalk()
+
+    this.phaeton.animation = true
+
+    gsap.to(
+      this.phaeton.mesh.position,
+      {
+        x: "+=450",
+        duration: 1.5,
+        ease: "sin.in"
+      }
+    )
+  }
+  animationEndFragment () {
+    // console.log('end animation fragment')
+    this.fragment.animation = true
+
+    gsap.to(
+      this.fragment.mesh.position,
+      {
+        x: "+=450",
+        duration: 2.5,
+        ease: "sin.inOut"
+      }
+    )
+  }
+
   //
   // Destruct
   //
   async destruct () {
+    const trans = await Transition.fadeIn(2)
+
     clearScene(this.scene)
     Matter.World.clear(this.world);
     this.scene.parent.fog = null
