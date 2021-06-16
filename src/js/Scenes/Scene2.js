@@ -356,9 +356,9 @@ export default class Scene0 {
     this.scene.add(this.map) 
 
     // TEXTURE MAP
-    const texturemap = this.textureLoader.load('/models/scene2/texture_salle_bake.png')
+    const texturemap = this.textureLoader.load('/models/scene2/texture_salle_bake-min.png')
     texturemap.flipY = false
-    const normalmap = this.textureLoader.load('/models/scene2/normal_salle.png')
+    const normalmap = this.textureLoader.load('/models/scene2/normal_salle-min.png')
     normalmap.flipY = false
 
     const materialMap = new THREE.MeshStandardMaterial({

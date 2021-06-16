@@ -239,7 +239,7 @@ export default class Scene3 {
     const blockTopFloor = new Box({
       engine: this.engine,
       scene: this.scene,
-      // render: false,
+      render: false,
       color: 0xff00ff,
       size: {
         x: 100,
