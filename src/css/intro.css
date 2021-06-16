@@ -5,8 +5,8 @@
 }
 
 body {
-  font-family: 'nueva-std', serif;
-  font-weight: 700;
+  font-family: 'nueva-std-extended', serif;
+  font-weight: 300;
   font-style: normal;
   background-image: url('https://helios.vercel.app/img/background.jpg');
   background-size: cover;
@@ -16,7 +16,7 @@ body {
 }
 
 h1 {
-  font-size: 15em;
+  font-size: 300px;
   font-weight: 100;
   text-shadow: 0 0 9px #FF0000;
   font-family: "helios";
@@ -28,16 +28,15 @@ h1 {
 
 a {
   color: #FF912C;
-  text-transform: uppercase;
   text-decoration: none;
-  letter-spacing: 0.15em;
   cursor: pointer;
   font-size: 20px !important;
   display: inline-block;
   padding: 15px 20px;
   position: relative;
 }
-a:after {    
+
+a:after {
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
   content: "";
@@ -49,25 +48,42 @@ a:after {
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
-a:hover:after { 
-  width: 100%; 
-  left: 0; 
+
+a:hover:after {
+  width: 100%;
+  left: 0;
 }
+
 .subtitle {
   margin-top: -50px;
   font-size: 35px;
 }
 
+p {
+  font-size: 40px;
+}
+
+#text3, #text1S2 {
+  font-size: 30px;
+  font-family: 'nueva-std-extended', serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
 #intro {
+  background-image: url('https://helios.vercel.app/img/background.jpg');
   z-index: 3;
   position: absolute;
-  margin-top: 10%;
+  padding-top: 10%;
   text-align: center;
   width: 100%;
   height: 100vh;
 }
 
-#scene1, #scene2, #scene3 {
+#scene1,
+#scene2,
+#scene3 {
+  background-image: url('https://helios.vercel.app/img/background.jpg');
   position: absolute;
   top: 0;
   left: 0;
@@ -76,13 +92,16 @@ a:hover:after {
 }
 
 #button {
-  margin-top: 30px;
+  margin-top: 25px;
   cursor: pointer;
+  font-size: 25px !important;
 }
 
-.sound {
+.sound p {
   margin-top: 10%;
   animation: fadeIn 10s;
+  font-size: 20px !important;
+  color: #FF912C;
 }
 
 #scene1 {
@@ -94,6 +113,12 @@ a:hover:after {
 .column {
   width: 50%;
   height: 100vh;
+}
+
+.bold { 
+  font-family: 'nueva-std-extended', serif;
+  font-weight: 700;
+  font-style: normal;
 }
 
 .left {
@@ -121,34 +146,37 @@ a:hover:after {
 }
 
 #header {
-  font-weight: 50;
   margin-top: 60%;
-  font-size: 3em;
   margin-left: -170%;
 }
 
 #text2 {
   margin-left: 10%;
-  font-size: 1em;
 }
 
-#scene2, #scene3 {
+#scene2,
+#scene3 {
   display: flex;
   width: 100%;
 }
 
-#scene2{
+#scene2 {
   z-index: 1;
 }
 
 #scene2T {
   margin-top: 30%;
   margin-left: 30%;
-  font-size: 3em;
 }
 
 #text2S2 {
-  margin-left: 35%;
+  margin-top: 45px;
+  margin-left: 120px;
+}
+
+#text3S2 {
+  margin-top: 45px;
+  margin-left: 50px;
 }
 
 #temple {
@@ -162,14 +190,16 @@ a:hover:after {
 }
 
 #temple,
+#text1,
+#text2,
 #text1S2,
 #text2S2,
 #text3S2,
 #text1S3,
 #text2S3,
-#text3S3
-{
+#text3S3 {
   opacity: 0;
+  font-size: 30px !important;
 }
 
 #sun {
@@ -179,24 +209,42 @@ a:hover:after {
   width: 160%;
 }
 
-#scene3{
+#scene3 {
   z-index: 0;
 }
 
-#scene3T{
-  margin-top: 30%;
-  font-size: 3em;
+#scene3T {
+  margin-top: 330px;
 }
 
-#text2S3{
-  margin-left: 10%;
+#text1S3{
+  margin-left: 320px;
 }
+
+#text2S3 {
+  margin-top: 45px;
+  margin-left: 200px;
+}
+
+#text3S3 {
+  margin-top: 45px;
+  margin-left: 370px;
+}
+
+#text4S3 {
+  font-size: 30px !important;
+  font-family: 'nueva-std-extended', serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
 
 #endStart {
+  background-image: url('https://helios.vercel.app/img/background.jpg');
   text-align: center;
-  font-size: 3em;
-  padding: 10%;
-  margin-top: 5%;
+  padding-top: 10%;
+  width: 100%;
+  height: 100vh;
 }
 
 #startGame {
@@ -220,6 +268,12 @@ a:hover:after {
   pointer-events: none;
 }
 
+.hidePlay {
+  opacity: 0 !important;
+  transition: opacity 1500ms;
+  pointer-events: none;
+}
+
 #suite {
   margin-left: 20%;
   position: absolute;
@@ -228,18 +282,52 @@ a:hover:after {
   cursor: pointer;
 }
 
-.players{
+#suite2 {
+  opacity: 0;
+}
+
+.baseline { 
+  font-family: 'nueva-std-extended', serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 50px;
+}
+
+.players {
   display: flex;
-  font-size: 20px;
+  color: #FFC75B;
+  font-size: 30px !important;
   margin-top: 10%;
 }
 
-.playerPhaeton{
+.playerPhaeton {
   width: 50%;
 }
 
-.playerFragment{
+.playerFragment {
   width: 50%;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+.advice {
+  font-size: 22px;
+  color: #FF912C;
+}
+
+.Q {
+  margin-right: 10px;
+}
+
+.mouse {
+  padding: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 
