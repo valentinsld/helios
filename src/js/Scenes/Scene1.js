@@ -931,7 +931,8 @@ export default class Scene1 {
     }
     
     const trans = await Transition.fadeIn(0)
-
+    this.game.clearUpdatedElement()
+    
     clearScene(this.scene)
     Matter.World.clear(this.world);
     this.scene.parent.fog = null

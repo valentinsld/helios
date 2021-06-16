@@ -507,6 +507,7 @@ export default class Scene0 {
     const trans = await Transition.fadeIn(1)
 
     MenuContextuels.removeMenu('endScene2')
+    this.game.clearUpdatedElement()
 
     clearScene(this.scene)
     Matter.World.clear(this.world);
