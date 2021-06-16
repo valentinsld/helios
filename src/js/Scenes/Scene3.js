@@ -441,7 +441,7 @@ export default class Scene3 {
       z: 300,
     }
     const size = {
-      x: 1000,
+      x: 800,
       y: 400,
       z: 100
     }
@@ -475,7 +475,7 @@ export default class Scene3 {
     //
     var collider = Matter.Bodies.rectangle(
       pos.x + 100, pos.y,
-      size.x + 300, size.y,
+      size.x + 500, size.y,
       {
         label: 'boxColider',
         isSensor: true,
@@ -501,7 +501,12 @@ export default class Scene3 {
         const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
 
         if (conditionCollider && conditionFragment) {
-          MATERIAL.opacity = 0
+          gsap.to(
+            MATERIAL,
+            {
+              opacity: 0
+            }
+          )
         }
       }
     });
@@ -516,7 +521,12 @@ export default class Scene3 {
         const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
 
         if (conditionCollider && conditionFragment) {
-          MATERIAL.opacity = 1
+          gsap.to(
+            MATERIAL,
+            {
+              opacity: 1
+            }
+          )
         }
       }
     });
