@@ -214,6 +214,9 @@ export default class Intro {
     var scene3 = document.getElementById('scene3')
     var startGame = document.getElementById('startGame')
     var endStart = document.getElementById('endStart')
+    var introMobile = document.getElementById('introMobile')
+    var moreButton = document.getElementById('moreButton')
+    var project = document.getElementById('project')
     
     button.addEventListener("click", () => {
       console.log('click')
@@ -242,6 +245,11 @@ export default class Intro {
     startGame.addEventListener("click", () => {
       endStart.classList.add('hide');
       this.game.next()  
+    })
+
+    moreButton.addEventListener("click", () => {
+      introMobile.classList.add('hide');
+      project.classList.add('show');
     })
     
   }
