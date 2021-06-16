@@ -14,7 +14,7 @@
   font-size: 35px;
   color: #FFB662;
 
-  background-image: url('http://localhost:8080/img/background.jpg');
+  background-image: url('https://helios.vercel.app/img/background.jpg');
   background-size: cover;
   opacity: 0;
   pointer-events: none;

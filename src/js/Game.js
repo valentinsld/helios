@@ -10,9 +10,6 @@ import Matter from 'matter-js'
 import SceneManager from './Scenes'
 import { menuContextuelsCamera } from './utils/MenuContextuels'
 
-import vertexShader from '../glsl/gradient/vertex.glsl'
-import fragmentShader from '../glsl/gradient/fragment.glsl'
-
 export default class Game{
   constructor() {
     this.canvas = document.querySelector('canvas.webgl')
@@ -66,61 +63,13 @@ export default class Game{
   // create scene
   createScene() {
     this.globalScene = new THREE.Scene()
-    this.globalScene.background = new THREE.Color(0x170707)
+    this.globalScene.background = new THREE.Color(0x000000)
 
     if (this.debug) {
       this.debugGlobalFolder = this.debug.addFolder('Global Scene')
 
       const axesHelper = new THREE.AxesHelper( 500 );
       this.globalScene.add( axesHelper );
-    }
-    this.createGradientBackground()
-  }
-  createGradientBackground () {
-    let color = {
-      top: 0x000000, // 0x25180e,
-      bottom: 0xf1414 // 0x170707
-    }
-
-    var myGradient = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(2,2,1,1),
-      new THREE.ShaderMaterial({
-        uniforms: {
-          uColorA: { value: new THREE.Color(color.bottom) },
-          uColorB: { value: new THREE.Color(color.top) },
-          uTime: { value: 0 },
-          uSize: { value: 5 },
-          uSizeNoise: { value: 0.02 },
-          uSpeedTime: { value: 0.07 }
-        },
-        vertexShader,
-        fragmentShader
-      })
-    )
-    const uniforms = myGradient.material.uniforms
-    myGradient.material.depthWrite = false
-    myGradient.renderOrder = -99999
-
-    this.globalScene.add(myGradient)
-
-    this.addUpdatedElement('gradient', (time) => {
-      uniforms.uTime.value = time
-    })
-
-    if (this.debug) {
-      const colorTop = this.debugGlobalFolder.addColor(color, "top").name('background color')
-      colorTop.onChange((value) => {
-        uniforms.uColorB.value = new THREE.Color(value)
-      })
-
-      const colorBottom = this.debugGlobalFolder.addColor(color, "bottom").name('background color')
-      colorBottom.onChange((value) => {
-        uniforms.uColorA.value = new THREE.Color(value)
-      })
-
-      this.debugGlobalFolder.add(uniforms.uSize, "value", 0, 150).name('Size')
-      this.debugGlobalFolder.add(uniforms.uSizeNoise, "value", 0, 0.1).name('Size noise')
-      this.debugGlobalFolder.add(uniforms.uSpeedTime, "value", 0, 4).name('Speed noise')
     }
   }
 
@@ -268,6 +217,7 @@ export default class Game{
         },
       });
       this.render.canvas.id = 'matterRender'
+      this.render.canvas.style.opacity = '0'
       Render.run(this.render);
 
       //

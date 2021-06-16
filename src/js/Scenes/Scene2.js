@@ -82,6 +82,7 @@ export default class Scene0 {
       debug: this.debug,
       radius: 35,
       distance: 400,
+      multiplicatorSpeed: 1.5,
       position : {
         x : -1150,
         y : -400,
@@ -98,8 +99,8 @@ export default class Scene0 {
     const floor = new Box({
       engine: this.engine,
       scene: this.scene,
-      color: 0xff0000,
-      render: false,
+      color: 0x000000,
+      // render: false,
       size: {
         x: 3600,
         y: 400,
@@ -108,7 +109,7 @@ export default class Scene0 {
       position : {
         x: 0,
         y: -880,
-        z: 0
+        z: 200
       }
     })
 
@@ -124,7 +125,7 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: 1550,
+        x: 1600,
         y: 200,
         z: 100
       }
@@ -141,11 +142,32 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: -1600,
+        x: -1550,
         y: 200,
         z: 100
       }
     })
+
+    // Block door
+    this.physicDoor = new Box({
+      engine: this.engine,
+      scene: this.scene,
+      color: 0xff0000,
+      render: false,
+      size: {
+        x: 300,
+        y: 600,
+        z: 100
+      },
+      position : {
+        x: 1480,
+        y: -400,
+        z: 100
+      }
+    })
+
+    this.physicDoor.box.vertices[0].x -= 300
+    Matter.Body.setVertices(this.physicDoor.box, this.physicDoor.box.vertices);
   }
 
   initDoor () {
@@ -157,7 +179,7 @@ export default class Scene0 {
       fragment: this.fragment,
       // render: false,
       position : {
-        x : 1200,
+        x : 1350,
         y : -500,
         z : 250
       },
@@ -213,7 +235,7 @@ export default class Scene0 {
       // debug: this.debug,
       gltf,
       position: {
-        x: -920,
+        x: -870,
         y: -600,
         z: -260,
       },
@@ -227,7 +249,7 @@ export default class Scene0 {
       }
     })
 
-    this.initLightBrasier(this.fireLeft)
+    this.initLightBrasier(this.fireLeft, 50)
 
     return this.newPromise()
   }
@@ -239,7 +261,7 @@ export default class Scene0 {
       // debug: this.debug,
       gltf,
       position: {
-        x: 890,
+        x: 940,
         y: -600,
         z: -270,
       },
@@ -253,18 +275,19 @@ export default class Scene0 {
       }
     })
 
-    this.initLightBrasier(this.fireRight)
+    this.initLightBrasier(this.fireRight, -50)
 
     return this.newPromise()
   }
 
-  initLightBrasier (fire) {
+  initLightBrasier (fire, translateX = 0) {
     // point light
     const paramsLight = {
       color: 0xa26d32
     }
     const lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
     lightBrasier.position.copy(fire.position)
+    lightBrasier.position.x += translateX
     
     lightBrasier.castShadow = true
     lightBrasier.shadow.camera.far = 1800
@@ -328,7 +351,7 @@ export default class Scene0 {
   async initSalle (gltf) {
     this.map = gltf.scene
     this.map.scale.set(250, 250, 250)
-    this.map.position.set(-100, -680, -200)
+    this.map.position.set(-50, -680, -200)
 
     this.scene.add(this.map) 
 
@@ -419,6 +442,7 @@ export default class Scene0 {
       this.phaeton.mesh.position,
       {
         x: "+=450",
+        y: "-=200",
         duration: 1.5,
         ease: "sin.in"
       }
@@ -432,6 +456,7 @@ export default class Scene0 {
       this.fragment.mesh.position,
       {
         x: "+=450",
+        y: "-=200",
         duration: 2.5,
         ease: "sin.inOut"
       }
@@ -452,6 +477,9 @@ export default class Scene0 {
     this.door.open()
     console.log('EndScene')
     // x: 5.7, y:1.9
+
+    this.physicDoor
+    Matter.World.remove(this.world, this.physicDoor.box)
 
     gsap.to(
       this.map.getObjectByName(`PORTE`).position,

@@ -19,7 +19,7 @@ const POSITION = {
 const RADIUS = 21
 
 export default class Fragment{
-  constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS, distance = 330}) {
+  constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS, distance = 330, multiplicatorSpeed = 1}) {
     this.game = game
     this.canvas = canvas
     this.world = engine.world
@@ -44,6 +44,7 @@ export default class Fragment{
 
     this.position = position
     this.radius = radius
+    this.multiplicatorSpeed = multiplicatorSpeed
 
     this.animation = null
     this.interactionElements = []
@@ -411,8 +412,8 @@ export default class Fragment{
       // apply force body
       let forceX = (this.box.position.x - this.cursor.x) / -500 * this.cameraZoom
       let forceY = (this.box.position.y - this.cursor.y) / -500 * this.cameraZoom
-      forceX = Math.max(Math.min(forceX, 0.4), -0.4)
-      forceY = Math.max(Math.min(forceY, 0.4), -0.4)
+      forceX = Math.max(Math.min(forceX, 0.4 * this.multiplicatorSpeed), -0.4 * this.multiplicatorSpeed)
+      forceY = Math.max(Math.min(forceY, 0.4 * this.multiplicatorSpeed), -0.4 * this.multiplicatorSpeed)
       
       Matter.Body.applyForce(
         this.box,
@@ -421,7 +422,7 @@ export default class Fragment{
       )
 
       angle = Math.atan2(forceY, forceX)
-      if (this.box.positionPrev.x != this.box.position.x) scale = Math.min(Math.max(1.3 * this.box.speed / 60, 1), 1.4)
+      if (this.box.positionPrev.x != this.box.position.x) scale = Math.min(Math.max(1.3 * this.box.speed / 60, 1), 1.4 * this.multiplicatorSpeed)
     }
 
     // update position mesh

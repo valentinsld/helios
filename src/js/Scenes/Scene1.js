@@ -27,6 +27,9 @@ import Transition from '../utils/transition'
 import Statue from '../Elements/01_statue'
 import AnimatedFire from '../Elements/animatedFire'
 
+import vertexShader from '../../glsl/gradient/vertex.glsl'
+import fragmentShader from '../../glsl/gradient/fragment.glsl'
+
 export default class Scene1 {
   constructor({camera, render, engine, globalScene, gltfLoader, textureLoader, sceneManager, game, debug}) {
     this.game = game
@@ -66,6 +69,7 @@ export default class Scene1 {
     this.initCharacters()
     this.initModels()
     this.addElements()
+    this.createGradientBackground()
   }
 
   initZoomCamera () {
@@ -278,6 +282,54 @@ export default class Scene1 {
     this.scene.add(planeMesh)
   }
 
+  createGradientBackground () {
+    let color = {
+      top: 0x000000, // 0x25180e,
+      bottom: 0xf1414 // 0x170707
+    }
+
+    var myGradient = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry(2,2,1,1),
+      new THREE.ShaderMaterial({
+        uniforms: {
+          uColorA: { value: new THREE.Color(color.bottom) },
+          uColorB: { value: new THREE.Color(color.top) },
+          uTime: { value: 0 },
+          uSize: { value: 5 },
+          uSizeNoise: { value: 0.02 },
+          uSpeedTime: { value: 0.07 }
+        },
+        vertexShader,
+        fragmentShader
+      })
+    )
+    const uniforms = myGradient.material.uniforms
+    myGradient.material.depthWrite = false
+    myGradient.renderOrder = -99999
+
+    this.scene.add(myGradient)
+
+    this.game.addUpdatedElement('gradient', (time) => {
+      uniforms.uTime.value = time
+    })
+
+    if (this.debug) {
+      const colorTop = this.debugSceneFolder.addColor(color, "top").name('background color')
+      colorTop.onChange((value) => {
+        uniforms.uColorB.value = new THREE.Color(value)
+      })
+
+      const colorBottom = this.debugSceneFolder.addColor(color, "bottom").name('background color')
+      colorBottom.onChange((value) => {
+        uniforms.uColorA.value = new THREE.Color(value)
+      })
+
+      this.debugSceneFolder.add(uniforms.uSize, "value", 0, 150).name('Size')
+      this.debugSceneFolder.add(uniforms.uSizeNoise, "value", 0, 0.1).name('Size noise')
+      this.debugSceneFolder.add(uniforms.uSpeedTime, "value", 0, 4).name('Speed noise')
+    }
+  }
+
   async initStatuesBrasier (gltf) {
 
     let brasier = null
@@ -289,20 +341,20 @@ export default class Scene1 {
     const children = [...gltf.scene.children]
     for (const node of children) {
       if (node.name === 'statue_debout') {
-        node.position.y = 0.021
-        node.position.z = -2.121
+        // node.position.y = 0.021
+        // node.position.z = -2.121
 
         statue1.add(node)
         statue1.position.copy(node.position)
         node.position.set(0,0,0)
-      } else if (node.name === 'statue_assis') {
-        node.position.y = 0.257
-        node.position.z = -2.725
+      } else if (node.name === 'statue_assise') {
+        // node.position.y = 0.257
+        // node.position.z = -2.725
 
         statue2.add(node)
         statue2.position.copy(node.position)
         node.position.set(0,0,0)
-      } else if (node.name === 'brasier') {
+      } else if (node.name === 'brazier') {
         brasier = node
         this.groupeBrasier.add(brasier)
       }
@@ -316,9 +368,9 @@ export default class Scene1 {
   }
 
   async initStatue1 (gltf) {
-    const texture = this.textureLoader.load('/models/statues_brasier/texture_debout_anamorphose.png')
+    const texture = this.textureLoader.load('/models/statues_brasier/Texture_Statues_Brasier_bake.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/statues_brasier/normal_debout_anamorphose.png')
+    const normal = this.textureLoader.load('/models/statues_brasier/Normal_Statues_Brasier_bake.png')
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
@@ -357,9 +409,9 @@ export default class Scene1 {
   }
 
   async initStatue2 (gltf) {
-    const texture = this.textureLoader.load('/models/statues_brasier/texture_assis_anamorphose.png')
+    const texture = this.textureLoader.load('/models/statues_brasier/Texture_Statues_Brasier_bake.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/statues_brasier/normal_assis_anamorphose.png')
+    const normal = this.textureLoader.load('/models/statues_brasier/Normal_Statues_Brasier_bake.png')
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
@@ -581,9 +633,9 @@ export default class Scene1 {
   }
 
   async initBrasier (gltf) {
-    const texture = this.textureLoader.load('/models/statues_brasier/texture_brasier.png')
+    const texture = this.textureLoader.load('/models/statues_brasier/Texture_Statues_Brasier_bake.png')
     texture.flipY = false
-    const normal = this.textureLoader.load('/models/statues_brasier/normal_brasier.png')
+    const normal = this.textureLoader.load('/models/statues_brasier/Normal_Statues_Brasier_bake.png')
     normal.flipY = false
 
     const material = new THREE.MeshStandardMaterial({
@@ -737,30 +789,29 @@ export default class Scene1 {
   }
 
   async initarbres (gltf) {
-    const textureArbre = this.textureLoader.load('/models/cailloux_arbre/arbre.png')
-    textureArbre.flipY = false
-    const normalArbre = this.textureLoader.load('/models/cailloux_arbre/normal_arbre.png')
-    normalArbre.flipY = false
+    const texture = this.textureLoader.load('/models/cailloux_arbre/Texture_Cailloux_Arbre.png')
+    texture.flipY = false
+    const normal = this.textureLoader.load('/models/cailloux_arbre/Normal_Cailloux_Arbre.png')
+    normal.flipY = false
 
-    const materialArbre = new THREE.MeshStandardMaterial({
-      map: textureArbre,
-      normalMap: normalArbre,
+    const material = new THREE.MeshStandardMaterial({
+      map: texture,
+      normalMap: normal,
       metalness: 0,
       roughness: 0.5,
     })
 
-    const textureCailloux = this.textureLoader.load('/models/cailloux_arbre/cailloux.png')
-    textureCailloux.flipY = false
-    const normalCailloux = this.textureLoader.load('/models/cailloux_arbre/normal_cailloux.png')
-    normalCailloux.flipY = false
+    // const textureCailloux = this.textureLoader.load('/models/cailloux_arbre/cailloux.png')
+    // textureCailloux.flipY = false
+    // const normalCailloux = this.textureLoader.load('/models/cailloux_arbre/normal_cailloux.png')
+    // normalCailloux.flipY = false
 
-    const materialCailloux = new THREE.MeshStandardMaterial({
-      map: textureCailloux,
-      normalMap: normalCailloux,
-      metalness: 0,
-      roughness: 0.5,
-    })
-
+    // const materialCailloux = new THREE.MeshStandardMaterial({
+    //   map: textureCailloux,
+    //   normalMap: normalCailloux,
+    //   metalness: 0,
+    //   roughness: 0.5,
+    // })
 
     this.arbreCailloux = gltf.scene
     this.arbreCailloux.scale.set(300, 300, 300)
@@ -768,11 +819,7 @@ export default class Scene1 {
     this.arbreCailloux.position.set(675, -455, -60)
     
     this.arbreCailloux.traverse( function(node) {
-      if (node.name === 'arbre') {
-        node.material = materialArbre
-      } else if (node.name === 'cailloux') {
-        node.material = materialCailloux
-      }
+      node.material = material
     })
 
     this.scene.add(this.arbreCailloux)
