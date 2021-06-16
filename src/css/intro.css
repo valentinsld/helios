@@ -63,7 +63,8 @@ p {
   font-size: 40px;
 }
 
-#text3, #text1S2 {
+#text3,
+#text1S2 {
   font-size: 30px;
   font-family: 'nueva-std-extended', serif;
   font-weight: 700;
@@ -115,7 +116,7 @@ p {
   height: 100vh;
 }
 
-.bold { 
+.bold {
   font-family: 'nueva-std-extended', serif;
   font-weight: 700;
   font-style: normal;
@@ -217,7 +218,7 @@ p {
   margin-top: 330px;
 }
 
-#text1S3{
+#text1S3 {
   margin-left: 320px;
 }
 
@@ -286,7 +287,7 @@ p {
   opacity: 0;
 }
 
-.baseline { 
+.baseline {
   font-family: 'nueva-std-extended', serif;
   font-weight: 700;
   font-style: normal;
@@ -330,6 +331,9 @@ p {
   display: block;
 }
 
+.introMobile{
+  display: none;
+}
 
 @keyframes animatedFragment {
   from {
@@ -340,5 +344,41 @@ p {
   to {
     object-position: 0px 0px;
     width: 52%;
+  }
+}
+
+@media only screen and (min-device-width : 0px) and (max-device-width : 1024px) {
+  h1{
+    font-size: 100px;
+  }
+
+  #intro{
+    display: none;
+  }
+  .introMobile{
+    width: 100%;
+    height: 100vh;
+    display: block;
+    text-align: center;
+    padding-top: 30%;
+    background-image: url('https://helios.vercel.app/img/background.jpg');
+  }
+  .subtitleMobile {
+    display: block;
+    margin-top: 0;
+    font-size: 20px;
+  }
+  .description p{
+    color: #FF912C;
+    font-size: 18px !important;
+  }
+
+  .more a {
+    color: #FFC75B;
+    text-decoration: underline;
+  }
+
+  #scene1, #scene2, #scene3{
+    display: none;
   }
 }
