@@ -277,6 +277,7 @@ export default class Phaeton{
 
   keyup(event){
     this.runed = false
+    if (this.animation) return
 
     switch (event.code) {  
       case "Space":
