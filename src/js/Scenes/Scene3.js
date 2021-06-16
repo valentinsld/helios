@@ -239,7 +239,7 @@ export default class Scene3 {
     const blockTopFloor = new Box({
       engine: this.engine,
       scene: this.scene,
-      render: false,
+      // render: false,
       color: 0xff00ff,
       size: {
         x: 100,
@@ -247,7 +247,7 @@ export default class Scene3 {
         z: 100
       },
       position : {
-        x: -700,
+        x: -600,
         y: 100,
         z: 0
       },
@@ -339,7 +339,7 @@ export default class Scene3 {
       engine: this.engine,
       phaeton: this.phaeton,
       position : {
-        x : -1030,
+        x : -970,
         y : -430,
         z : 0
       },
