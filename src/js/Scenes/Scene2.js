@@ -72,7 +72,7 @@ export default class Scene0 {
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
       scale: 86,
-      speed: 15,
+      speed: 12,
       position : {
         x : -1300,
         y : -600,

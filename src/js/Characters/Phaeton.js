@@ -22,7 +22,7 @@ const ANIMATIONS = {
 }
 
 export default class Phaeton{
-  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE, scale = SCALE, speed = 9.5}) {
+  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE, scale = SCALE, speed = 10}) {
     this.world = engine.world
     this.scene = scene
     this.textureLoader = textureLoader
@@ -57,8 +57,8 @@ export default class Phaeton{
         inertia: 'Infinity',
         frictionAir: 0.1,
         // chamfer: 10,
-        friction: 1,
-        mass: 1000,
+        friction: 0,
+        mass: 0,
         collisionFilter: {
           category: 0x0004,
         },
