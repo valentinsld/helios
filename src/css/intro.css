@@ -336,7 +336,7 @@ p {
   display: block;
 }
 
-#introMobile {
+#introMobile, #project {
   display: none;
 }
 
