@@ -23,7 +23,7 @@ export default class Intro {
     var tl3 = gsap.timeline({
       paused: true,
       delay: 1,
-      onComplete: start
+      // onComplete: start
     })
     
     var tl4 = gsap.timeline({
@@ -162,6 +162,11 @@ export default class Intro {
       opacity: 0,
       ease: Expo.easeInOut
     })
+
+    tl3.set("#suite3", {
+      opacity: 0,
+      ease: Expo.easeInOut
+    })
     
     
     tl3.to("#sun", 10, {
@@ -181,6 +186,10 @@ export default class Intro {
     
     
     tl3.to("#text3S3", 1, {
+      opacity: 1
+    }, "< 1");
+
+    tl3.to("#suite3", 1, {
       opacity: 1
     }, "< 1");
     
@@ -217,6 +226,7 @@ export default class Intro {
     var introMobile = document.getElementById('introMobile')
     var moreButton = document.getElementById('moreButton')
     var project = document.getElementById('project')
+    var suite3 = document.getElementById('suite3')
     
     button.addEventListener("click", () => {
       console.log('click')
@@ -237,10 +247,15 @@ export default class Intro {
       tl3.play();
     })
 
-    function start() {
+    suite3.addEventListener("click", () => {
       scene3.classList.add('hidePlay');
       tl4.play();
-    }
+    })
+
+    // function start() {
+    //   scene3.classList.add('hidePlay');
+    //   tl4.play();
+    // }
     
     startGame.addEventListener("click", () => {
       endStart.classList.add('hide');
