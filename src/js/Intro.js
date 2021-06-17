@@ -225,7 +225,7 @@ export default class Intro {
 
       // Start sound
       AudioManager.newSound({
-        name: 'scene1_ambiance',
+        name: 'scene0_ambiance',
         loop: true
       })
     })

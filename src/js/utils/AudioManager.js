@@ -4,14 +4,14 @@ import gsap from 'gsap'
 const LIST_AUDIO = {
   plaque: 'plaque_pression.mp3',
   
-  scene1_ambiance: 'Intro/intro.wav',
-  scene2_ambiance: 'Enigme_1/ambiance2.mp3',
-  scene2_brasier: 'Enigme_1/fragment_brasier.mp3',
-  scene2_porte: 'Enigme_1/porte.mp3',
-  scene2_reussite: 'Enigme_1/reussite.mp3',
-  scene2_statue: 'Enigme_1/statue.mp3',
-  scene3_ambiance: 'Enigme_2/ambiance.mp3',
-  scene3_portPierre: 'Enigme_2/porte_pierre.mp3',
+  scene0_ambiance: 'Intro/intro.wav',
+  scene1_ambiance: 'Enigme_1/ambiance2.mp3',
+  scene1_brasier: 'Enigme_1/fragment_brasier.mp3',
+  scene1_porte: 'Enigme_1/porte.mp3',
+  scene1_reussite: 'Enigme_1/reussite.mp3',
+  scene1_statue: 'Enigme_1/statue.mp3',
+  scene2_ambiance: 'Enigme_2/ambiance.mp3',
+  scene2_portPierre: 'Enigme_2/porte_pierre.mp3',
   scene_: '',
 }
 
@@ -52,11 +52,11 @@ class Audio {
 }
 
 // AudioManager.newSound({
-//   name: 'scene1_ambiance',
+//   name: 'name',
 //   loop: true
 // })
 
-// AudioManager.stopSound('scene1_ambiance', 2.5)
+// AudioManager.stopSound('name', 2.5)
 
 class AudioManager {
   constructor () {

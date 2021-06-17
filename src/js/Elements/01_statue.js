@@ -136,7 +136,7 @@ export default class Statue {
 
     MenuContextuels.removeMenu('Statues')
     AudioManager.newSound({
-      name: 'scene2_statue',
+      name: 'scene1_statue',
       volume: 0.5
     })
     

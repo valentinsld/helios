@@ -101,7 +101,7 @@ export default class Fire {
           })
           
           AudioManager.newSound({
-            name: 'scene2_brasier'
+            name: 'scene1_brasier'
           })
         }
       }

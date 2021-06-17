@@ -66,9 +66,9 @@ export default class Scene1 {
 
     this.endEnigme = false
 
-    AudioManager.stopSound('scene1_ambiance', 2.5)
+    AudioManager.stopSound('scene0_ambiance', 2.5)
     AudioManager.newSound({
-      name: 'scene2_ambiance',
+      name: 'scene1_ambiance',
       loop: true
     })
 
@@ -849,7 +849,7 @@ export default class Scene1 {
           duration: 1.2,
           onStart: () => {
             AudioManager.newSound({
-              name: 'scene2_reussite'
+              name: 'scene1_reussite'
             })
           }
         }
@@ -872,7 +872,7 @@ export default class Scene1 {
           delay: 0.5,
           onStart: () => {
             AudioManager.newSound({
-              name: 'scene2_porte'
+              name: 'scene1_porte'
             })
           }
         }
@@ -942,7 +942,7 @@ export default class Scene1 {
       this.debug.removeFolder('Fire')
     }
     
-    AudioManager.stopSound('scene2_ambiance', 2.5)
+    AudioManager.stopSound('scene1_ambiance', 2.5)
 
     const trans = await Transition.fadeIn(0)
     this.game.clearUpdatedElement()
