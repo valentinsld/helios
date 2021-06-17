@@ -140,7 +140,6 @@ export default class Statue {
       volume: 0.5
     })
     
-    this.step += 1
     // console.log(this.step, this.step % 4 === 0)
     // this.mesh.rotation.y = this.step * Math.PI / 2
     const moreY = this.mesh.moreY || 0
@@ -150,7 +149,10 @@ export default class Statue {
       {
         y: this.step * Math.PI / 2 + moreY,
         ease: "steps(6)", //'Power2.out'
-        duration: 0.5
+        duration: 0.5,
+        onComplete: () => {
+          this.step += 1
+        }
       }
     )
 
