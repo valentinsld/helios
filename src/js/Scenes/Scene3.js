@@ -632,7 +632,7 @@ export default class Scene3 {
         sym: 1,
       },
       {
-        x: -880,
+        x: -780,
         y: 105,
         z: 0,
         id: 2,
