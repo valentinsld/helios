@@ -48,11 +48,6 @@ export default class Scene3 {
     this.addLadder()
     this.addDoor()
     this.addCacheForSymboles()
-
-
-    setTimeout(() => {
-      this.endScene()
-    }, 2000);
   }
 
   initZoomCamera () {
