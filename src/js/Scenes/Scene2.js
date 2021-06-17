@@ -288,25 +288,16 @@ export default class Scene0 {
     const lightBrasier = new THREE.PointLight(paramsLight.color, 4.5, 1900)
     lightBrasier.position.copy(fire.position)
     lightBrasier.position.x += translateX
+    lightBrasier.position.z += 100
     
-    lightBrasier.castShadow = true
-    lightBrasier.shadow.camera.far = 1800
-    lightBrasier.shadow.camera.near = 200
-    lightBrasier.shadow.radius = 4
-    lightBrasier.shadow.mapSize.width = 512
-    lightBrasier.shadow.mapSize.height = 512
+    // lightBrasier.castShadow = true
+    // lightBrasier.shadow.camera.far = 1800
+    // lightBrasier.shadow.camera.near = 200
+    // lightBrasier.shadow.radius = 4
+    // lightBrasier.shadow.mapSize.width = 512
+    // lightBrasier.shadow.mapSize.height = 512
 
     this.scene.add( lightBrasier )
-
-    // if (this.debugSceneFolder) {
-    //   const color = this.debugSceneFolder.addColor(paramsLight, "color").name('Light Color')
-    //   color.onChange((value) => {
-    //     lightBrasier.color = new THREE.Color(value)
-    //   })
-
-    //   this.debugSceneFolder.add(lightBrasier, "intensity", 0, 10).name('Light intensity')
-    //   this.debugSceneFolder.add(lightBrasier, "distance", 1000, 2000).name('Light distance')
-    // }
 
 
     //
@@ -356,9 +347,9 @@ export default class Scene0 {
     this.scene.add(this.map) 
 
     // TEXTURE MAP
-    const texturemap = this.textureLoader.load('/models/scene2/texture_salle_bake.png')
+    const texturemap = this.textureLoader.load('/models/scene2/texture_salle_bake-min.png')
     texturemap.flipY = false
-    const normalmap = this.textureLoader.load('/models/scene2/normal_salle.png')
+    const normalmap = this.textureLoader.load('/models/scene2/normal_salle-min.png')
     normalmap.flipY = false
 
     const materialMap = new THREE.MeshStandardMaterial({
@@ -507,6 +498,7 @@ export default class Scene0 {
     const trans = await Transition.fadeIn(1)
 
     MenuContextuels.removeMenu('endScene2')
+    this.game.clearUpdatedElement()
 
     clearScene(this.scene)
     Matter.World.clear(this.world);

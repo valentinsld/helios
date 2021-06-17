@@ -3,17 +3,17 @@ import gsap from 'gsap'
 const TEXTS = [
   [
     // 'Scene1 -> Scene 2',
-    'La lumière est revenue.'
+    'Jamais le soleil ne rayonna si proche de nous.',
+    'Sans l’intervention de Zeus, Terre, ciel et océans se seraient changés en flammes.'
   ],
   [
     // 'Scene2 -> Scene 3',
-    'Dans le ciel, Hélios et son char ont repris leur course.',
-    'Le soleil est redevenu complet ....'
+    'Depuis lors, le char d\'Hélios cessa de nous apporter la lumière du jour.'
   ]
   ,
   [
     // 'Scene3 -> Scene 4',
-    'Nous avons réussi notre quête.'
+    'Que poussa Hélios à confier ses rênes à un mortel ?'
   ]
 ]
 

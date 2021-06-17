@@ -360,14 +360,14 @@ export default class Scene1 {
       }
     }
     
-    await this.initBrasier(brasier)
-    await this.initStatue1(statue1)
-    await this.initStatue2(statue2)
+    this.initBrasier(brasier)
+    this.initStatue1(statue1)
+    this.initStatue2(statue2)
 
     return this.newPromise()
   }
 
-  async initStatue1 (gltf) {
+  initStatue1 (gltf) {
     const texture = this.textureLoader.load('/models/statues_brasier/Texture_Statues_Brasier_bake.png')
     texture.flipY = false
     const normal = this.textureLoader.load('/models/statues_brasier/Normal_Statues_Brasier_bake.png')
@@ -404,11 +404,9 @@ export default class Scene1 {
         z: 100
       }
     })
-
-    return this.newPromise()
   }
 
-  async initStatue2 (gltf) {
+  initStatue2 (gltf) {
     const texture = this.textureLoader.load('/models/statues_brasier/Texture_Statues_Brasier_bake.png')
     texture.flipY = false
     const normal = this.textureLoader.load('/models/statues_brasier/Normal_Statues_Brasier_bake.png')
@@ -445,8 +443,6 @@ export default class Scene1 {
         z: 100
       }
     })
-
-    return this.newPromise()
   }
 
   async initPorte (gltf) {
@@ -632,7 +628,7 @@ export default class Scene1 {
     return this.newPromise(2500)
   }
 
-  async initBrasier (gltf) {
+  initBrasier (gltf) {
     const texture = this.textureLoader.load('/models/statues_brasier/Texture_Statues_Brasier_bake.png')
     texture.flipY = false
     const normal = this.textureLoader.load('/models/statues_brasier/Normal_Statues_Brasier_bake.png')
@@ -693,8 +689,6 @@ export default class Scene1 {
     })
 
     this.initLightBrasier()
-
-    return this.newPromise()
   }
 
   async initFeu (gltf) {
@@ -931,6 +925,7 @@ export default class Scene1 {
     }
     
     const trans = await Transition.fadeIn(0)
+    this.game.clearUpdatedElement()
 
     clearScene(this.scene)
     Matter.World.clear(this.world);
