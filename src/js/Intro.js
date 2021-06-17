@@ -244,7 +244,7 @@ export default class Intro {
     
     startGame.addEventListener("click", () => {
       endStart.classList.add('hide');
-      this.game.next()  
+      // this.game.next()  
     })
 
     moreButton.addEventListener("click", () => {
