@@ -85,8 +85,6 @@ p {
 #scene1,
 #scene2,
 #scene3 {
-  background-image: url('https://helios.vercel.app/img/background.png');
-  background-size: cover !important;
   position: absolute;
   top: 0;
   left: 0;
@@ -108,6 +106,8 @@ p {
 }
 
 #scene1 {
+  background-image: url('https://helios.vercel.app/img/background.png');
+  background-repeat: no-repeat;
   display: flex;
   width: 100%;
   z-index: 5;
