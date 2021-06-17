@@ -230,14 +230,7 @@ export default class Phaeton{
         {
           y: Math.PI * 2.5,
           duration: 0.8,
-          ease: 'Power2.out',
-          onStart: () => {
-            this.animation = true
-
-            setTimeout(() => {
-              this.animation = null
-            }, 500);
-          }
+          ease: 'Power2.out'
         }
       )
     }
@@ -254,14 +247,7 @@ export default class Phaeton{
         {
           y: Math.PI * 1.5,
           duration: 0.8,
-          ease: 'Power2.out',
-          onStart: () => {
-            this.animation = true
-
-            setTimeout(() => {
-              this.animation = null
-            }, 500);
-          }
+          ease: 'Power2.out'
         }
       )
     }
@@ -371,7 +357,7 @@ export default class Phaeton{
     )
   }
 
-  fadeToAction( name, duration ) {
+  fadeToAction (name, duration) {
     if (this.activeAction._clip.name === name) return
 
     this.previousAction = this.activeAction
