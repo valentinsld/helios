@@ -8,7 +8,7 @@ body {
   font-family: 'nueva-std-extended', serif;
   font-weight: 300;
   font-style: normal;
-  background-image: url('https://helios.vercel.app/img/background.png');
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
   background-size: cover;
   color: #FFC75B;
   width: 100%;
@@ -72,8 +72,8 @@ p {
 }
 
 #intro {
-  background-image: url('https://helios.vercel.app/img/background.png');
-  background-size: cover;
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-size: contain;
   z-index: 6;
   position: absolute;
   padding-top: 10%;
@@ -85,6 +85,8 @@ p {
 #scene1,
 #scene2,
 #scene3 {
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-size: contain;
   position: absolute;
   top: 0;
   left: 0;
@@ -106,7 +108,7 @@ p {
 }
 
 #scene1 {
-  background-image: url('https://helios.vercel.app/img/background.png');
+  background-image: url('https://helios.vercel.app/img/background.jpg');
   background-repeat: no-repeat;
   display: flex;
   width: 100%;
@@ -116,12 +118,6 @@ p {
 .column {
   width: 50%;
   height: 100vh;
-}
-
-.bold {
-  font-family: 'nueva-std-extended', serif;
-  font-weight: 700;
-  font-style: normal;
 }
 
 .left {
@@ -243,7 +239,7 @@ p {
 
 
 #endStart {
-  background-image: url('https://helios.vercel.app/img/background.png');
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
   background-size: cover;
   opacity: 0;
 
@@ -340,8 +336,12 @@ p {
   display: block;
 }
 
-#introMobile, #project{
+#introMobile {
   display: none;
+}
+
+#motif {
+  margin-top: 20px;
 }
 
 @keyframes animatedFragment {
@@ -362,23 +362,32 @@ p {
     font-size: 100px;
   }
 
+  .webgl {
+    display: none;
+  }
+
   #intro{
     display: none;
   }
   #introMobile{
+    background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+    background-size: cover;
     position: absolute;
-    z-index: 1;
+    z-index: 3;
     width: 100%;
     height: 100vh;
     display: block;
     text-align: center;
     padding-top: 30%;
-    background-image: url('https://helios.vercel.app/img/background.png');
   }
   .subtitleMobile {
     display: block;
     margin-top: 0;
     font-size: 20px;
+  }
+
+  .description{
+    padding: 30px;
   }
   .description p{
     color: #FF912C;
@@ -386,12 +395,13 @@ p {
   }
 
   #project{
-    opacity: 0;
+    position: initial;
     width: 100%;
     height: 100vh;
-    background-image: url('https://helios.vercel.app/img/background.png');
+    background-image: url('https://helios.vercel.app/img/background.jpg');
+    background-size: cover;
     position: absolute;
-    z-index: 0;
+    z-index: 2;
     pointer-events: none;
     padding-top: 10%;
   }
