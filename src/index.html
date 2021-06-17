@@ -1,13 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/intro.css">
-    <link rel="stylesheet" href="https://use.typekit.net/vaj6pfe.css">
-    <title>Helios</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/intro.css">
+  <link rel="stylesheet" href="https://use.typekit.net/kdl7efz.css">
+  <title>Helios</title>
 </head>
+
 <body>
+
+  <div id="introMobile" class="introMobile">
+    <div class="title">
+      <h1>HELIOS</h1>
+      <p class="subtitleMobile">Une odyssée</p>
+      <p class="subtitleMobile">à la recherche du soleil</p>
+    </div>
+
+    <div class="picto">
+      <img class="picto" src="https://helios.vercel.app/img/computer.svg" alt="">
+    </div>
+
+    <div class="description">
+      <p>Hélios est une expérience intéractive, optimisée pour le web.</p>
+      <p>Pour pouvoir en profiter, revenez depuis un ordinateur !</p>
+    </div>
+
+    <div class="more">
+      <a id="moreButton">En savoir plus sur le projet</a>
+    </div>
+  </div>
+
+  <div id="project" class="">
+    <p>Hélios est un projet de jeu multijoueur sur navigateur, revisitant le mythe de Phaéton dans une aventure à 
+      la recherche du soleil. Se jouant à deux, il vise à recréer un lien après l'isolement imposé par l'épidémie de coronavirus.</p>
+      <p>Il est le fruit du travail de 4 élèves du Bachelor Designer et Développeur Interactif de Gobelins, l'Ecole de l'Image</p>
+      <div id="credits">
+        <p><strong>Design : </strong> Victor Soulié & Lisa Levavasseur</p>
+        <p><strong>Développement : </strong>Valentin Salaud & Vanina Idiart</p>
+      </div>
+  </div>
+
+
   <div id="intro">
     <div class="title">
       <h1>HELIOS</h1>
@@ -27,16 +62,16 @@
     </div>
     <div class="fragment">
       <img id="fragment" src="https://helios.vercel.app/img/Fragment.gif" alt="">
-    </div>    
+    </div>
     <div class="right column">
       <div id="header">
         <p id="text1">Par ma faute ... </p>
         <br>
         <br>
         <p id="text2">
-          tu es tout ce qu'il reste du soleil.
+          tu es <strong class="bold"> ce qu'il reste du soleil.</strong>
         </p>
-        <a id="suite">Suite ...</a>
+        <img id="suite" src="https://raw.githubusercontent.com/valentinsld/helios/166adb47d2abadda01a430f273e763baa768ea06/static/img/next.svg" alt="">
       </div>
     </div>
   </div>
@@ -57,7 +92,7 @@
         </p>
         <br>
         <br>
-        <a id="suite2">Suite ...</a>
+        <img id="suite2" src="https://raw.githubusercontent.com/valentinsld/helios/166adb47d2abadda01a430f273e763baa768ea06/static/img/next.svg" alt="">
       </div>
     </div>
 
@@ -76,12 +111,12 @@
         <br>
         <br>
         <p id="text2S3">
-          de te rendre sous ta véritable forme
+          de te rendre <strong>sous ta véritable forme</strong>
         </p>
         <br>
         <br>
         <p id="text3S3">
-          à mon père ...    
+          à mon père ...
         </p>
         <br>
         <br>
@@ -90,11 +125,27 @@
   </div>
 
   <div id="endStart">
-    <p>Sortons ensemble</p>
-    <p>de cette nuit sans fin.</p>
+    <p class="baseline">Sortons ensemble <br>de cette nuit sans fin.</p>
+    <div class="players">
+      <div class="playerPhaeton">
+        <p>Joueur 1 : Phaéton</p>
+        <div class="icons">
+          <img class="Q" id="QPress" src="https://helios.vercel.app/img/Q.svg" alt="">
+          <img class="S" id="SPress" src="https://helios.vercel.app/img/S.svg" alt="">
+        </div>
+        <p class="advice">Utilisez le clavier</p>
+        <p class="advice">pour vous déplacer</p>
+      </div>
+      <div class="playerFragment">
+        <p>Joueur 2 : Fragment</p>
+        <img class="mouse" id="mouse" src="https://helios.vercel.app/img/Icon-souris.svg" alt="">
+        <p class="advice">Utilisez la souris</p>
+        <p class="advice">pour vous déplacer</p>
+      </div>
+    </div>
     <a id="startGame">Commencez l'aventure</a>
   </div>
-  
+
   <!-- Model Loader -->
   <div class="modelLoader">
     <div class="modelLoader__container">
@@ -106,26 +157,30 @@
   <div class="transition">
     <div class="transition__top">
       <svg width="258" height="14" viewBox="0 0 258 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M146.923 6.71387H257.5" stroke="#FFB662"/>
-        <path d="M0 6.71387H55.29H110.58" stroke="#FFB662"/>
-        <path d="M126.484 8.7404H133.943V1.39746H119.373V12.9581" stroke="#FFB662" stroke-miterlimit="10"/>
-        <path d="M130.311 5.21767H122.853V12.5606H137.423V1" stroke="#FFB662" stroke-miterlimit="10"/>
+        <path d="M146.923 6.71387H257.5" stroke="#FFB662" />
+        <path d="M0 6.71387H55.29H110.58" stroke="#FFB662" />
+        <path d="M126.484 8.7404H133.943V1.39746H119.373V12.9581" stroke="#FFB662" stroke-miterlimit="10" />
+        <path d="M130.311 5.21767H122.853V12.5606H137.423V1" stroke="#FFB662" stroke-miterlimit="10" />
       </svg>
     </div>
     <div class="transition__texts texts"></div>
+    <svg class="transition__loader" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.48449 8.7404H15.9432V1.39746H1.37305V12.9581" stroke="#FFB662" stroke-miterlimit="10"/>
+      <path d="M12.3117 5.21767H4.85303V12.5606H19.4232V1" stroke="#FFB662" stroke-miterlimit="10"/>
+    </svg>
   </div>
 
   <canvas class="webgl"></canvas>
 
   <div id="ModelMenu" class="MenuContextuel" hidden>
     <svg width="258" height="14" viewBox="0 0 258 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M146.923 6.71387H257.5" stroke="#FFB662"/>
-      <path d="M0 6.71387H55.29H110.58" stroke="#FFB662"/>
-      <path d="M126.484 8.7404H133.943V1.39746H119.373V12.9581" stroke="#FFB662" stroke-miterlimit="10"/>
-      <path d="M130.311 5.21767H122.853V12.5606H137.423V1" stroke="#FFB662" stroke-miterlimit="10"/>
+      <path d="M146.923 6.71387H257.5" stroke="#FFB662" />
+      <path d="M0 6.71387H55.29H110.58" stroke="#FFB662" />
+      <path d="M126.484 8.7404H133.943V1.39746H119.373V12.9581" stroke="#FFB662" stroke-miterlimit="10" />
+      <path d="M130.311 5.21767H122.853V12.5606H137.423V1" stroke="#FFB662" stroke-miterlimit="10" />
     </svg>
     <p class="MenuContextuel__content"></p>
   </div>
 </body>
-</html>
 
+</html>

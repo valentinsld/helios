@@ -26,7 +26,8 @@ export default class Scene0 {
   async destruct () {
     this.scene.clear()
     Matter.World.clear(this.world);
-
+    this.game.clearUpdatedElement()
+    
     return new Promise(resolve => {
       setTimeout(() => {
         resolve('destructed');

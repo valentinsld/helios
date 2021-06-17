@@ -22,13 +22,12 @@ export default class Intro {
     
     var tl3 = gsap.timeline({
       paused: true,
-      delay: 3,
+      delay: 1,
       onComplete: start
     })
     
     var tl4 = gsap.timeline({
-      paused: true,
-      delay: 1,
+      paused: true
     })
     
     
@@ -54,39 +53,39 @@ export default class Intro {
       opacity: 0,
       ease: Expo.easeInOut
     })
+
+    tl.set("#suite", {
+      opacity: 0,
+      ease: Expo.easeInOut,
+    })
     
-    
-    tl.to("#phaeton", 6, {
+    tl.to("#phaeton", 3, {
       y: -10,
       width: 1000,
       opacity: 1
     });
     
     
-    tl.to("#fragment", 7, {
+    tl.to("#fragment", 2, {
       x: -100,
       opacity: 1
     }, "< 2");
     
     
-    tl.to("#text1", 7, {
-      opacity: 1
-    }, "< 3");
-    
-    
-    tl.to("#text2", 7, {
+    tl.to("#text1", 2, {
       opacity: 1
     }, "< 1");
     
     
+    tl.to("#text2", 2, {
+      opacity: 1
+    }, "< 1");
+
+    tl.to("#suite", 2, {
+      opacity: 1
+    }, "< 1");
+
     
-    
-    
-    
-    tl2.set("#scene1", {
-      opacity: 1,
-      ease: Expo.easeInOut
-    });
     
     tl2.set("#text1S2", {
       opacity: 0,
@@ -106,35 +105,40 @@ export default class Intro {
     tl2.set("#temple", {
       opacity: 0,
       width: "80%",
+      ease: Expo.easeOut
+    });
+
+    tl2.set("#suite2", {
+      opacity: 0,
       ease: Expo.easeInOut
     });
     
-    tl2.to("#scene1", {
-      opacity: 0
-    });
-    
-    tl2.to("#temple", 10, {
+    tl2.to("#temple", 7, {
       opacity: 1,
       width: "100%"
-    }, "< 1");
+    });
     
-    tl2.to("#text1S2", 2, {
+    tl2.to("#text1S2", 1, {
       opacity: 1
     }, "< 2");
     
     tl2.to("#text2S2", 2, {
       opacity: 1
-    }, "< 2");
+    }, "< 1");
     
     
     tl2.to("#text3S2", 2, {
+      opacity: 1
+    }, "< 1");
+
+    tl2.to("#suite2", 2, {
       opacity: 1
     }, "< 1");
     
     
     tl3.set("#sun", {
       opacity: 0,
-      width: "140%",
+      width: "150%",
       ease: Expo.easeInOut
     })
     
@@ -160,25 +164,25 @@ export default class Intro {
     })
     
     
-    tl3.to("#sun", 13, {
+    tl3.to("#sun", 10, {
       opacity: 1,
       rotation: "+=60",
       width: "170%"
-    });
+    }, "< 1");
     
-    tl3.to("#text1S3", 3, {
+    tl3.to("#text1S3", 1, {
       opacity: 1
     }, "< 2");
     
     
-    tl3.to("#text2S3", 3, {
+    tl3.to("#text2S3", 2, {
       opacity: 1
-    }, "< 3");
+    }, "< 1");
     
     
-    tl3.to("#text3S3", 3, {
+    tl3.to("#text3S3", 1, {
       opacity: 1
-    }, "< 4");
+    }, "< 1");
     
     
     
@@ -186,9 +190,20 @@ export default class Intro {
       opacity: 0,
       ease: Expo.easeInOut
     })
+
+    tl4.set("playerPhaeton",{
+      opacity: 0,
+      ease: Expo.easeInOut
+    })
+
     tl4.to("#endStart", 3, {
       opacity: 1
     });
+
+    tl4.to ("#playerPhaeton", 4, {
+      opacity: 1
+    });
+
     
     
     var button = document.getElementById('button')
@@ -199,6 +214,9 @@ export default class Intro {
     var scene3 = document.getElementById('scene3')
     var startGame = document.getElementById('startGame')
     var endStart = document.getElementById('endStart')
+    var introMobile = document.getElementById('introMobile')
+    var moreButton = document.getElementById('moreButton')
+    var project = document.getElementById('project')
     
     button.addEventListener("click", () => {
       console.log('click')
@@ -218,9 +236,9 @@ export default class Intro {
       scene3.classList.add('show');
       tl3.play();
     })
-    
+
     function start() {
-      scene3.classList.add('hide');
+      scene3.classList.add('hidePlay');
       tl4.play();
     }
     
@@ -228,8 +246,11 @@ export default class Intro {
       endStart.classList.add('hide');
       this.game.next()  
     })
+
+    moreButton.addEventListener("click", () => {
+      introMobile.classList.add('hide');
+      project.classList.add('show');
+    })
     
   }
 }
-
-
