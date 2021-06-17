@@ -28,7 +28,7 @@ export default class Scene0 {
     this.scene = new THREE.Group()
     globalScene.add(this.scene)
 
-    this.cameraFar()
+    this.updateCamera()
     this.initCharacters()
     this.initBox()
     this.addDoor()
@@ -36,8 +36,9 @@ export default class Scene0 {
     this.initModels()
   }
 
-  cameraFar () {
+  updateCamera () {
     this.camera.far = 4500
+    this.camera.zoom = 0.5
 
     this.camera.updateProjectionMatrix()
   }

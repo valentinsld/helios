@@ -64,7 +64,7 @@ export default class Scene0 {
       debug: this.debug,
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
-      scale: 80,
+      scale: 86,
       speed: 15,
       position : {
         x : -1300,
@@ -142,7 +142,7 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: -1550,
+        x: -1700,
         y: 200,
         z: 100
       }
@@ -341,8 +341,8 @@ export default class Scene0 {
 
   async initSalle (gltf) {
     this.map = gltf.scene
-    this.map.scale.set(250, 250, 250)
-    this.map.position.set(-50, -680, -200)
+    this.map.scale.set(252, 252, 252)
+    this.map.position.set(-80, -680, -200)
 
     this.scene.add(this.map) 
 

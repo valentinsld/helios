@@ -56,7 +56,7 @@ export default class Scene1 {
     this.groupeBrasier = new THREE.Group()
     this.groupeBrasier.scale.set(300, 300, 300)
     this.groupeBrasier.rotation.y = 2.25
-    this.groupeBrasier.position.set(680, -455, -135)
+    this.groupeBrasier.position.set(678, -455, -133)
 
     this.scene.add(this.groupeBrasier)
 
