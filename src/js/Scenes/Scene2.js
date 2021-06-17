@@ -242,7 +242,7 @@ export default class Scene0 {
       // debug: this.debug,
       gltf,
       position: {
-        x: -870,
+        x: -900,
         y: -600,
         z: -260,
       },
@@ -268,7 +268,7 @@ export default class Scene0 {
       // debug: this.debug,
       gltf,
       position: {
-        x: 940,
+        x: 920,
         y: -600,
         z: -270,
       },
