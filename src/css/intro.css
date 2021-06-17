@@ -15,6 +15,10 @@ body {
   height: 100vh;
 }
 
+img {
+  /* pointer-events: none; */
+}
+
 h1 {
   font-size: 300px;
   font-weight: 100;
@@ -301,6 +305,13 @@ p {
   opacity: 0;
   width: 5%;
   margin-top: 40px;
+}
+
+#suite3 {
+  opacity: 0;
+  cursor: pointer;
+  margin-left: 80%;
+  width: 5%;
 }
 
 .baseline {
