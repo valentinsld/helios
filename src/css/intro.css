@@ -8,11 +8,15 @@ body {
   font-family: 'nueva-std-extended', serif;
   font-weight: 300;
   font-style: normal;
-  background-image: url('https://helios.vercel.app/img/background.png');
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
   background-size: cover;
   color: #FFC75B;
   width: 100%;
   height: 100vh;
+}
+
+img {
+  /* pointer-events: none; */
 }
 
 h1 {
@@ -72,11 +76,12 @@ p {
 }
 
 #intro {
-  background-image: url('https://helios.vercel.app/img/background.png');
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
   background-size: cover;
   z-index: 6;
   position: absolute;
-  padding-top: 10%;
+  padding-top: 7%;
   text-align: center;
   width: 100%;
   height: 100vh;
@@ -85,8 +90,9 @@ p {
 #scene1,
 #scene2,
 #scene3 {
-  background-image: url('https://helios.vercel.app/img/background.png');
-  background-size: cover !important;
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
+  background-size: cover;
   position: absolute;
   top: 0;
   left: 0;
@@ -107,7 +113,13 @@ p {
   color: #FF912C;
 }
 
+.motif{
+  height: 10px;
+}
+
 #scene1 {
+  background-image: url('https://helios.vercel.app/img/background.jpg');
+  background-repeat: no-repeat;
   display: flex;
   width: 100%;
   z-index: 5;
@@ -116,12 +128,6 @@ p {
 .column {
   width: 50%;
   height: 100vh;
-}
-
-.bold {
-  font-family: 'nueva-std-extended', serif;
-  font-weight: 700;
-  font-style: normal;
 }
 
 .left {
@@ -149,8 +155,8 @@ p {
 }
 
 #header {
-  margin-top: 60%;
-  margin-left: -170%;
+  margin-top: 45%;
+  margin-left: -80%;
 }
 
 #text2 {
@@ -161,6 +167,7 @@ p {
 #scene3 {
   display: flex;
   width: 100%;
+  height: 100vh;
 }
 
 #scene2 {
@@ -213,6 +220,9 @@ p {
 }
 
 #scene3 {
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
+  background-size: cover;
   z-index: 3;
 }
 
@@ -243,7 +253,8 @@ p {
 
 
 #endStart {
-  background-image: url('https://helios.vercel.app/img/background.png');
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
   background-size: cover;
   opacity: 0;
 
@@ -296,6 +307,13 @@ p {
   margin-top: 40px;
 }
 
+#suite3 {
+  opacity: 0;
+  cursor: pointer;
+  margin-left: 80%;
+  width: 5%;
+}
+
 .baseline {
   font-family: 'nueva-std-extended', serif;
   font-weight: 700;
@@ -304,6 +322,8 @@ p {
 }
 
 .players {
+  margin-left: 10%;
+  margin-right: 10%;
   display: flex;
   color: #FFC75B;
   font-size: 30px !important;
@@ -340,8 +360,13 @@ p {
   display: block;
 }
 
-#introMobile, #project{
+#introMobile,
+#project {
   display: none;
+}
+
+#motif {
+  margin-top: 90px;
 }
 
 @keyframes animatedFragment {
@@ -358,40 +383,56 @@ p {
 
 
 @media only screen and (min-device-width : 0px) and (max-device-width : 1024px) {
-  h1{
+  h1 {
     font-size: 100px;
   }
 
-  #intro{
+  .webgl {
     display: none;
   }
-  #introMobile{
+
+  #intro {
+    display: none;
+  }
+
+  #introMobile {
+    background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+    background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
-    z-index: 1;
+    z-index: 3;
     width: 100%;
     height: 100vh;
     display: block;
     text-align: center;
     padding-top: 30%;
-    background-image: url('https://helios.vercel.app/img/background.png');
   }
+
   .subtitleMobile {
     display: block;
     margin-top: 0;
     font-size: 20px;
   }
-  .description p{
+
+  .description {
+    padding: 30px;
+  }
+
+  .description p {
     color: #FF912C;
     font-size: 18px !important;
   }
 
-  #project{
-    opacity: 0;
+  #project {
+    background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: block !important;
+    position: initial;
     width: 100%;
     height: 100vh;
-    background-image: url('https://helios.vercel.app/img/background.png');
     position: absolute;
-    z-index: 0;
+    z-index: 2;
     pointer-events: none;
     padding-top: 10%;
   }
@@ -400,6 +441,7 @@ p {
     font-size: 20px;
     padding: 10%;
   }
+
   .picto {
     padding: 10%;
   }
@@ -409,13 +451,17 @@ p {
     font-size: 20px !important;
   }
 
-  #credits{
+  #credits {
     padding: 10%;
   }
-  #credits p{
+
+  #credits p {
     padding: 0;
   }
-  #scene1, #scene2, #scene3{
+
+  #scene1,
+  #scene2,
+  #scene3 {
     display: none;
   }
 
