@@ -48,6 +48,11 @@ export default class Scene3 {
     this.addLadder()
     this.addDoor()
     this.addCacheForSymboles()
+
+
+    setTimeout(() => {
+      this.endScene()
+    }, 2000);
   }
 
   initZoomCamera () {
@@ -724,8 +729,14 @@ export default class Scene3 {
     spotLight.penumbra = 0.3
     spotLight.power = 15
 
-    spotLight.position.set(-300, 1400, 40)
+    spotLight.position.set(-100, 1500, 40)
     this.scene.add( spotLight )
+
+    const targetObject = new THREE.Object3D()
+    targetObject.position.set(-100, 100, 40)
+    this.scene.add(targetObject)
+
+    spotLight.target = targetObject
 
     // animation lights
     this.symboles.forEach((sym, i) => {
