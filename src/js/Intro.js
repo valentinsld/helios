@@ -1,7 +1,6 @@
-import gsap from 'gsap'
-import {
-  Expo
-} from "gsap";
+import gsap, { Expo } from 'gsap'
+
+import AudioManager from './utils/AudioManager'
 
 export default class Intro {
   constructor(game) {
@@ -223,6 +222,12 @@ export default class Intro {
       intro.classList.add('hide');
       scene1.classList.add('show');
       tl.play();
+
+      // Start sound
+      AudioManager.newSound({
+        name: 'scene1_ambiance',
+        loop: true
+      })
     })
     
     suite.addEventListener("click", () => {

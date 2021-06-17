@@ -3,6 +3,7 @@ import Matter from 'matter-js'
 import gsap from 'gsap'
 
 import MenuContextuels from '../utils/MenuContextuels'
+import AudioManager from '../utils/AudioManager'
 
 const POSITION = {
   x: 0,
@@ -134,7 +135,11 @@ export default class Statue {
     if (!this.canInteract) return
 
     MenuContextuels.removeMenu('Statues')
-
+    AudioManager.newSound({
+      name: 'scene2_statue',
+      volume: 0.5
+    })
+    
     this.step += 1
     // console.log(this.step, this.step % 4 === 0)
     // this.mesh.rotation.y = this.step * Math.PI / 2
