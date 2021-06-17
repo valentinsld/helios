@@ -64,7 +64,7 @@ export default class Scene3 {
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
       scale: 60,
-      speed: 15,
+      speed: 13,
       position : {
         x : -1300,
         y : 100,
@@ -724,8 +724,14 @@ export default class Scene3 {
     spotLight.penumbra = 0.3
     spotLight.power = 15
 
-    spotLight.position.set(-300, 1400, 40)
+    spotLight.position.set(-100, 1500, 40)
     this.scene.add( spotLight )
+
+    const targetObject = new THREE.Object3D()
+    targetObject.position.set(-100, 100, 40)
+    this.scene.add(targetObject)
+
+    spotLight.target = targetObject
 
     // animation lights
     this.symboles.forEach((sym, i) => {

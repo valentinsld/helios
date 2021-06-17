@@ -51,7 +51,7 @@ export default class Scene0 {
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
       scale: 85,
-      speed: 15,
+      speed: 12,
       position : {
         x : -1550,
         y : -550,
@@ -299,11 +299,17 @@ export default class Scene0 {
     
     this.map.add( globalLight )
 
-    // Second light
-    const secondLight = new THREE.PointLight(0xfaa961, 1, 3000, 0.5)
-    secondLight.position.set(0, 0.1, -5.6)
+    // // Second light
+    // const secondLight = new THREE.PointLight(0xfaa961, 1, 3000, 0.5)
+    // secondLight.position.set(0, 0.1, -5.6)
     
-    this.map.add( secondLight )
+    // this.map.add( secondLight )
+
+    // Second light
+    const topLight = new THREE.PointLight(0xfaa961, 0.5, 2000, 0.5)
+    topLight.position.set(0, 5, 2.2)
+    
+    this.map.add( topLight )
 
     
     // Light Door
