@@ -313,7 +313,7 @@ export default class Phaeton{
     this.animation.to(
       this.mesh.position,
       {
-        duration: 0.8,
+        duration: upDown ? 0.4 : 0.8,
         x: start.x,
         y: upDown ? "-=0" : "-=150"
       }
@@ -329,7 +329,7 @@ export default class Phaeton{
     .to(
       this.mesh.position,
       {
-        duration: 3,
+        duration: 2,
         y: end.y,
         ease: 'linear',
         onComplete: () => {
