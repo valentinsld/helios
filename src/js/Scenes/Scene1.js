@@ -66,17 +66,38 @@ export default class Scene1 {
 
     this.endEnigme = false
 
-    AudioManager.stopSound('scene0_ambiance', 2.5)
-    AudioManager.newSound({
-      name: 'scene1_ambiance',
-      loop: true
-    })
 
     this.initZoomCamera()
     this.initCharacters()
     this.initModels()
     this.addElements()
     this.createGradientBackground()
+  }
+
+  initScene () {
+    AudioManager.stopSound('scene0_ambiance', 2.5)
+    AudioManager.newSound({
+      name: 'scene1_ambiance',
+      loop: true
+    })
+
+    const backgroundNoise = this.game.globalScene.getObjectByName('NoiseBackground')
+    const scene0 = this.game.globalScene.getObjectByName('Scene0')
+
+    gsap.to(
+      backgroundNoise.material.uniforms.uOpacity,
+      {
+        value: 0,
+        duration: 2,
+        onComplete: () => {
+          backgroundNoise.geometry.dispose()
+          backgroundNoise.material.dispose()
+          scene0.remove(backgroundNoise)
+      
+          this.game.removeUpdatedElement('NoiseBackground')
+        }
+      }
+    )
   }
 
   initZoomCamera () {
