@@ -3,6 +3,7 @@ import Matter from 'matter-js'
 import gsap from 'gsap'
 
 import MenuContextuels from '../utils/MenuContextuels'
+import AudioManager from '../utils/AudioManager'
 
 const POSITION = {
   x: 0,
@@ -78,7 +79,7 @@ export default class Statue {
           MenuContextuels.addMenu({
             id: 'Statues',
             text: 'Intéragissez avec espace pour tourner la statue',
-            position: new THREE.Vector3(-330, -200, 0)
+            position: new THREE.Vector3(-320, -150, 0)
           })
         }
       }
@@ -134,8 +135,11 @@ export default class Statue {
     if (!this.canInteract) return
 
     MenuContextuels.removeMenu('Statues')
-
-    this.step += 1
+    AudioManager.newSound({
+      name: 'scene1_statue',
+      volume: 0.5
+    })
+    
     // console.log(this.step, this.step % 4 === 0)
     // this.mesh.rotation.y = this.step * Math.PI / 2
     const moreY = this.mesh.moreY || 0
@@ -145,7 +149,10 @@ export default class Statue {
       {
         y: this.step * Math.PI / 2 + moreY,
         ease: "steps(6)", //'Power2.out'
-        duration: 0.5
+        duration: 0.5,
+        onComplete: () => {
+          this.step += 1
+        }
       }
     )
 

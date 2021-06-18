@@ -48,11 +48,11 @@ class Menu {
     this.position = position
     this.camera = menuContextuelsCamera
     
+    this.seen = 0
     this.init()
   }
   
   init () {
-    this.initTime = new Date()
 
     // init DOM
     this.el = MENU_DOM.cloneNode(true)
@@ -69,8 +69,17 @@ class Menu {
 
     // animation
     setTimeout(() => {
-      this.el.classList.add('-see')
+      this.see()
     }, 50);
+  }
+  
+  see () {
+    if (this.seen >= 2 || this.el.classList.contains('-see')) return
+    this.seen += 1
+
+    this.initTime = new Date()
+
+    this.el.classList.add('-see')
   }
 
   remove () {
@@ -81,9 +90,9 @@ class Menu {
       this.el.classList.remove('-see')
     }, delay);
 
-    setTimeout(() => {
-      this.el.remove()
-    }, delay + 800);
+    // setTimeout(() => {
+    //   this.el.remove()
+    // }, delay + 800);
   }
 }
 
@@ -93,9 +102,11 @@ class MenuContextuels {
   }
 
   addMenu ({id, text, position}) {
-    if (this.menus[id]) return
-
-    this.menus[id] = new Menu({text, position})
+    if (this.menus[id]) {
+      this.menus[id].see()
+    } else {
+      this.menus[id] = new Menu({text, position})
+    }
   }
 
   removeMenu(id) {

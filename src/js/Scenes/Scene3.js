@@ -64,7 +64,7 @@ export default class Scene3 {
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
       scale: 60,
-      speed: 15,
+      speed: 13,
       position : {
         x : -1300,
         y : 100,
@@ -118,7 +118,7 @@ export default class Scene3 {
   }
 
   addWallsAndFloors () {
-    this.game.ambientLight.intensity = this.debug ? 1 : 0.17
+    this.game.ambientLight.intensity = this.debug ? 1 : 0.12
     
     // FLOORS
     const floor1 = new Box({
@@ -279,23 +279,6 @@ export default class Scene3 {
         },
       }
     })
-
-    //
-    // Shadow bottom
-    //
-    const BOX = new THREE.BoxBufferGeometry(1000, 600, 100, 32, 32)
-    const MATERIAL = new THREE.MeshStandardMaterial({
-      color: 0x000000,
-      metalness: 0.3,
-      roughness: 0.4,
-      transparent: true,
-      opacity: 0
-    })
-
-    this.shadowCenter = new THREE.Mesh(BOX, MATERIAL)
-    this.shadowCenter.position.set(0, -640, 300)
-    
-    this.scene.add(this.shadowCenter)
   }
 
   pressPlaque (i) {
@@ -632,7 +615,7 @@ export default class Scene3 {
         sym: 1,
       },
       {
-        x: -880,
+        x: -780,
         y: 105,
         z: 0,
         id: 2,
@@ -741,8 +724,14 @@ export default class Scene3 {
     spotLight.penumbra = 0.3
     spotLight.power = 15
 
-    spotLight.position.set(-300, 1400, 40)
+    spotLight.position.set(-100, 1500, 40)
     this.scene.add( spotLight )
+
+    const targetObject = new THREE.Object3D()
+    targetObject.position.set(-100, 100, 40)
+    this.scene.add(targetObject)
+
+    spotLight.target = targetObject
 
     // animation lights
     this.symboles.forEach((sym, i) => {
@@ -791,9 +780,7 @@ export default class Scene3 {
       {
         z: endRotation,
         duration: 3,
-        ease: "power4.in",
-        onUpdate: this.changeColorShadowCenter.bind(this),
-        onUpdateParams: [endRotation]
+        ease: "power4.in"
       },
       '-=0.5'
     )
@@ -802,9 +789,7 @@ export default class Scene3 {
       {
         z: Math.PI * 0.43,
         duration: 0.2,
-        ease: "power2.out",
-        onUpdate: this.changeColorShadowCenter.bind(this),
-        onUpdateParams: [endRotation]
+        ease: "power2.out"
       }
     )
     tl.to(
@@ -812,9 +797,7 @@ export default class Scene3 {
       {
         z: endRotation,
         duration: 0.15,
-        ease: "power1.in",
-        onUpdate: this.changeColorShadowCenter.bind(this),
-        onUpdateParams: [endRotation]
+        ease: "power1.in"
       }
     )
 
@@ -862,13 +845,6 @@ export default class Scene3 {
     up.vertices[0].x -= 100
     up.vertices[1].x += 100
     Matter.Body.setVertices(up, up.vertices);
-  }
-
-  changeColorShadowCenter (maxZ) {
-    const value = this.renePhaeton.rotation.z
-    const ratio = value / maxZ
-
-    this.shadowCenter.material.opacity = ratio
   }
 
   animationEndPhaeton () {

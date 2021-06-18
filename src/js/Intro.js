@@ -1,7 +1,6 @@
-import gsap from 'gsap'
-import {
-  Expo
-} from "gsap";
+import gsap, { Expo } from 'gsap'
+
+import AudioManager from './utils/AudioManager'
 
 export default class Intro {
   constructor(game) {
@@ -235,6 +234,12 @@ export default class Intro {
       intro.classList.add('hide');
       scene1.classList.add('show');
       tl.play();
+
+      // Start sound
+      AudioManager.newSound({
+        name: 'scene0_ambiance',
+        loop: true
+      })
     })
     
     suite.addEventListener("click", () => {
@@ -250,10 +255,15 @@ export default class Intro {
     })
 
     suite3.addEventListener("click", () => {
-      scene3.classList.add('hide');
+      scene3.classList.add('hidePlay');
       tl4.play();
     })
 
+    // function start() {
+    //   scene3.classList.add('hidePlay');
+    //   tl4.play();
+    // }
+    
     moreButton.addEventListener("click", () => {
       introMobile.classList.add('hide');
       project.classList.add('show');

@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+      import * as THREE from 'three'
 import * as Matter from 'matter-js'
 
 import gsap from 'gsap'
@@ -16,6 +16,7 @@ import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import Transition from '../utils/transition'
 import MenuContextuels from '../utils/MenuContextuels'
+import AudioManager from '../utils/AudioManager'
 
 import Phaeton from '../Characters/Phaeton'
 import Fragment from '../Characters/Fragment'
@@ -24,6 +25,7 @@ import Box from '../Elements/Box'
 import AnimatedFire from '../Elements/animatedFire'
 import Plaque from '../Elements/Plaque'
 import Door from '../Elements/Door'
+import { Audio } from 'three'
 
 export default class Scene0 {
   constructor({camera, engine, globalScene, gltfLoader, debug, textureLoader, sceneManager, game}) {
@@ -45,6 +47,11 @@ export default class Scene0 {
 
     this.initZoomCamera()
 
+    AudioManager.newSound({
+      name: 'scene2_ambiance',
+      loop: true
+    })
+
     this.initSol()
     this.initCharacters()
     this.initDoor()
@@ -64,8 +71,8 @@ export default class Scene0 {
       debug: this.debug,
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
-      scale: 80,
-      speed: 15,
+      scale: 86,
+      speed: 12,
       position : {
         x : -1300,
         y : -600,
@@ -142,7 +149,7 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: -1550,
+        x: -1700,
         y: 200,
         z: 100
       }
@@ -235,7 +242,7 @@ export default class Scene0 {
       // debug: this.debug,
       gltf,
       position: {
-        x: -870,
+        x: -900,
         y: -600,
         z: -260,
       },
@@ -261,7 +268,7 @@ export default class Scene0 {
       // debug: this.debug,
       gltf,
       position: {
-        x: 940,
+        x: 920,
         y: -600,
         z: -270,
       },
@@ -341,8 +348,8 @@ export default class Scene0 {
 
   async initSalle (gltf) {
     this.map = gltf.scene
-    this.map.scale.set(250, 250, 250)
-    this.map.position.set(-50, -680, -200)
+    this.map.scale.set(252, 252, 252)
+    this.map.position.set(-80, -680, -200)
 
     this.scene.add(this.map) 
 
@@ -463,6 +470,10 @@ export default class Scene0 {
       text: 'Lorsque vous marchez sur des plaques de pression, vous activez des mecanismes',
       position: new THREE.Vector3(550, -100, 0)
     })
+    AudioManager.newSound({
+      name: 'scene2_portPierre',
+      volume: 0.6
+    })
 
     this.open = true
     this.door.open()
@@ -495,6 +506,8 @@ export default class Scene0 {
   // Destruct
   //
   async destruct () {
+    AudioManager.stopSound('scene2_ambiance')
+
     const trans = await Transition.fadeIn(1)
 
     MenuContextuels.removeMenu('endScene2')

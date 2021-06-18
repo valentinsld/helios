@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import Matter from 'matter-js'
 import gsap from 'gsap'
 
+import AudioManager from '../utils/AudioManager'
+
 const INIT = {
   position: {
     x: 0,
@@ -129,6 +131,10 @@ export default class Plaque {
         duration: 0.3
       }
     )
+
+    AudioManager.newSound({
+      name: 'plaque'
+    })
 
     this.func.call(null, this.funcParam)
   }

@@ -23,6 +23,7 @@ import Door from '../Elements/Door'
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import Transition from '../utils/transition'
+import AudioManager from '../utils/AudioManager'
 
 import Statue from '../Elements/01_statue'
 import AnimatedFire from '../Elements/animatedFire'
@@ -56,7 +57,7 @@ export default class Scene1 {
     this.groupeBrasier = new THREE.Group()
     this.groupeBrasier.scale.set(300, 300, 300)
     this.groupeBrasier.rotation.y = 2.25
-    this.groupeBrasier.position.set(680, -455, -135)
+    this.groupeBrasier.position.set(678, -455, -133)
 
     this.scene.add(this.groupeBrasier)
 
@@ -64,6 +65,12 @@ export default class Scene1 {
     if (this.debug) this.debugSceneFolder = this.debug.addFolder('Scene params')
 
     this.endEnigme = false
+
+    AudioManager.stopSound('scene0_ambiance', 2.5)
+    AudioManager.newSound({
+      name: 'scene1_ambiance',
+      loop: true
+    })
 
     this.initZoomCamera()
     this.initCharacters()
@@ -832,13 +839,19 @@ export default class Scene1 {
     // animation door
     const initEmmisive = this.materialSoleil.emissiveIntensity
     const timeline = gsap.timeline()
+
     timeline
       .to (
         this.materialSoleil,
         {
           emissiveIntensity: 3,
           ease: "steps(14)",
-          duration: 1.2
+          duration: 1.2,
+          onStart: () => {
+            AudioManager.newSound({
+              name: 'scene1_reussite'
+            })
+          }
         }
       )
       .to (
@@ -856,7 +869,12 @@ export default class Scene1 {
           y: Math.PI / 2.2,
           ease: "steps(12)",
           duration: 2,
-          delay: 0.5
+          delay: 0.5,
+          onStart: () => {
+            AudioManager.newSound({
+              name: 'scene1_porte'
+            })
+          }
         }
       )
       .to(
@@ -924,6 +942,8 @@ export default class Scene1 {
       this.debug.removeFolder('Fire')
     }
     
+    AudioManager.stopSound('scene1_ambiance', 2.5)
+
     const trans = await Transition.fadeIn(0)
     this.game.clearUpdatedElement()
 
