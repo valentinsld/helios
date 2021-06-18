@@ -9,6 +9,7 @@ import Matter from 'matter-js'
 
 import SceneManager from './Scenes'
 import { menuContextuelsCamera } from './utils/MenuContextuels'
+import AudioManager from './utils/AudioManager'
 
 export default class Game{
   constructor() {
@@ -137,6 +138,7 @@ export default class Game{
 
     // add to menu contextuels
     menuContextuelsCamera.init(this.camera)
+    AudioManager.initCamera(this.camera)
   }
 
   initRenderer() {

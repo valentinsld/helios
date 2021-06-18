@@ -5,6 +5,7 @@ import vertexShader from '../../glsl/sun/vertex.glsl'
 import fragmentShader from '../../glsl/sun/fragment.glsl'
 
 import MenuContextuels from '../utils/MenuContextuels'
+import AudioManager from '../utils/AudioManager'
 
 const POSITION = {
   x: 0,
@@ -97,6 +98,10 @@ export default class Fire {
             id: 'captorFire',
             text: 'Cliquez et maintenez pour diriger le faisceau',
             position: new THREE.Vector3(-580, -300, 0)
+          })
+          
+          AudioManager.newSound({
+            name: 'scene1_brasier'
           })
         }
       }
