@@ -193,8 +193,7 @@ export default class Intro {
       opacity: 1
     }, "< 1");
     
-    
-    
+  
     tl4.set("#endStart", {
       opacity: 0,
       ease: Expo.easeInOut
@@ -227,6 +226,9 @@ export default class Intro {
     var moreButton = document.getElementById('moreButton')
     var project = document.getElementById('project')
     var suite3 = document.getElementById('suite3')
+    var QPress = document.getElementById('QPress')
+    var DPress = document.getElementById('DPress')
+    
     
     button.addEventListener("click", () => {
       console.log('click')
@@ -248,24 +250,29 @@ export default class Intro {
     })
 
     suite3.addEventListener("click", () => {
-      scene3.classList.add('hidePlay');
+      scene3.classList.add('hide');
       tl4.play();
-    })
-
-    // function start() {
-    //   scene3.classList.add('hidePlay');
-    //   tl4.play();
-    // }
-    
-    startGame.addEventListener("click", () => {
-      endStart.classList.add('hide');
-      // this.game.next()  
     })
 
     moreButton.addEventListener("click", () => {
       introMobile.classList.add('hide');
       project.classList.add('show');
     })
-    
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code == 'KeyA' || e.code == 'KeyD' ) {
+        e.keypress = 'KeyA';
+        e.keypress = 'KeyD';
+        document.getElementById("keyActivate").innerHTML = 'Activé';
+        document.getElementById("keyActivate2").style.display = 'none';
+      };
+      startGame.classList.add('show');
+    });
+
+    startGame.addEventListener("click", () => {
+      endStart.classList.add('hide');
+      this.game.next()  
+    })
+
   }
 }

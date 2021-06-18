@@ -33,13 +33,15 @@
   </div>
 
   <div id="project" class="">
-    <p>Hélios est un projet de jeu multijoueur sur navigateur, revisitant le mythe de Phaéton dans une aventure à 
-      la recherche du soleil. Se jouant à deux, il vise à recréer un lien après l'isolement imposé par l'épidémie de coronavirus.</p>
-      <p>Il est le fruit du travail de 4 élèves du Bachelor Designer et Développeur Interactif de Gobelins, l'Ecole de l'Image</p>
-      <div id="credits">
-        <p><strong>Design : </strong> Victor Soulié & Lisa Levavasseur</p>
-        <p><strong>Développement : </strong>Valentin Salaud & Vanina Idiart</p>
-      </div>
+    <p>Hélios est un projet de jeu multijoueur sur navigateur, revisitant le mythe de Phaéton dans une aventure à
+      la recherche du soleil. Se jouant à deux, il vise à recréer un lien après l'isolement imposé par l'épidémie de
+      coronavirus.</p>
+    <p>Il est le fruit du travail de 4 élèves du Bachelor Designer et Développeur Interactif de Gobelins, l'Ecole de
+      l'Image</p>
+    <div id="credits">
+      <p><strong>Design : </strong> Victor Soulié & Lisa Levavasseur</p>
+      <p><strong>Développement : </strong>Valentin Salaud & Vanina Idiart</p>
+    </div>
   </div>
 
 
@@ -49,15 +51,15 @@
       <p class="subtitle">Une odyssée à la recherche du soleil</p>
     </div>
     <div>
-      <a id="button">Lancer l'expérience</a>
+      <a id="button">Lancez l'expérience</a>
     </div>
     <div class="sound">
       <p>Utilisez des hauts-parleurs pour profiter pleinement de l'expérience</p>
     </div>
     <div id="motif">
-      <img id="motif" src="https://helios.vercel.app/img/motif.png" alt="motif bottom">
+      <img class="motif" src="https://helios.vercel.app/img/motif.png" alt="motif bottom">
     </div>
-    
+
   </div>
 
   <div id="scene1">
@@ -136,16 +138,17 @@
         <p>Joueur 1 : Phaéton</p>
         <div class="icons">
           <img class="Q" id="QPress" src="https://helios.vercel.app/img/Q.svg" alt="">
-          <img class="S" id="SPress" src="https://helios.vercel.app/img/S.svg" alt="">
+          <img class="D" id="DPress" src="https://helios.vercel.app/img/S.svg" alt="">
         </div>
-        <p class="advice">Utilisez le clavier</p>
-        <p class="advice">pour vous déplacer</p>
+        <p class="advice" id="keyActivate">Utilisez le clavier</p>
+        <p class="advice" id="keyActivate2">pour activer votre joueur</p>
       </div>
       <div class="playerFragment">
         <p>Joueur 2 : Fragment</p>
-        <img class="mouse" id="mouse" src="https://helios.vercel.app/img/Icon-souris.svg" alt="">
-        <p class="advice">Utilisez la souris</p>
-        <p class="advice">pour vous déplacer</p>
+        <img class="mouse" id="mouse" onclick="change_textMouse()" src="https://helios.vercel.app/img/Icon-souris.svg"
+          alt="">
+        <p class="advice" id="mouseActivate">Cliquez pour</p>
+        <p class="advice" id="mouseActivate2">activer votre joueur</p>
       </div>
     </div>
     <a id="startGame">Commencez l'aventure</a>
@@ -169,9 +172,10 @@
       </svg>
     </div>
     <div class="transition__texts texts"></div>
-    <svg class="transition__loader" width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8.48449 8.7404H15.9432V1.39746H1.37305V12.9581" stroke="#FFB662" stroke-miterlimit="10"/>
-      <path d="M12.3117 5.21767H4.85303V12.5606H19.4232V1" stroke="#FFB662" stroke-miterlimit="10"/>
+    <svg class="transition__loader" width="20" height="14" viewBox="0 0 20 14" fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.48449 8.7404H15.9432V1.39746H1.37305V12.9581" stroke="#FFB662" stroke-miterlimit="10" />
+      <path d="M12.3117 5.21767H4.85303V12.5606H19.4232V1" stroke="#FFB662" stroke-miterlimit="10" />
     </svg>
   </div>
 
@@ -187,5 +191,12 @@
     <p class="MenuContextuel__content"></p>
   </div>
 </body>
+
+<script>
+  function change_textMouse() {
+    document.getElementById("mouseActivate").innerHTML = 'Activé';
+    document.getElementById("mouseActivate2").style.display = "none"
+  }
+</script>
 
 </html>

@@ -73,10 +73,11 @@ p {
 
 #intro {
   background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
   background-size: cover;
   z-index: 6;
   position: absolute;
-  padding-top: 10%;
+  padding-top: 7%;
   text-align: center;
   width: 100%;
   height: 100vh;
@@ -86,6 +87,7 @@ p {
 #scene2,
 #scene3 {
   background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
   background-size: cover;
   position: absolute;
   top: 0;
@@ -105,6 +107,10 @@ p {
   animation: fadeIn 10s;
   font-size: 20px !important;
   color: #FF912C;
+}
+
+.motif{
+  height: 10px;
 }
 
 #scene1 {
@@ -145,8 +151,8 @@ p {
 }
 
 #header {
-  margin-top: 40%;
-  margin-left: -40%;
+  margin-top: 45%;
+  margin-left: -80%;
 }
 
 #text2 {
@@ -157,6 +163,7 @@ p {
 #scene3 {
   display: flex;
   width: 100%;
+  height: 100vh;
 }
 
 #scene2 {
@@ -209,6 +216,8 @@ p {
 }
 
 #scene3 {
+  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
   background-size: cover;
   z-index: 3;
 }
@@ -241,6 +250,7 @@ p {
 
 #endStart {
   background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
   background-size: cover;
   opacity: 0;
 
@@ -256,6 +266,7 @@ p {
 }
 
 #startGame {
+  opacity: 0;
   margin-top: 30px;
 }
 
@@ -277,7 +288,7 @@ p {
 }
 
 #suite {
-  width: 70px;
+  width: 2%;
   margin-top: 40px;
   margin-left: 20%;
   position: absolute;
@@ -289,17 +300,15 @@ p {
 #suite2 {
   cursor: pointer;
   opacity: 0;
-  width: 70px;
-  margin-left: 70%;
+  width: 5%;
   margin-top: 40px;
 }
 
 #suite3 {
-  cursor: pointer;
   opacity: 0;
-  width: 70px;
-  margin-left: 70%;
-  margin-top: 40px;
+  cursor: pointer;
+  margin-left: 80%;
+  width: 5%;
 }
 
 .baseline {
@@ -310,6 +319,8 @@ p {
 }
 
 .players {
+  margin-left: 10%;
+  margin-right: 10%;
   display: flex;
   color: #FFC75B;
   font-size: 30px !important;
@@ -346,13 +357,13 @@ p {
   display: block;
 }
 
-#introMobile, #project {
+#introMobile,
+#project {
   display: none;
 }
 
 #motif {
-  height: 10px;
-  margin-top: 20px;
+  margin-top: 90px;
 }
 
 @keyframes animatedFragment {
@@ -369,7 +380,7 @@ p {
 
 
 @media only screen and (min-device-width : 0px) and (max-device-width : 1024px) {
-  h1{
+  h1 {
     font-size: 100px;
   }
 
@@ -377,11 +388,14 @@ p {
     display: none;
   }
 
-  #intro{
+  #intro {
     display: none;
   }
-  #introMobile{
-    background-color: black;
+
+  #introMobile {
+    background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+    background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     z-index: 3;
     width: 100%;
@@ -390,22 +404,26 @@ p {
     text-align: center;
     padding-top: 30%;
   }
+
   .subtitleMobile {
     display: block;
     margin-top: 0;
     font-size: 20px;
   }
 
-  .description{
+  .description {
     padding: 30px;
   }
-  .description p{
+
+  .description p {
     color: #FF912C;
     font-size: 18px !important;
   }
 
-  #project{
-    background-color: black;
+  #project {
+    background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+    background-repeat: no-repeat;
+    background-size: cover;
     display: block !important;
     position: initial;
     width: 100%;
@@ -420,6 +438,7 @@ p {
     font-size: 20px;
     padding: 10%;
   }
+
   .picto {
     padding: 10%;
   }
@@ -429,13 +448,17 @@ p {
     font-size: 20px !important;
   }
 
-  #credits{
+  #credits {
     padding: 10%;
   }
-  #credits p{
+
+  #credits p {
     padding: 0;
   }
-  #scene1, #scene2, #scene3{
+
+  #scene1,
+  #scene2,
+  #scene3 {
     display: none;
   }
 
