@@ -394,7 +394,7 @@ export default class Scene0 {
 
   initPlaque () {
     const pos = {
-      x: 500,
+      x: 480,
       y: -600
     }
 
