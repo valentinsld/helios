@@ -49,13 +49,13 @@
       <p class="subtitle">Une odyssée à la recherche du soleil</p>
     </div>
     <div>
-      <a id="button">Lancez l'expérience</a>
+      <a id="button">Lancer l'expérience</a>
     </div>
     <div class="sound">
       <p>Utilisez des hauts-parleurs pour profiter pleinement de l'expérience</p>
     </div>
     <div id="motif">
-      <img class="motif" src="https://helios.vercel.app/img/motif.png" alt="motif bottom">
+      <img id="motif" src="https://helios.vercel.app/img/motif.png" alt="motif bottom">
     </div>
     
   </div>
@@ -139,16 +139,16 @@
           <img class="S" id="SPress" src="https://helios.vercel.app/img/S.svg" alt="">
         </div>
         <p class="advice">Utilisez le clavier</p>
-        <p class="advice">pour activer votre joueur</p>
+        <p class="advice">pour vous déplacer</p>
       </div>
       <div class="playerFragment">
         <p>Joueur 2 : Fragment</p>
-        <img class="mouse" id="mouse" onclick="change_textMouse()"  src="https://helios.vercel.app/img/Icon-souris.svg" alt="">
-        <p class="advice" id="mouseActivate" >Cliquez pour</p>
-        <p class="advice" id="mouseActivate2">activer votre joueur</p>
+        <img class="mouse" id="mouse" src="https://helios.vercel.app/img/Icon-souris.svg" alt="">
+        <p class="advice">Utilisez la souris</p>
+        <p class="advice">pour vous déplacer</p>
       </div>
     </div>
-    <!-- <a id="startGame">Commencez l'aventure</a> -->
+    <a id="startGame">Commencez l'aventure</a>
   </div>
 
   <!-- Model Loader -->
@@ -187,12 +187,5 @@
     <p class="MenuContextuel__content"></p>
   </div>
 </body>
-
-<script>
-      function change_textMouse() {
-      document.getElementById("mouseActivate").innerHTML = 'Activé';
-      document.getElementById("mouseActivate2").style.display = "none"
-    }
-</script>
 
 </html>

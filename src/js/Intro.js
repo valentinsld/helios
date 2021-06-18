@@ -193,7 +193,8 @@ export default class Intro {
       opacity: 1
     }, "< 1");
     
-  
+    
+    
     tl4.set("#endStart", {
       opacity: 0,
       ease: Expo.easeInOut
@@ -227,7 +228,6 @@ export default class Intro {
     var project = document.getElementById('project')
     var suite3 = document.getElementById('suite3')
     
-    
     button.addEventListener("click", () => {
       console.log('click')
       intro.classList.add('hide');
@@ -248,7 +248,7 @@ export default class Intro {
     })
 
     suite3.addEventListener("click", () => {
-      scene3.classList.add('hide');
+      scene3.classList.add('hidePlay');
       tl4.play();
     })
 
@@ -257,15 +257,15 @@ export default class Intro {
     //   tl4.play();
     // }
     
-    // startGame.addEventListener("click", () => {
-    //   endStart.classList.add('hide');
-    //   this.game.next()  
-    // })
+    startGame.addEventListener("click", () => {
+      endStart.classList.add('hide');
+      // this.game.next()  
+    })
 
     moreButton.addEventListener("click", () => {
       introMobile.classList.add('hide');
       project.classList.add('show');
     })
-
+    
   }
 }
