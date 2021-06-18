@@ -146,7 +146,7 @@ p {
 
 #fragment {
   margin-top: 50%;
-  width: 100% !important;
+  width: 90% !important;
   animation: animatedFragment 10s linear infinite alternate;
 }
 
