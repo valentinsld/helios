@@ -128,7 +128,7 @@ export default class Scene3 {
       render: false,
       size: {
         x: 1600,
-        y: 150,
+        y: 140,
         z: 100
       },
       position : {
@@ -144,7 +144,7 @@ export default class Scene3 {
       color: 0xff0000,
       size: {
         x: 1540,
-        y: 150,
+        y: 140,
         z: 100
       },
       position : {
@@ -323,7 +323,7 @@ export default class Scene3 {
       phaeton: this.phaeton,
       position : {
         x : -970,
-        y : -430,
+        y : -450,
         z : 0
       },
       size: {
@@ -697,7 +697,7 @@ export default class Scene3 {
             return Matter.Svg.pathToVertices(path, 30);
           });
 
-          var terrain = Matter.Bodies.fromVertices(-90, -650, vertexSets, {
+          var terrain = Matter.Bodies.fromVertices(-90, -655, vertexSets, {
             isStatic: true,
             render: {
               fillStyle: '#ffff00',
