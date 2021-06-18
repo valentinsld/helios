@@ -147,7 +147,7 @@ export default class Statue {
     gsap.to(
       this.mesh.rotation,
       {
-        y: this.step * Math.PI / 2 + moreY,
+        y: (this.step + 1) * Math.PI / 2 + moreY,
         ease: "steps(6)", //'Power2.out'
         duration: 0.5,
         onComplete: () => {
