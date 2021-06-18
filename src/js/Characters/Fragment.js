@@ -224,8 +224,8 @@ export default class Fragment{
       `
       const regexFragColor = 'gl_FragColor = vec4( outgoingLight, diffuseColor.a );'
       const addNoise = `
-      float noise = cnoise(vec3(vPosition.xy * 0.05, uTime * 0.8));
-      outgoingLight += vec3(noise / 4.0);
+      float noise = cnoise(vec3(vPosition.xy * 0.05, uTime * 1.5));
+      outgoingLight += vec3(noise / 3.0);
       gl_FragColor = vec4( outgoingLight, diffuseColor.a );
       `
       fragmentShader = varying + fragmentShader.replace(regexFragColor, addNoise)
