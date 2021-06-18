@@ -45,7 +45,7 @@ export default class Scene0 {
         uTime: { value: 0 },
         uSize: { value: 1 },
         uSizeNoise: { value: 0.57 },
-        uSpeedTime: { value: 0.2 }
+        uSpeedTime: { value: 0.18 }
       },
       vertexShader,
       fragmentShader,
