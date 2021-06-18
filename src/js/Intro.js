@@ -257,13 +257,9 @@ export default class Intro {
     suite3.addEventListener("click", () => {
       scene3.classList.add('hidePlay');
       tl4.play();
+      this.game.next()
     })
-
-    // function start() {
-    //   scene3.classList.add('hidePlay');
-    //   tl4.play();
-    // }
-    
+   
     moreButton.addEventListener("click", () => {
       introMobile.classList.add('hide');
       project.classList.add('show');
@@ -281,7 +277,7 @@ export default class Intro {
 
     startGame.addEventListener("click", () => {
       endStart.classList.add('hide');
-      this.game.next()  
+      this.game.state.currentScene.initScene()
     })
 
   }
