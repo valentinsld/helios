@@ -726,8 +726,8 @@ export default class Scene1 {
       debug: this.debug,
       gltf,
       position: {
-        x: -620,
-        y: -420,
+        x: -625,
+        y: -418,
         z: -80
       },
       parameters: {
