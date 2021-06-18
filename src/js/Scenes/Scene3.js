@@ -591,7 +591,7 @@ export default class Scene3 {
 
     this.lightDoor = new THREE.PointLight(0xfaa961, 5, 300, 0.5)
     this.lightDoor.castShadow = true
-    this.lightDoor.position.set(3.17, 1.57, 0)
+    this.lightDoor.position.set(3.6, 1.57, 0)
     this.map.add(this.lightDoor)
 
     //Set up shadow properties for the light
