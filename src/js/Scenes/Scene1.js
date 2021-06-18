@@ -72,8 +72,6 @@ export default class Scene1 {
     this.initModels()
     this.addElements()
     this.createGradientBackground()
-
-    setTimeout(this.initScene.bind(this), 4000)
   }
 
   initScene () {
