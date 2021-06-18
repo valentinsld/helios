@@ -6,6 +6,7 @@ import * as dat from 'dat.gui'
 import Stats from 'stats.js'
 
 import Matter from 'matter-js'
+import Bowser from 'bowser'
 
 import SceneManager from './Scenes'
 import { menuContextuelsCamera } from './utils/MenuContextuels'
@@ -26,7 +27,7 @@ export default class Game{
 
     this.initTextLoader()
     this.initGltfLoader()
-
+    this.initMobile()
     this.initCamera()
     this.initRenderer()
     this.initLights()
@@ -40,6 +41,14 @@ export default class Game{
     this.initSceneManager()
   }
 
+  initMobile(){
+    const ISMOBILE = Bowser.getParser(window.navigator.userAgent).parsedResult.platform.type !== 'desktop'
+    var body = document.getElementById('ismobile')
+    if(window.innerHeight > 1024 || ISMOBILE){
+      body.classList.add('ismobile');
+    }
+  }
+  
   // GUI
   initGUI() {
     dat.GUI.prototype.removeFolder = function(name) {

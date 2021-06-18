@@ -346,7 +346,8 @@ p {
   display: block;
 }
 
-#introMobile, #project {
+#introMobile,
+#project {
   display: none;
 }
 
@@ -368,75 +369,80 @@ p {
 }
 
 
-@media only screen and (min-device-width : 0px) and (max-device-width : 1024px) {
-  h1{
-    font-size: 100px;
-  }
+.ismobile h1 {
+  font-size: 100px;
+}
 
-  .webgl {
-    display: none;
-  }
+.ismobile .webgl {
+  display: none;
+}
 
-  #intro{
-    display: none;
-  }
-  #introMobile{
-    background-color: black;
-    position: absolute;
-    z-index: 3;
-    width: 100%;
-    height: 100vh;
-    display: block;
-    text-align: center;
-    padding-top: 30%;
-  }
-  .subtitleMobile {
-    display: block;
-    margin-top: 0;
-    font-size: 20px;
-  }
+.ismobile #intro {
+  display: none;
+}
 
-  .description{
-    padding: 30px;
-  }
-  .description p{
-    color: #FF912C;
-    font-size: 18px !important;
-  }
+.ismobile #introMobile {
+  background-color: black;
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  height: 100vh;
+  display: block;
+  text-align: center;
+  padding-top: 30%;
+}
 
-  #project{
-    background-color: black;
-    display: block !important;
-    position: initial;
-    width: 100%;
-    height: 100vh;
-    position: absolute;
-    z-index: 2;
-    pointer-events: none;
-    padding-top: 10%;
-  }
+.ismobile .subtitleMobile {
+  display: block;
+  margin-top: 0;
+  font-size: 20px;
+}
 
-  #project p {
-    font-size: 20px;
-    padding: 10%;
-  }
-  .picto {
-    padding: 10%;
-  }
+.ismobile .description {
+  padding: 30px;
+}
 
-  .more a {
-    color: #FFC75B;
-    font-size: 20px !important;
-  }
+.ismobile .description p {
+  color: #FF912C;
+  font-size: 18px !important;
+}
 
-  #credits{
-    padding: 10%;
-  }
-  #credits p{
-    padding: 0;
-  }
-  #scene1, #scene2, #scene3{
-    display: none;
-  }
+.ismobile #project {
+  background-color: black;
+  display: block !important;
+  position: initial;
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  padding-top: 10%;
+}
 
+.ismobile #project p {
+  font-size: 20px;
+  padding: 10%;
+}
+
+.ismobile .picto {
+  padding: 10%;
+}
+
+.ismobile .more a {
+  color: #FFC75B;
+  font-size: 20px !important;
+}
+
+.ismobile #credits {
+  padding: 10%;
+}
+
+.ismobile #credits p {
+  padding: 0;
+}
+
+.ismobile #scene1,
+#scene2,
+#scene3 {
+  display: none;
 }
