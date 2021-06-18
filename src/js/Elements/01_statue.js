@@ -143,27 +143,26 @@ export default class Statue {
     // console.log(this.step, this.step % 4 === 0)
     // this.mesh.rotation.y = this.step * Math.PI / 2
     const moreY = this.mesh.moreY || 0
+    this.step += 1
 
     gsap.to(
       this.mesh.rotation,
       {
-        y: (this.step + 1) * Math.PI / 2 + moreY,
+        y: this.step * Math.PI / 2 + moreY,
         ease: "steps(6)", //'Power2.out'
         duration: 0.5,
         onComplete: () => {
-          this.step += 1
+          if (this.step % 4 === 0) {
+            this.activate = true
+            // if (!this.gltf) this.mesh.material.color = new THREE.Color("#ff0000")
+          } else {
+            this.activate = false
+            // if (!this.gltf) this.mesh.material.color = new THREE.Color("#0000ff")
+          }
+          // console.log(this.activate)
         }
       }
     )
-
-    if (this.step % 4 === 0) {
-      this.activate = true
-      if (!this.gltf) this.mesh.material.color = new THREE.Color("#ff0000")
-    } else {
-      this.activate = false
-      if (!this.gltf) this.mesh.material.color = new THREE.Color("#0000ff")
-    }
-    // console.log(this.activate)
   }
 
 }
