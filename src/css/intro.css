@@ -72,11 +72,12 @@ p {
 }
 
 #intro {
-  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
-  background-size: cover;
+  /* background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
+  background-size: cover; */
   z-index: 6;
   position: absolute;
-  padding-top: 10%;
+  padding-top: 7%;
   text-align: center;
   width: 100%;
   height: 100vh;
@@ -85,8 +86,9 @@ p {
 #scene1,
 #scene2,
 #scene3 {
-  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
-  background-size: cover;
+  /* background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
+  background-size: cover; */
   position: absolute;
   top: 0;
   left: 0;
@@ -107,9 +109,13 @@ p {
   color: #FF912C;
 }
 
+.motif {
+  height: 10px;
+}
+
 #scene1 {
-  background-image: url('https://helios.vercel.app/img/background.jpg');
-  background-repeat: no-repeat;
+  /* background-image: url('https://helios.vercel.app/img/background.jpg');
+  background-repeat: no-repeat; */
   display: flex;
   width: 100%;
   z-index: 5;
@@ -140,11 +146,13 @@ p {
 
 #fragment {
   margin-top: 50%;
-  width: 100% !important;
+  width: 90% !important;
   animation: animatedFragment 10s linear infinite alternate;
 }
 
 #header {
+  margin-top: 45%;
+  margin-left: -80%;
   margin-top: 40%;
   margin-left: -40%;
 }
@@ -157,6 +165,7 @@ p {
 #scene3 {
   display: flex;
   width: 100%;
+  height: 100vh;
 }
 
 #scene2 {
@@ -209,7 +218,9 @@ p {
 }
 
 #scene3 {
-  background-size: cover;
+  /* background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
+  background-size: cover; */
   z-index: 3;
 }
 
@@ -240,8 +251,9 @@ p {
 
 
 #endStart {
-  background-image: url('https://helios.vercel.app/img/background.jpg') !important;
-  background-size: cover;
+  /* background-image: url('https://helios.vercel.app/img/background.jpg') !important;
+  background-repeat: no-repeat;
+  background-size: cover; */
   opacity: 0;
 
   position: absolute;
@@ -256,6 +268,7 @@ p {
 }
 
 #startGame {
+  opacity: 0;
   margin-top: 30px;
 }
 
@@ -302,6 +315,13 @@ p {
   margin-top: 40px;
 }
 
+#suite3 {
+  opacity: 0;
+  cursor: pointer;
+  margin-left: 80%;
+  width: 5%;
+}
+
 .baseline {
   font-family: 'nueva-std-extended', serif;
   font-weight: 700;
@@ -310,6 +330,8 @@ p {
 }
 
 .players {
+  margin-left: 10%;
+  margin-right: 10%;
   display: flex;
   color: #FFC75B;
   font-size: 30px !important;
@@ -352,6 +374,7 @@ p {
 }
 
 #motif {
+  margin-top: 90px;
   height: 10px;
   margin-top: 20px;
 }
@@ -369,6 +392,7 @@ p {
 }
 
 
+
 .ismobile h1 {
   font-size: 100px;
 }
@@ -382,7 +406,6 @@ p {
 }
 
 .ismobile #introMobile {
-  background-color: black;
   position: absolute;
   z-index: 3;
   width: 100%;
@@ -408,8 +431,7 @@ p {
 }
 
 .ismobile #project {
-  background-color: black;
-  display: block !important;
+  display: none !important;
   position: initial;
   width: 100%;
   height: 100vh;
@@ -441,8 +463,6 @@ p {
   padding: 0;
 }
 
-.ismobile #scene1,
-#scene2,
-#scene3 {
+.ismobile #scene1, #scene2, #scene3 {
   display: none;
 }
