@@ -109,7 +109,7 @@ export default class Scene0 {
       },
       position : {
         x: 0,
-        y: -880,
+        y: -922,
         z: 0
       }
     })
@@ -162,8 +162,8 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: -1900,
-        y: 520,
+        x: -1830,
+        y: 480,
         z: 0
       }
     })
@@ -178,7 +178,7 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: 1800,
+        x: 1820,
         y: 520,
         z: 0
       }
@@ -211,8 +211,8 @@ export default class Scene0 {
 
   initMap (gltf) {
     this.map = gltf.scene
-    this.map.scale.set(310, 310, 310)
-    this.map.position.set(-50, -700, -600)
+    this.map.scale.set(313, 313, 313)
+    this.map.position.set(-65, -750, -600)
     this.map.animations = gltf.animations
 
     this.scene.add(this.map)
