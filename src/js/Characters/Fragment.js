@@ -16,7 +16,7 @@ const POSITION = {
   y: 0,
   z: 0
 }
-const RADIUS = 21
+const RADIUS = 18
 
 export default class Fragment{
   constructor({canvas, engine, game, scene, camera, debug, position = POSITION, radius = RADIUS, distance = 330, multiplicatorSpeed = 1}) {
