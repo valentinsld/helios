@@ -47,11 +47,6 @@ export default class Scene0 {
 
     this.initZoomCamera()
 
-    AudioManager.newSound({
-      name: 'scene2_ambiance',
-      loop: true
-    })
-
     this.initSol()
     this.initCharacters()
     this.initDoor()
@@ -231,6 +226,11 @@ export default class Scene0 {
   }
 
   endtransitionIntro () {
+    AudioManager.newSound({
+      name: 'scene2_ambiance',
+      loop: true
+    })
+
     // TODO : animation characters appear
     console.log('endLoadingModels')
   }
@@ -252,7 +252,9 @@ export default class Scene0 {
         z: 10
       },
       parameters: {
-        colorEnd: 42
+        colorStart: 18,
+        colorEnd: 55,
+        scale: 110
       }
     })
 
@@ -278,7 +280,9 @@ export default class Scene0 {
         z: 10
       },
       parameters: {
-        colorEnd: 42
+        colorStart: 18,
+        colorEnd: 55,
+        scale: 110
       }
     })
 

@@ -119,6 +119,11 @@ export default class Scene3 {
   }
 
   endtransitionIntro () {
+    AudioManager.newSound({
+      name: 'scene3_ambiance',
+      loop: true
+    })
+
     // TODO : animation characters appear
     console.log('endLoadingModels')
   }
