@@ -252,7 +252,9 @@ export default class Scene0 {
         z: 10
       },
       parameters: {
-        colorEnd: 42
+        colorStart: 18,
+        colorEnd: 55,
+        scale: 110
       }
     })
 
@@ -278,7 +280,9 @@ export default class Scene0 {
         z: 10
       },
       parameters: {
-        colorEnd: 42
+        colorStart: 18,
+        colorEnd: 55,
+        scale: 110
       }
     })
 
