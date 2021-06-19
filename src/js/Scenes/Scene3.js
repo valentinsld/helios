@@ -16,6 +16,7 @@ import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import Transition from '../utils/transition'
 import MenuContextuels from '../utils/MenuContextuels'
+import AudioManager from '../utils/AudioManager'
 
 // import AnimatedFire from '../Elements/animatedFire'
 
@@ -38,6 +39,11 @@ export default class Scene3 {
 
     this.code = []
     this.open = false
+
+    AudioManager.newSound({
+      name: 'scene3_ambiance',
+      loop: true
+    })
 
     this.initZoomCamera()
     this.initCharacters()
@@ -717,6 +723,10 @@ export default class Scene3 {
 
     const tl = gsap.timeline({delay: 1})
 
+    AudioManager.newSound({
+      name: 'scene1_reussite'
+    })
+
     // add light
     const spotLight = new THREE.SpotLight(0xfaa961, 0, 1200)
     spotLight.angle = 0.4
@@ -770,7 +780,12 @@ export default class Scene3 {
       {
         delay: 0.5,
         y: 1,
-        ease: "power2.in"
+        ease: "power2.in",
+        onStart: () => {
+          AudioManager.newSound({
+            name: 'scene3_renes'
+          })
+        }
       }
     )
 
@@ -780,9 +795,26 @@ export default class Scene3 {
       {
         z: endRotation,
         duration: 3,
-        ease: "power4.in"
+        ease: "power4.in",
+        onComplete: () => {
+          AudioManager.newSound({
+            name: 'scene3_chute'
+          })
+        }
       },
       '-=0.5'
+    )
+    tl.to(
+      this.renePhaeton,
+      {
+        duration: 2.55,
+        onComplete: () => {
+          AudioManager.newSound({
+            name: 'scene3_chute'
+          })
+        }
+      },
+      '<'
     )
     tl.to(
       this.renePhaeton.rotation,
@@ -806,9 +838,21 @@ export default class Scene3 {
       this.map.getObjectByName('porte').position,
       {
         y: 2.5,
-        duration: 1.5,
+        duration: 2.5,
         ease: "power1.in"
       }
+    )
+    .to(
+      this.map,
+      {
+        duration: 0.5,
+        onComplete: () => {
+          AudioManager.newSound({
+            name: 'scene2_portPierre'
+          })
+        }
+      },
+      '<'
     )
     .to(
       this.lightDoor,
@@ -873,6 +917,7 @@ export default class Scene3 {
       this.fragment.mesh.position,
       {
         x: "+=450",
+        y: "+=150",
         z: 120,
         duration: 2.5,
         ease: "sin.inOut"
@@ -884,6 +929,8 @@ export default class Scene3 {
   // Destruct
   //
   async destruct () {
+    AudioManager.stopSound('scene3_ambiance', 2.5)
+
     const trans = await Transition.fadeIn(2)
     this.game.clearUpdatedElement()
     
