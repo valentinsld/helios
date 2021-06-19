@@ -1,6 +1,7 @@
 attribute float aSize;
 uniform float size;
 uniform float uPixel;
+uniform float uTime;
 
 void main()
 {
@@ -14,5 +15,6 @@ void main()
   gl_Position = projectedPosition;
 
   // Size
-  gl_PointSize = size * aSize * uPixel;
+  float idle = sin(uTime * 1.5) / 6.0 + 1.1;
+  gl_PointSize = size * aSize * uPixel * idle;
 }

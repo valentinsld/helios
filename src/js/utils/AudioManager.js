@@ -12,6 +12,10 @@ const LIST_AUDIO = {
   scene1_statue: 'Enigme_1/statue.mp3',
   scene2_ambiance: 'Enigme_2/ambiance.mp3',
   scene2_portPierre: 'Enigme_2/porte_pierre.mp3',
+  scene3_ambiance: 'Enigme_3/ambiance_cave.mp3',
+  scene3_chute: 'Enigme_3/chute_statue.mp3',
+  scene3_echelle: 'Enigme_3/echelle.mp3',
+  scene3_renes: 'Enigme_3/renes.mp3',
   scene_: '',
 }
 

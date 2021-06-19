@@ -141,6 +141,11 @@ export default class Plaque {
 
   endInteract () {
     this.animation?.kill()
+
+    AudioManager.newSound({
+      name: 'plaque'
+    })
+
     gsap.to(
       this.mesh.scale,
       {
