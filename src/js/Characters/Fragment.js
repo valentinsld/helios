@@ -310,6 +310,9 @@ export default class Fragment{
         },
         uPixel: {
           value: this.game.renderer.getPixelRatio()
+        },
+        uTime: {
+          value: 0
         }
       }
     })
@@ -466,6 +469,8 @@ export default class Fragment{
 
     this.trails.geometry.setAttribute('position', new THREE.BufferAttribute(this.trailsPositions, 3))
     this.trails.geometry.attributes.position.needsUpdate = true
+
+    this.trails.material.uniforms.uTime.value = time 
 
     // update time shader
     if(this.uniforms) this.uniforms.uTime.value = time
