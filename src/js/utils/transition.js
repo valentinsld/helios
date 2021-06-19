@@ -23,7 +23,7 @@ class Transition {
     this.elContainerText = this.el.querySelector('.transition__texts')
   }
 
-  async fadeIn (textIndex, duration = 7000, time = 800) {
+  async fadeIn (textIndex, duration = 9000, time = 800) {
     this.timeStartAnimation = new Date()
     this.minDuration = duration
 
