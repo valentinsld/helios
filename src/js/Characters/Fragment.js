@@ -470,10 +470,30 @@ export default class Fragment{
     // update time shader
     if(this.uniforms) this.uniforms.uTime.value = time
 
-    if (this.animation) return
-
     let angle = 0
     let scale = 1
+
+    if (this.animation) {
+      let forceX = (this.box.position.x - this.cursor.x) / -500 * this.cameraZoom
+      let forceY = (this.box.position.y - this.cursor.y) / -500 * this.cameraZoom
+      forceX = Math.max(Math.min(forceX, 0.4 * this.multiplicatorSpeed), -0.4 * this.multiplicatorSpeed)
+      forceY = Math.max(Math.min(forceY, 0.4 * this.multiplicatorSpeed), -0.4 * this.multiplicatorSpeed)
+      
+      Matter.Body.applyForce(
+        this.box,
+        Matter.Vector.create(0,0),
+        Matter.Vector.create(forceX, forceY)
+      )
+
+      angle = Math.atan2(forceY, forceX)
+      if (this.box.positionPrev.x != this.box.position.x) scale = Math.min(Math.max(1.3 * this.box.speed / 60, 1), 1.4 * this.multiplicatorSpeed)
+
+      this.mesh.rotation.z = angle
+      this.mesh.scale.x = scale
+      this.mesh.scale.y = 1/scale
+
+      return
+    }
 
     // interact with element
     if (this.interactionElement) {
