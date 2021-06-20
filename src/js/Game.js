@@ -44,7 +44,7 @@ export default class Game{
   initMobile(){
     const ISMOBILE = Bowser.getParser(window.navigator.userAgent).parsedResult.platform.type !== 'desktop'
     var device = document.getElementById('ismobile')
-    if(window.innerHeight < 1024 || ISMOBILE){
+    if(window.innerWidth < 1024 || ISMOBILE){
       device.classList.add('ismobile');
       console.log(ISMOBILE)
     }
