@@ -490,7 +490,7 @@ export default class Scene0 {
         x: 5.7,
         y: 1.9,
         delay: 0.5,
-        duration: 2.6,
+        duration: 3.2,
         ease: 'power3.in',
         onStart: () => {
           AudioManager.newSound({

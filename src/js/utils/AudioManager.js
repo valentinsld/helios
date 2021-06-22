@@ -3,19 +3,22 @@ import gsap from 'gsap'
 
 const LIST_AUDIO = {
   plaque: 'plaque_pression.mp3',
+  plaqueOut: 'plaque_pression2.mp3',
+  info: 'info.mp3',
   
   scene0_ambiance: 'Intro/intro.wav',
   scene1_ambiance: 'Enigme_1/ambiance2.mp3',
   scene1_brasier: 'Enigme_1/fragment_brasier.mp3',
   scene1_porte: 'Enigme_1/porte.mp3',
-  scene1_reussite: 'Enigme_1/reussite.mp3',
+  scene1_reussite: 'Enigme_1/reussite_2.mp3',
   scene1_statue: 'Enigme_1/statue.mp3',
   scene2_ambiance: 'Enigme_2/ambiance.mp3',
-  scene2_portPierre: 'Enigme_2/porte_pierre.mp3',
-  scene3_ambiance: 'Enigme_3/ambiance_cave.mp3',
+  scene2_portPierre: 'Enigme_2/porte_pierre_2.mp3',
+  scene3_ambiance: 'Enigme_3/ambiance_cave_2.mp3',
   scene3_chute: 'Enigme_3/chute_statue.mp3',
   scene3_echelle: 'Enigme_3/echelle.mp3',
   scene3_renes: 'Enigme_3/renes.mp3',
+  scene4_ambiance: 'Enigme_4/ambiance_cloitre.mp3',
   scene_: '',
 }
 

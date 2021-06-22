@@ -143,7 +143,7 @@ export default class Plaque {
     this.animation?.kill()
 
     AudioManager.newSound({
-      name: 'plaque'
+      name: 'plaqueOut'
     })
 
     gsap.to(

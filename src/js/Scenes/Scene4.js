@@ -11,7 +11,7 @@ import Door from '../Elements/Door'
 import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import Transition from '../utils/transition'
-// import MenuContextuels from '../utils/MenuContextuels'
+import AudioManager from '../utils/AudioManager'
 
 export default class Scene0 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
@@ -324,6 +324,11 @@ export default class Scene0 {
   }
 
   endtransitionIntro () {
+    AudioManager.newSound({
+      name: 'scene4_ambiance',
+      loop: true
+    })
+
     // TODO : animation characters appear
     console.log('endLoadingModels')
   }
@@ -362,6 +367,8 @@ export default class Scene0 {
   // Destruct
   //
   async destruct () {
+    AudioManager.stopSound('scene4_ambiance', 2.5)
+
     const trans = await Transition.fadeIn(2)
     this.game.clearUpdatedElement()
     
