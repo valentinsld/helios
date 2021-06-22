@@ -838,7 +838,7 @@ export default class Scene3 {
       this.map.getObjectByName('porte').position,
       {
         y: 2.5,
-        duration: 2.5,
+        duration: 3.2,
         ease: "power1.in"
       }
     )
