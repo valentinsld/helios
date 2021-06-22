@@ -40,6 +40,11 @@ export default class Scene3 {
     this.code = []
     this.open = false
 
+    AudioManager.newSound({
+      name: 'scene3_ambiance',
+      loop: true
+    })
+
     this.initZoomCamera()
     this.initCharacters()
     this.initModels()
