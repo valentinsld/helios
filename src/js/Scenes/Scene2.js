@@ -254,7 +254,7 @@ export default class Scene0 {
       parameters: {
         colorStart: 18,
         colorEnd: 55,
-        scale: 110
+        scale: 100
       }
     })
 
@@ -282,7 +282,7 @@ export default class Scene0 {
       parameters: {
         colorStart: 18,
         colorEnd: 55,
-        scale: 110
+        scale: 100
       }
     })
 
