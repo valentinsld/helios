@@ -254,6 +254,7 @@ p {
   /* background-image: url('https://helios.vercel.app/img/background.jpg') !important;
   background-repeat: no-repeat;
   background-size: cover; */
+  background-color: black !important;
   opacity: 0;
 
   position: absolute;
@@ -267,8 +268,12 @@ p {
   height: 100vh;
 }
 
-#startGame {
+.baseline, .playerPhaeton, .playerFragment {
   opacity: 0;
+}
+
+.startGame {
+  opacity: 0 !important;
   margin-top: 30px;
 }
 
@@ -276,6 +281,12 @@ p {
   opacity: 1 !important;
   transition: opacity 400ms;
 }
+
+.showPlay {
+  opacity: 1 !important;
+  transition: opacity 900ms;
+}
+
 
 .hide {
   opacity: 0 !important;
@@ -315,14 +326,9 @@ p {
   margin-top: 40px;
 }
 
-#suite3 {
-  opacity: 0;
-  cursor: pointer;
-  margin-left: 80%;
-  width: 5%;
-}
 
 .baseline {
+  margin-top: 10%;
   font-family: 'nueva-std-extended', serif;
   font-weight: 700;
   font-style: normal;
@@ -464,5 +470,5 @@ p {
 }
 
 .ismobile #scene1, #scene2, #scene3 {
-  display: none;
+  opacity: 0;
 }
