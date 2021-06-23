@@ -26,6 +26,7 @@ export default class Scene0 {
 
     // init scene
     this.scene = new THREE.Group()
+    this.scene.name = 'Scene4'
     globalScene.add(this.scene)
 
     this.updateCamera()
@@ -371,12 +372,11 @@ export default class Scene0 {
   async destruct () {
     AudioManager.stopSound('scene4_ambiance', 2.5)
 
-    const trans = await Transition.fadeIn(2)
-    this.game.clearUpdatedElement()
+    // const trans = await Transition.fadeIn(2)
+    // this.game.clearUpdatedElement()
     
-    clearScene(this.scene)
+    // clearScene(this.scene)
     Matter.World.clear(this.world);
-    this.scene.parent.fog = null
 
     return new Promise(resolve => {
       resolve('destructed');
