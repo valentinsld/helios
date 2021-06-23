@@ -15,6 +15,6 @@ void main()
   gl_Position = projectedPosition;
 
   // Size
-  float idle = sin(uTime * 1.5) / 6.0 + 1.1;
+  float idle = sin(uTime * 1.8) / 6.0 + 1.1;
   gl_PointSize = size * aSize * uPixel * idle;
 }
