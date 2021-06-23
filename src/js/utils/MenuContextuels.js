@@ -1,4 +1,4 @@
-import AudioManager from '../utils/AudioManager'
+// import AudioManager from '../utils/AudioManager'
 
 const DOM = document.querySelector('body')
 const MENU_DOM = document.querySelector('#ModelMenu')
@@ -83,9 +83,10 @@ class Menu {
 
     this.el.classList.add('-see')
 
-    AudioManager.newSound({
-      name: 'info'
-    })
+    // AudioManager.newSound({
+    //   name: 'info'
+    // })
+
   }
 
   remove () {

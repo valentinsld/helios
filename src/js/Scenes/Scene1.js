@@ -119,7 +119,8 @@ export default class Scene1 {
         x : -900,
         y : -350,
         z : 80
-      }
+      },
+      sound: 'pas_dehors'
     })
 
     this.fragment = new Fragment({

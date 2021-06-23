@@ -24,7 +24,7 @@ const ANIMATIONS = {
 }
 
 export default class Phaeton{
-  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE, scale = SCALE, speed = 10}) {
+  constructor({engine, scene, debug, textureLoader, gltfLoader, position = POSITION, size = SIZE, scale = SCALE, speed = 10, sound = 'pas_temple'}) {
     this.world = engine.world
     this.scene = scene
     this.textureLoader = textureLoader
@@ -39,6 +39,7 @@ export default class Phaeton{
     this.speed = speed
     this.runed = false
     this.isTurnedTo = 'right'
+    this.sound = sound
     this.interactionElements = []
 
     this.addPhaetonToWorld()
@@ -226,6 +227,12 @@ export default class Phaeton{
   goToLeft () {
     this.fadeToAction(ANIMATIONS.marche, 1)
 
+    AudioManager.newSound({
+      name: this.sound,
+      volume: 0.5,
+      loop: true
+    })
+
     if (this.isTurnedTo === 'right') {
       gsap.to(
         this.mesh.rotation,
@@ -242,6 +249,12 @@ export default class Phaeton{
   }
   goToRight () {
     this.fadeToAction(ANIMATIONS.marche, 1)
+
+    AudioManager.newSound({
+      name: this.sound,
+      volume: 0.5,
+      loop: true
+    })
 
     if (this.isTurnedTo === 'left') {
       gsap.to(
@@ -264,6 +277,8 @@ export default class Phaeton{
   }
 
   keyup(event){
+    AudioManager.stopSound(this.sound, 0.1)
+
     this.runed = false
     if (this.animation) return
 

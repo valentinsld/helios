@@ -5,6 +5,8 @@ const LIST_AUDIO = {
   plaque: 'plaque_pression.mp3',
   plaqueOut: 'plaque_pression2.mp3',
   info: 'info.mp3',
+  pas_temple: 'pas_temple.mp3',
+  pas_dehors: 'pas_dehors.mp3',
   
   scene0_ambiance: 'Intro/intro.wav',
   scene1_ambiance: 'Enigme_1/ambiance2.mp3',
