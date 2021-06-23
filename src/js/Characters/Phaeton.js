@@ -335,7 +335,7 @@ export default class Phaeton{
         ease: 'linear',
         onUpdate: function (ev) {
           if (upDown && this.progress() > 0.88) {
-            console.log(this.progress())
+            // console.log(this.progress())
             THAT.fadeToAction(ANIMATIONS.idle, 0.4)
           }
         },
