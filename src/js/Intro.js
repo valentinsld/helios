@@ -286,7 +286,7 @@ export default class Intro {
     suite3.addEventListener("click", () => {
       scene3.classList.add('hidePlay');
       tl4.play();
-      // this.game.next();
+      this.game.next();
     })
    
     moreButton.addEventListener("click", () => {
