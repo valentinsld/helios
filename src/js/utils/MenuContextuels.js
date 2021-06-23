@@ -86,6 +86,7 @@ class Menu {
     // AudioManager.newSound({
     //   name: 'info'
     // })
+
   }
 
   remove () {

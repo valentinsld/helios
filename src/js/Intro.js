@@ -28,6 +28,10 @@ export default class Intro {
     var tl4 = gsap.timeline({
       paused: true
     })
+
+    var tl5 = gsap.timeline({
+      paused: true
+    })
     
     
     tl.set("#phaeton", {
@@ -198,20 +202,47 @@ export default class Intro {
       ease: Expo.easeInOut
     })
 
-    tl4.set("playerPhaeton",{
-      opacity: 0,
-      ease: Expo.easeInOut
-    })
-
     tl4.to("#endStart", 3, {
       opacity: 1
     });
 
-    tl4.to ("#playerPhaeton", 4, {
-      opacity: 1
+    tl4.set("#baseline", {
+      opacity: 0,
+      ease: Expo.easeInOut
+    })
+
+    tl4.to("#baseline", 3, {
+      opacity: 1,
     });
 
-    
+    tl4.set("#baseline", {
+      marginTop: "10%",
+      ease: Expo.easeInOut
+    })
+
+    tl4.to("#baseline", 2, {
+      marginTop: "0"
+    }, "< 1");
+
+    tl4.set("#playerPhaeton", {
+      opacity: 0,
+      ease: Expo.easeInOut
+    })
+
+    tl4.to("#playerPhaeton", 1, {
+      opacity: 1,
+    });
+
+    tl4.set("#playerFragment", {
+      opacity: 0,
+      ease: Expo.easeInOut
+    })
+
+    tl4.to("#playerFragment", 1, {
+      opacity: 1,
+    });
+
+
     
     var button = document.getElementById('button')
     var suite = document.getElementById('suite')
@@ -225,8 +256,6 @@ export default class Intro {
     var moreButton = document.getElementById('moreButton')
     var project = document.getElementById('project')
     var suite3 = document.getElementById('suite3')
-    var QPress = document.getElementById('QPress')
-    var DPress = document.getElementById('DPress')
     
     
     button.addEventListener("click", () => {
@@ -257,7 +286,7 @@ export default class Intro {
     suite3.addEventListener("click", () => {
       scene3.classList.add('hidePlay');
       tl4.play();
-      this.game.next()
+      this.game.next();
     })
    
     moreButton.addEventListener("click", () => {
@@ -272,11 +301,12 @@ export default class Intro {
         document.getElementById("keyActivate").innerHTML = 'Activé';
         document.getElementById("keyActivate2").style.display = 'none';
       };
-      startGame.classList.add('show');
+      startGame.classList.add('showPlay');
     });
 
     startGame.addEventListener("click", () => {
       endStart.classList.add('hide');
+      // this.game.state.next()
       this.game.state.currentScene.initScene()
     })
 
