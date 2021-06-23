@@ -319,19 +319,13 @@ p {
   margin-top: 40px;
 }
 
+
 #suite3 {
   cursor: pointer;
   opacity: 0;
   width: 70px;
   margin-left: 70%;
   margin-top: 40px;
-}
-
-#suite3 {
-  opacity: 0;
-  cursor: pointer;
-  margin-left: 80%;
-  width: 5%;
 }
 
 .baseline {
