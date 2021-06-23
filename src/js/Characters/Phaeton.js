@@ -333,12 +333,12 @@ export default class Phaeton{
         duration: 2,
         y: end.y,
         ease: 'linear',
-        // onUpdate: function (ev) {
-        //   if (upDown && this.progress() > 0.88) {
-        //     console.log(this.progress())
-        //     THAT.fadeToAction(ANIMATIONS.idle, 0.4)
-        //   }
-        // },
+        onUpdate: function (ev) {
+          if (upDown && this.progress() > 0.88) {
+            console.log(this.progress())
+            THAT.fadeToAction(ANIMATIONS.idle, 0.4)
+          }
+        },
         onComplete: () => {
           this.fadeToAction(ANIMATIONS.idle, 0.3)
         }
