@@ -256,6 +256,9 @@ export default class Intro {
     var moreButton = document.getElementById('moreButton')
     var project = document.getElementById('project')
     var suite3 = document.getElementById('suite3')
+    var QPress = document.getElementById('QPress')
+    var DPress = document.getElementById('DPress')
+    
     
     
     button.addEventListener("click", () => {

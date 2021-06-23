@@ -47,11 +47,6 @@ export default class Scene0 {
 
     this.initZoomCamera()
 
-    AudioManager.newSound({
-      name: 'scene2_ambiance',
-      loop: true
-    })
-
     this.initSol()
     this.initCharacters()
     this.initDoor()
@@ -231,6 +226,11 @@ export default class Scene0 {
   }
 
   endtransitionIntro () {
+    AudioManager.newSound({
+      name: 'scene2_ambiance',
+      loop: true
+    })
+
     // TODO : animation characters appear
     console.log('endLoadingModels')
   }
@@ -252,7 +252,9 @@ export default class Scene0 {
         z: 10
       },
       parameters: {
-        colorEnd: 42
+        colorStart: 18,
+        colorEnd: 55,
+        scale: 110
       }
     })
 
@@ -278,7 +280,9 @@ export default class Scene0 {
         z: 10
       },
       parameters: {
-        colorEnd: 42
+        colorStart: 18,
+        colorEnd: 55,
+        scale: 110
       }
     })
 
@@ -394,7 +398,7 @@ export default class Scene0 {
 
   initPlaque () {
     const pos = {
-      x: 500,
+      x: 480,
       y: -600
     }
 
@@ -470,10 +474,7 @@ export default class Scene0 {
       text: 'Lorsque vous marchez sur des plaques de pression, vous activez des mecanismes',
       position: new THREE.Vector3(550, -100, 0)
     })
-    AudioManager.newSound({
-      name: 'scene2_portPierre',
-      volume: 0.6
-    })
+
 
     this.open = true
     this.door.open()
@@ -488,8 +489,15 @@ export default class Scene0 {
       {
         x: 5.7,
         y: 1.9,
-        duration: 1.7,
-        ease: 'power3.in'
+        delay: 0.5,
+        duration: 3.2,
+        ease: 'power3.in',
+        onStart: () => {
+          AudioManager.newSound({
+            name: 'scene2_portPierre',
+            volume: 0.6
+          })
+        }
       }
     )
   }

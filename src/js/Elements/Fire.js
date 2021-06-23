@@ -99,10 +99,6 @@ export default class Fire {
             text: 'Cliquez et maintenez pour diriger le faisceau',
             position: new THREE.Vector3(-580, -300, 0)
           })
-          
-          AudioManager.newSound({
-            name: 'scene1_brasier'
-          })
         }
       }
     });
@@ -245,6 +241,11 @@ export default class Fire {
   startInteract() {
     this.spotLight.intensity = 10
     this.cone.material.uniforms.opacity.value = this.coneOpacity
+
+    MenuContextuels.removeMenu('captorFire')
+    AudioManager.newSound({
+      name: 'scene1_brasier'
+    })
   }
 
   interact(cursor) {
@@ -254,8 +255,6 @@ export default class Fire {
     lookAt.z -= 10
 
     this.cone.lookAt(lookAt)
-
-    MenuContextuels.removeMenu('captorFire')
 
     const allbodies = Matter.Composite.allBodies(this.world),
       bodies = allbodies.filter(bodie => 

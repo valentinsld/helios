@@ -16,6 +16,7 @@ import LoaderModelsManager from '../utils/LoaderModelsManager'
 import clearScene from '../utils/clearScene'
 import Transition from '../utils/transition'
 import MenuContextuels from '../utils/MenuContextuels'
+import AudioManager from '../utils/AudioManager'
 
 // import AnimatedFire from '../Elements/animatedFire'
 
@@ -38,6 +39,11 @@ export default class Scene3 {
 
     this.code = []
     this.open = false
+
+    AudioManager.newSound({
+      name: 'scene3_ambiance',
+      loop: true
+    })
 
     this.initZoomCamera()
     this.initCharacters()
@@ -113,6 +119,11 @@ export default class Scene3 {
   }
 
   endtransitionIntro () {
+    AudioManager.newSound({
+      name: 'scene3_ambiance',
+      loop: true
+    })
+
     // TODO : animation characters appear
     console.log('endLoadingModels')
   }
@@ -128,7 +139,7 @@ export default class Scene3 {
       render: false,
       size: {
         x: 1600,
-        y: 150,
+        y: 140,
         z: 100
       },
       position : {
@@ -144,7 +155,7 @@ export default class Scene3 {
       color: 0xff0000,
       size: {
         x: 1540,
-        y: 150,
+        y: 140,
         z: 100
       },
       position : {
@@ -323,7 +334,7 @@ export default class Scene3 {
       phaeton: this.phaeton,
       position : {
         x : -970,
-        y : -430,
+        y : -450,
         z : 0
       },
       size: {
@@ -591,7 +602,7 @@ export default class Scene3 {
 
     this.lightDoor = new THREE.PointLight(0xfaa961, 5, 300, 0.5)
     this.lightDoor.castShadow = true
-    this.lightDoor.position.set(3.17, 1.57, 0)
+    this.lightDoor.position.set(3.6, 1.57, 0)
     this.map.add(this.lightDoor)
 
     //Set up shadow properties for the light
@@ -697,7 +708,7 @@ export default class Scene3 {
             return Matter.Svg.pathToVertices(path, 30);
           });
 
-          var terrain = Matter.Bodies.fromVertices(-90, -650, vertexSets, {
+          var terrain = Matter.Bodies.fromVertices(-90, -655, vertexSets, {
             isStatic: true,
             render: {
               fillStyle: '#ffff00',
@@ -716,6 +727,10 @@ export default class Scene3 {
     this.door.open()
 
     const tl = gsap.timeline({delay: 1})
+
+    AudioManager.newSound({
+      name: 'scene1_reussite'
+    })
 
     // add light
     const spotLight = new THREE.SpotLight(0xfaa961, 0, 1200)
@@ -770,7 +785,12 @@ export default class Scene3 {
       {
         delay: 0.5,
         y: 1,
-        ease: "power2.in"
+        ease: "power2.in",
+        onStart: () => {
+          AudioManager.newSound({
+            name: 'scene3_renes'
+          })
+        }
       }
     )
 
@@ -780,9 +800,26 @@ export default class Scene3 {
       {
         z: endRotation,
         duration: 3,
-        ease: "power4.in"
+        ease: "power4.in",
+        onComplete: () => {
+          AudioManager.newSound({
+            name: 'scene3_chute'
+          })
+        }
       },
       '-=0.5'
+    )
+    tl.to(
+      this.renePhaeton,
+      {
+        duration: 2.55,
+        onComplete: () => {
+          AudioManager.newSound({
+            name: 'scene3_chute'
+          })
+        }
+      },
+      '<'
     )
     tl.to(
       this.renePhaeton.rotation,
@@ -806,9 +843,21 @@ export default class Scene3 {
       this.map.getObjectByName('porte').position,
       {
         y: 2.5,
-        duration: 1.5,
+        duration: 3.2,
         ease: "power1.in"
       }
+    )
+    .to(
+      this.map,
+      {
+        duration: 0.5,
+        onComplete: () => {
+          AudioManager.newSound({
+            name: 'scene2_portPierre'
+          })
+        }
+      },
+      '<'
     )
     .to(
       this.lightDoor,
@@ -873,6 +922,7 @@ export default class Scene3 {
       this.fragment.mesh.position,
       {
         x: "+=450",
+        y: "+=150",
         z: 120,
         duration: 2.5,
         ease: "sin.inOut"
@@ -884,6 +934,8 @@ export default class Scene3 {
   // Destruct
   //
   async destruct () {
+    AudioManager.stopSound('scene3_ambiance', 2.5)
+
     const trans = await Transition.fadeIn(2)
     this.game.clearUpdatedElement()
     
