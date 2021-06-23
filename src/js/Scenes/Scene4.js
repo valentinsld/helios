@@ -29,8 +29,8 @@ export default class Scene0 {
     globalScene.add(this.scene)
 
     this.updateCamera()
-    this.initCharacters()
     this.initBox()
+    this.initCharacters()
     this.addDoor()
 
     this.initModels()
@@ -70,12 +70,14 @@ export default class Scene0 {
       distance: 500,
       multiplicatorSpeed: 1.5,
       position : {
-        x : -1400,
-        y : -300,
-        z : -200
+        x: -1400,
+        y: -300,
+        z: -200
       }
     })
 
+    this.fragment.box.collisionFilter.mask = 0x0004
+    
     this.game.addUpdatedElement('phaeton', this.phaeton.update.bind(this.phaeton))
     this.game.addUpdatedElement('fragment', this.fragment.update.bind(this.fragment))
   }
