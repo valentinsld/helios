@@ -40,11 +40,6 @@ export default class Scene3 {
     this.code = []
     this.open = false
 
-    AudioManager.newSound({
-      name: 'scene3_ambiance',
-      loop: true
-    })
-
     this.initZoomCamera()
     this.initCharacters()
     this.initModels()
@@ -940,8 +935,7 @@ export default class Scene3 {
     this.game.clearUpdatedElement()
     
     clearScene(this.scene)
-    Matter.World.clear(this.world);
-    this.scene.parent.fog = null
+    Matter.World.clear(this.world)
 
     return new Promise(resolve => {
       resolve('destructed');

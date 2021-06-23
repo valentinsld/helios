@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import Matter from 'matter-js'
 import gsap from 'gsap'
 
+import AudioManager from '../utils/AudioManager'
+
 const POSITION = {
   x: 0,
   y: 0,
@@ -311,6 +313,12 @@ export default class Phaeton{
 
     this.fadeToAction(ANIMATIONS.echelle, 0.6)
 
+    // AudioManager.newSound({
+    //   name: 'scene3_echelle',
+    //   volume: 0.25,
+    //   loop: true
+    // })
+
     this.animation.to(
       this.mesh.position,
       {
@@ -333,13 +341,14 @@ export default class Phaeton{
         duration: 2,
         y: end.y,
         ease: 'linear',
-        // onUpdate: function (ev) {
-        //   if (upDown && this.progress() > 0.88) {
-        //     console.log(this.progress())
-        //     THAT.fadeToAction(ANIMATIONS.idle, 0.4)
-        //   }
-        // },
+        onUpdate: function (ev) {
+          if (upDown && this.progress() > 0.88) {
+            // console.log(this.progress())
+            THAT.fadeToAction(ANIMATIONS.idle, 0.4)
+          }
+        },
         onComplete: () => {
+          // AudioManager.stopSound('scene3_echelle', 0.1)
           this.fadeToAction(ANIMATIONS.idle, 0.3)
         }
       }
