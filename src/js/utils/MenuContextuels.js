@@ -1,3 +1,5 @@
+import AudioManager from '../utils/AudioManager'
+
 const DOM = document.querySelector('body')
 const MENU_DOM = document.querySelector('#ModelMenu')
 const MIN_DURATION = 5000
@@ -80,6 +82,10 @@ class Menu {
     this.initTime = new Date()
 
     this.el.classList.add('-see')
+
+    AudioManager.newSound({
+      name: 'info'
+    })
   }
 
   remove () {
