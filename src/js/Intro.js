@@ -287,22 +287,22 @@ export default class Intro {
       scene3.classList.add('hidePlay');
       tl4.play();
       this.game.next();
+
+      document.addEventListener('keydown', (e) => {
+        if (e.code == 'KeyA' || e.code == 'KeyD' ) {
+          e.keypress = 'KeyA';
+          e.keypress = 'KeyD';
+          document.getElementById("keyActivate").innerHTML = 'Activé';
+          document.getElementById("keyActivate2").style.display = 'none';
+        };
+        startGame.classList.add('showPlay');
+      });
     })
    
     moreButton.addEventListener("click", () => {
       introMobile.classList.add('hide');
       project.classList.add('show');
     })
-
-    document.addEventListener('keydown', (e) => {
-      if (e.code == 'KeyA' || e.code == 'KeyD' ) {
-        e.keypress = 'KeyA';
-        e.keypress = 'KeyD';
-        document.getElementById("keyActivate").innerHTML = 'Activé';
-        document.getElementById("keyActivate2").style.display = 'none';
-      };
-      startGame.classList.add('showPlay');
-    });
 
     startGame.addEventListener("click", () => {
       endStart.classList.add('hide');
