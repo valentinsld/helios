@@ -3,9 +3,8 @@
 Tester l'experience : [helios.vercel.app](https://helios.vercel.app/)
 
 ## Qu'est ce que c'est ?
-``` bash
 Hélios est un projet de jeu multijoueur sur navigateur, revisitant le mythe de Phaéton dans une aventure à la recherche du soleil. Se jouant à deux, il vise à recréer un lien après l’isolement imposé par l’épidemie de coronavirus.
-```
+
 
 Réalisation par :
 - [Lisa LEVAVASSEUR](http://lisalevavasseur.fr/) (DA)
@@ -22,7 +21,7 @@ Réalisation par :
 
 
 ## Architecture du projet
-
+``` bash
 ../
   ./src
     ./css
@@ -42,7 +41,7 @@ Réalisation par :
     ./img
     ./models
     ./sounds
-
+```
 
 ## Installer le projet
 Pour lancer ce projet:
