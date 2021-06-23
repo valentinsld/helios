@@ -229,7 +229,7 @@ export default class Intro {
       ease: Expo.easeInOut
     })
 
-    tl4.to("#playerPhaeton", 3, {
+    tl4.to("#playerPhaeton", 1, {
       opacity: 1,
     });
 
@@ -238,7 +238,7 @@ export default class Intro {
       ease: Expo.easeInOut
     })
 
-    tl4.to("#playerFragment", 3, {
+    tl4.to("#playerFragment", 1, {
       opacity: 1,
     });
 
@@ -306,7 +306,7 @@ export default class Intro {
 
     startGame.addEventListener("click", () => {
       endStart.classList.add('hide');
-      this.game.state.next().style.display = "none"
+      // this.game.state.next()
       this.game.state.currentScene.initScene()
     })
 
