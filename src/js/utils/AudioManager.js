@@ -32,6 +32,8 @@ class Audio {
     this.volume = volume
     this.loop = loop
 
+    this.play = true
+
     this.initsound()
   }
 
@@ -42,7 +44,7 @@ class Audio {
       this.sound.setBuffer(buffer)
       this.sound.setLoop(this.loop)
       this.sound.setVolume(this.volume)
-      this.sound.play()
+      if (this.play) this.sound.play()
     })
   }
 
@@ -53,6 +55,7 @@ class Audio {
         value: 0,
         duration,
         onComplete: () => {
+          this.play = false
           this.sound.stop()
         }
       }
