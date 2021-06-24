@@ -35,6 +35,10 @@ export default class Scene0 {
     this.addDoor()
 
     this.initModels()
+
+    setTimeout(() => {
+      console.log(this.world)
+    }, 2000);
   }
 
   updateCamera () {
@@ -77,7 +81,8 @@ export default class Scene0 {
       }
     })
 
-    this.fragment.box.collisionFilter.mask = 0x0004
+    this.fragment.box.collisionFilter.mask = 0x0001 | 0x0004
+    this.fragment.box.collisionFilter.category = 0x0004
     
     this.game.addUpdatedElement('phaeton', this.phaeton.update.bind(this.phaeton))
     this.game.addUpdatedElement('fragment', this.fragment.update.bind(this.fragment))
