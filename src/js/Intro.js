@@ -221,7 +221,7 @@ export default class Intro {
     })
 
     tl4.to("#baseline", 2, {
-      marginTop: "0"
+      marginTop: "0",
     }, "< 1");
 
     tl4.set("#playerPhaeton", {
@@ -231,6 +231,17 @@ export default class Intro {
 
     tl4.to("#playerPhaeton", 1, {
       opacity: 1,
+      onComplete: () => {
+        document.addEventListener('keydown', (e) => {
+          if (e.code == 'KeyA' || e.code == 'KeyD' ) {
+            e.keypress = 'KeyA';
+            e.keypress = 'KeyD';
+            document.getElementById("keyActivate").innerHTML = 'Activé';
+            document.getElementById("keyActivate2").style.display = 'none';
+          };
+          startGame.classList.add('showPlay');
+        });
+      }
     });
 
     tl4.set("#playerFragment", {
@@ -287,16 +298,6 @@ export default class Intro {
       scene3.classList.add('hidePlay');
       tl4.play();
       this.game.next();
-
-      document.addEventListener('keydown', (e) => {
-        if (e.code == 'KeyA' || e.code == 'KeyD' ) {
-          e.keypress = 'KeyA';
-          e.keypress = 'KeyD';
-          document.getElementById("keyActivate").innerHTML = 'Activé';
-          document.getElementById("keyActivate2").style.display = 'none';
-        };
-        startGame.classList.add('showPlay');
-      });
     })
    
     moreButton.addEventListener("click", () => {
