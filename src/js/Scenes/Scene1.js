@@ -180,7 +180,7 @@ export default class Scene1 {
       size: {
         x: 4000,
         y: 500,
-        z: 500
+        z: 1196
       },
       position : {
         x: 0,
@@ -306,7 +306,7 @@ export default class Scene1 {
     )
 
     const planeMesh = new THREE.Mesh(plane, textureFirstPlan)
-    planeMesh.position.set(0, -330, 150)
+    planeMesh.position.set(-110, -330, 598)
 
     this.scene.add(planeMesh)
   }
