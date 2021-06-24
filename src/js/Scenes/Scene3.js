@@ -938,7 +938,9 @@ export default class Scene3 {
     Matter.World.clear(this.world)
 
     return new Promise(resolve => {
-      resolve('destructed');
+      setTimeout(() => {
+        resolve('destructed');
+      }, 100);
     });
   }
 }
