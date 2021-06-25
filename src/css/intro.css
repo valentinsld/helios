@@ -599,6 +599,12 @@ p {
   margin-top: 60px;
 }
 
-#adventure, #construction, #construction2 {
+#adventure, #construction, #construction2, #logos {
   opacity: 0;
+}
+
+#logos {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }

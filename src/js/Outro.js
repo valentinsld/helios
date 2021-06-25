@@ -55,10 +55,20 @@ export default class Outro {
       opacity: 0,
       ease: Expo.easeInOut,
     })
+
+    t2.set("#logos", {
+      opacity: 0,
+      ease: Expo.easeInOut,
+    })
     
     t2.to("#credits", 3, {
       opacity: 1
     });
+    
+    t2.to("#logos", 3, {
+      opacity: 1
+    });
+
 
 
     var plus = document.getElementById('plus')
