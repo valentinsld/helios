@@ -10,7 +10,9 @@
   justify-content: center;
   align-items: center;
 
-  font-family: 'Nueva Std';
+  font-family: 'nueva-std-extended', serif;
+  font-weight: 300;
+  font-style: normal;
   font-size: 32px;
   color: #FFB662;
 
