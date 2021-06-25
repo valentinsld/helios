@@ -289,7 +289,7 @@ export default class Scene1 {
     })
 
     // first plan
-    const paln = this.textureLoader.load('/models/premier_plan.png')
+    const paln = this.textureLoader.load('/models/premier_plan3.jpg')
     // paln.flipY = false
     const textureFirstPlan = new THREE.MeshStandardMaterial({
       color: 0x000000,
@@ -306,7 +306,7 @@ export default class Scene1 {
     )
 
     const planeMesh = new THREE.Mesh(plane, textureFirstPlan)
-    planeMesh.position.set(0, -330, 598.5)
+    planeMesh.position.set(0, -410, 598)
 
     this.scene.add(planeMesh)
   }
