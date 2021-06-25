@@ -231,6 +231,10 @@ export default class Scene0 {
       loop: true
     })
 
+    setTimeout(() => {
+      this.fragment.notStarted = false
+    }, 3000);
+
     // TODO : animation characters appear
     // console.log('endLoadingModels')
   }

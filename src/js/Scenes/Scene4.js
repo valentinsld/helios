@@ -328,9 +328,15 @@ export default class Scene0 {
   }
 
   endtransitionIntro () {
+    this.fragment.notStarted = false
+    
     AudioManager.newSound({
       name: 'scene4_ambiance',
+<<<<<<< HEAD
       volume: 0.2,
+=======
+      volume: 0.25,
+>>>>>>> a136770 (feat ef fez)
       loop: true
     })
 

@@ -114,6 +114,8 @@ export default class Scene3 {
   }
 
   endtransitionIntro () {
+    this.fragment.notStarted = false
+    
     AudioManager.newSound({
       name: 'scene3_ambiance',
       loop: true

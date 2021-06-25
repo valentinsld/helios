@@ -84,7 +84,9 @@ export default class Scene1 {
     const backgroundNoise = this.game.globalScene.getObjectByName('NoiseBackground')
     const scene0 = this.game.globalScene.getObjectByName('Scene0')
 
-    gsap.to(
+    const tl = gsap.timeline()
+
+    tl.to(
       backgroundNoise.material.uniforms.uOpacity,
       {
         value: 0,
@@ -98,12 +100,73 @@ export default class Scene1 {
         }
       }
     )
+
+    // animation PHAETON
+    this.phaeton.playWalk()
+    this.phaeton.animation = true
+    this.fragment.animation = true
+
+    tl.fromTo(
+      this.phaeton.mesh.position,
+      {
+        x: this.phaeton.position.x - 400,
+        y: -450,
+      },
+      {
+        x: this.phaeton.position.x,
+        y: -450,
+        duration: 2.4,
+        ease: 'none',
+        onStart: () => {
+          AudioManager.newSound({
+            name: 'pas_dehors',
+            volume: 0.5,
+            loop: true
+          })
+        },
+        onComplete: () => {
+          AudioManager.stopSound('pas_dehors', 0.1)
+
+          this.phaeton.playIdle()
+          this.phaeton.animation = null
+        }
+      }
+    )
+    tl.fromTo(
+      this.fragment.mesh.position,
+      {
+        x: this.fragment.position.x - 400,
+        y: this.fragment.position.y,
+        z: this.fragment.position.z
+      },
+      {
+        x: this.fragment.position.x,
+        y: this.fragment.position.y,
+        z: this.fragment.position.z,
+        duration: 2.4,
+        ease: 'none',
+        onComplete: () => {
+          this.fragment.animation = null
+          this.fragment.notStarted = false
+        }
+      },
+      '<'
+    )
+    tl.fromTo(
+      this.fragment,
+      {
+        multiplicatorSpeed: 0
+      },
+      {
+        multiplicatorSpeed: this.fragment.multiplicatorSpeed,
+        duration: 3,
+        ease: 'Power4.out'
+      }
+    )
   }
 
   initZoomCamera () {
     this.camera.zoom = 0.95
-
-    // this.scene.position.set(-200, 100, 0)
 
     this.camera.updateProjectionMatrix()
   }
@@ -116,8 +179,8 @@ export default class Scene1 {
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
       position : {
-        x : -900,
-        y : -350,
+        x : -850,
+        y : -450,
         z : 80
       },
       sound: 'pas_dehors'
