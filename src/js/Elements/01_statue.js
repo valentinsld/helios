@@ -78,7 +78,7 @@ export default class Statue {
 
           MenuContextuels.addMenu({
             id: 'Statues',
-            text: 'Intéragissez avec espace pour tourner la statue',
+            text: `Intéragissez avec <br><span>Espace</span> pour tourner <br>la statue `,
             position: new THREE.Vector3(-320, -150, 0)
           })
         }

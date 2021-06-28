@@ -334,6 +334,7 @@ export default class Scene0 {
   endtransitionIntro () {
     AudioManager.newSound({
       name: 'scene4_ambiance',
+      volume: 0.2,
       loop: true
     })
 

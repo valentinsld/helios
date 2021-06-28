@@ -306,7 +306,7 @@ export default class Scene1 {
     )
 
     const planeMesh = new THREE.Mesh(plane, textureFirstPlan)
-    planeMesh.position.set(0, -330, 599)
+    planeMesh.position.set(0, -330, 598.5)
 
     this.scene.add(planeMesh)
   }
