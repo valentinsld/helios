@@ -238,7 +238,7 @@ export default class Intro {
       onComplete: () => {
         // activer Phaeton
         document.addEventListener('keydown', (e) => {
-          if (e.code == 'KeyA' || e.code == 'KeyD' ) {
+          if (e.code === 'KeyA' || e.code === 'KeyD' || e.code === 'Space' ) {
             e.keypress = 'KeyA';
             e.keypress = 'KeyD';
             document.getElementById("keyActivate").innerHTML = 'Activé';
