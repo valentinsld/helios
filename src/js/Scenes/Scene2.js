@@ -127,7 +127,7 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: 1600,
+        x: 1550,
         y: 200,
         z: 100
       }
@@ -144,7 +144,7 @@ export default class Scene0 {
         z: 100
       },
       position : {
-        x: -1700,
+        x: -1550,
         y: 200,
         z: 100
       }
