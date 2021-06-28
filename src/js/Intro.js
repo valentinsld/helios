@@ -229,18 +229,38 @@ export default class Intro {
       ease: Expo.easeInOut
     })
 
+    let step = {
+      phaeton: false,
+      phos: false
+    }
     tl4.to("#playerPhaeton", 1, {
       opacity: 1,
       onComplete: () => {
+        // activer Phaeton
         document.addEventListener('keydown', (e) => {
           if (e.code == 'KeyA' || e.code == 'KeyD' ) {
             e.keypress = 'KeyA';
             e.keypress = 'KeyD';
             document.getElementById("keyActivate").innerHTML = 'Activé';
             document.getElementById("keyActivate2").style.display = 'none';
+
+            step.phaeton = true
+            if (step.phos && step.phaeton) {
+              startGame.classList.add('showPlay');
+            }
           };
-          startGame.classList.add('showPlay');
         });
+          
+        // activer souris
+        document.querySelector('#playerFragment').addEventListener('click', () => {
+          document.getElementById("mouseActivate").innerHTML = 'Activé';
+          document.getElementById("mouseActivate2").style.display = "none"
+
+          step.phos = true
+          if (step.phos && step.phaeton) {
+            startGame.classList.add('showPlay');
+          }
+        })
       }
     });
 
