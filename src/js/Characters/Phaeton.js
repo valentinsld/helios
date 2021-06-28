@@ -328,11 +328,11 @@ export default class Phaeton{
 
     this.fadeToAction(ANIMATIONS.echelle, 0.6)
 
-    // AudioManager.newSound({
-    //   name: 'scene3_echelle',
-    //   volume: 0.25,
-    //   loop: true
-    // })
+    AudioManager.newSound({
+      name: 'scene3_echelle',
+      volume: 0.25,
+      loop: true
+    })
 
     this.animation.to(
       this.mesh.position,
@@ -359,11 +359,12 @@ export default class Phaeton{
         onUpdate: function (ev) {
           if (upDown && this.progress() > 0.88) {
             // console.log(this.progress())
+            AudioManager.stopSound('scene3_echelle', 0.1)
             THAT.fadeToAction(ANIMATIONS.idle, 0.4)
           }
         },
         onComplete: () => {
-          // AudioManager.stopSound('scene3_echelle', 0.1)
+          AudioManager.stopSound('scene3_echelle', 0.1)
           this.fadeToAction(ANIMATIONS.idle, 0.3)
         }
       }
