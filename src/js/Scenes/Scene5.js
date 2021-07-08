@@ -20,12 +20,7 @@ export default class Scene0 {
     this.scene = new THREE.Group()
     globalScene.add(this.scene)
 
-    this.initScene()
     this.initBackground()
-  }
-
-  initScene() {
-    console.log('scene 5')
   }
 
   initBackground () {
@@ -57,8 +52,6 @@ export default class Scene0 {
     this.scene.add(this.planeNoise)
 
     this.game.addUpdatedElement('NoiseBackground', this.updateNoise.bind(this))
-
-    console.log(this.planeNoise)
 
     gsap.to(
       this.planeNoise.material.uniforms.uOpacity,

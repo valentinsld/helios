@@ -197,7 +197,7 @@ export default class Scene0 {
   }
 
   initModels() {
-    console.log('scene 2')
+    // console.log('scene 2')
 
     const arrayModels = [
       {
@@ -232,7 +232,7 @@ export default class Scene0 {
     })
 
     // TODO : animation characters appear
-    console.log('endLoadingModels')
+    // console.log('endLoadingModels')
   }
 
   async initFeuLeft (gltf) {
@@ -478,7 +478,6 @@ export default class Scene0 {
 
     this.open = true
     this.door.open()
-    console.log('EndScene')
     // x: 5.7, y:1.9
 
     this.physicDoor

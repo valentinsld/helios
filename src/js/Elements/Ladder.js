@@ -52,39 +52,6 @@ export default class Ladder{
     );
 
     Matter.World.add(this.world, collider)
-
-    return
-
-    // init events
-    Matter.Events.on(this.engine, 'collisionStart', function(event) {
-      var pairs = event.pairs;
-      
-      for (var i = 0, j = pairs.length; i != j; ++i) {
-        var pair = pairs[i];
-
-        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
-        const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
-
-        if (conditionCollider && conditionPhaeton) {
-          console.log('enter')
-        }
-      }
-    });
-
-    Matter.Events.on(this.engine, 'collisionEnd', function(event) {
-      var pairs = event.pairs;
-      
-      for (var i = 0, j = pairs.length; i != j; ++i) {
-        var pair = pairs[i];
-
-        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
-        const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
-
-        if (conditionCollider && conditionPhaeton) {
-          console.log('leave')
-        }
-      }
-    });
   }
 
   addElementToScene() {
