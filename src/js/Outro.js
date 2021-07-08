@@ -2,7 +2,6 @@ import gsap, { Expo } from 'gsap'
 
 export default class Outro {
   constructor() {
-    console.log('init OUTRO')
     this.initOutro()
   }
 

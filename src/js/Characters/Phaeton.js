@@ -90,8 +90,7 @@ export default class Phaeton{
       },
       (error) =>
       {
-        console.log('error')
-        console.log(error)
+        console.error('ERROR', error)
         this.addPhaetonToScene()
       }
     )

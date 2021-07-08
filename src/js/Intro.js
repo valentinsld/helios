@@ -4,7 +4,6 @@ import AudioManager from './utils/AudioManager'
 
 export default class Intro {
   constructor(game) {
-    console.log('Start intro !')
     this.game = game
     this.initIntro()
   }
@@ -290,7 +289,7 @@ export default class Intro {
     
     
     button.addEventListener("click", () => {
-      console.log('click')
+      // console.log('click')
       intro.classList.add('hide');
       scene1.classList.add('show');
       tl.play();

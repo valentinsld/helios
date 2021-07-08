@@ -120,7 +120,7 @@ export default class Scene3 {
     })
 
     // TODO : animation characters appear
-    console.log('endLoadingModels')
+    // console.log('endLoadingModels')
   }
 
   addWallsAndFloors () {

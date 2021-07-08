@@ -46,7 +46,7 @@ export default class Game{
     var device = document.getElementById('ismobile')
     if(window.innerWidth < 1024 || ISMOBILE){
       device.classList.add('ismobile');
-      console.log(ISMOBILE)
+      // console.log(ISMOBILE)
     }
   }
   
@@ -86,16 +86,6 @@ export default class Game{
 
   initTextLoader() {
     this.textureLoader = new THREE.TextureLoader()
-    // this.cubeTextureLoader = new THREE.CubeTextureLoader()
-    
-    // this.environmentMapTexture = this.cubeTextureLoader.load([
-    //     '/textures/environmentMaps/0/px.png',
-    //     '/textures/environmentMaps/0/nx.png',
-    //     '/textures/environmentMaps/0/py.png',
-    //     '/textures/environmentMaps/0/ny.png',
-    //     '/textures/environmentMaps/0/pz.png',
-    //     '/textures/environmentMaps/0/nz.png'
-    // ])
   }
 
   initGltfLoader() {
@@ -104,25 +94,6 @@ export default class Game{
 
     this.gltfLoader = new GLTFLoader()
     // this.gltfLoader.setDRACOLoader(dracoLoader)
-
-    // gltfLoader.load(
-    //   '/models/Duck/glTF/Duck.gltf',
-    //   (gltf) =>
-    //   {
-    //       console.log('success')
-    //       console.log(gltf)
-    //   },
-    //   (progress) =>
-    //   {
-    //       console.log('progress')
-    //       console.log(progress)
-    //   },
-    //   (error) =>
-    //   {
-    //       console.log('error')
-    //       console.log(error)
-    //   }
-    // )
   }
 
   initCamera() {

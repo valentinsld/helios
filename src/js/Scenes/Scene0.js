@@ -19,13 +19,8 @@ export default class Scene0 {
     this.scene.name = 'Scene0'
     globalScene.add(this.scene)
 
-    this.initScene()
     this.initBackground()
     this.intro = new Intro(sceneManager)
-  }
-
-  initScene() {
-    console.log('scene 0')
   }
 
   initBackground () {

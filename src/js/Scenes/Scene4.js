@@ -35,10 +35,6 @@ export default class Scene0 {
     this.addDoor()
 
     this.initModels()
-
-    setTimeout(() => {
-      console.log(this.world)
-    }, 2000);
   }
 
   updateCamera () {
@@ -339,7 +335,7 @@ export default class Scene0 {
     })
 
     // TODO : animation characters appear
-    console.log('endLoadingModels')
+    // console.log('endLoadingModels')
   }
 
   
