@@ -15,3 +15,9 @@ body
 {
     overflow: hidden;
 }
+
+* ::selection {
+  background-color: #ffd480;
+  color: #c76c17;
+  text-shadow: 0 0 9px #da6623;
+}
