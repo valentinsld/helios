@@ -17,7 +17,7 @@ export default class SceneManager {
     this.state = {
       currentSceneIndex: START_SCENE,
       currentScene: new this.scenes[START_SCENE](this.params),
-      isTransitioning: false,
+      isTransitioning: false
     }
   }
 
@@ -44,6 +44,7 @@ export default class SceneManager {
   }
 
   async next() {
+    // console.log(this.state)
     if (this.currentSceneIndex === this.scenes.length || this.state.isTransitioning) return
     this.state.isTransitioning = true
 

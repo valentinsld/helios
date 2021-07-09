@@ -319,10 +319,10 @@ export default class Intro {
       this.game.next();
     })
    
-    moreButton.addEventListener("click", () => {
-      introMobile.classList.add('hide');
-      project.classList.add('show');
-    })
+    // moreButton.addEventListener("click", () => {
+    //   introMobile.classList.add('hide');
+    //   project.classList.add('show');
+    // })
 
     startGame.addEventListener("click", () => {
       endStart.classList.add('hide');
