@@ -1,4 +1,4 @@
-const START_SCENE = 0
+const START_SCENE = 2
 
 export default class SceneManager {
   constructor(params) {

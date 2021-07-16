@@ -30,8 +30,8 @@ export default class Scene0 {
     globalScene.add(this.scene)
 
     this.updateCamera()
-    this.initBox()
     this.initCharacters()
+    this.initBox()
     this.addDoor()
 
     this.initModels()
@@ -55,7 +55,7 @@ export default class Scene0 {
       speed: 12,
       position : {
         x : -1550,
-        y : -550,
+        y : -747,
         z : -250
       }
     })
@@ -97,6 +97,23 @@ export default class Scene0 {
       gltfLoader: this.gltfLoader,
       endFunction: this.endLoadingModels.bind(this)
     })
+  }
+
+  endLoadingModels () {
+    const endTrans = Transition.fadeOut(this.endtransitionIntro.bind(this))
+  }
+
+  endtransitionIntro () {
+    this.fragment.notStarted = false
+    
+    AudioManager.newSound({
+      name: 'scene4_ambiance',
+      volume: 0.25,
+      loop: true
+    })
+
+    this.phaeton.animationIntro({y: 0, x: -600, z: 0})
+    this.fragment.animationIntro({y: 0, x: -600, z: 0})
   }
 
   initBox () {
@@ -323,26 +340,6 @@ export default class Scene0 {
     this.map.add( lightDoor )
   }
 
-  endLoadingModels () {
-    const endTrans = Transition.fadeOut(this.endtransitionIntro.bind(this))
-  }
-
-  endtransitionIntro () {
-    this.fragment.notStarted = false
-    
-    AudioManager.newSound({
-      name: 'scene4_ambiance',
-<<<<<<< HEAD
-      volume: 0.2,
-=======
-      volume: 0.25,
->>>>>>> a136770 (feat ef fez)
-      loop: true
-    })
-
-    // TODO : animation characters appear
-    // console.log('endLoadingModels')
-  }
 
   
   animationEndPhaeton () {

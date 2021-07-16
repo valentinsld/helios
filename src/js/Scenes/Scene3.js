@@ -68,7 +68,7 @@ export default class Scene3 {
       speed: 13,
       position : {
         x : -1300,
-        y : 100,
+        y : 65,
         z : 80
       }
     })
@@ -121,8 +121,8 @@ export default class Scene3 {
       loop: true
     })
 
-    // TODO : animation characters appear
-    // console.log('endLoadingModels')
+    this.phaeton.animationIntro({y: 200, z: -600})
+    this.fragment.animationIntro({y: 200, z: -600})
   }
 
   addWallsAndFloors () {

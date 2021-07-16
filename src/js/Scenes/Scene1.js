@@ -102,67 +102,8 @@ export default class Scene1 {
     )
 
     // animation PHAETON
-    this.phaeton.playWalk()
-    this.phaeton.animation = true
-    this.fragment.animation = true
-
-    tl.fromTo(
-      this.phaeton.mesh.position,
-      {
-        x: this.phaeton.position.x - 400,
-        y: -450,
-      },
-      {
-        x: this.phaeton.position.x,
-        y: -450,
-        duration: 2.4,
-        ease: 'none',
-        onStart: () => {
-          AudioManager.newSound({
-            name: 'pas_dehors',
-            volume: 0.5,
-            loop: true
-          })
-        },
-        onComplete: () => {
-          AudioManager.stopSound('pas_dehors', 0.1)
-
-          this.phaeton.playIdle()
-          this.phaeton.animation = null
-        }
-      }
-    )
-    tl.fromTo(
-      this.fragment.mesh.position,
-      {
-        x: this.fragment.position.x - 400,
-        y: this.fragment.position.y,
-        z: this.fragment.position.z
-      },
-      {
-        x: this.fragment.position.x,
-        y: this.fragment.position.y,
-        z: this.fragment.position.z,
-        duration: 2.4,
-        ease: 'none',
-        onComplete: () => {
-          this.fragment.animation = null
-          this.fragment.notStarted = false
-        }
-      },
-      '<'
-    )
-    tl.fromTo(
-      this.fragment,
-      {
-        multiplicatorSpeed: 0
-      },
-      {
-        multiplicatorSpeed: this.fragment.multiplicatorSpeed,
-        duration: 3,
-        ease: 'Power4.out'
-      }
-    )
+    this.phaeton.animationIntro({x: -400})
+    this.fragment.animationIntro({x: -400})
   }
 
   initZoomCamera () {

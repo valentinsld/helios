@@ -458,6 +458,42 @@ export default class Fragment{
     })
   }
 
+  animationIntro ({y = 0, x = -600, z = 0}) {
+    const tl = gsap.timeline()
+
+    tl.fromTo(
+      this.mesh.position,
+      {
+        x: this.position.x + x,
+        y: this.position.y + y,
+        z: this.position.z + z
+      },
+      {
+        x: this.position.x,
+        y: this.position.y,
+        z: this.position.z,
+        duration: 2.4,
+        ease: 'none',
+        onComplete: () => {
+          this.animation = null
+          this.notStarted = false
+        }
+      },
+      '<'
+    )
+    tl.fromTo(
+      this,
+      {
+        multiplicatorSpeed: 0
+      },
+      {
+        multiplicatorSpeed: this.multiplicatorSpeed,
+        duration: 3,
+        ease: 'Power4.out'
+      }
+    )
+  }
+
   update(time) {
     this.cursor.el.update(this.cursor.realX, this.cursor.realY)
 

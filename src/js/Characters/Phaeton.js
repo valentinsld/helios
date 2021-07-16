@@ -412,6 +412,39 @@ export default class Phaeton{
 
   }
 
+  animationIntro ({y = 0, x = -600, z = 0}) {
+    this.playWalk()
+
+    gsap.fromTo(
+      this.mesh.position,
+      {
+        x: this.position.x + x,
+        y: this.position.y + y,
+        z: this.position.z + z
+      },
+      {
+        x: this.position.x,
+        y: this.position.y,
+        z: this.position.z,
+        duration: 2.4,
+        ease: 'none',
+        onStart: () => {
+          AudioManager.newSound({
+            name: 'pas_dehors',
+            volume: 0.5,
+            loop: true
+          })
+        },
+        onComplete: () => {
+          AudioManager.stopSound('pas_dehors', 0.1)
+
+          this.playIdle()
+          this.animation = null
+        }
+      }
+    )
+  }
+
   update(time) {
     const dt = time - this.lastClock;
     if ( this.mixer ) this.mixer.update( dt );
