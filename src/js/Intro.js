@@ -212,6 +212,9 @@ export default class Intro {
 
     tl4.to("#baseline", 3, {
       opacity: 1,
+      onComplete: () => {
+        this.game.next();
+      }
     });
 
     tl4.set("#baseline", {
@@ -220,10 +223,7 @@ export default class Intro {
     })
 
     tl4.to("#baseline", 2, {
-      marginTop: "0",
-      onComplete: () => {
-        this.game.next();
-      }
+      marginTop: "0"
     }, "< 1");
 
     tl4.set("#playerPhaeton", {
