@@ -221,6 +221,9 @@ export default class Intro {
 
     tl4.to("#baseline", 2, {
       marginTop: "0",
+      onComplete: () => {
+        this.game.next();
+      }
     }, "< 1");
 
     tl4.set("#playerPhaeton", {
@@ -316,7 +319,6 @@ export default class Intro {
     suite3.addEventListener("click", () => {
       scene3.classList.add('hidePlay');
       tl4.play();
-      this.game.next();
     })
    
     // moreButton.addEventListener("click", () => {
