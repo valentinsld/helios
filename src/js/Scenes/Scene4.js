@@ -13,7 +13,7 @@ import clearScene from '../utils/clearScene'
 import Transition from '../utils/transition'
 import AudioManager from '../utils/AudioManager'
 
-export default class Scene0 {
+export default class Scene4 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
     this.game = game
     this.camera = camera
@@ -30,8 +30,8 @@ export default class Scene0 {
     globalScene.add(this.scene)
 
     this.updateCamera()
-    this.initBox()
     this.initCharacters()
+    this.initBox()
     this.addDoor()
 
     this.initModels()
@@ -55,7 +55,7 @@ export default class Scene0 {
       speed: 12,
       position : {
         x : -1550,
-        y : -550,
+        y : -747,
         z : -250
       }
     })
@@ -77,8 +77,9 @@ export default class Scene0 {
       }
     })
 
+    // Fix collision
+    this.phaeton.box.collisionFilter.category = 0x0008
     this.fragment.box.collisionFilter.mask = 0x0001 | 0x0004
-    this.fragment.box.collisionFilter.category = 0x0004
     
     this.game.addUpdatedElement('phaeton', this.phaeton.update.bind(this.phaeton))
     this.game.addUpdatedElement('fragment', this.fragment.update.bind(this.fragment))
@@ -97,6 +98,23 @@ export default class Scene0 {
       gltfLoader: this.gltfLoader,
       endFunction: this.endLoadingModels.bind(this)
     })
+  }
+
+  endLoadingModels () {
+    const endTrans = Transition.fadeOut(this.endtransitionIntro.bind(this))
+  }
+
+  endtransitionIntro () {
+    this.fragment.notStarted = false
+    
+    AudioManager.newSound({
+      name: 'scene4_ambiance',
+      volume: 0.25,
+      loop: true
+    })
+
+    this.phaeton.animationIntro({y: 0, x: -600, z: 0})
+    this.fragment.animationIntro({y: 0, x: -600, z: 0})
   }
 
   initBox () {
@@ -323,20 +341,6 @@ export default class Scene0 {
     this.map.add( lightDoor )
   }
 
-  endLoadingModels () {
-    const endTrans = Transition.fadeOut(this.endtransitionIntro.bind(this))
-  }
-
-  endtransitionIntro () {
-    AudioManager.newSound({
-      name: 'scene4_ambiance',
-      volume: 0.2,
-      loop: true
-    })
-
-    // TODO : animation characters appear
-    // console.log('endLoadingModels')
-  }
 
   
   animationEndPhaeton () {

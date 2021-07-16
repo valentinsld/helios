@@ -49,6 +49,7 @@ export default class Scene3 {
     this.addLadder()
     this.addDoor()
     this.addCacheForSymboles()
+    this.initFinalSpot()
   }
 
   initZoomCamera () {
@@ -68,7 +69,7 @@ export default class Scene3 {
       speed: 13,
       position : {
         x : -1300,
-        y : 100,
+        y : 65,
         z : 80
       }
     })
@@ -114,13 +115,15 @@ export default class Scene3 {
   }
 
   endtransitionIntro () {
+    this.fragment.notStarted = false
+    
     AudioManager.newSound({
       name: 'scene3_ambiance',
       loop: true
     })
 
-    // TODO : animation characters appear
-    // console.log('endLoadingModels')
+    this.phaeton.animationIntro({y: 200, z: -600})
+    this.fragment.animationIntro({y: 200, z: -600})
   }
 
   addWallsAndFloors () {
@@ -377,7 +380,8 @@ export default class Scene3 {
           MenuContextuels.addMenu({
             id: 'echelle',
             text: 'Appuyez sur espace pour utiliser l\'échelle',
-            position: new THREE.Vector3(pos.x + 410, pos.y + 100, 0)
+            position: new THREE.Vector3(pos.x + 410, pos.y + 100, 0),
+            maxScene: 1
           })
         }
       }
@@ -717,6 +721,25 @@ export default class Scene3 {
     
   }
 
+  initFinalSpot () {
+    // add light
+    this.finalSpotLight = new THREE.SpotLight(0xfaa961, 0, 1200)
+    this.finalSpotLight.angle = 0.4
+    this.finalSpotLight.decay = -0.1
+    this.finalSpotLight.penumbra = 0.3
+    this.finalSpotLight.power = 15
+    this.finalSpotLight.intensity = 0
+
+    this.finalSpotLight.position.set(-100, 1500, 40)
+    this.scene.add( this.finalSpotLight )
+
+    const targetObject = new THREE.Object3D()
+    targetObject.position.set(-100, 100, 40)
+    this.scene.add(targetObject)
+
+    this.finalSpotLight.target = targetObject
+  }
+
   endScene () {
     this.open = true
     this.door.open()
@@ -726,22 +749,6 @@ export default class Scene3 {
     AudioManager.newSound({
       name: 'scene1_reussite'
     })
-
-    // add light
-    const spotLight = new THREE.SpotLight(0xfaa961, 0, 1200)
-    spotLight.angle = 0.4
-    spotLight.decay = -0.1
-    spotLight.penumbra = 0.3
-    spotLight.power = 15
-
-    spotLight.position.set(-100, 1500, 40)
-    this.scene.add( spotLight )
-
-    const targetObject = new THREE.Object3D()
-    targetObject.position.set(-100, 100, 40)
-    this.scene.add(targetObject)
-
-    spotLight.target = targetObject
 
     // animation lights
     this.symboles.forEach((sym, i) => {
@@ -761,7 +768,7 @@ export default class Scene3 {
 
     // animation light
     tl.fromTo(  
-      spotLight,
+      this.finalSpotLight,
       {
         intensity: 0,
       },
@@ -829,7 +836,34 @@ export default class Scene3 {
       {
         z: endRotation,
         duration: 0.15,
-        ease: "power1.in"
+        ease: "power1.in",
+        onComplete: () => {
+          // moove center block
+          Matter.Body.translate(this.blockCenter.box, Matter.Vector.create(0, -140))
+
+          // add block
+          const up = Matter.Bodies.rectangle(
+            0,
+            -325,
+            250,
+            50,
+            {
+              label: 'Box',
+              isStatic: true,
+              friction: 1,
+              frictionStatic: Infinity,
+              render: {
+                fillStyle: 'transparent',
+                lineWidth: 2
+              }
+            }
+          );
+          Matter.World.add(this.world, up);
+
+          up.vertices[0].x -= 100
+          up.vertices[1].x += 100
+          Matter.Body.setVertices(up, up.vertices);
+        }
       }
     )
 
@@ -863,32 +897,6 @@ export default class Scene3 {
       },
       '<'
     )
-
-    // moove center block
-    Matter.Body.translate(this.blockCenter.box, Matter.Vector.create(0, -140))
-
-    // add block
-    const up = Matter.Bodies.rectangle(
-      0,
-      -325,
-      250,
-      50,
-      {
-        label: 'Box',
-        isStatic: true,
-        friction: 1,
-        frictionStatic: Infinity,
-        render: {
-          fillStyle: 'transparent',
-          lineWidth: 2
-        }
-      }
-    );
-    Matter.World.add(this.world, up);
-
-    up.vertices[0].x -= 100
-    up.vertices[1].x += 100
-    Matter.Body.setVertices(up, up.vertices);
   }
 
   animationEndPhaeton () {

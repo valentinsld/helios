@@ -46,7 +46,8 @@ export default class Fragment{
     this.radius = radius
     this.multiplicatorSpeed = multiplicatorSpeed
 
-    this.animation = null
+    this.animation = true
+    this.notStarted = true
     this.interactionElements = []
     this.interactionElement = null
     this.mouseDown = false
@@ -247,7 +248,7 @@ export default class Fragment{
 
     // ADD ELEMENTS
     this.mesh.add(this.sphere, this.sphereLight)
-    this.mesh.position.z = this.position.z
+    this.mesh.position.copy(this.position)
 
     this.mesh.add(this.sphere);
   }
@@ -457,6 +458,42 @@ export default class Fragment{
     })
   }
 
+  animationIntro ({y = 0, x = -600, z = 0}) {
+    const tl = gsap.timeline()
+
+    tl.fromTo(
+      this.mesh.position,
+      {
+        x: this.position.x + x,
+        y: this.position.y + y,
+        z: this.position.z + z
+      },
+      {
+        x: this.position.x,
+        y: this.position.y,
+        z: this.position.z,
+        duration: 2.4,
+        ease: 'none',
+        onComplete: () => {
+          this.animation = null
+          this.notStarted = false
+        }
+      },
+      '<'
+    )
+    tl.fromTo(
+      this,
+      {
+        multiplicatorSpeed: 0
+      },
+      {
+        multiplicatorSpeed: this.multiplicatorSpeed,
+        duration: 3,
+        ease: 'Power4.out'
+      }
+    )
+  }
+
   update(time) {
     this.cursor.el.update(this.cursor.realX, this.cursor.realY)
 
@@ -478,6 +515,14 @@ export default class Fragment{
     let angle = 0
     let scale = 1
 
+    if (this.notStarted) {
+      Matter.Body.setPosition(
+        this.box,
+        Matter.Vector.create(this.position.x, this.position.y)
+      )
+      return
+    }
+    
     if (this.animation) {
       let forceX = (this.box.position.x - this.cursor.x) / -500 * this.cameraZoom
       let forceY = (this.box.position.y - this.cursor.y) / -500 * this.cameraZoom
@@ -530,7 +575,8 @@ export default class Fragment{
       )
 
       angle = Math.atan2(forceY, forceX)
-      if (this.box.positionPrev.x != this.box.position.x) scale = Math.min(Math.max(1.3 * this.box.speed / 60, 1), 1.4 * this.multiplicatorSpeed)
+      if (this.box.positionPrev.x != this.box.position.x) scale = Math.min(Math.max(1.3 * this.box.speed / 60, 1), 1.4 * Math.max(this.multiplicatorSpeed, 1))
+      // console.log({scale, angle, forceX, forceX})
     }
 
     // update position mesh

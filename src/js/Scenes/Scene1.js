@@ -84,7 +84,9 @@ export default class Scene1 {
     const backgroundNoise = this.game.globalScene.getObjectByName('NoiseBackground')
     const scene0 = this.game.globalScene.getObjectByName('Scene0')
 
-    gsap.to(
+    const tl = gsap.timeline()
+
+    tl.to(
       backgroundNoise.material.uniforms.uOpacity,
       {
         value: 0,
@@ -98,12 +100,14 @@ export default class Scene1 {
         }
       }
     )
+
+    // animation PHAETON
+    this.phaeton.animationIntro({x: -400})
+    this.fragment.animationIntro({x: -400})
   }
 
   initZoomCamera () {
     this.camera.zoom = 0.95
-
-    // this.scene.position.set(-200, 100, 0)
 
     this.camera.updateProjectionMatrix()
   }
@@ -116,8 +120,8 @@ export default class Scene1 {
       textureLoader: this.textureLoader,
       gltfLoader: this.gltfLoader,
       position : {
-        x : -900,
-        y : -350,
+        x : -850,
+        y : -450,
         z : 80
       },
       sound: 'pas_dehors'
@@ -289,7 +293,7 @@ export default class Scene1 {
     })
 
     // first plan
-    const paln = this.textureLoader.load('/models/premier_plan.png')
+    const paln = this.textureLoader.load('/models/premier_plan3.jpg')
     // paln.flipY = false
     const textureFirstPlan = new THREE.MeshStandardMaterial({
       color: 0x000000,
@@ -306,7 +310,7 @@ export default class Scene1 {
     )
 
     const planeMesh = new THREE.Mesh(plane, textureFirstPlan)
-    planeMesh.position.set(0, -330, 598.5)
+    planeMesh.position.set(0, -410, 598)
 
     this.scene.add(planeMesh)
   }

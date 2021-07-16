@@ -35,7 +35,7 @@ export default class Phaeton{
     this.size = size
     this.scale = scale
 
-    this.animation = null
+    this.animation = true
     this.speed = speed
     this.runed = false
     this.isTurnedTo = 'right'
@@ -274,6 +274,9 @@ export default class Phaeton{
     this.animation = true
     this.fadeToAction(ANIMATIONS.marche, 1)
   }
+  playIdle() {
+    this.fadeToAction(ANIMATIONS.idle, 1)
+  }
 
   keyup(event){
     AudioManager.stopSound(this.sound, 0.1)
@@ -329,7 +332,7 @@ export default class Phaeton{
 
     AudioManager.newSound({
       name: 'scene3_echelle',
-      volume: 0.25,
+      volume: 0.2,
       loop: true
     })
 
@@ -407,6 +410,39 @@ export default class Phaeton{
       .fadeIn( duration )
       .play()
 
+  }
+
+  animationIntro ({y = 0, x = -600, z = 0}) {
+    this.playWalk()
+
+    gsap.fromTo(
+      this.mesh.position,
+      {
+        x: this.position.x + x,
+        y: this.position.y + y,
+        z: this.position.z + z
+      },
+      {
+        x: this.position.x,
+        y: this.position.y,
+        z: this.position.z,
+        duration: 2.4,
+        ease: 'none',
+        onStart: () => {
+          AudioManager.newSound({
+            name: 'pas_dehors',
+            volume: 0.5,
+            loop: true
+          })
+        },
+        onComplete: () => {
+          AudioManager.stopSound('pas_dehors', 0.1)
+
+          this.playIdle()
+          this.animation = null
+        }
+      }
+    )
   }
 
   update(time) {
