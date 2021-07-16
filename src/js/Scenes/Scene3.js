@@ -380,7 +380,8 @@ export default class Scene3 {
           MenuContextuels.addMenu({
             id: 'echelle',
             text: 'Appuyez sur espace pour utiliser l\'échelle',
-            position: new THREE.Vector3(pos.x + 410, pos.y + 100, 0)
+            position: new THREE.Vector3(pos.x + 410, pos.y + 100, 0),
+            maxScene: 1
           })
         }
       }

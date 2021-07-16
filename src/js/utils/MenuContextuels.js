@@ -45,12 +45,13 @@ class CAMERA {
 export const menuContextuelsCamera =  new CAMERA()
 
 class Menu {
-  constructor ({ text = 'No text', position = {x: 0, y: 0, z: 0} }) {
+  constructor ({ text = 'No text', position = {x: 0, y: 0, z: 0}, maxScene }) {
     this.text = text
     this.position = position
     this.camera = menuContextuelsCamera
     
     this.seen = 0
+    this.maxScene = maxScene
     this.init()
   }
   
@@ -76,7 +77,7 @@ class Menu {
   }
   
   see () {
-    if (this.seen >= 2 || this.el.classList.contains('-see')) return
+    if (this.seen >= this.maxScene || this.el.classList.contains('-see')) return
     this.seen += 1
 
     this.initTime = new Date()
@@ -108,11 +109,11 @@ class MenuContextuels {
     this.menus = {}
   }
 
-  addMenu ({id, text, position}) {
+  addMenu ({id, text, position, maxScene = 2}) {
     if (this.menus[id]) {
       this.menus[id].see()
     } else {
-      this.menus[id] = new Menu({text, position})
+      this.menus[id] = new Menu({text, position, maxScene})
     }
   }
 
