@@ -13,7 +13,7 @@ import clearScene from '../utils/clearScene'
 import Transition from '../utils/transition'
 import AudioManager from '../utils/AudioManager'
 
-export default class Scene0 {
+export default class Scene4 {
   constructor({camera, engine, globalScene, gltfLoader, textureLoader, sceneManager, game}) {
     this.game = game
     this.camera = camera
@@ -77,8 +77,9 @@ export default class Scene0 {
       }
     })
 
+    // Fix collision
+    this.phaeton.box.collisionFilter.category = 0x0008
     this.fragment.box.collisionFilter.mask = 0x0001 | 0x0004
-    this.fragment.box.collisionFilter.category = 0x0004
     
     this.game.addUpdatedElement('phaeton', this.phaeton.update.bind(this.phaeton))
     this.game.addUpdatedElement('fragment', this.fragment.update.bind(this.fragment))
