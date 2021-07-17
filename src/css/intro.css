@@ -26,6 +26,10 @@ h1 {
   z-index: 0;
 }
 
+.eventNone {
+  pointer-events: none;
+}
+
 a {
   color: #FF912C;
   text-decoration: none;

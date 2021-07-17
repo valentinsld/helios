@@ -17,7 +17,6 @@ body
 }
 
 * ::selection {
-  background-color: #ffd480;
-  color: #c76c17;
-  text-shadow: 0 0 9px #da6623;
+  background-color: none;
+  color: currentColor;
 }
