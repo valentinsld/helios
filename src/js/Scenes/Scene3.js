@@ -742,7 +742,6 @@ export default class Scene3 {
 
   endScene () {
     this.open = true
-    this.door.open()
 
     const tl = gsap.timeline({delay: 1})
 
@@ -873,7 +872,10 @@ export default class Scene3 {
       {
         y: 2.5,
         duration: 3.2,
-        ease: "power1.in"
+        ease: "power1.in",
+        onComplete: () => {
+          this.door.open()
+        }
       }
     )
     .to(

@@ -860,7 +860,6 @@ export default class Scene1 {
 
   endEnigmeAnimation () {
     this.endEnigme = true
-    this.door.open()
 
     // animation door
     const initEmmisive = this.materialSoleil.emissiveIntensity
@@ -910,7 +909,10 @@ export default class Scene1 {
           y: -Math.PI / 2.2,
           ease: "steps(12)",
           delay: 0.5,
-          duration: 2
+          duration: 2,
+          onComplete: () => {
+            this.door.open()
+          }
         },
         "-=1.6"
       )
@@ -924,13 +926,14 @@ export default class Scene1 {
   animationEndPhaeton () {
     this.phaeton.playWalk()
 
+    this.phaeton.mesh.position.z = -50
     gsap.to(
       this.phaeton.mesh.position,
       {
         x: "+=350",
         z: -100,
         duration: 2.5,
-        ease: "sin.inOut"
+        ease: this.phaeton.runed ? "sin.inOut" : "power1.in"
       }
     )
   }
