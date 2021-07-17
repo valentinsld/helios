@@ -45,7 +45,7 @@ export default class Door{
 
   addElementToWorld() {
     // init element
-    var collider = Matter.Bodies.rectangle(
+    this.collider = Matter.Bodies.rectangle(
       this.position.x,
       this.position.y,
       this.size.x,
@@ -62,7 +62,7 @@ export default class Door{
       }
     );
 
-    Matter.World.add(this.world, collider)
+    Matter.World.add(this.world, this.collider)
 
     // init events
     Matter.Events.on(this.engine, 'collisionStart', (event) => {
@@ -73,7 +73,7 @@ export default class Door{
       for (var i = 0, j = pairs.length; i != j; ++i) {
         var pair = pairs[i];
 
-        const conditionCollider = pair.bodyA === collider || pair.bodyB === collider
+        const conditionCollider = pair.bodyA === this.collider || pair.bodyB === this.collider
         const conditionPhaeton = pair.bodyA.label === 'Phaeton' || pair.bodyB.label === 'Phaeton'
         const conditionFragment = pair.bodyA.label === 'Fragment' || pair.bodyB.label === 'Fragment'
 
@@ -137,6 +137,45 @@ export default class Door{
   open () {
     this.opened = true
     if (this.mesh) this.mesh.material.color = new THREE.Color(0x00ffff)
+
+    var Bounds = Matter.Bounds;
+    const newBounds = this.collider.bounds
+
+    for(var j = 0; j < this.world.bodies.length; j++) {
+      const bodie = this.world.bodies[j]
+      const boundsA = Bounds.create(bodie.vertices)
+      const ifCollide = Bounds.overlaps(boundsA, newBounds)
+      if (!ifCollide) return
+
+      if (bodie.label === "Phaeton") {
+        this.animationEndPhaeton.call(true)
+        this.entered.phaeton = true
+
+        if (this.entered.fragment) {
+          this.sceneManager.next()
+        } else {
+          setTimeout(() => {
+            if (!this.entered.fragment) {
+              this.sceneManager.next()
+            }
+          }, 5000);
+        }
+      } else if (bodie.label === "Fragment") {
+        this.animationEndFragment.call(true)
+        this.entered.fragment = true
+        
+        if (this.entered.phaeton) {
+          this.sceneManager.next()
+        } else {
+          setTimeout(() => {
+            if (!this.entered.phaeton) {
+              this.sceneManager.next()
+            }
+          }, 5000);
+        }
+      }
+    }
+
   }
 
   close () {
