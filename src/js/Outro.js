@@ -6,6 +6,8 @@ export default class Outro {
   }
 
   initOutro () {
+  document.querySelector('.outro').style.display = 'initial'
+
     var tl = gsap.timeline({
       delay: 1
     })
