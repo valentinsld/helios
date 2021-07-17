@@ -477,7 +477,6 @@ export default class Scene0 {
 
 
     this.open = true
-    this.door.open()
     // x: 5.7, y:1.9
 
     this.physicDoor
@@ -496,6 +495,9 @@ export default class Scene0 {
             name: 'scene2_portPierre',
             volume: 0.6
           })
+        },
+        onComplete: () => {
+          this.door.open()
         }
       }
     )
